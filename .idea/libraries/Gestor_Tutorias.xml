@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gestor_Tutorias">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/Gestor_Tutorias.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
