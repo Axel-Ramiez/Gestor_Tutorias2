@@ -1,4 +1,4 @@
 package gestor_tutorias.dao;
 
-public class coordinadorDAO {
+public class problematicaDAO {
 }
