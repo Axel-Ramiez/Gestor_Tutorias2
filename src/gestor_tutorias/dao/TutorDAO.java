@@ -1,4 +1,4 @@
 package gestor_tutorias.dao;
 
-public class tutorDAO {
+public class TutorDAO {
 }
