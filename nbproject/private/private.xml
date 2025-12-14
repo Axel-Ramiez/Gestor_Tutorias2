@@ -4,6 +4,27 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/Gestor_Tutorias.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/pojo/Usuario.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/pojo/Rol.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/pojo/ReporteTutoria.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/pojo/Problematica.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/pojo/HorarioDisponible.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/pojo/FechaTutoria.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/pojo/Estudiante.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/pojo/AsignacionEstudiante.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/Enum/EstadoReporte.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/Enum/EstatusProblematica.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/Enum/TipoProblematica.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/controlador/controladorEjemplo.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/dao/DAOEjemplo.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/excepcion/ExcepcionEjemplo.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/filtro/FiltroEjemplo.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/modelo/modeloEjemplo.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/utilidades/utilidadesEjemplo.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/validacion/validacionEjemplo.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/vista/vistaEjemplo.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gsetor_tutorias/dominio/dominioEjemplo.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/modelo/ConexionBD.java</file>
         </group>
     </open-files>
 </project-private>
