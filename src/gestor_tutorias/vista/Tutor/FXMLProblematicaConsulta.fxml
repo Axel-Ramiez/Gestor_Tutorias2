@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gestor_tutorias.controlador.Tutor.FXMLProblematicaConsulta"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLProblematicaConsulta">
+   <children>
+      <Label layoutX="30.0" layoutY="285.0" prefHeight="71.0" prefWidth="544.0" text="  id_problematica i,  id_reporte inL,  titulo  descripcion ,  id_experiencia_educativa i  estado ENUM('Pendiente', 'Atendida') " />
+      <Label layoutX="30.0" layoutY="96.0" text="id problematica" />
+      <Label layoutX="182.0" layoutY="96.0" text="idreporte" />
+      <Label layoutX="23.0" layoutY="182.0" text="titulo" />
+      <Label layoutX="360.0" layoutY="87.0" text="id experencia educativa" />
+      <Label layoutX="504.0" layoutY="37.0" text="estado" />
+      <Label layoutX="207.0" layoutY="174.0" text="Label" />
+   </children>
 </AnchorPane>

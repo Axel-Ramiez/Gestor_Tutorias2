@@ -8,38 +8,25 @@
       <Button layoutX="434.0" layoutY="350.0" mnemonicParsing="false" text="guardar" />
       <Label layoutX="251.0" layoutY="5.0" text="Reporte de tutoria" />
       <Label layoutX="285.0" layoutY="23.0" text="datos" />
-      <TableView layoutX="11.0" layoutY="201.0" prefHeight="131.0" prefWidth="582.0">
-        <columns>
-          <TableColumn prefWidth="37.19999694824219" text="C1" />
-          <TableColumn prefWidth="73.60000610351562" text="matricula" />
-            <TableColumn prefWidth="79.0" text="nombre" />
-            <TableColumn prefWidth="86.80003356933594" text="semestre" />
-            <TableColumn prefWidth="251.60000610351562" text="asistencia">
-               <columns>
-                  <TableColumn prefWidth="75.0" text="1er" />
-                  <TableColumn prefWidth="75.0" text="2do" />
-                  <TableColumn prefWidth="75.0" text="3er" />
-               </columns>
-            </TableColumn>
-            <TableColumn prefWidth="75.0" text="situacion" />
-        </columns>
-      </TableView>
       <Button layoutX="503.0" layoutY="350.0" mnemonicParsing="false" text="eliminar" />
       <Label layoutX="127.0" layoutY="53.0" prefHeight="18.0" prefWidth="39.0" text="fecha" />
       <Label layoutX="201.0" layoutY="53.0" text="hora" />
       <Label layoutX="293.0" layoutY="53.0" text="periodo escolar" />
-      <Label layoutX="400.0" layoutY="53.0" text="tutor" />
-      <Label layoutX="507.0" layoutY="62.0" text="aula" />
+      <Label layoutX="400.0" layoutY="53.0" text="ID tutor" />
+      <Label layoutX="507.0" layoutY="62.0" text="ID estudiante" />
       <TextField layoutX="293.0" layoutY="80.0" prefHeight="26.0" prefWidth="82.0" />
       <TextField layoutX="401.0" layoutY="80.0" prefHeight="26.0" prefWidth="82.0" />
       <TextField layoutX="507.0" layoutY="81.0" prefHeight="26.0" prefWidth="66.0" />
-      <DatePicker layoutX="127.0" layoutY="80.0" prefHeight="26.0" prefWidth="52.0" />
+      <DatePicker layoutX="105.0" layoutY="80.0" prefHeight="26.0" prefWidth="74.0" />
       <Label layoutX="12.0" layoutY="121.0" text="temas a tratar en la tutoria" />
-      <Label layoutX="8.0" layoutY="178.0" text="reporte" />
       <Label layoutX="251.0" layoutY="112.0" text="respuesta por parte del coordinador" />
       <TextField layoutX="252.0" layoutY="134.0" prefHeight="53.0" prefWidth="322.0" />
       <Button layoutX="17.0" layoutY="350.0" mnemonicParsing="false" text="generar problematica" />
       <ChoiceBox layoutX="201.0" layoutY="80.0" prefHeight="26.0" prefWidth="66.0" />
       <TextField layoutX="9.0" layoutY="139.0" prefHeight="43.0" prefWidth="176.0" />
+      <Label layoutX="28.0" layoutY="53.0" text="ID tutotria" />
+      <Label layoutX="23.0" layoutY="81.0" prefHeight="26.0" prefWidth="66.0" text="Label" />
+      <Label layoutX="14.0" layoutY="200.0" text="reporte" />
+      <TextArea layoutX="16.0" layoutY="225.0" prefHeight="106.0" prefWidth="558.0" />
    </children>
 </AnchorPane>
