@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gestor_tutorias.controlador.Coordinador.FXMLPrincipalCoordinador"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLPrincipalCoordinador">
+    <children>
+        <Pane prefHeight="73.0" prefWidth="600.0">
+            <children>
+                <ImageView fitHeight="53.0" fitWidth="67.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+                <Label layoutX="81.0" layoutY="26.0" text="Sistema de tutorias - UV" />
+                <Label layoutX="365.0" layoutY="34.0" text="usuario: Coordinador" />
+                <Label layoutX="519.0" layoutY="34.0" text="cerrar sesion" />
+            </children>
+        </Pane>
+        <Label layoutX="100.0" layoutY="132.0" prefHeight="136.0" prefWidth="140.0" text="Planeacionde tutoria" />
+        <Label layoutX="339.0" layoutY="124.0" prefHeight="152.0" prefWidth="168.0" text="reporte de tutoria" />
+        <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
+    </children>
 </AnchorPane>
