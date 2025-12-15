@@ -1,12 +1,24 @@
 package gestor_tutorias.filtro;
 
 public class General {
-    public String quitarEspacioBorde(String texto){}
-    public String quitarEspacioMedio(String texto){}
-    public String cambiarLetra(String texto){}
-    public String quitarCaracterIlegible(String texto){}
-    public String quitarCaracterHtml(String texto){}
-    public String quitarHtml(String texto){}
+    public String quitarEspacioBorde(String texto){
+        return texto;
+    }
+    public String quitarEspacioMedio(String texto){
+        return texto;
+    }
+    public String cambiarLetra(String texto){
+        return texto;
+    }
+    public String quitarCaracterIlegible(String texto){
+        return texto;
+    }
+    public String quitarCaracterHtml(String texto){
+        return texto;
+    }
+    public String quitarHtml(String texto){
+        return texto;
+    }
     public String normalizarRuta(String ruta){
         /*
          * USO:
@@ -21,6 +33,7 @@ public class General {
          * NOTA:
          * Se usa solo si el sistema necesita aceptar rutas controladas.
          */
+        return ruta;
     }
 
 }
