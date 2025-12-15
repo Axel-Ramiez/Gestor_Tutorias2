@@ -1,0 +1,121 @@
+
+
+
+CREATE TABLE roles (
+  id_rol int NOT NULL AUTO_INCREMENT,
+  nombre_rol varchar(50) NOT NULL,
+  PRIMARY KEY (id_rol)
+);
+
+CREATE TABLE facultades (
+  id_facultad int NOT NULL AUTO_INCREMENT,
+  nombre varchar(100) NOT NULL,
+  PRIMARY KEY (id_facultad)
+);
+
+CREATE TABLE carreras (
+  id_carrera int NOT NULL AUTO_INCREMENT,
+  nombre varchar(100) NOT NULL,
+  id_facultad int NOT NULL,
+  PRIMARY KEY (id_carrera),
+  FOREIGN KEY (id_facultad) REFERENCES facultades (id_facultad)
+);
+
+CREATE TABLE periodos_escolares (
+  id_periodo int NOT NULL AUTO_INCREMENT,
+  nombre varchar(50) NOT NULL,
+  fecha_inicio date NOT NULL,
+  fecha_fin date NOT NULL,
+  activo tinyint(1) DEFAULT '0',
+  PRIMARY KEY (id_periodo)
+);
+
+CREATE TABLE usuarios (
+  id_usuario int NOT NULL AUTO_INCREMENT,
+  matricula varchar(20) NOT NULL,
+  contrasena varchar(255) NOT NULL,
+  nombre_completo varchar(150) NOT NULL,
+  correo varchar(100) DEFAULT NULL,
+  id_rol int NOT NULL,
+  activo tinyint(1) DEFAULT '1',
+  PRIMARY KEY (id_usuario),
+  UNIQUE KEY matricula (matricula),
+  FOREIGN KEY (id_rol) REFERENCES roles (id_rol)
+);
+
+
+CREATE TABLE estudiantes (
+  id_estudiante int NOT NULL AUTO_INCREMENT,
+  matricula varchar(20) NOT NULL,
+  nombre_completo varchar(150) NOT NULL,
+  correo varchar(100) DEFAULT NULL,
+  id_carrera int NOT NULL,
+  semestre int DEFAULT 1,
+  activo tinyint(1) DEFAULT '1',
+  PRIMARY KEY (id_estudiante),
+  UNIQUE KEY matricula (matricula),
+  FOREIGN KEY (id_carrera) REFERENCES carreras (id_carrera)
+);
+
+
+CREATE TABLE asignaciones (
+  id_asignacion int NOT NULL AUTO_INCREMENT,
+  id_tutor int NOT NULL,
+  id_estudiante int NOT NULL,
+  id_periodo int NOT NULL,
+  PRIMARY KEY (id_asignacion),
+  FOREIGN KEY (id_tutor) REFERENCES usuarios (id_usuario),
+  FOREIGN KEY (id_estudiante) REFERENCES estudiantes (id_estudiante),
+  FOREIGN KEY (id_periodo) REFERENCES periodos_escolares (id_periodo)
+);
+
+CREATE TABLE fechas_tutorias (
+  id_fecha_tutoria int NOT NULL AUTO_INCREMENT,
+  id_periodo int NOT NULL,
+  id_carrera int NOT NULL,
+  fecha_cierre_reportes date NOT NULL,
+  numero_sesion int NOT NULL, -- 1, 2, 3
+  PRIMARY KEY (id_fecha_tutoria),
+  FOREIGN KEY (id_periodo) REFERENCES periodos_escolares (id_periodo),
+  FOREIGN KEY (id_carrera) REFERENCES carreras (id_carrera)
+);
+
+CREATE TABLE horarios_tutorias (
+  id_horario int NOT NULL AUTO_INCREMENT,
+  id_tutor int NOT NULL,
+  id_fecha_tutoria int NOT NULL,
+  id_estudiante int DEFAULT NULL, -- NULL = Libre, CON ID = Ocupado
+  hora_inicio time NOT NULL,
+  hora_fin time NOT NULL,
+  PRIMARY KEY (id_horario),
+  FOREIGN KEY (id_tutor) REFERENCES usuarios (id_usuario),
+  FOREIGN KEY (id_fecha_tutoria) REFERENCES fechas_tutorias (id_fecha_tutoria),
+  FOREIGN KEY (id_estudiante) REFERENCES estudiantes (id_estudiante)
+);
+
+
+
+CREATE TABLE reportes_tutorias (
+  id_reporte int NOT NULL AUTO_INCREMENT,
+  id_tutor int NOT NULL,
+  id_estudiante int NOT NULL,
+  id_fecha_tutoria int NOT NULL,
+  descripcion_general text,
+  asistencia tinyint(1) DEFAULT '0',
+  estado ENUM('Pendiente', 'Revisado') NOT NULL DEFAULT 'Pendiente',
+  PRIMARY KEY (id_reporte),
+  FOREIGN KEY (id_tutor) REFERENCES usuarios (id_usuario),
+  FOREIGN KEY (id_estudiante) REFERENCES estudiantes (id_estudiante),
+  FOREIGN KEY (id_fecha_tutoria) REFERENCES fechas_tutorias (id_fecha_tutoria)
+);
+
+CREATE TABLE problematicas (
+  id_problematica int NOT NULL AUTO_INCREMENT,
+  id_reporte int NOT NULL,
+  titulo varchar(100) NOT NULL,
+  descripcion text NOT NULL,
+  id_experiencia_educativa int DEFAULT NULL,
+  estado ENUM('Pendiente', 'Atendida') NOT NULL DEFAULT 'Pendiente',
+  PRIMARY KEY (id_problematica),
+  FOREIGN KEY (id_reporte) REFERENCES reportes_tutorias (id_reporte)
+);
