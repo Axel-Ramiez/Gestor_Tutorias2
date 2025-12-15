@@ -36,7 +36,6 @@ public class ValidacionGeneral{
          * No permite /, \\, .. en la entrada.
          */
     }
-
     public boolean datoValidado(){
         if( dato==null){return false;}
 

@@ -1,14 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gestor_tutorias.controlador.Coordinador.FXMLReporteTutoriaConsulta"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLReporteTutoriaConsulta">
 
+    <children>
+        <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="12.0" style="-fx-padding:20;">
+
+                    <!-- TÍTULO -->
+                    <Label style="-fx-font-weight: bold;" text="Reporte de tutoría">
+                        <font>
+                            <Font size="20" />
+                        </font>
+                    </Label>
+
+                    <!-- INFORMACIÓN GENERAL -->
+                    <Label style="-fx-font-weight: bold; -fx-padding:10 0 0 0;" text="Información general" />
+
+                    <GridPane hgap="10" vgap="6">
+                        <columnConstraints>
+                            <ColumnConstraints prefWidth="120" />
+                            <ColumnConstraints prefWidth="150" />
+                            <ColumnConstraints prefWidth="120" />
+                            <ColumnConstraints prefWidth="200" />
+                        </columnConstraints>
+
+                        <children>
+                            <Label text="Fecha:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <Label text="Hora:" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <Label text="Período escolar:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <Label text="Tutor:" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                            <TextField fx:id="txtFecha" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+                            <TextField fx:id="txtHora" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                            <TextField fx:id="txtPeriodoEscolar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+
+                            <TextArea fx:id="txtNombreTutor" prefHeight="14.0" prefRowCount="2" prefWidth="200.0" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        </children>
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
+                    </GridPane>
+
+                    <!-- TEMAS ABORDADOS -->
+                    <Label style="-fx-font-weight: bold; -fx-padding:10 0 0 0;" text="Temas abordados de la planeación de tutoría" />
+
+                    <TextArea fx:id="txtTemasAbordados" prefHeight="100" wrapText="true" />
+
+                    <!-- ASISTENCIA -->
+                    <Label style="-fx-font-weight: bold; -fx-padding:10 0 0 0;" text="Asistencia" />
+
+                    <TableView fx:id="tblAsistencia" prefHeight="180">
+
+                        <columns>
+                            <TableColumn fx:id="colNombreEstudiante" prefWidth="170" text="Nombre del estudiante" />
+
+                            <TableColumn fx:id="colSemestre" prefWidth="80" text="Semestre" />
+
+                            <TableColumn fx:id="colMatricula" prefWidth="110" text="Matrícula" />
+
+                            <TableColumn fx:id="colTutoria1" prefWidth="80" text="Tutoría 1" />
+
+                            <TableColumn fx:id="colTutoria2" prefWidth="80" text="Tutoría 2" />
+
+                            <TableColumn fx:id="colTutoria3" prefWidth="80" text="Tutoría 3" />
+
+                            <TableColumn fx:id="colSituacionGeneral" prefWidth="180" text="Situación general" />
+
+                            <TableColumn fx:id="colGenerarProblematica" prefWidth="160" text="Generar problemática" />
+                        </columns>
+
+                        <placeholder>
+                            <Label text="Sin registros de asistencia" />
+                        </placeholder>
+
+                    </TableView>
+
+                    <!-- RESPUESTA COORDINADOR -->
+                    <Label style="-fx-font-weight: bold; -fx-padding:10 0 0 0;" text="Respuesta por parte del coordinador" />
+
+                    <TextArea fx:id="txtRespuestaCoordinador" prefHeight="90" wrapText="true" />
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
 </AnchorPane>
