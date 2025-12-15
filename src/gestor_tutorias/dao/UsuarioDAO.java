@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UsuarioDAO {
 
-    // --- LOGIN ---
+
     public static Usuario iniciarSesion(String matricula, String password) throws SQLException {
         Usuario usuario = null;
         Connection conn = ConexionBD.abrirConexion();
@@ -37,7 +37,7 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    // --- REGISTRAR (Sin numero_empleado y con AutoIncrement) ---
+
     public static boolean registrarUsuario(Usuario usuario) throws SQLException {
         Connection conn = ConexionBD.abrirConexion();
         if (conn == null) throw new SQLException("Sin conexión.");
@@ -58,7 +58,7 @@ public class UsuarioDAO {
         }
     }
 
-    // --- EDITAR (Sin numero_empleado) ---
+
     public static boolean editarUsuario(Usuario usuario) throws SQLException {
         Connection conn = ConexionBD.abrirConexion();
         if (conn == null) throw new SQLException("Sin conexión.");
@@ -79,7 +79,7 @@ public class UsuarioDAO {
         }
     }
 
-    // --- ELIMINAR (Baja Lógica) ---
+
     public static boolean eliminarUsuario(int idUsuario) throws SQLException {
         Connection conn = ConexionBD.abrirConexion();
         if (conn == null) throw new SQLException("Sin conexión.");
@@ -94,7 +94,7 @@ public class UsuarioDAO {
         }
     }
 
-    // --- CONSULTAR TODOS ---
+
     public static List<Usuario> obtenerTodos() throws SQLException {
         List<Usuario> usuarios = new ArrayList<>();
         Connection conn = ConexionBD.abrirConexion();
@@ -113,7 +113,7 @@ public class UsuarioDAO {
         return usuarios;
     }
 
-    // --- MAPEO (Sin numero_empleado) ---
+
     private static Usuario mapearUsuario(ResultSet rs) throws SQLException {
         Usuario u = new Usuario();
         u.setIdUsuario(rs.getInt("id_usuario"));

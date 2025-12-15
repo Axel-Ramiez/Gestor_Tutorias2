@@ -43,7 +43,6 @@ public class FXMLInicioSesionController implements Initializable {
 
     @FXML
     private void clicIniciar(ActionEvent event) {
-        // 1. Usamos tu clase Validacion (nombre corregido)
         boolean isUsuarioValido = Validacion.validarRequerido(tfUsuario, lbErrorUsuario, "Usuario requerido");
         boolean isPasswordValido = Validacion.validarRequerido(pfPassword, lbErrorPassword, "Contraseña requerida");
 
@@ -74,13 +73,13 @@ public class FXMLInicioSesionController implements Initializable {
 
         switch (idRol) {
             case 1: // Administrador
-                ruta = "/gestor_tutorias/vista/GestionUsuarios.fxml";
+                ruta = "/gestor_tutorias/vista/FXMLPrincipalAdministrador.fxml";
                 break;
             case 2: // Coordinador
-                ruta = "/gestor_tutorias/vista/GestionUsuarios.fxml";
+                ruta = "/gestor_tutorias/vista/FXMLPrincipalCoordinador.fxml";
                 break;
             case 3: // Tutor
-                ruta = "/gestor_tutorias/vista/MenuTutor.fxml";
+                ruta = "/gestor_tutorias/vista/FXMLPrincipalTutor.fxml";
                 break;
             default:
                 mostrarAlerta("Acceso Denegado", "Rol no reconocido.");

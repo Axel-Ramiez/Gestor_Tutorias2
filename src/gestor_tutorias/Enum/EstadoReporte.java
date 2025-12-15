@@ -2,7 +2,6 @@ package gestor_tutorias.Enum;
 
 public enum EstadoReporte {
     PENDIENTE("Pendiente"),
-    ENVIADO("Enviado"),
     REVISADO("Revisado");
 
     private final String valorBD;

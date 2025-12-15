@@ -6,7 +6,9 @@ public class Sesion {
     private static Sesion instancia;
     private Usuario usuarioLogueado;
 
-    private Sesion() {}
+    private Sesion() {
+
+    }
 
     public static Sesion getInstancia() {
         if (instancia == null) {
@@ -16,14 +18,17 @@ public class Sesion {
     }
 
     public void login(Usuario usuario) {
+
         this.usuarioLogueado = usuario;
     }
 
     public void logout() {
+
         this.usuarioLogueado = null;
     }
 
     public Usuario getUsuarioLogueado() {
+
         return usuarioLogueado;
     }
 }
