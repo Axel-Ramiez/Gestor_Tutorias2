@@ -107,9 +107,7 @@ public class ReporteTutoria {
         return retroalimentacionCoord;
     }
 
-    public void setRetroalimentacionCoord(String retroalimentacionCoord) {
-        this.retroalimentacionCoord = retroalimentacionCoord;
-    }
+    public void setRetroalimentacionCoord(String retroalimentacionCoord) {this.retroalimentacionCoord = retroalimentacionCoord;}
 
     public LocalDateTime getFechaRevision() {
         return fechaRevision;
