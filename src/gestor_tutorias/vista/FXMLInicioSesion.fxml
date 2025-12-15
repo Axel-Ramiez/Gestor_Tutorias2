@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.FXMLInicioSesionController">
    <children>
-      <Pane prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: 006DB2;">
+      <Pane prefHeight="400.0" prefWidth="300.0">
          <children>
             <ImageView fx:id="IVLogo" fitHeight="209.0" fitWidth="243.0" layoutX="46.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -28,7 +28,7 @@
             <Label fx:id="lbPassword" layoutX="120.0" layoutY="200.0" text="Contraseña" />
             <TextField fx:id="tfUsuario" alignment="CENTER" layoutX="76.0" layoutY="149.0" promptText="User123" />
             <PasswordField fx:id="pfPassword" alignment="CENTER" layoutX="76.0" layoutY="220.0" promptText="*****" />
-            <Button fx:id="botonIniciar" layoutX="121.0" layoutY="271.0" mnemonicParsing="false" onAction="#clicIniciar" text="Ingresar" />
+            <Button fx:id="botonIniciar" layoutX="121.0" layoutY="271.0" mnemonicParsing="false" onAction="#clicIniciarSesion" text="Ingresar" />
             <Label fx:id="lbErrorUsuario" layoutX="136.0" layoutY="174.0" textFill="RED" />
             <Label fx:id="lbErrorPassword" layoutX="136.0" layoutY="245.0" textFill="RED" />
          </children>

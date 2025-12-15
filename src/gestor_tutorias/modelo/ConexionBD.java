@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static java.util.jar.Pack200.Packer.PASS;
+
 
 public class ConexionBD {
 
@@ -14,32 +16,31 @@ public class ConexionBD {
     private static final String URL = "jdbc:mysql://"+ IP + ":" + PORT + "/" + NAME_BD
             + "?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=America/Mexico_City";
     private static final String USER = "root";
-    private static final String PASSWORD = "Samus_05";
-    private static Connection CONEXION = null;
+    private static final String PASS = "Samus_05";
+    private static Connection conexion = null;
 
-    public static Connection abrirConexion(){
-
-        try{
+    public static Connection abrirConexion() {
+        Connection conexion = null;
+        try {
             Class.forName(DRIVER);
-            CONEXION = DriverManager.getConnection(URL, USER, PASSWORD);
-
-        }catch(ClassNotFoundException cnfe){
-            cnfe.printStackTrace();
-        }catch (SQLException sqle){
-            sqle.printStackTrace();
+            conexion = DriverManager.getConnection(URL, USER, PASS);
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.err.println("Error de conexión: " + ex.getMessage());
+            ex.printStackTrace();
         }
-        return CONEXION;
-
+        return conexion;
     }
 
-    public static void cerrarConexion(){
-        try{
-            if(CONEXION!=null){
-                CONEXION.close();
+
+    public static void cerrarConexion(Connection conexion) {
+        if (conexion != null) {
+            try {
+                if (!conexion.isClosed()) {
+                    conexion.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Error al cerrar conexión: " + ex.getMessage());
             }
-        }catch (SQLException sqle){
-            sqle.printStackTrace();
         }
     }
-
 }

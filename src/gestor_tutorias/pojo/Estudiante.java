@@ -4,83 +4,46 @@ public class Estudiante {
     private int idEstudiante;
     private String matricula;
     private String nombreCompleto;
-    private String correoInstitucional;
+    private String correo;
+    private int idCarrera; // Ahora guardamos el ID, no el nombre
     private int semestre;
-    private String carrera;
-    private boolean situacionRiesgo;
+    private boolean activo;
 
     public Estudiante() {
     }
 
-    public Estudiante(int idEstudiante, String matricula, String nombreCompleto, String correoInstitucional, int semestre, String carrera, boolean situacionRiesgo) {
-        this.idEstudiante = idEstudiante;
+    public Estudiante(String matricula, String nombreCompleto, String correo, int idCarrera, int semestre) {
         this.matricula = matricula;
         this.nombreCompleto = nombreCompleto;
-        this.correoInstitucional = correoInstitucional;
-        this.semestre = semestre;
-        this.carrera = carrera;
-        this.situacionRiesgo = situacionRiesgo;
-    }
-
-    
-    
-    // Getters y Setters
-
-    public int getIdEstudiante() {
-        return idEstudiante;
-    }
-
-    public void setIdEstudiante(int idEstudiante) {
-        this.idEstudiante = idEstudiante;
-    }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
-
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
-
-    public String getCorreoInstitucional() {
-        return correoInstitucional;
-    }
-
-    public void setCorreoInstitucional(String correoInstitucional) {
-        this.correoInstitucional = correoInstitucional;
-    }
-
-    public int getSemestre() {
-        return semestre;
-    }
-
-    public void setSemestre(int semestre) {
+        this.correo = correo;
+        this.idCarrera = idCarrera;
         this.semestre = semestre;
     }
 
-    public String getCarrera() {
-        return carrera;
-    }
+    // --- GETTERS Y SETTERS ---
+    public int getIdEstudiante() { return idEstudiante; }
+    public void setIdEstudiante(int idEstudiante) { this.idEstudiante = idEstudiante; }
 
-    public void setCarrera(String carrera) {
-        this.carrera = carrera;
-    }
+    public String getMatricula() { return matricula; }
+    public void setMatricula(String matricula) { this.matricula = matricula; }
 
-    public boolean isSituacionRiesgo() {
-        return situacionRiesgo;
-    }
+    public String getNombreCompleto() { return nombreCompleto; }
+    public void setNombreCompleto(String nombreCompleto) { this.nombreCompleto = nombreCompleto; }
 
-    public void setSituacionRiesgo(boolean situacionRiesgo) {
-        this.situacionRiesgo = situacionRiesgo;
+    public String getCorreo() { return correo; }
+    public void setCorreo(String correo) { this.correo = correo; }
+
+    public int getIdCarrera() { return idCarrera; }
+    public void setIdCarrera(int idCarrera) { this.idCarrera = idCarrera; }
+
+    public int getSemestre() { return semestre; }
+    public void setSemestre(int semestre) { this.semestre = semestre; }
+
+    public boolean isActivo() { return activo; }
+    public void setActivo(boolean activo) { this.activo = activo; }
+
+    @Override
+    public String toString() {
+        return nombreCompleto + " (" + matricula + ")";
     }
-    
-    
 }

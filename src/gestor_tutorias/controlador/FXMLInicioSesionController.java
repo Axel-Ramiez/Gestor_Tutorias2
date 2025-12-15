@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package gestor_tutorias.controlador;
 
+import gestor_tutorias.controlador.Administrador.FXMLPrincipalAdministradorController;
 import gestor_tutorias.dao.UsuarioDAO;
 import gestor_tutorias.pojo.Usuario;
-import gestor_tutorias.utilidades.Sesion;
-import gestor_tutorias.validacion.Validacion; // <--- AQUÍ CAMBIÓ EL IMPORT
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -26,92 +21,92 @@ import javafx.stage.Stage;
 
 public class FXMLInicioSesionController implements Initializable {
 
-    @FXML
-    private Label lbErrorUsuario;
-    @FXML
-    private Label lbErrorPassword;
+    // Variables que coinciden con TU FXML
     @FXML
     private TextField tfUsuario;
     @FXML
-    private PasswordField pfPassword;
+    private PasswordField pfPassword; // Antes se llamaba tfPassword
+    @FXML
+    private Label lbErrorUsuario;     // Etiqueta roja debajo del usuario
+    @FXML
+    private Label lbErrorPassword;    // Etiqueta roja debajo de la contraseña
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Limpiamos los mensajes de error al iniciar
         lbErrorUsuario.setText("");
         lbErrorPassword.setText("");
     }
 
     @FXML
-    private void clicIniciar(ActionEvent event) {
-        boolean isUsuarioValido = Validacion.validarRequerido(tfUsuario, lbErrorUsuario, "Usuario requerido");
-        boolean isPasswordValido = Validacion.validarRequerido(pfPassword, lbErrorPassword, "Contraseña requerida");
+    private void clicIniciarSesion(ActionEvent event) {
+        // 1. Limpiar errores previos
+        lbErrorUsuario.setText("");
+        lbErrorPassword.setText("");
 
-        if (isUsuarioValido && isPasswordValido) {
-            verificarCredenciales(tfUsuario.getText(), pfPassword.getText());
+        String matricula = tfUsuario.getText();
+        String password = pfPassword.getText();
+
+        boolean isValido = true;
+
+        // 2. Validaciones básicas en la interfaz
+        if(matricula.isEmpty()){
+            lbErrorUsuario.setText("Campo obligatorio");
+            isValido = false;
+        }
+        if(password.isEmpty()){
+            lbErrorPassword.setText("Campo obligatorio");
+            isValido = false;
+        }
+
+        if(isValido){
+            validarCredencialesBD(matricula, password);
         }
     }
 
-    private void verificarCredenciales(String matricula, String password) {
+    private void validarCredencialesBD(String matricula, String password) {
         try {
-            Usuario usuarioLogin = UsuarioDAO.iniciarSesion(matricula, password);
+            Usuario usuarioSesion = UsuarioDAO.iniciarSesion(matricula, password);
 
-            if (usuarioLogin != null) {
-                Sesion.getInstancia().login(usuarioLogin);
-                irPantallaPrincipal(usuarioLogin.getIdRol());
+            if(usuarioSesion != null){
+                irMenuPrincipal(usuarioSesion);
             } else {
-                mostrarAlerta("Credenciales incorrectas", "El usuario o contraseña no coinciden.");
+                // Si el usuario no existe, mostramos alerta o mensaje en etiquetas
+                mostrarAlerta("Credenciales incorrectas", "El usuario o contraseña no son válidos.");
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
             mostrarAlerta("Error de conexión", "No se pudo conectar con la base de datos.");
         }
     }
 
-    private void irPantallaPrincipal(int idRol) {
-        String ruta = "";
-
-        switch (idRol) {
-            case 1: // Administrador
-                ruta = "/gestor_tutorias/vista/FXMLPrincipalAdministrador.fxml";
-                break;
-            case 2: // Coordinador
-                ruta = "/gestor_tutorias/vista/FXMLPrincipalCoordinador.fxml";
-                break;
-            case 3: // Tutor
-                ruta = "/gestor_tutorias/vista/FXMLPrincipalTutor.fxml";
-                break;
-            default:
-                mostrarAlerta("Acceso Denegado", "Rol no reconocido.");
-                return;
-        }
-
-        abrirVentana(ruta);
-    }
-
-    private void abrirVentana(String rutaFXML) {
+    private void irMenuPrincipal(Usuario usuario) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(rutaFXML));
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Sistema de Gestión de Tutorías");
-            stage.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Administrador/FXMLPrincipalAdministrador.fxml"));
+            Parent root = loader.load();
 
-            Stage ventanaActual = (Stage) tfUsuario.getScene().getWindow();
-            ventanaActual.close();
+            FXMLPrincipalAdministradorController controlador = loader.getController();
+            controlador.inicializarInformacion(usuario);
+
+            Stage escenario = new Stage();
+            escenario.setScene(new Scene(root));
+            escenario.setTitle("Menú Principal - Sistema de Tutorías");
+            escenario.show();
+
+            Stage escenarioActual = (Stage) tfUsuario.getScene().getWindow();
+            escenarioActual.close();
 
         } catch (IOException ex) {
             ex.printStackTrace();
-            mostrarAlerta("Error de navegación", "No se pudo cargar la vista: " + rutaFXML);
+            mostrarAlerta("Error", "No se pudo cargar la ventana del menú principal.");
         }
     }
 
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
+    private void mostrarAlerta(String titulo, String mensaje){
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

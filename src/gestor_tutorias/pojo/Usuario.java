@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gestor_tutorias.pojo;
 
 public class Usuario {
@@ -10,27 +6,21 @@ public class Usuario {
     private String contrasena;
     private String nombreCompleto;
     private String correo;
-    private String carrera;
     private int idRol;
     private boolean activo;
-
 
     public Usuario() {
     }
 
-
-    public Usuario(int idUsuario, String matricula, String contrasena, String nombreCompleto, String correo, String carrera, int idRol) {
-        this.idUsuario = idUsuario;
+    public Usuario(String matricula, String contrasena, String nombreCompleto, String correo, int idRol) {
         this.matricula = matricula;
         this.contrasena = contrasena;
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
-        this.carrera = carrera;
         this.idRol = idRol;
-        this.activo = true;
     }
 
-    // Getters y Setters
+    // --- GETTERS Y SETTERS ---
     public int getIdUsuario() { return idUsuario; }
     public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
 
@@ -46,9 +36,6 @@ public class Usuario {
     public String getCorreo() { return correo; }
     public void setCorreo(String correo) { this.correo = correo; }
 
-    public String getCarrera() { return carrera; }
-    public void setCarrera(String carrera) { this.carrera = carrera; }
-
     public int getIdRol() { return idRol; }
     public void setIdRol(int idRol) { this.idRol = idRol; }
 
@@ -57,6 +44,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return nombreCompleto;
+        return nombreCompleto; // Para que se vea bonito en los ComboBox
     }
 }
