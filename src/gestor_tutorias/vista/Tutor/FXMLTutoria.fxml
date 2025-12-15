@@ -19,9 +19,9 @@
         <Button layoutX="490.0" layoutY="91.0" mnemonicParsing="false" text="crear nuevo" />
         <TableView layoutX="14.0" layoutY="137.0" prefHeight="174.0" prefWidth="573.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="id" />
-                <TableColumn prefWidth="75.0" text="matricula" />
-                <TableColumn prefWidth="75.0" text="nombre" />
+                <TableColumn prefWidth="75.0" text="fecha" />
+                <TableColumn prefWidth="75.0" text="hora" />
+                <TableColumn prefWidth="75.0" text="periodoescolar" />
                 <TableColumn prefWidth="75.0" text="correo" />
                 <TableColumn prefWidth="75.0" text="idcarrera" />
                 <TableColumn prefWidth="75.0" text="semestre" />
