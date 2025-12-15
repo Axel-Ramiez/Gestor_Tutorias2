@@ -61,7 +61,7 @@ public class FXMLPrincipalAdministradorController implements Initializable {
     }
 
     @FXML
-    private void clicGestionarTutorados(ActionEvent event) {
+    private void clicGestionarEstudiante(ActionEvent event) {
         mostrarAlerta("Navegación", "Aquí se abrirá la pantalla de Asignar Tutores.");
     }
 
