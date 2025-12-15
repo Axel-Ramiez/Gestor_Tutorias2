@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gestor_tutorias.controlador.Tutor.FXMLTutoriaConsulta"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLTutoriaConsulta">
+   <children>
+      <Button layoutX="362.0" layoutY="350.0" mnemonicParsing="false" text="exportar" />
+      <Button layoutX="434.0" layoutY="350.0" mnemonicParsing="false" text="guardar" />
+      <Label layoutX="251.0" layoutY="5.0" text="Reporte de tutoria" />
+      <Label layoutX="285.0" layoutY="23.0" text="datos" />
+      <TableView layoutX="11.0" layoutY="201.0" prefHeight="131.0" prefWidth="582.0">
+        <columns>
+          <TableColumn prefWidth="37.19999694824219" text="C1" />
+          <TableColumn prefWidth="73.60000610351562" text="matricula" />
+            <TableColumn prefWidth="79.0" text="nombre" />
+            <TableColumn prefWidth="86.80003356933594" text="semestre" />
+            <TableColumn prefWidth="251.60000610351562" text="asistencia">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="1er" />
+                  <TableColumn prefWidth="75.0" text="2do" />
+                  <TableColumn prefWidth="75.0" text="3er" />
+               </columns>
+            </TableColumn>
+            <TableColumn prefWidth="75.0" text="situacion" />
+        </columns>
+      </TableView>
+      <Button layoutX="503.0" layoutY="350.0" mnemonicParsing="false" text="eliminar" />
+      <Label layoutX="14.0" layoutY="53.0" text="fecha" />
+      <Label layoutX="98.0" layoutY="53.0" text="hora" />
+      <Label layoutX="180.0" layoutY="53.0" text="periodo escolar" />
+      <Label layoutX="314.0" layoutY="53.0" text="tutor" />
+      <Label layoutX="463.0" layoutY="62.0" text="aula" />
+      <TextField layoutX="180.0" layoutY="80.0" prefHeight="26.0" prefWidth="82.0" />
+      <TextField layoutX="314.0" layoutY="80.0" prefHeight="26.0" prefWidth="110.0" />
+      <TextField layoutX="463.0" layoutY="81.0" prefHeight="26.0" prefWidth="110.0" />
+      <DatePicker layoutX="9.0" layoutY="81.0" prefHeight="26.0" prefWidth="52.0" />
+      <Label layoutX="24.0" layoutY="117.0" text="temas a tratar" />
+      <Label layoutX="14.0" layoutY="173.0" text="reporte" />
+      <Label layoutX="237.0" layoutY="117.0" text="respuesta" />
+      <TextField layoutX="302.0" layoutY="121.0" prefHeight="66.0" prefWidth="230.0" />
+      <Button layoutX="17.0" layoutY="350.0" mnemonicParsing="false" text="generar rpoblematica" />
+   </children>
 </AnchorPane>
