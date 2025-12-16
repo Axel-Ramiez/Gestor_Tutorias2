@@ -7,62 +7,76 @@ public class ReporteTutoria {
     private int idTutor;
     private int idEstudiante;
     private int idFechaTutoria;
-    private String descripcionGeneral;
+    private String reporte;
+    private String respuestaCoordinador;
     private boolean asistencia;
     private EstadoReporte estado;
 
     public ReporteTutoria() {
     }
-    // Constructor para la inserción (sin idReporte)
-    public ReporteTutoria(int idTutor, int idEstudiante, int idFechaTutoria, String descripcionGeneral, boolean asistencia) {
+
+    // Constructor para inserción (sin idReporte)
+    public ReporteTutoria(int idTutor, int idEstudiante, int idFechaTutoria, String reporte,
+                          String respuestaCoordinador, boolean asistencia) {
         this.idTutor = idTutor;
         this.idEstudiante = idEstudiante;
         this.idFechaTutoria = idFechaTutoria;
-        this.descripcionGeneral = descripcionGeneral;
+        this.reporte = reporte;
+        this.respuestaCoordinador = respuestaCoordinador;
         this.asistencia = asistencia;
-        // El campo 'estado' se deja para el valor por defecto de la DB ('Pendiente')
+        // 'estado' se deja para el valor por defecto de la DB ('Pendiente')
     }
 
     // Constructor completo (útil para recuperar de la DB)
-    public ReporteTutoria(int idReporte, int idTutor, int idEstudiante, int idFechaTutoria, String descripcionGeneral, boolean asistencia, EstadoReporte estado) {
+    public ReporteTutoria(int idReporte, int idTutor, int idEstudiante, int idFechaTutoria,
+                          String reporte, String respuestaCoordinador, boolean asistencia, EstadoReporte estado) {
         this.idReporte = idReporte;
         this.idTutor = idTutor;
         this.idEstudiante = idEstudiante;
         this.idFechaTutoria = idFechaTutoria;
-        this.descripcionGeneral = descripcionGeneral;
+        this.reporte = reporte;
+        this.respuestaCoordinador = respuestaCoordinador;
         this.asistencia = asistencia;
         this.estado = estado;
     }
 
     // --- GETTERS Y SETTERS ---
-
-    // id_reporte (int NOT NULL AUTO_INCREMENT) -> idReporte
     public int getIdReporte() { return idReporte; }
     public void setIdReporte(int idReporte) { this.idReporte = idReporte; }
 
-    // id_tutor (int NOT NULL) -> idTutor
     public int getIdTutor() { return idTutor; }
     public void setIdTutor(int idTutor) { this.idTutor = idTutor; }
 
-    // id_estudiante (int NOT NULL) -> idEstudiante
     public int getIdEstudiante() { return idEstudiante; }
     public void setIdEstudiante(int idEstudiante) { this.idEstudiante = idEstudiante; }
 
-    // id_fecha_tutoria (int NOT NULL) -> idFechaTutoria
     public int getIdFechaTutoria() { return idFechaTutoria; }
     public void setIdFechaTutoria(int idFechaTutoria) { this.idFechaTutoria = idFechaTutoria; }
 
-    // descripcion_general (text) -> descripcionGeneral
-    public String getDescripcionGeneral() { return descripcionGeneral; }
-    public void setDescripcionGeneral(String descripcionGeneral) { this.descripcionGeneral = descripcionGeneral; }
+    public String getReporte() { return reporte; }
+    public void setReporte(String reporte) { this.reporte = reporte; }
 
-    // asistencia (tinyint(1) DEFAULT '0') -> asistencia
+    public String getRespuestaCoordinador() { return respuestaCoordinador; }
+    public void setRespuestaCoordinador(String respuestaCoordinador) { this.respuestaCoordinador = respuestaCoordinador; }
+
     public boolean isAsistencia() { return asistencia; }
     public void setAsistencia(boolean asistencia) { this.asistencia = asistencia; }
 
-    // estado (ENUM('Pendiente', 'Revisado') NOT NULL DEFAULT 'Pendiente') -> estado
     public EstadoReporte getEstado() { return estado; }
     public void setEstado(EstadoReporte estado) { this.estado = estado; }
 
-    // Puedes añadir equals, hashCode y toString si es necesario.
+    @Override
+    public String toString() {
+        return "ReporteTutoria{" +
+                "idReporte=" + idReporte +
+                ", idTutor=" + idTutor +
+                ", idEstudiante=" + idEstudiante +
+                ", idFechaTutoria=" + idFechaTutoria +
+                ", reporte='" + reporte + '\'' +
+                ", respuestaCoordinador='" + respuestaCoordinador + '\'' +
+                ", asistencia=" + asistencia +
+                ", estado=" + estado +
+                '}';
+    }
 }
+

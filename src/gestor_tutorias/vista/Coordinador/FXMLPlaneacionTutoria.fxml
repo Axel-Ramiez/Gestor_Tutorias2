@@ -14,19 +14,23 @@
                 <Label layoutX="519.0" layoutY="34.0" text="cerrar sesion" />
             </children>
         </Pane>
+
         <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
-        <Label layoutX="261.0" layoutY="103.0" text="reporte de tutoria" />
-        <Button fx:id="crear" layoutX="490.0" layoutY="91.0" mnemonicParsing="false" onAction="#crearReporteTutoria" text="crear nuevo" />
+        <Label layoutX="261.0" layoutY="103.0" text="planeacion de tutorias" />
+
+        <Button fx:id="crear" layoutX="490.0" layoutY="91.0" mnemonicParsing="false" onAction="#crearPlaneacionTutoria" text="crear nuevo" />
+        <Button fx:id="consultar" layoutX="403.0" layoutY="91.0" mnemonicParsing="false" onAction="#consultarPlaneacionTutoria" text="consultar" />
+
         <TableView fx:id="reportetutoria" layoutX="98.0" layoutY="141.0" prefHeight="174.0" prefWidth="377.0">
             <columns>
-                <TableColumn fx:id="fechainicio" prefWidth="75.0" text="fechainicio" />
-                <TableColumn fx:id="fechafin" prefWidth="75.0" text="fechafin" />
-                <TableColumn fx:id="carrera" prefWidth="75.0" text="carrera" />
-                <TableColumn fx:id="periodoescolar" prefWidth="75.0" text="periodo escolar" />
-                <TableColumn fx:id="sesion" prefWidth="75.0" text="sesion" />
+                <TableColumn fx:id="fechainicio" prefWidth="75.0" text="ID Fecha" />
+                <TableColumn fx:id="periodoescolar" prefWidth="75.0" text="Periodo Escolar" />
+                <TableColumn fx:id="carrera" prefWidth="75.0" text="Carrera" />
+                <TableColumn fx:id="fecha" prefWidth="75.0" text="Fecha" />
+                <TableColumn fx:id="sesion" prefWidth="75.0" text="Sesión" />
+                <TableColumn fx:id="temas" prefWidth="100.0" text="Temas" />
             </columns>
         </TableView>
-        <Button fx:id="consultar" layoutX="403.0" layoutY="91.0" mnemonicParsing="false" onAction="#consultarReporteTutoria" text="consultar" />
-
     </children>
 </AnchorPane>
+

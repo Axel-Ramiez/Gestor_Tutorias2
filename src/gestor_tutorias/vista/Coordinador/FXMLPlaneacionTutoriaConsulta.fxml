@@ -27,10 +27,13 @@
       <TextArea fx:id="temastratar" layoutX="27.0" layoutY="285.0" prefHeight="74.0" prefWidth="559.0" />
       <DatePicker fx:id="fecha" layoutX="23.0" layoutY="139.0" prefHeight="26.0" prefWidth="150.0" />
       <TextField fx:id="carrera" layoutX="21.0" layoutY="224.0" prefHeight="26.0" prefWidth="150.0" />
-      <TextField fx:id="periodo" layoutX="436.0" layoutY="140.0" />
+      <TextField fx:id="periodo" layoutX="436.0" layoutY="140.0" prefHeight="26.0" prefWidth="150.0" />
       <DatePicker fx:id="fechacierre" layoutX="225.0" layoutY="139.0" prefHeight="26.0" prefWidth="150.0" />
       <TextField fx:id="sesion" layoutX="225.0" layoutY="224.0" />
       <Label layoutX="286.0" layoutY="81.0" text="Planeacion de tutoria" />
+        <Label fx:id="idPlaneacion" layoutX="442.0" layoutY="199.0" text="ID" />
+      <TextField fx:id="id" layoutX="437.0" layoutY="224.0" />
+
     </children>
 
 </AnchorPane>

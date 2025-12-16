@@ -98,20 +98,22 @@ CREATE TABLE horario_tutoria (
 );
 
 
-
 CREATE TABLE reporte_tutoria (
   id_reporte int NOT NULL AUTO_INCREMENT,
   id_tutor int NOT NULL,
   id_estudiante int NOT NULL,
-  id_fecha_tutoria int NOT NULL,
-  descripcion_general text,
+  id_fecha_tutoria int NOT NULL, -- <--- AQUÍ está tu referencia por ID
+  reporte text NOT NULL,
+  respuesta_coordinador text,
   asistencia tinyint(1) DEFAULT '0',
   estado ENUM('Pendiente', 'Revisado') NOT NULL DEFAULT 'Pendiente',
   PRIMARY KEY (id_reporte),
   FOREIGN KEY (id_tutor) REFERENCES usuario (id_usuario),
   FOREIGN KEY (id_estudiante) REFERENCES estudiante (id_estudiante),
+  -- Esta es la línea que "comunica" el reporte con la planeación (y por ende, con sus temas)
   FOREIGN KEY (id_fecha_tutoria) REFERENCES planeacion_tutoria (id_fecha_tutoria)
-);
+) ENGINE=InnoDB;
+
 
 CREATE TABLE problematica (
   id_problematica int NOT NULL AUTO_INCREMENT,
@@ -163,22 +165,27 @@ INSERT INTO estudiante (matricula, nombre_completo, correo, id_carrera, semestre
 ('zS20015003', 'Pedro Sanchez', 'zs20015003@estudiantes.uv.mx', 2, 1, 1, 0),
 ('zS20015004', 'Sofia Torres', 'zs20015004@estudiantes.uv.mx', 1, 7, 1, 1);
 
+INSERT INTO asignacion_tutor (id_tutor, id_estudiante, id_periodo) VALUES
+(3, 1, 2), -- Juan Pérez atiende a Ana Martinez
+(3, 2, 2), -- Juan Pérez atiende a Luis Rodriguez
+(4, 3, 2), -- Maria Gomez atiende a Pedro Sanchez
+(4, 4, 2); -- Maria Gomez atiende a Sofia Torres
 
+INSERT INTO planeacion_tutoria (id_periodo, id_carrera, fecha, numero_sesion, temas) VALUES
+(2, 1, '2024-09-05', 1, 'Presentación, revisión de carga académica y lineamientos.'),
+(2, 1, '2024-10-20', 2, 'Seguimiento de calificaciones parciales y apoyo académico.'),
+(2, 1, '2024-12-01', 3, 'Evaluación final del periodo y preparación de pre-inscripción.');
 
+INSERT INTO horario_tutoria (id_tutor, id_fecha_tutoria, id_estudiante, hora_inicio, hora_fin) VALUES
+(3, 1, 1, '10:00:00', '10:15:00'), -- Slot ocupado por Ana Martinez
+(3, 1, 2, '10:15:00', '10:30:00'), -- Slot ocupado por Luis Rodriguez
+(3, 1, NULL, '10:30:00', '10:45:00'), -- Slot libre
+(4, 1, 3, '11:00:00', '11:15:00'); -- Slot ocupado por Pedro Sanchez
 
+INSERT INTO reporte_tutoria (id_tutor, id_estudiante, id_fecha_tutoria, descripcion_general, asistencia, estado) VALUES
+(3, 1, 1, 'La estudiante muestra buen desempeño, sin dudas administrativas.', 1, 'Revisado'),
+(3, 2, 1, 'El estudiante comenta dificultades en una experiencia educativa específica.', 1, 'Pendiente');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO problematica (id_reporte, titulo, descripcion, id_experiencia_educativa, estado) VALUES
+(2, 'Dificultad con Algoritmos', 'El estudiante no comprende los conceptos de recursividad.', 101, 'Pendiente'),
+(2, 'Falta de equipo de cómputo', 'El estudiante requiere acceso a laboratorios fuera de horario.', NULL, 'Atendida');

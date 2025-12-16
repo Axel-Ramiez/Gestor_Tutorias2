@@ -46,21 +46,65 @@ public class FXMLPrincipalCoordinador implements Initializable {
 
     @FXML
     private void clicPlaneacion(ActionEvent event) {
-        // Abre: FXMLPlaneacionTutoriaConsulta.fxml
-        abrirVentana("/gestor_tutorias/vista/Coordinador/FXMLPlaneacionTutoria.fxml", "Planeación de Tutoría");
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLPlaneacionTutoria.fxml")
+            );
+
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Planeación de Tutoría");
+            stage.show();
+
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo abrir Planeación de Tutoría.");
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void clicReporte(ActionEvent event) {
-        // Abre: FXMLReporteTutoriaConsulta.fxml
-        abrirVentana("/gestor_tutorias/vista/Coordinador/FXMLReporteTutoria.fxml", "Reporte de Tutoría");
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLReporteTutoria.fxml")
+            );
+
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Reporte de Tutoría");
+            stage.show();
+
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo abrir Reporte de Tutoría.");
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    private void clicEstudiante(ActionEvent event) {
-        // Abre: FXMLAlumnoConsulta.fxml
-        abrirVentana("/gestor_tutorias/vista/Coordinador/FXMLAlumno.fxml", "Gestión de Alumno");
+    private void clickEstudiante(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLEstudiante.fxml")
+            );
+
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Gestión de Alumno");
+            stage.show();
+
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo abrir Gestión de Alumno.");
+            e.printStackTrace();
+        }
     }
+
+
 
     @FXML
     private void clicRiesgo(ActionEvent event) {

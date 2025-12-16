@@ -1,0 +1,869 @@
+package gestor_tutorias.controlador.Coordinador;
+
+import gestor_tutorias.dao.PlaneacionTutoriaDAO;
+import gestor_tutorias.pojo.PlaneacionTutoria;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+public class FXMLPlaneacionTutoriaConsulta {
+
+    @FXML
+    private DatePicker fecha;
+
+    @FXML
+    private DatePicker fechacierre;
+
+    @FXML
+    private TextField periodo;
+
+    @FXML
+    private TextField carrera;
+
+    @FXML
+    private TextField sesion;
+
+    @FXML
+    private TextArea temastratar;
+
+    private final PlaneacionTutoriaDAO dao = new PlaneacionTutoriaDAO();
+
+    @FXML
+    private void guardarPlaneacionTutoria() {
+
+        try {
+            if (fecha.getValue() == null || fechacierre.getValue() == null) {
+                mostrarAlerta("Fechas obligatorias");
+                return;
+            }
+
+            int idPeriodo = Integer.parseInt(periodo.getText());
+            int idCarrera = Integer.parseInt(carrera.getText());
+            int numeroSesion = Integer.parseInt(sesion.getText());
+            LocalDate fechaCierre = fechacierre.getValue();
+
+            PlaneacionTutoria planeacion = new PlaneacionTutoria(
+                    idPeriodo,
+                    idCarrera,
+                    fechaCierre,
+                    numeroSesion,
+                    temastratar.getText()
+            );
+
+            int id = dao.guardarPlaneacion(planeacion);
+
+            if (id > 0) {
+                mostrarAlerta("Planeación guardada correctamente");
+                limpiarCampos();
+            }
+
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Datos numéricos inválidos");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error al guardar en BD");
+        }
+    }
+
+    @FXML
+    private void eliminarPlaneacionTutoria() {
+        // Normalmente se elimina desde selección previa
+        mostrarAlerta("Seleccione una planeación desde la lista");
+    }
+
+    private void limpiarCampos() {
+        periodo.clear();
+        carrera.clear();
+        sesion.clear();
+        temastratar.clear();
+        fecha.setValue(null);
+        fechacierre.setValue(null);
+    }
+
+    private void mostrarAlerta(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+}
+
+package gestor_tutorias.controlador.Coordinador;
+
+import gestor_tutorias.dao.PlaneacionTutoriaDAO;
+import gestor_tutorias.pojo.PlaneacionTutoria;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+public class FXMLPlaneacionTutoria implements Initializable {
+
+    @FXML
+    private TableView<PlaneacionTutoria> reportetutoria;
+
+    @FXML
+    private TableColumn<PlaneacionTutoria, Integer> periodoescolar;
+
+    @FXML
+    private TableColumn<PlaneacionTutoria, Integer> carrera;
+
+    @FXML
+    private TableColumn<PlaneacionTutoria, Integer> sesion;
+
+    private final PlaneacionTutoriaDAO dao = new PlaneacionTutoriaDAO();
+    private ObservableList<PlaneacionTutoria> lista;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        periodoescolar.setCellValueFactory(new PropertyValueFactory<>("idPeriodo"));
+        carrera.setCellValueFactory(new PropertyValueFactory<>("idCarrera"));
+        sesion.setCellValueFactory(new PropertyValueFactory<>("numeroSesion"));
+        cargarPlaneaciones();
+    }
+
+    @FXML
+    private void consultarReporteTutoria() {
+        cargarPlaneaciones();
+    }
+
+    @FXML
+    private void crearReporteTutoria() {
+        // Navegación a pantalla de creación (FXMLPlaneacionTutoriaConsulta)
+        // Se maneja desde el main o gestor de escenas
+    }
+
+    private void cargarPlaneaciones() {
+        try {
+            List<PlaneacionTutoria> datos = dao.obtenerTodas();
+            lista = FXCollections.observableArrayList(datos);
+            reportetutoria.setItems(lista);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLPlaneacionTutoria">
+    <children>
+        <Pane prefHeight="73.0" prefWidth="600.0">
+            <children>
+                <ImageView fitHeight="53.0" fitWidth="67.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+                <Label layoutX="81.0" layoutY="26.0" text="Sistema de tutorias - UV" />
+                <Label layoutX="365.0" layoutY="34.0" text="usuario: Coordinador" />
+                <Label layoutX="519.0" layoutY="34.0" text="cerrar sesion" />
+            </children>
+        </Pane>
+        <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
+        <Label layoutX="261.0" layoutY="103.0" text="planeacion de tutorias" />
+        <Button fx:id="crear" layoutX="490.0" layoutY="91.0" mnemonicParsing="false" onAction="#crearReporteTutoria" text="crear nuevo" />
+        <TableView fx:id="reportetutoria" layoutX="98.0" layoutY="141.0" prefHeight="174.0" prefWidth="377.0">
+            <columns>
+                <TableColumn fx:id="fechainicio" prefWidth="75.0" text="fechainicio" />
+                <TableColumn fx:id="fechafin" prefWidth="75.0" text="fechafin" />
+                <TableColumn fx:id="carrera" prefWidth="75.0" text="carrera" />
+                <TableColumn fx:id="periodoescolar" prefWidth="75.0" text="periodo escolar" />
+                <TableColumn fx:id="sesion" prefWidth="75.0" text="sesion" />
+            </columns>
+        </TableView>
+        <Button fx:id="consultar" layoutX="403.0" layoutY="91.0" mnemonicParsing="false" onAction="#consultarReporteTutoria" text="consultar" />
+
+    </children>
+</AnchorPane>
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLPlaneacionTutoriaConsulta">
+
+    <children>
+        <Pane prefHeight="73.0" prefWidth="600.0">
+            <children>
+                <ImageView fitHeight="53.0" fitWidth="67.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+                <Label layoutX="81.0" layoutY="26.0" text="Sistema de tutorias - UV" />
+                <Label layoutX="365.0" layoutY="34.0" text="usuario: Coordinador" />
+                <Label layoutX="519.0" layoutY="34.0" text="cerrar sesion" />
+            </children>
+        </Pane>
+        <Label layoutX="15.0" layoutY="418.0" text="UNIVERSIDAD VERACRUZANA" />
+      <Label layoutX="27.0" layoutY="107.0" text="fecha" />
+      <Label layoutX="436.0" layoutY="107.0" text="periodo" />
+      <Label layoutX="23.0" layoutY="199.0" text="carrera" />
+      <Label layoutX="228.0" layoutY="107.0" text="fecha de cierre" />
+      <Label layoutX="225.0" layoutY="199.0" text="sesion" />
+      <Label layoutX="27.0" layoutY="254.0" text="temas a tratar" />
+      <Button fx:id="guardar" layoutX="520.0" layoutY="376.0" mnemonicParsing="false" onAction="#guardarPlaneacionTutoria" text="guardar" />
+      <Button fx:id="eliminar" layoutX="419.0" layoutY="376.0" mnemonicParsing="false" onAction="#eliminarPlaneacionTutoria" text="eliminar" />
+      <TextArea fx:id="temastratar" layoutX="27.0" layoutY="285.0" prefHeight="74.0" prefWidth="559.0" />
+      <DatePicker fx:id="fecha" layoutX="23.0" layoutY="139.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="carrera" layoutX="21.0" layoutY="224.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="periodo" layoutX="436.0" layoutY="140.0" />
+      <DatePicker fx:id="fechacierre" layoutX="225.0" layoutY="139.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="sesion" layoutX="225.0" layoutY="224.0" />
+      <Label layoutX="286.0" layoutY="81.0" text="Planeacion de tutoria" />
+    </children>
+
+</AnchorPane>
+
+package gestor_tutorias.dao;
+
+import gestor_tutorias.pojo.PlaneacionTutoria;
+import gestor_tutorias.modelo.ConexionBD;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PlaneacionTutoriaDAO {
+    private static final String TABLA = "planeacion_tutoria";
+
+    private static final String SQL_INSERT =
+            "INSERT INTO " + TABLA + " (id_periodo, id_carrera, fecha, numero_sesion, temas) VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_SELECT_BY_ID =
+            "SELECT id_fecha_tutoria, id_periodo, id_carrera, fecha, numero_sesion, temas FROM " + TABLA + " WHERE id_fecha_tutoria = ?";
+    private static final String SQL_SELECT_ALL =
+            "SELECT id_fecha_tutoria, id_periodo, id_carrera, fecha, numero_sesion, temas FROM " + TABLA;
+    private static final String SQL_UPDATE =
+            "UPDATE " + TABLA + " SET id_periodo = ?, id_carrera = ?, fecha = ?, numero_sesion = ?, temas = ? WHERE id_fecha_tutoria = ?";
+    private static final String SQL_DELETE =
+            "DELETE FROM " + TABLA + " WHERE id_fecha_tutoria = ?";
+
+
+    private PlaneacionTutoria mapearPlaneacion(ResultSet rs) throws SQLException {
+        int idFechaTutoria = rs.getInt("id_fecha_tutoria");
+        int idPeriodo = rs.getInt("id_periodo");
+        int idCarrera = rs.getInt("id_carrera");
+        LocalDate fechaCierreReportes = rs.getDate("fecha").toLocalDate();
+        int numeroSesion = rs.getInt("numero_sesion");
+        String temas = rs.getString("temas");
+
+        return new PlaneacionTutoria(idFechaTutoria, idPeriodo, idCarrera, fechaCierreReportes, numeroSesion, temas);
+    }
+
+    public int guardarPlaneacion(PlaneacionTutoria planeacion) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int idGenerado = -1;
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+
+            ps.setInt(1, planeacion.getIdPeriodo());
+            ps.setInt(2, planeacion.getIdCarrera());
+            ps.setDate(3, Date.valueOf(planeacion.getFechaCierreReportes()));
+            ps.setInt(4, planeacion.getNumeroSesion());
+            ps.setString(5, planeacion.getTemas());
+
+            int filasAfectadas = ps.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    idGenerado = rs.getInt(1);
+                }
+            }
+        } finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return idGenerado;
+    }
+
+    public PlaneacionTutoria obtenerPorId(int idFechaTutoria) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        PlaneacionTutoria planeacion = null;
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_SELECT_BY_ID);
+            ps.setInt(1, idFechaTutoria);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                planeacion = mapearPlaneacion(rs);
+            }
+        } finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return planeacion;
+    }
+
+    public List<PlaneacionTutoria> obtenerTodas() throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<PlaneacionTutoria> planeaciones = new ArrayList<>();
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_SELECT_ALL);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                planeaciones.add(mapearPlaneacion(rs));
+            }
+        } finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return planeaciones;
+    }
+
+    public boolean actualizarPlaneacion(PlaneacionTutoria planeacion) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        boolean exito = false;
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_UPDATE);
+
+            ps.setInt(1, planeacion.getIdPeriodo());
+            ps.setInt(2, planeacion.getIdCarrera());
+            ps.setDate(3, Date.valueOf(planeacion.getFechaCierreReportes()));
+            ps.setInt(4, planeacion.getNumeroSesion());
+            ps.setString(5, planeacion.getTemas());
+            ps.setInt(6, planeacion.getIdFechaTutoria());
+
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas > 0) {
+                exito = true;
+            }
+        } finally {
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return exito;
+    }
+
+    public boolean eliminarPlaneacion(int idFechaTutoria) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        boolean exito = false;
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_DELETE);
+            ps.setInt(1, idFechaTutoria);
+
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas > 0) {
+                exito = true;
+            }
+        } finally {
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return exito;
+    }
+}
+
+package gestor_tutorias.pojo;
+
+import java.time.LocalDate;
+
+public class PlaneacionTutoria {
+    private int idFechaTutoria;
+    private int idPeriodo;
+    private int idCarrera;
+    private LocalDate fechaCierreReportes;
+    private int numeroSesion;
+    private String temas;
+
+    public PlaneacionTutoria() {
+    }
+    // Constructor para la inserción (sin idFechaTutoria)
+    public PlaneacionTutoria(int idPeriodo, int idCarrera, LocalDate fechaCierreReportes, int numeroSesion, String temas) {
+        this.idPeriodo = idPeriodo;
+        this.idCarrera = idCarrera;
+        this.fechaCierreReportes = fechaCierreReportes;
+        this.numeroSesion = numeroSesion;
+        this.temas = temas;
+    }
+
+    // Constructor completo (útil para recuperar de la DB)
+    public PlaneacionTutoria(int idFechaTutoria, int idPeriodo, int idCarrera, LocalDate fechaCierreReportes, int numeroSesion, String temas) {
+        this.idFechaTutoria = idFechaTutoria;
+        this.idPeriodo = idPeriodo;
+        this.idCarrera = idCarrera;
+        this.fechaCierreReportes = fechaCierreReportes;
+        this.numeroSesion = numeroSesion;
+        this.temas = temas;
+    }
+
+    // --- GETTERS Y SETTERS ---
+
+    // id_fecha_tutoria (int NOT NULL AUTO_INCREMENT) -> idFechaTutoria
+    public int getIdFechaTutoria() { return idFechaTutoria; }
+    public void setIdFechaTutoria(int idFechaTutoria) { this.idFechaTutoria = idFechaTutoria; }
+
+    // id_periodo (int NOT NULL) -> idPeriodo
+    public int getIdPeriodo() { return idPeriodo; }
+    public void setIdPeriodo(int idPeriodo) { this.idPeriodo = idPeriodo; }
+
+    // id_carrera (int NOT NULL) -> idCarrera
+    public int getIdCarrera() { return idCarrera; }
+    public void setIdCarrera(int idCarrera) { this.idCarrera = idCarrera; }
+
+    // fecha_cierre_reportes (date NOT NULL) -> fechaCierreReportes
+    public LocalDate getFechaCierreReportes() { return fechaCierreReportes; }
+    public void setFechaCierreReportes(LocalDate fechaCierreReportes) { this.fechaCierreReportes = fechaCierreReportes; }
+
+    // numero_sesion (int NOT NULL) -> numeroSesion
+    public int getNumeroSesion() { return numeroSesion; }
+    public void setNumeroSesion(int numeroSesion) { this.numeroSesion = numeroSesion; }
+
+    // temas (text NOT NULL) -> temas
+    public String getTemas() { return temas; }
+    public void setTemas(String temas) { this.temas = temas; }
+}
+
+drop database IF EXIST gestion_tutorias;
+
+create database gestion_tutorias;
+use gestion_tutorias;
+
+CREATE TABLE rol (
+  id_rol int NOT NULL AUTO_INCREMENT,
+  nombre_rol varchar(50) NOT NULL,
+  PRIMARY KEY (id_rol)
+);
+
+CREATE TABLE facultad (
+  id_facultad int NOT NULL AUTO_INCREMENT,
+  nombre varchar(100) NOT NULL,
+  PRIMARY KEY (id_facultad)
+);
+
+CREATE TABLE carrera (
+  id_carrera int NOT NULL AUTO_INCREMENT,
+  nombre varchar(100) NOT NULL,
+  id_facultad int NOT NULL,
+  PRIMARY KEY (id_carrera),
+  FOREIGN KEY (id_facultad) REFERENCES facultad (id_facultad)
+);
+
+CREATE TABLE periodo_escolar (
+  id_periodo int NOT NULL AUTO_INCREMENT,
+  nombre varchar(50) NOT NULL,
+  fecha_inicio date NOT NULL,
+  fecha_fin date NOT NULL,
+  activo tinyint(1) DEFAULT '0',
+  PRIMARY KEY (id_periodo)
+);
+
+CREATE TABLE usuario (
+  id_usuario int NOT NULL AUTO_INCREMENT,
+  matricula varchar(20) NOT NULL,
+  contrasena varchar(255) NOT NULL,
+  nombre_completo varchar(150) NOT NULL,
+  correo varchar(100) DEFAULT NULL,
+  id_rol int NOT NULL,
+  activo tinyint(1) DEFAULT '1',
+  PRIMARY KEY (id_usuario),
+  UNIQUE KEY matricula (matricula),
+  FOREIGN KEY (id_rol) REFERENCES rol (id_rol)
+);
+
+
+CREATE TABLE estudiante (
+  id_estudiante int NOT NULL AUTO_INCREMENT,
+  matricula varchar(20) NOT NULL,
+  nombre_completo varchar(150) NOT NULL,
+  correo varchar(100) DEFAULT NULL,
+  id_carrera int NOT NULL,
+  semestre int DEFAULT 1,
+  activo tinyint(1) DEFAULT '1',
+  riesgo tinyint(1) DEFAULT '1',
+  PRIMARY KEY (id_estudiante),
+  UNIQUE KEY matricula (matricula),
+  FOREIGN KEY (id_carrera) REFERENCES carrera (id_carrera)
+);
+
+
+CREATE TABLE asignacion_tutor (
+  id_asignacion int NOT NULL AUTO_INCREMENT,
+  id_tutor int NOT NULL,
+  id_estudiante int NOT NULL,
+  id_periodo int NOT NULL,
+  PRIMARY KEY (id_asignacion),
+  FOREIGN KEY (id_tutor) REFERENCES usuario (id_usuario),
+  FOREIGN KEY (id_estudiante) REFERENCES estudiante (id_estudiante),
+  FOREIGN KEY (id_periodo) REFERENCES periodo_escolar (id_periodo)
+);
+
+CREATE TABLE planeacion_tutoria (
+  id_fecha_tutoria int NOT NULL AUTO_INCREMENT,
+  id_periodo int NOT NULL,
+  id_carrera int NOT NULL,
+  fecha date NOT NULL,
+  numero_sesion int NOT NULL, -- 1, 2, 3
+  temas text NOT NULL,
+  PRIMARY KEY (id_fecha_tutoria),
+  FOREIGN KEY (id_periodo) REFERENCES periodo_escolar (id_periodo),
+  FOREIGN KEY (id_carrera) REFERENCES carrera (id_carrera)
+);
+
+CREATE TABLE horario_tutoria (
+  id_horario int NOT NULL AUTO_INCREMENT,
+  id_tutor int NOT NULL,
+  id_fecha_tutoria int NOT NULL,
+  id_estudiante int DEFAULT NULL, -- NULL = Libre, CON ID = Ocupado
+  hora_inicio time NOT NULL,
+  hora_fin time NOT NULL,
+  PRIMARY KEY (id_horario),
+  FOREIGN KEY (id_tutor) REFERENCES usuario (id_usuario),
+  FOREIGN KEY (id_fecha_tutoria) REFERENCES planeacion_tutoria (id_fecha_tutoria),
+  FOREIGN KEY (id_estudiante) REFERENCES estudiante (id_estudiante)
+);
+
+
+
+CREATE TABLE reporte_tutoria (
+  id_reporte int NOT NULL AUTO_INCREMENT,
+  id_tutor int NOT NULL,
+  id_estudiante int NOT NULL,
+  id_fecha_tutoria int NOT NULL,
+  descripcion_general text,
+  asistencia tinyint(1) DEFAULT '0',
+  estado ENUM('Pendiente', 'Revisado') NOT NULL DEFAULT 'Pendiente',
+  PRIMARY KEY (id_reporte),
+  FOREIGN KEY (id_tutor) REFERENCES usuario (id_usuario),
+  FOREIGN KEY (id_estudiante) REFERENCES estudiante (id_estudiante),
+  FOREIGN KEY (id_fecha_tutoria) REFERENCES planeacion_tutoria (id_fecha_tutoria)
+);
+
+CREATE TABLE problematica (
+  id_problematica int NOT NULL AUTO_INCREMENT,
+  id_reporte int NOT NULL,
+  titulo varchar(100) NOT NULL,
+  descripcion text NOT NULL,
+  id_experiencia_educativa int DEFAULT NULL,
+  estado ENUM('Pendiente', 'Atendida') NOT NULL DEFAULT 'Pendiente',
+  PRIMARY KEY (id_problematica),
+  FOREIGN KEY (id_reporte) REFERENCES reporte_tutoria (id_reporte)
+);
+
+
+INSERT INTO rol (nombre_rol) VALUES
+('Administrador'),
+('Coordinador'),
+('Tutor');
+
+
+INSERT INTO facultad (nombre) VALUES
+('Estadística e Informática'),
+('Ingeniería'),
+('Derecho'),
+('Medicina');
+
+
+INSERT INTO carrera (nombre, id_facultad) VALUES
+('Ingeniería de Software', 1),
+('Redes y Servicios de Cómputo', 1),
+('Estadística', 1),
+('Ingeniería Civil', 2);
+
+
+INSERT INTO periodo_escolar (nombre, fecha_inicio, fecha_fin, activo) VALUES
+('FEB-JUL 2024', '2024-02-06', '2024-07-15', 0),
+('AGO-ENE 2024', '2024-08-12', '2025-01-31', 1);
+
+
+INSERT INTO usuario (matricula, contrasena, nombre_completo, correo, id_rol, activo) VALUES
+('ADM001', '12345', 'Carlos Administrador', 'admin@uv.mx', 1, 1),
+('COR001', '12345', 'Laura Coordinadora', 'lcoord@uv.mx', 2, 1),
+('PRO001', '12345', 'Juan Pérez Tutor', 'jperez@uv.mx', 3, 1),
+('PRO002', '12345', 'Maria Gomez Tutor', 'mgomez@uv.mx', 3, 1);
+
+
+INSERT INTO estudiante (matricula, nombre_completo, correo, id_carrera, semestre, activo, riesgo) VALUES
+('zS20015001', 'Ana Martinez', 'zs20015001@estudiantes.uv.mx', 1, 3, 1, 0),
+('zS20015002', 'Luis Rodriguez', 'zs20015002@estudiantes.uv.mx', 1, 5, 1, 1),
+('zS20015003', 'Pedro Sanchez', 'zs20015003@estudiantes.uv.mx', 2, 1, 1, 0),
+('zS20015004', 'Sofia Torres', 'zs20015004@estudiantes.uv.mx', 1, 7, 1, 1);
+
+INSERT INTO asignacion_tutor (id_tutor, id_estudiante, id_periodo) VALUES
+(3, 1, 2), -- Juan Pérez atiende a Ana Martinez
+(3, 2, 2), -- Juan Pérez atiende a Luis Rodriguez
+(4, 3, 2), -- Maria Gomez atiende a Pedro Sanchez
+(4, 4, 2); -- Maria Gomez atiende a Sofia Torres
+
+INSERT INTO planeacion_tutoria (id_periodo, id_carrera, fecha, numero_sesion, temas) VALUES
+(2, 1, '2024-09-05', 1, 'Presentación, revisión de carga académica y lineamientos.'),
+(2, 1, '2024-10-20', 2, 'Seguimiento de calificaciones parciales y apoyo académico.'),
+(2, 1, '2024-12-01', 3, 'Evaluación final del periodo y preparación de pre-inscripción.');
+
+INSERT INTO horario_tutoria (id_tutor, id_fecha_tutoria, id_estudiante, hora_inicio, hora_fin) VALUES
+(3, 1, 1, '10:00:00', '10:15:00'), -- Slot ocupado por Ana Martinez
+(3, 1, 2, '10:15:00', '10:30:00'), -- Slot ocupado por Luis Rodriguez
+(3, 1, NULL, '10:30:00', '10:45:00'), -- Slot libre
+(4, 1, 3, '11:00:00', '11:15:00'); -- Slot ocupado por Pedro Sanchez
+
+INSERT INTO reporte_tutoria (id_tutor, id_estudiante, id_fecha_tutoria, descripcion_general, asistencia, estado) VALUES
+(3, 1, 1, 'La estudiante muestra buen desempeño, sin dudas administrativas.', 1, 'Revisado'),
+(3, 2, 1, 'El estudiante comenta dificultades en una experiencia educativa específica.', 1, 'Pendiente');
+
+INSERT INTO problematica (id_reporte, titulo, descripcion, id_experiencia_educativa, estado) VALUES
+(2, 'Dificultad con Algoritmos', 'El estudiante no comprende los conceptos de recursividad.', 101, 'Pendiente'),
+(2, 'Falta de equipo de cómputo', 'El estudiante requiere acceso a laboratorios fuera de horario.', NULL, 'Atendida');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package gestor_tutorias.controlador.Coordinador;
+
+import gestor_tutorias.dao.EstudianteDAO;
+import gestor_tutorias.pojo.Estudiante;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
+public class FXMLEstudiante implements Initializable {
+
+    @FXML
+    private TableView<Estudiante> tablaEstudiante;
+
+    @FXML
+    private TableColumn<Estudiante, Integer> id;
+
+    @FXML
+    private TableColumn<Estudiante, String> matricula;
+
+    @FXML
+    private TableColumn<Estudiante, String> nombre;
+
+    @FXML
+    private TableColumn<Estudiante, String> correo;
+
+    @FXML
+    private TableColumn<Estudiante, Integer> idCarrera;
+
+    @FXML
+    private TableColumn<Estudiante, Integer> semestre;
+
+    @FXML
+    private TableColumn<Estudiante, Integer> activo;
+
+    private ObservableList<Estudiante> lista;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        id.setCellValueFactory(new PropertyValueFactory<>("idEstudiante"));
+        matricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        nombre.setCellValueFactory(new PropertyValueFactory<>("nombreCompleto"));
+        correo.setCellValueFactory(new PropertyValueFactory<>("correo"));
+        idCarrera.setCellValueFactory(new PropertyValueFactory<>("idCarrera"));
+        semestre.setCellValueFactory(new PropertyValueFactory<>("semestre"));
+        activo.setCellValueFactory(new PropertyValueFactory<>("activo"));
+
+        cargarAlumnos();
+    }
+
+    @FXML
+    private void consultarAlumno() throws IOException {
+        // 1. Obtener estudiante seleccionado
+        Estudiante seleccionado = tablaEstudiante.getSelectionModel().getSelectedItem();
+
+        if (seleccionado == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText(null);
+            alert.setContentText("Seleccione un estudiante de la lista");
+            alert.showAndWait();
+            return;
+        }
+
+        // 2. Cargar FXML de consulta
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLEstudianteConsulta.fxml"));
+        Parent root = loader.load();
+
+        // 3. Obtener controlador y pasar el estudiante
+        FXMLEstudianteConsulta controlador = loader.getController();
+        controlador.cargarEstudiante(seleccionado);
+
+        // 4. Abrir nueva ventana
+        Stage stage = new Stage();
+        stage.setTitle("Consulta de Estudiante");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    private void cargarAlumnos() {
+        try {
+            List<Estudiante> alumnos = EstudianteDAO.obtenerTodos();
+            lista = FXCollections.observableArrayList(alumnos);
+            tablaEstudiante.setItems(lista);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+package gestor_tutorias.controlador.Coordinador;
+
+import gestor_tutorias.dao.EstudianteDAO;
+import gestor_tutorias.pojo.Estudiante;
+import java.sql.SQLException;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+
+public class FXMLEstudianteConsulta {
+
+    @FXML
+    private Label idEstudiante;
+
+    @FXML
+    private TextField matricula;
+
+    @FXML
+    private TextField nombreCompleto;
+
+    @FXML
+    private TextField correo;
+
+    @FXML
+    private TextField idCarrera;
+
+    @FXML
+    private TextField semestre;
+
+    @FXML
+    private ComboBox<String> activo;
+
+    @FXML
+    private Label riesgo;
+
+    @FXML
+    private TextField tutor; // Nuevo campo editable
+
+
+    private Estudiante estudianteActual;
+
+    @FXML
+    private void initialize() {
+        activo.getItems().addAll("Activo", "Inactivo");
+        activo.getSelectionModel().select("Activo");
+
+        // Campos no editables
+        matricula.setEditable(false);
+        nombreCompleto.setEditable(false);
+        correo.setEditable(false);
+        idCarrera.setEditable(false);
+        semestre.setEditable(false);
+        activo.setDisable(true);
+    }
+
+    @FXML
+    private void guardarEstudiante() {
+        if (estudianteActual != null) {
+            String tutorAsignado = tutor.getText().trim();
+
+            // Aquí debes llamar a tu DAO para actualizar el tutor, ejemplo:
+            try {
+                // EstudianteDAO.actualizarTutor(estudianteActual.getIdEstudiante(), tutorAsignado);
+                mostrarAlerta("Tutor actualizado correctamente: " + tutorAsignado);
+            } catch (Exception e) {
+                e.printStackTrace();
+                mostrarAlerta("Error al actualizar tutor");
+            }
+        } else {
+            mostrarAlerta("No hay estudiante seleccionado");
+        }
+    }
+
+
+    public void cargarEstudiante(Estudiante est) {
+        this.estudianteActual = est;
+        idEstudiante.setText(String.valueOf(est.getIdEstudiante()));
+        matricula.setText(est.getMatricula());
+        nombreCompleto.setText(est.getNombreCompleto());
+        correo.setText(est.getCorreo());
+        idCarrera.setText(String.valueOf(est.getIdCarrera()));
+        semestre.setText(String.valueOf(est.getSemestre()));
+        riesgo.setText(est.getRiesgo() == 1 ? "En riesgo" : "Sin riesgo");
+        activo.getSelectionModel().select(est.getActivo() == 1 ? "Activo" : "Inactivo");
+
+        tutor.setText(""); // Inicializa vacío o con valor actual del tutor
+        tutor.setEditable(true);
+    }
+
+
+    private void limpiarCampos() {
+        idEstudiante.setText("");
+        matricula.clear();
+        nombreCompleto.clear();
+        correo.clear();
+        idCarrera.clear();
+        semestre.clear();
+        riesgo.setText("");
+        activo.getSelectionModel().select("Activo");
+        estudianteActual = null;
+    }
+
+    private void mostrarAlerta(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+}

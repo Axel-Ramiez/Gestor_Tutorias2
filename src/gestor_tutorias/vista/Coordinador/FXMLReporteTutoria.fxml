@@ -16,14 +16,14 @@
         </Pane>
         <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
         <Label layoutX="261.0" layoutY="103.0" text="reporte de tutoria" />
-        <TableView fx:id="reportetutoria" layoutX="74.0" layoutY="137.0" prefHeight="174.0" prefWidth="452.0">
+        <TableView fx:id="reporteTutoria" layoutX="74.0" layoutY="137.0" prefHeight="174.0" prefWidth="452.0">
             <columns>
-                <TableColumn fx:id="idtutoria" prefWidth="75.0" text="id tutoria" />
+                <TableColumn fx:id="idTutoria" prefWidth="75.0" text="id tutoria" />
                 <TableColumn fx:id="fecha" prefWidth="75.0" text="fecha" />
                 <TableColumn fx:id="hora" prefWidth="75.0" text="hora" />
-                <TableColumn fx:id="periodoescolar" prefWidth="75.0" text="periodo escolar" />
+                <TableColumn fx:id="periodoEscolar" prefWidth="75.0" text="periodo escolar" />
                 <TableColumn fx:id="idtutor" prefWidth="75.0" text="id tutor" />
-                <TableColumn fx:id="idestudiante" prefWidth="75.0" text="id estudiante" />
+                <TableColumn fx:id="idEstudiante" prefWidth="75.0" text="id estudiante" />
             </columns>
         </TableView>
         <Button fx:id="consultar" layoutX="461.0" layoutY="90.0" mnemonicParsing="false" onAction="#consultarReporteTutoria" text="consultar" />

@@ -1,57 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLPrincipalCoordinador">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLPrincipalCoordinador">
+
     <children>
 
-        <Pane prefHeight="99.0" prefWidth="900.0" style="-fx-background-color: #006DB2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <!-- BARRA SUPERIOR -->
+        <Pane prefHeight="99.0" style="-fx-background-color: #006DB2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label layoutX="128.0" layoutY="35.0" text="Sistema de Tutorías - UV" textFill="WHITE">
-                    <font>
-                        <Font name="System Bold" size="20.0" />
-                    </font>
-                </Label>
-                <Label fx:id="lbNombreAdmin" alignment="CENTER_RIGHT" layoutX="500.0" layoutY="20.0" prefHeight="20.0" prefWidth="280.0" text="Usuario: Coordinador" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Button fx:id="salir" layoutX="800.0" layoutY="15.0" mnemonicParsing="false" onAction="#clicCerrarSesion" style="-fx-background-color: #004e80; -fx-cursor: hand;" text="Salir" textFill="WHITE" />
-                <ImageView fitHeight="86.0" fitWidth="105.0" layoutX="27.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+
+                <ImageView fitHeight="86.0" fitWidth="105.0" layoutX="27.0" layoutY="7.0" preserveRatio="true">
                     <image>
                         <Image url="@../../recurso/flor-azul%20-%20copia-Photoroom.png" />
                     </image>
                 </ImageView>
+
+                <Label layoutX="140.0" layoutY="35.0" text="Sistema de Tutorías - UV" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+
+                <Label fx:id="lbNombreAdmin" alignment="CENTER_RIGHT" layoutX="500.0" layoutY="20.0" prefWidth="280.0" text="Coordinador:" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+
+                <Button layoutX="800.0" layoutY="15.0" onAction="#clicCerrarSesion" style="-fx-background-color: #004e80; -fx-cursor: hand;" text="Salir" textFill="WHITE" />
             </children>
         </Pane>
 
-        <Label layoutX="14.0" layoutY="569.0" text="Universidad Veracruzana" textFill="#999999" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
-
-        <Button layoutX="375.0" layoutY="155.0" mnemonicParsing="false" onAction="#clicPlaneacion" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Planeacion de tutorias" textFill="#333333">
+        <!-- BOTONES PRINCIPALES -->
+        <Button layoutX="113.0" layoutY="155.0" onAction="#clickEstudiante" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Estudiante">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
 
-        <Button fx:id="reportetutoria" layoutX="627.0" layoutY="155.0" mnemonicParsing="false" onAction="#clicReporte" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Reportes de tutoria" textFill="#333333">
+        <Button layoutX="375.0" layoutY="155.0" onAction="#clicPlaneacion" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Planeación de Tutorías">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-      <Button layoutX="113.0" layoutY="155.0" mnemonicParsing="false" onAction="#clicEstudiante" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Estudiante" textFill="#333333">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="113.0" layoutY="362.0" mnemonicParsing="false" onAction="#clicRiesgo" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Estudiantes en Riesgo" textAlignment="CENTER" textFill="#333333">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
+
+        <Button layoutX="627.0" layoutY="155.0" onAction="#clicReporte" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Reportes de Tutoría">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+
+        <Button layoutX="113.0" layoutY="362.0" onAction="#clicRiesgo" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Estudiantes en Riesgo" textAlignment="CENTER">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+
+        <!-- FOOTER -->
+        <Label text="Universidad Veracruzana" textFill="#999999" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+
     </children>
 </AnchorPane>

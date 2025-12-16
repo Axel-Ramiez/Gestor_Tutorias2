@@ -1,119 +1,88 @@
 package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.dao.ReporteTutoriaDAO;
-import gestor_tutorias.filtro.FiltroString;
 import gestor_tutorias.pojo.ReporteTutoria;
-import java.sql.SQLException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.sql.SQLException;
+
 public class FXMLReporteTutoriaConsulta {
 
     @FXML
-    private Label idtutoria;
+    private Label idTutoriaLabel;
 
     @FXML
-    private TextField periodoescolar;
+    private TextField periodoEscolarField;
 
     @FXML
-    private TextField idtutor;
+    private TextField idTutorField;
 
     @FXML
-    private TextField idestudiante;
+    private TextField idEstudianteField;
 
     @FXML
-    private DatePicker fecha;
+    private DatePicker fechaPicker;
 
     @FXML
-    private TextField temastratar;
+    private TextArea reporteTextArea;
 
     @FXML
-    private TextField respuestacoordinador;
+    private CheckBox asistenciaCheckBox;
 
     @FXML
-    private TextArea reporte;
+    private TextField respuestaCoordinadorField; // Único editable
+
+    private final ReporteTutoriaDAO reporteDao = new ReporteTutoriaDAO();
+    private ReporteTutoria reporteActual;
 
     @FXML
-    private CheckBox estudiante;
+    private void initialize() {
+        // Campos no editables
+        periodoEscolarField.setEditable(false);
+        idTutorField.setEditable(false);
+        idEstudianteField.setEditable(false);
+        fechaPicker.setDisable(true);
+        reporteTextArea.setEditable(false);
+        asistenciaCheckBox.setDisable(true);
 
-    private final ReporteTutoriaDAO dao = new ReporteTutoriaDAO();
+        // Único editable
+        respuestaCoordinadorField.setEditable(true);
+    }
 
-    @FXML
-    private void guardarreportetutoria() {
+    public void cargarReporte(ReporteTutoria reporte) {
+        this.reporteActual = reporte;
 
-        try {
-            // ===== VALIDACIONES BÁSICAS =====
-            if (idtutor.getText().isEmpty() || idestudiante.getText().isEmpty()) {
-                mostrarAlerta("Campos obligatorios vacíos");
-                return;
-            }
+        idTutoriaLabel.setText(String.valueOf(reporte.getIdReporte()));
+        idTutorField.setText(String.valueOf(reporte.getIdTutor()));
+        idEstudianteField.setText(String.valueOf(reporte.getIdEstudiante()));
+        periodoEscolarField.setText(reporte.getPeriodoEscolar());
+        respuestaCoordinadorField.setText(reporte.getRespuestaCoordinador());
+        reporteTextArea.setText(reporte.getReporte());
+        asistenciaCheckBox.setSelected(reporte.isAsistencia());
 
-            // ===== FILTRO STRING =====
-            FiltroString filtro = new FiltroString(reporte.getText());
-            filtro.filtrarSQLInjectionString();
-            filtro.filtrarXSSString();
-
-            int idTutor = Integer.parseInt(idtutor.getText());
-            int idEstudiante = Integer.parseInt(idestudiante.getText());
-
-            // En tu DB id_fecha_tutoria es FK numérica
-            int idFechaTutoria = 1; // <-- normalmente se obtiene de planeacion_tutoria
-
-            boolean asistencia = estudiante.isSelected();
-
-            ReporteTutoria nuevo = new ReporteTutoria(
-                    idTutor,
-                    idEstudiante,
-                    idFechaTutoria,
-                    reporte.getText(),
-                    asistencia
-            );
-
-            int idGenerado = dao.guardarReporte(nuevo);
-
-            if (idGenerado > 0) {
-                idtutoria.setText(String.valueOf(idGenerado));
-                mostrarAlerta("Reporte guardado correctamente");
-            }
-
-        } catch (NumberFormatException e) {
-            mostrarAlerta("IDs inválidos");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            mostrarAlerta("Error al guardar en BD");
+        if (reporte.getIdFechaTutoria() != null) {
+            fechaPicker.setValue(reporte.getIdFechaTutoria().toLocalDate());
         }
     }
 
     @FXML
-    private void eliminarReporteTutoria() {
+    private void guardarReporteTutoria() {
+        if (reporteActual != null) {
+            String respuesta = respuestaCoordinadorField.getText().trim();
+            reporteActual.setRespuestaCoordinador(respuesta);
 
-        try {
-            if (idtutoria.getText() == null || idtutoria.getText().isEmpty()) {
-                mostrarAlerta("No hay reporte seleccionado");
-                return;
+            try {
+                // Llamada al DAO para actualizar solo la respuesta del coordinador
+                reporteDao.actualizarRespuesta(reporteActual.getIdReporte(), respuesta);
+                mostrarAlerta("Respuesta del coordinador actualizada correctamente");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                mostrarAlerta("Error al actualizar la respuesta en la base de datos");
             }
-
-            int id = Integer.parseInt(idtutoria.getText());
-
-            if (dao.eliminarReporte(id)) {
-                mostrarAlerta("Reporte eliminado");
-                limpiarCampos();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            mostrarAlerta("Error al eliminar");
+        } else {
+            mostrarAlerta("No hay reporte seleccionado");
         }
-    }
-
-    private void limpiarCampos() {
-        idtutoria.setText("");
-        idtutor.clear();
-        idestudiante.clear();
-        periodoescolar.clear();
-        temastratar.clear();
-        respuestacoordinador.clear();
-        reporte.clear();
-        estudiante.setSelected(false);
     }
 
     private void mostrarAlerta(String mensaje) {

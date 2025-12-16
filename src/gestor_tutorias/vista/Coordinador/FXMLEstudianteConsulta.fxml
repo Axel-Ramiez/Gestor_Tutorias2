@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLAlumnoConsulta">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLEstudianteConsulta">
    <children>
        <Pane prefHeight="73.0" prefWidth="600.0">
            <children>
@@ -15,7 +15,7 @@
            </children>
        </Pane>
        <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
-      <Label layoutX="32.0" layoutY="118.0" text="ID alumno" />
+      <Label layoutX="32.0" layoutY="118.0" text="id Estudiante" />
       <Label layoutX="225.0" layoutY="118.0" text="matricula" />
       <Label layoutX="427.0" layoutY="118.0" text="nombre completo" />
       <Label layoutX="29.0" layoutY="191.0" text="correo" />
@@ -24,15 +24,16 @@
       <Label layoutX="30.0" layoutY="268.0" text="activo" />
       <ComboBox fx:id="activo" layoutX="31.0" layoutY="293.0" prefWidth="150.0" />
       <TextField fx:id="semestre" layoutX="427.0" layoutY="218.0" />
-      <TextField fx:id="idcarrera" layoutX="225.0" layoutY="218.0" />
+      <TextField fx:id="idCarrera" layoutX="225.0" layoutY="218.0" />
       <TextField fx:id="matricula" layoutX="225.0" layoutY="136.0" />
-      <TextField fx:id="nombrecompleto" layoutX="427.0" layoutY="136.0" />
+      <TextField fx:id="nombreCompleto" layoutX="427.0" layoutY="136.0" />
       <TextField fx:id="correo" layoutX="31.0" layoutY="218.0" />
-      <Label fx:id="idalumno" layoutX="32.0" layoutY="140.0" prefHeight="18.0" prefWidth="67.0" text="label" />
+      <Label fx:id="idEstudiante" layoutX="32.0" layoutY="140.0" prefHeight="18.0" prefWidth="67.0" text="label" />
       <Button fx:id="guardar" layoutX="519.0" layoutY="293.0" mnemonicParsing="false" onAction="#guardarEstudiante" text="guardar" />
-      <Button fx:id="eliminar" layoutX="427.0" layoutY="293.0" mnemonicParsing="false" onAction="#eliminarEstudiante" text="eliminar" />
-      <Label layoutX="275.0" layoutY="82.0" text="alumno" />
+      <Label layoutX="275.0" layoutY="82.0" text="estudiante" />
       <Label layoutX="225.0" layoutY="268.0" text="riesgo" />
       <Label fx:id="riesgo" layoutX="225.0" layoutY="293.0" prefHeight="26.0" prefWidth="143.0" text="Label" />
+      <Label layoutX="340.0" layoutY="268.0" text="tutor" />
+      <TextField fx:id="tutor" layoutX="318.0" layoutY="293.0" />
    </children>
 </AnchorPane>

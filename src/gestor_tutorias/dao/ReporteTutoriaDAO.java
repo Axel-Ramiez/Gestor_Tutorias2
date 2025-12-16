@@ -1,8 +1,9 @@
 package gestor_tutorias.dao;
 
 import gestor_tutorias.pojo.ReporteTutoria;
-import gestor_tutorias.modelo.ConexionBD; // Asumiendo que esta clase existe
-import gestor_tutorias.Enum.EstadoReporte; // Asumiendo que esta clase existe
+import gestor_tutorias.modelo.ConexionBD;
+import gestor_tutorias.Enum.EstadoReporte;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,37 +11,40 @@ import java.util.List;
 public class ReporteTutoriaDAO {
     private static final String TABLA = "reporte_tutoria";
 
-    // Consultas SQL usando ? para PreparedStatement
     private static final String SQL_INSERT =
-            "INSERT INTO " + TABLA + " (id_tutor, id_estudiante, id_fecha_tutoria, descripcion_general, asistencia) VALUES (?, ?, ?, ?, ?)";
+            "INSERT INTO " + TABLA + " (id_tutor, id_estudiante, id_fecha_tutoria, reporte, respuesta_coordinador, asistencia) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+
     private static final String SQL_SELECT_BY_ID =
-            "SELECT id_reporte, id_tutor, id_estudiante, id_fecha_tutoria, descripcion_general, asistencia, estado FROM " + TABLA + " WHERE id_reporte = ?";
+            "SELECT id_reporte, id_tutor, id_estudiante, id_fecha_tutoria, reporte, respuesta_coordinador, asistencia, estado " +
+                    "FROM " + TABLA + " WHERE id_reporte = ?";
+
     private static final String SQL_SELECT_ALL =
-            "SELECT id_reporte, id_tutor, id_estudiante, id_fecha_tutoria, descripcion_general, asistencia, estado FROM " + TABLA;
+            "SELECT id_reporte, id_tutor, id_estudiante, id_fecha_tutoria, reporte, respuesta_coordinador, asistencia, estado " +
+                    "FROM " + TABLA;
+
     private static final String SQL_UPDATE =
-            "UPDATE " + TABLA + " SET id_tutor = ?, id_estudiante = ?, id_fecha_tutoria = ?, descripcion_general = ?, asistencia = ?, estado = ? WHERE id_reporte = ?";
+            "UPDATE " + TABLA + " SET id_tutor = ?, id_estudiante = ?, id_fecha_tutoria = ?, reporte = ?, respuesta_coordinador = ?, asistencia = ?, estado = ? " +
+                    "WHERE id_reporte = ?";
+
     private static final String SQL_DELETE =
             "DELETE FROM " + TABLA + " WHERE id_reporte = ?";
 
-
-    /**
-     * Método auxiliar para mapear un ResultSet a un objeto ReporteTutoria.
-     */
     private ReporteTutoria mapearReporte(ResultSet rs) throws SQLException {
         int idReporte = rs.getInt("id_reporte");
         int idTutor = rs.getInt("id_tutor");
         int idEstudiante = rs.getInt("id_estudiante");
         int idFechaTutoria = rs.getInt("id_fecha_tutoria");
-        String descripcionGeneral = rs.getString("descripcion_general");
+        String reporte = rs.getString("reporte");
+        String respuestaCoordinador = rs.getString("respuesta_coordinador");
         boolean asistencia = rs.getBoolean("asistencia");
+        EstadoReporte estado = EstadoReporte.valueOf(rs.getString("estado").toUpperCase());
 
-        // Mapeo de ENUM
-        EstadoReporte estado = EstadoReporte.valueOf(rs.getString("estado"));
-
-        return new ReporteTutoria(idReporte, idTutor, idEstudiante, idFechaTutoria, descripcionGeneral, asistencia, estado);
+        return new ReporteTutoria(idReporte, idTutor, idEstudiante, idFechaTutoria,
+                reporte, respuestaCoordinador, asistencia, estado);
     }
 
-    public int guardarReporte(ReporteTutoria reporte) throws SQLException {
+    public int guardarReporte(ReporteTutoria reporteObj) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -48,18 +52,15 @@ public class ReporteTutoriaDAO {
 
         try {
             conn = ConexionBD.abrirConexion();
-            // La columna 'estado' tiene DEFAULT 'Pendiente', no se incluye en el INSERT
             ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
-
-            // Asigna los parámetros
-            ps.setInt(1, reporte.getIdTutor());
-            ps.setInt(2, reporte.getIdEstudiante());
-            ps.setInt(3, reporte.getIdFechaTutoria());
-            ps.setString(4, reporte.getDescripcionGeneral());
-            ps.setBoolean(5, reporte.isAsistencia());
+            ps.setInt(1, reporteObj.getIdTutor());
+            ps.setInt(2, reporteObj.getIdEstudiante());
+            ps.setInt(3, reporteObj.getIdFechaTutoria());
+            ps.setString(4, reporteObj.getReporte());
+            ps.setString(5, reporteObj.getRespuestaCoordinador());
+            ps.setBoolean(6, reporteObj.isAsistencia());
 
             int filasAfectadas = ps.executeUpdate();
-
             if (filasAfectadas > 0) {
                 rs = ps.getGeneratedKeys();
                 if (rs.next()) {
@@ -96,6 +97,26 @@ public class ReporteTutoriaDAO {
         }
         return reporte;
     }
+    public boolean actualizarRespuesta(int idReporte, String respuestaCoordinador) throws SQLException {
+        String sql = "UPDATE " + TABLA + " SET respuesta_coordinador = ? WHERE id_reporte = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        boolean exito = false;
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, respuestaCoordinador);
+            ps.setInt(2, idReporte);
+
+            int filasAfectadas = ps.executeUpdate();
+            exito = filasAfectadas > 0;
+        } finally {
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return exito;
+    }
 
     public List<ReporteTutoria> obtenerTodos() throws SQLException {
         Connection conn = null;
@@ -119,7 +140,7 @@ public class ReporteTutoriaDAO {
         return reportes;
     }
 
-    public boolean actualizarReporte(ReporteTutoria reporte) throws SQLException {
+    public boolean actualizarReporte(ReporteTutoria reporteObj) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         boolean exito = false;
@@ -128,21 +149,17 @@ public class ReporteTutoriaDAO {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_UPDATE);
 
-            // 1. Asigna los nuevos valores
-            ps.setInt(1, reporte.getIdTutor());
-            ps.setInt(2, reporte.getIdEstudiante());
-            ps.setInt(3, reporte.getIdFechaTutoria());
-            ps.setString(4, reporte.getDescripcionGeneral());
-            ps.setBoolean(5, reporte.isAsistencia());
-            ps.setString(6, reporte.getEstado().toString()); // Guarda el ENUM como String
-
-            // 2. Asigna el ID para la cláusula WHERE
-            ps.setInt(7, reporte.getIdReporte());
+            ps.setInt(1, reporteObj.getIdTutor());
+            ps.setInt(2, reporteObj.getIdEstudiante());
+            ps.setInt(3, reporteObj.getIdFechaTutoria());
+            ps.setString(4, reporteObj.getReporte());
+            ps.setString(5, reporteObj.getRespuestaCoordinador());
+            ps.setBoolean(6, reporteObj.isAsistencia());
+            ps.setString(7, reporteObj.getEstado().toString());
+            ps.setInt(8, reporteObj.getIdReporte());
 
             int filasAfectadas = ps.executeUpdate();
-            if (filasAfectadas > 0) {
-                exito = true;
-            }
+            exito = filasAfectadas > 0;
         } finally {
             if (ps != null) ps.close();
             ConexionBD.cerrarConexion(conn);
@@ -161,9 +178,7 @@ public class ReporteTutoriaDAO {
             ps.setInt(1, idReporte);
 
             int filasAfectadas = ps.executeUpdate();
-            if (filasAfectadas > 0) {
-                exito = true;
-            }
+            exito = filasAfectadas > 0;
         } finally {
             if (ps != null) ps.close();
             ConexionBD.cerrarConexion(conn);
@@ -171,3 +186,4 @@ public class ReporteTutoriaDAO {
         return exito;
     }
 }
+

@@ -5,27 +5,21 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLReporteTutoriaConsulta">
     <children>
-        <Button fx:id="guardar" layoutX="434.0" layoutY="350.0" mnemonicParsing="false" onAction="#guardarreportetutoria" text="guardar" />
+        <Button fx:id="guardar" layoutX="511.0" layoutY="352.0" mnemonicParsing="false" onAction="#guardarReporteTutoria" text="guardar" />
         <Label layoutX="251.0" layoutY="5.0" text="Reporte de tutoria" />
         <Label layoutX="285.0" layoutY="23.0" text="datos" />
-        <Button fx:id="eliminar" layoutX="503.0" layoutY="350.0" mnemonicParsing="false" onAction="#eliminarReporteTutoria" text="eliminar" />
-        <Label layoutX="127.0" layoutY="53.0" prefHeight="18.0" prefWidth="39.0" text="fecha" />
+        <Label layoutX="109.0" layoutY="53.0" prefHeight="18.0" prefWidth="39.0" text="fecha" />
         <Label layoutX="293.0" layoutY="53.0" text="periodo escolar" />
         <Label layoutX="400.0" layoutY="53.0" text="ID tutor" />
         <Label layoutX="507.0" layoutY="62.0" text="ID estudiante" />
-        <TextField fx:id="periodoescolar" layoutX="293.0" layoutY="80.0" prefHeight="26.0" prefWidth="82.0" />
-        <TextField fx:id="idtutor" layoutX="401.0" layoutY="80.0" prefHeight="26.0" prefWidth="82.0" />
-        <TextField fx:id="idestudiante" layoutX="507.0" layoutY="81.0" prefHeight="26.0" prefWidth="66.0" />
-        <DatePicker fx:id="fecha" layoutX="105.0" layoutY="80.0" prefHeight="26.0" prefWidth="74.0" />
-        <Label layoutX="12.0" layoutY="113.0" text="temas a tratar en la tutoria" />
-        <Label layoutX="204.0" layoutY="112.0" text="respuesta por parte del coordinador" />
-        <TextField fx:id="respuestacoordinador" layoutX="204.0" layoutY="139.0" prefHeight="83.0" prefWidth="369.0" />
-        <TextField fx:id="temastratar" layoutX="9.0" layoutY="139.0" prefHeight="83.0" prefWidth="174.0" />
-        <Label layoutX="28.0" layoutY="53.0" text="ID tutoria" />
-        <Label fx:id="idtutoria" layoutX="23.0" layoutY="81.0" prefHeight="26.0" prefWidth="66.0" text="Label" />
-        <Label layoutX="16.0" layoutY="230.0" text="reporte" />
-        <TextArea fx:id="reporte" layoutX="16.0" layoutY="256.0" prefHeight="75.0" prefWidth="558.0" />
-      <Label layoutX="204.0" layoutY="53.0" text="asistencia" />
-      <CheckBox fx:id="estudiante" layoutX="204.0" layoutY="84.0" mnemonicParsing="false" />
+        <TextField fx:id="periodoEscolarField" layoutX="293.0" layoutY="80.0" prefHeight="26.0" prefWidth="82.0" />
+        <TextField fx:id="idTutorField" layoutX="401.0" layoutY="80.0" prefHeight="26.0" prefWidth="82.0" />
+        <TextField fx:id="idEstudianteField" layoutX="507.0" layoutY="81.0" prefHeight="26.0" prefWidth="66.0" />
+        <DatePicker fx:id="fechaPicker" layoutX="109.0" layoutY="79.0" prefHeight="26.0" prefWidth="74.0" />
+        <TextField fx:id="respuestaCoordinadorField" layoutX="16.0" layoutY="139.0" prefHeight="62.0" prefWidth="558.0" />
+        <TextArea fx:id="reporteTextArea" layoutX="16.0" layoutY="245.0" prefHeight="75.0" prefWidth="558.0" />
+        <CheckBox fx:id="asistenciaCheckBox" layoutX="204.0" layoutY="84.0" mnemonicParsing="false" />
+        <TextField fx:id="idTutoria" layoutX="28.0" layoutY="80.0" prefHeight="26.0" prefWidth="58.0" />
+
     </children>
 </AnchorPane>
