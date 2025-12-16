@@ -8,7 +8,6 @@ public class AsignacionTutor {
 
     public AsignacionTutor() {
     }
-
     // Constructor para la inserción (sin idAsignacion)
     public AsignacionTutor(int idTutor, int idEstudiante, int idPeriodo) {
         this.idTutor = idTutor;

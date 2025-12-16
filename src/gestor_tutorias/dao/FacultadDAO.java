@@ -14,7 +14,6 @@ public class FacultadDAO {
     public static List<Facultad> obtenerTodas() throws SQLException {
         List<Facultad> lista = new ArrayList<>();
         Connection conn = ConexionBD.abrirConexion();
-
         if (conn != null) {
             try {
 

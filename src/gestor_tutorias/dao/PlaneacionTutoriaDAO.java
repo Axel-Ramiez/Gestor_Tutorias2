@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlaneacionTutoriaDAO {
-
     private static final String TABLA = "planeacion_tutoria";
 
     private static final String SQL_INSERT =

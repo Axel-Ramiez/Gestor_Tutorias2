@@ -86,7 +86,6 @@ public class FXMLAlumnoConsulta {
             mostrarAlerta("Error al eliminar alumno");
         }
     }
-
     public void cargarEstudiante(Estudiante est) {
         this.estudianteActual = est;
         idalumno.setText(String.valueOf(est.getIdEstudiante()));

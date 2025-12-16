@@ -1,7 +1,6 @@
 package gestor_tutorias.pojo;
 
 import java.sql.Time;
-
 public class HorarioTutoria { // Se renombra a HorarioTutoria para que sea más específico
     private int idHorario;
     private int idTutor;

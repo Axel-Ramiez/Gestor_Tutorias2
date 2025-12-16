@@ -12,7 +12,6 @@ public class PlaneacionTutoria {
 
     public PlaneacionTutoria() {
     }
-
     // Constructor para la inserción (sin idFechaTutoria)
     public PlaneacionTutoria(int idPeriodo, int idCarrera, LocalDate fechaCierreReportes, int numeroSesion, String temas) {
         this.idPeriodo = idPeriodo;

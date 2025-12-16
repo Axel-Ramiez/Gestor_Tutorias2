@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AsignacionTutorDAO {
-
     private static final String TABLA = "asignacion_tutor";
 
     // Consultas SQL usando ? para PreparedStatement

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarreraDAO {
-
     public static List<Carrera> obtenerPorFacultad(int idFacultad) throws SQLException {
         List<Carrera> lista = new ArrayList<>();
         Connection conn = ConexionBD.abrirConexion();

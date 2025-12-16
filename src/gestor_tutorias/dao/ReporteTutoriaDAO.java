@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReporteTutoriaDAO {
-
     private static final String TABLA = "reporte_tutoria";
 
     // Consultas SQL usando ? para PreparedStatement

@@ -6,7 +6,6 @@ import gestor_tutorias.pojo.ReporteTutoria;
 import java.sql.SQLException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 public class FXMLReporteTutoriaConsulta {
 
     @FXML

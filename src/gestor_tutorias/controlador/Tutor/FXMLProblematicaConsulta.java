@@ -11,7 +11,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
 public class FXMLProblematicaConsulta {
-
     @FXML private TextField idproblematica;
     @FXML private TextField idreporte;
     @FXML private TextField titulo;

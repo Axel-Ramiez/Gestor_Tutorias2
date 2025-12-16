@@ -17,7 +17,6 @@ public class UsuarioDAO {
         Connection conn = ConexionBD.abrirConexion();
         if (conn != null) {
             try {
-
                 String consulta = "SELECT u.*, r.nombre_rol " +
                         "FROM usuario u " +
                         "INNER JOIN rol r ON u.id_rol = r.id_rol " +

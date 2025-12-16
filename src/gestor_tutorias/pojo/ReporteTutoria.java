@@ -13,7 +13,6 @@ public class ReporteTutoria {
 
     public ReporteTutoria() {
     }
-
     // Constructor para la inserción (sin idReporte)
     public ReporteTutoria(int idTutor, int idEstudiante, int idFechaTutoria, String descripcionGeneral, boolean asistencia) {
         this.idTutor = idTutor;

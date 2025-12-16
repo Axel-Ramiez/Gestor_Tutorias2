@@ -12,7 +12,6 @@ public class Problematica {
 
     public Problematica() {
     }
-
     // Constructor para la inserción (sin idProblematica y sin estado, usando el valor por defecto de la DB)
     public Problematica(int idReporte, String titulo, String descripcion, Integer idExperienciaEducativa) {
         this.idReporte = idReporte;

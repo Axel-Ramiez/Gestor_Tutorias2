@@ -29,7 +29,6 @@ public class FXMLProblematica {
             e.printStackTrace();
         }
     }
-
     @FXML
     private void crearproblematica() {
         try {

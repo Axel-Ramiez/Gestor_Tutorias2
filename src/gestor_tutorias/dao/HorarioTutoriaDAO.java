@@ -199,7 +199,6 @@ public class HorarioTutoriaDAO {
 
         // Consulta específica para slots disponibles
         String SQL_SELECT_DISPONIBLES = "SELECT id_horario, id_tutor, id_fecha_tutoria, id_estudiante, hora_inicio, hora_fin FROM " + TABLA + " WHERE id_fecha_tutoria = ? AND id_estudiante IS NULL";
-
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_SELECT_DISPONIBLES);
