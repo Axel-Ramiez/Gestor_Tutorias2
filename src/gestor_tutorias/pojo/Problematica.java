@@ -5,20 +5,18 @@ import gestor_tutorias.Enum.EstatusProblematica;
 public class Problematica {
     private int idProblematica;
     private int idReporte;
-    private String titulo; // Mapea a 'titulo' en la DB
+    private String titulo;
     private String descripcion;
-    private Integer idExperienciaEducativa; // Puede ser NULL, por eso se usa Integer
-    private EstatusProblematica estado; // Mapea a 'estado' en la DB
+    private Integer idExperienciaEducativa;
+    private EstatusProblematica estado;
 
     public Problematica() {
     }
-    // Constructor para la inserción (sin idProblematica y sin estado, usando el valor por defecto de la DB)
     public Problematica(int idReporte, String titulo, String descripcion, Integer idExperienciaEducativa) {
         this.idReporte = idReporte;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.idExperienciaEducativa = idExperienciaEducativa;
-        // El campo 'estado' se deja para el valor por defecto de la DB ('Pendiente')
     }
 
     // Constructor completo (útil para recuperar de la DB)
@@ -45,15 +43,15 @@ public class Problematica {
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
 
-    // descripcion (text NOT NULL) -> descripcion
+
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    // id_experiencia_educativa (int DEFAULT NULL) -> idExperienciaEducativa
+
     public Integer getIdExperienciaEducativa() { return idExperienciaEducativa; }
     public void setIdExperienciaEducativa(Integer idExperienciaEducativa) { this.idExperienciaEducativa = idExperienciaEducativa; }
 
-    // estado (ENUM('Pendiente', 'Atendida') NOT NULL DEFAULT 'Pendiente') -> estado
+
     public EstatusProblematica getEstado() { return estado; }
     public void setEstado(EstatusProblematica estado) { this.estado = estado; }
 }

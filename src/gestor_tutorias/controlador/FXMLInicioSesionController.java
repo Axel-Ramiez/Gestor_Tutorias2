@@ -35,14 +35,12 @@ public class FXMLInicioSesionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Limpiamos los mensajes de error al iniciar
         lbErrorUsuario.setText("");
         lbErrorPassword.setText("");
     }
 
     @FXML
     private void clicIniciarSesion(ActionEvent event) {
-        // 1. Limpiar errores previos
         lbErrorUsuario.setText("");
         lbErrorPassword.setText("");
 
@@ -51,7 +49,6 @@ public class FXMLInicioSesionController implements Initializable {
 
         boolean isValido = true;
 
-        // 2. Validaciones básicas en la interfaz
         if(matricula.isEmpty()){
             lbErrorUsuario.setText("Campo obligatorio");
             isValido = false;
@@ -71,10 +68,8 @@ public class FXMLInicioSesionController implements Initializable {
             Usuario usuarioSesion = UsuarioDAO.iniciarSesion(usuario, password);
 
             if (usuarioSesion != null) {
-                // --- LINEA DE DEPURACIÓN (Bórrala cuando arreglemos el problema) ---
                 System.out.println("Usuario encontrado: " + usuarioSesion.getNombreCompleto());
                 System.out.println("ID ROL detectado: " + usuarioSesion.getIdRol());
-                // ------------------------------------------------------------------
 
                 switch (usuarioSesion.getIdRol()) {
                     case 1:

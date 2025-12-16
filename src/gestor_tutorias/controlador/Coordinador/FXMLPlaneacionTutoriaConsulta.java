@@ -18,34 +18,28 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class FXMLPlaneacionTutoriaConsulta implements Initializable {
-
-    // --- ELEMENTOS DE LA GUI ---
     @FXML private ComboBox<PeriodoEscolar> cbPeriodo;
     @FXML private ComboBox<Carrera> cbCarrera;
-    @FXML private ComboBox<Integer> cbSesion; // 1, 2, 3
+    @FXML private ComboBox<Integer> cbSesion;
     @FXML private DatePicker fechaTutoria;
     @FXML private DatePicker fechaCierre;
     @FXML private TextArea temastratar;
-    @FXML private TextField tfIdPlaneacion; // ID visible pero no editable
+    @FXML private TextField tfIdPlaneacion;
 
-    // --- LÓGICA ---
+
     private PlaneacionTutoria planeacionActual;
     private final PlaneacionTutoriaDAO dao = new PlaneacionTutoriaDAO();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarCatalogos();
-        // Inicializamos las sesiones (Generalmente son 1, 2 o 3)
         cbSesion.setItems(FXCollections.observableArrayList(1, 2, 3, 4));
     }
 
     private void cargarCatalogos() {
         try {
-            // Llenar Combo de Periodos
             List<PeriodoEscolar> periodos = PeriodoEscolarDAO.obtenerTodos();
             cbPeriodo.setItems(FXCollections.observableArrayList(periodos));
-
-            // Llenar Combo de Carreras (Necesitas tener CarreraDAO)
             List<Carrera> carreras = CarreraDAO.obtenerTodas();
             cbCarrera.setItems(FXCollections.observableArrayList(carreras));
 
@@ -57,7 +51,6 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
 
     @FXML
     private void guardarPlaneacionTutoria() {
-        // 1. Validaciones
         if (cbPeriodo.getValue() == null || cbCarrera.getValue() == null || cbSesion.getValue() == null) {
             mostrarAlerta("Advertencia", "Seleccione Periodo, Carrera y Número de Sesión.");
             return;
@@ -68,30 +61,25 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
         }
 
         try {
-            // 2. Obtener datos de los ComboBox (Objetos completos)
             int idPeriodo = cbPeriodo.getValue().getIdPeriodo();
             int idCarrera = cbCarrera.getValue().getIdCarrera();
             int numSesion = cbSesion.getValue();
             LocalDate fechaT = fechaTutoria.getValue();
-            // Si fechaCierre es nula, usamos la misma fecha de tutoría
             LocalDate fechaC = (fechaCierre.getValue() != null) ? fechaCierre.getValue() : fechaT;
             String temas = temastratar.getText();
 
-            // 3. Guardar o Actualizar
+
             if (planeacionActual == null) {
-                // NUEVO
                 PlaneacionTutoria nueva = new PlaneacionTutoria();
                 nueva.setIdPeriodo(idPeriodo);
                 nueva.setIdCarrera(idCarrera);
                 nueva.setNumeroSesion(numSesion);
-                nueva.setFechaTutoria(fechaT); // Asegúrate que tu POJO tenga este campo
-                // nueva.setFechaCierre(fechaC); // Si tu BD lo maneja
+                nueva.setFechaTutoria(fechaT);
                 nueva.setTemas(temas);
 
                 dao.guardarPlaneacion(nueva);
                 mostrarAlerta("Éxito", "Planeación registrada.");
             } else {
-                // EDITAR
                 planeacionActual.setIdPeriodo(idPeriodo);
                 planeacionActual.setIdCarrera(idCarrera);
                 planeacionActual.setNumeroSesion(numSesion);
@@ -125,15 +113,9 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
         this.planeacionActual = plan;
         tfIdPlaneacion.setText(String.valueOf(plan.getIdFechaTutoria()));
         temastratar.setText(plan.getTemas());
-
-        // Seleccionar los valores en los ComboBox
-        // OJO: Para que esto funcione, los objetos deben ser iguales (equals) o buscamos por ID
         seleccionarEnComboPeriodo(plan.getIdPeriodo());
         seleccionarEnComboCarrera(plan.getIdCarrera());
         cbSesion.setValue(plan.getNumeroSesion());
-
-        // Fechas
-        // fechaTutoria.setValue(plan.getFechaTutoria()); // Asumiendo LocalDate en POJO
     }
 
     // Métodos auxiliares para seleccionar en los combos por ID

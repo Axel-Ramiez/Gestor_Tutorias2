@@ -28,7 +28,6 @@ public class ProblematicaDAO {
         String titulo = rs.getString("titulo");
         String descripcion = rs.getString("descripcion");
 
-        // Manejo de NULL para id_experiencia_educativa (campo opcional)
         Integer idExperienciaEducativa = rs.getInt("id_experiencia_educativa");
         if (rs.wasNull()) {
             idExperienciaEducativa = null;
@@ -49,23 +48,23 @@ public class ProblematicaDAO {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
 
-            // Asigna los parámetros
+
             ps.setInt(1, problematica.getIdReporte());
             ps.setString(2, problematica.getTitulo());
             ps.setString(3, problematica.getDescripcion());
 
-            // Manejo de Integer (posiblemente NULL)
+
             if (problematica.getIdExperienciaEducativa() != null) {
                 ps.setInt(4, problematica.getIdExperienciaEducativa());
             } else {
                 ps.setNull(4, Types.INTEGER);
             }
 
-            // Si el POJO viene sin estado (inserción), la DB usará el valor por defecto ('Pendiente')
+
             if (problematica.getEstado() != null) {
                 ps.setString(5, problematica.getEstado().toString());
             } else {
-                ps.setString(5, "Pendiente"); // Usar el valor por defecto si el POJO lo permite
+                ps.setString(5, "Pendiente");
             }
 
             int filasAfectadas = ps.executeUpdate();
@@ -150,7 +149,7 @@ public class ProblematicaDAO {
             }
 
             ps.setString(5, problematica.getEstado().toString());
-            // 2. Asigna el ID para la cláusula WHERE
+
             ps.setInt(6, problematica.getIdProblematica());
 
             int filasAfectadas = ps.executeUpdate();

@@ -64,7 +64,6 @@ public class FXMLEstudiante implements Initializable {
 
     @FXML
     private void consultarAlumno() throws IOException {
-        // 1. Obtener estudiante seleccionado
         Estudiante seleccionado = tablaEstudiante.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
@@ -75,15 +74,12 @@ public class FXMLEstudiante implements Initializable {
             return;
         }
 
-        // 2. Cargar FXML de consulta
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLEstudianteConsulta.fxml"));
         Parent root = loader.load();
 
-        // 3. Obtener controlador y pasar el estudiante
         FXMLEstudianteConsulta controlador = loader.getController();
         controlador.cargarEstudiante(seleccionado);
 
-        // 4. Abrir nueva ventana
         Stage stage = new Stage();
         stage.setTitle("Consulta de Estudiante");
         stage.setScene(new Scene(root));

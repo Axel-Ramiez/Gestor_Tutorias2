@@ -22,20 +22,14 @@ public class FXMLTutoria implements Initializable {
 
     @FXML
     private TableView<ReporteTutoria> tablareportestutoria;
-
-    // Columna ID se queda como Integer
     @FXML
     private TableColumn<ReporteTutoria, Integer> idtutoria;
-
-    // --- CAMBIO IMPORTANTE: ---
-    // Cambiamos de Integer a String para mostrar NOMBRES, no IDs.
-    // Esto coincide con los atributos auxiliares que pusimos en tu POJO.
     @FXML
-    private TableColumn<ReporteTutoria, String> idtutor; // Mostrará nombreTutor
+    private TableColumn<ReporteTutoria, String> idtutor;
     @FXML
-    private TableColumn<ReporteTutoria, String> idestudiante; // Mostrará nombreEstudiante
+    private TableColumn<ReporteTutoria, String> idestudiante;
     @FXML
-    private TableColumn<ReporteTutoria, String> periodoescolar; // Mostrará periodoEscolar
+    private TableColumn<ReporteTutoria, String> periodoescolar;
 
     @FXML
     private Button crear;
@@ -44,18 +38,13 @@ public class FXMLTutoria implements Initializable {
     private Button consultar;
 
     private ObservableList<ReporteTutoria> listaReportes;
-    private Usuario tutorSesion; // Usuario logueado
+    private Usuario tutorSesion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
-        // No cargamos datos aquí todavía. Esperamos a que el Login nos pase el usuario.
     }
 
-    /**
-     * Este método es llamado desde el Menú Principal (FXMLPrincipalTutor)
-     * para pasarnos la información de quién está conectado.
-     */
     public void inicializarInformacion(Usuario usuario) {
         this.tutorSesion = usuario;
         if (tutorSesion != null) {
@@ -66,10 +55,7 @@ public class FXMLTutoria implements Initializable {
     }
 
     private void configurarTabla() {
-        // Mapeamos a los atributos del POJO ReporteTutoria
         idtutoria.setCellValueFactory(new PropertyValueFactory<>("idReporte"));
-
-        // Usamos los atributos auxiliares (Strings) para que se vea bonito
         idtutor.setCellValueFactory(new PropertyValueFactory<>("nombreTutor"));
         idestudiante.setCellValueFactory(new PropertyValueFactory<>("nombreEstudiante"));
         periodoescolar.setCellValueFactory(new PropertyValueFactory<>("periodoEscolar"));
@@ -78,7 +64,6 @@ public class FXMLTutoria implements Initializable {
     private void cargarReportesBD() {
         try {
             ReporteTutoriaDAO dao = new ReporteTutoriaDAO();
-            // Obtenemos solo los reportes de ESTE tutor
             List<ReporteTutoria> reportes = dao.obtenerPorTutor(tutorSesion.getIdUsuario());
 
             listaReportes = FXCollections.observableArrayList(reportes);
@@ -93,7 +78,6 @@ public class FXMLTutoria implements Initializable {
     @FXML
     private void crearReporteTutoria() {
         System.out.println("Navegar a pantalla de creación...");
-        // TODO: Implementar navegación a FXMLRegistrarReporte.fxml
     }
 
     @FXML
@@ -101,7 +85,6 @@ public class FXMLTutoria implements Initializable {
         ReporteTutoria seleccionado = tablareportestutoria.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
             mostrarAlerta("Selección", "Has seleccionado el reporte de: " + seleccionado.getNombreEstudiante());
-            // Aquí abrirías la ventana de detalle pasando el objeto 'seleccionado'
         } else {
             mostrarAlerta("Aviso", "Selecciona un reporte de la tabla primero.");
         }

@@ -33,8 +33,7 @@ public class FXMLEstudianteConsulta {
     private Label riesgo;
 
     @FXML
-    private TextField tutor; // Nuevo campo editable
-
+    private TextField tutor;
 
     private Estudiante estudianteActual;
 
@@ -42,8 +41,6 @@ public class FXMLEstudianteConsulta {
     private void initialize() {
         activo.getItems().addAll("Activo", "Inactivo");
         activo.getSelectionModel().select("Activo");
-
-        // Campos no editables
         matricula.setEditable(false);
         nombreCompleto.setEditable(false);
         correo.setEditable(false);
@@ -56,10 +53,7 @@ public class FXMLEstudianteConsulta {
     private void guardarEstudiante() {
         if (estudianteActual != null) {
             String tutorAsignado = tutor.getText().trim();
-
-            // Aquí debes llamar a tu DAO para actualizar el tutor, ejemplo:
             try {
-                // EstudianteDAO.actualizarTutor(estudianteActual.getIdEstudiante(), tutorAsignado);
                 mostrarAlerta("Tutor actualizado correctamente: " + tutorAsignado);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -82,7 +76,7 @@ public class FXMLEstudianteConsulta {
         riesgo.setText(est.getRiesgo() == 1 ? "En riesgo" : "Sin riesgo");
         activo.getSelectionModel().select(est.getActivo() == 1 ? "Activo" : "Inactivo");
 
-        tutor.setText(""); // Inicializa vacío o con valor actual del tutor
+        tutor.setText("");
         tutor.setEditable(true);
     }
 

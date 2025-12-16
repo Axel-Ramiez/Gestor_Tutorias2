@@ -2,10 +2,10 @@ package gestor_tutorias.pojo;
 
 public class PeriodoEscolar {
     private int idPeriodo;
-    private String nombre;       // Ej. "FEB-JUL 2025"
-    private String fechaInicio;  // yyyy-MM-dd
-    private String fechaFin;     // yyyy-MM-dd
-    private int activo;          // 1 = Sí, 0 = No
+    private String nombre;
+    private String fechaInicio;
+    private String fechaFin;
+    private int activo;
 
     public PeriodoEscolar() {
     }
@@ -31,7 +31,7 @@ public class PeriodoEscolar {
     public int getActivo() { return activo; }
     public void setActivo(int activo) { this.activo = activo; }
 
-    // Importante para que los ComboBox muestren el nombre y no código raro
+
     @Override
     public String toString() {
         return nombre;

@@ -79,7 +79,7 @@ public class FXMLEstudianteConsulta implements Initializable {
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana de atrás
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.setTitle("Registrar Estudiante");
             stage.showAndWait();
@@ -101,7 +101,6 @@ public class FXMLEstudianteConsulta implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Administrador/FXMLEstudiante.fxml"));
                 Parent root = loader.load();
 
-                // Pasamos los datos
                 FXMLEstudiante controlador = loader.getController();
                 controlador.inicializarValores(estudianteSeleccionado);
 
@@ -179,7 +178,7 @@ public class FXMLEstudianteConsulta implements Initializable {
                             estudiante.getCarreraNombre().toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
-                    return false; // No coincide
+                    return false;
                 });
             });
             SortedList<Estudiante> sortedData = new SortedList<>(filtro);

@@ -30,7 +30,6 @@ public class FXMLPrincipalCoordinador implements Initializable {
 
     @FXML
     private void clicCerrarSesion(ActionEvent event) {
-        // ... (Tu código de cerrar sesión que ya funcionaba) ...
         try {
             Stage stageActual = (Stage) lbNombreAdmin.getScene().getWindow();
             stageActual.close();
@@ -42,7 +41,7 @@ public class FXMLPrincipalCoordinador implements Initializable {
         } catch (IOException ex) { ex.printStackTrace(); }
     }
 
-    // --- AQUÍ ESTÁ LA MAGIA PARA ABRIR LAS VENTANAS DE TU COMPAÑERO ---
+
 
     @FXML
     private void clicPlaneacion(ActionEvent event) {
@@ -118,7 +117,7 @@ public class FXMLPrincipalCoordinador implements Initializable {
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana de atrás
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.setTitle(titulo);
             stage.showAndWait();

@@ -10,7 +10,7 @@ public class HorarioTutoriaDAO {
 
     private static final String TABLA = "horario_tutoria";
 
-    // Consultas SQL usando ? para PreparedStatement
+
     private static final String SQL_INSERT =
             "INSERT INTO " + TABLA + " (id_tutor, id_fecha_tutoria, id_estudiante, hora_inicio, hora_fin) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_SELECT_BY_ID =
@@ -23,17 +23,12 @@ public class HorarioTutoriaDAO {
             "DELETE FROM " + TABLA + " WHERE id_horario = ?";
 
 
-    /**
-     * Método auxiliar para mapear un ResultSet a un objeto HorarioTutoria.
-     */
     private HorarioTutoria mapearHorario(ResultSet rs) throws SQLException {
         int idHorario = rs.getInt("id_horario");
         int idTutor = rs.getInt("id_tutor");
         int idFechaTutoria = rs.getInt("id_fecha_tutoria");
         Time horaInicio = rs.getTime("hora_inicio");
         Time horaFin = rs.getTime("hora_fin");
-
-        // Manejo de NULL para id_estudiante (Integer)
         Integer idEstudiante = rs.getInt("id_estudiante");
         if (rs.wasNull()) {
             idEstudiante = null;
@@ -51,12 +46,8 @@ public class HorarioTutoriaDAO {
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
-
-            // Asigna los parámetros
             ps.setInt(1, horario.getIdTutor());
             ps.setInt(2, horario.getIdFechaTutoria());
-
-            // Manejo de NULL para id_estudiante (si es slot disponible)
             if (horario.getIdEstudiante() != null) {
                 ps.setInt(3, horario.getIdEstudiante());
             } else {
@@ -136,23 +127,17 @@ public class HorarioTutoriaDAO {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_UPDATE);
 
-            // 1. Asigna los nuevos valores
             ps.setInt(1, horario.getIdTutor());
             ps.setInt(2, horario.getIdFechaTutoria());
 
-            // Manejo de NULL para id_estudiante
             if (horario.getIdEstudiante() != null) {
                 ps.setInt(3, horario.getIdEstudiante());
             } else {
                 ps.setNull(3, Types.INTEGER);
             }
-
             ps.setTime(4, horario.getHoraInicio());
             ps.setTime(5, horario.getHoraFin());
-
-            // 2. Asigna el ID para la cláusula WHERE
             ps.setInt(6, horario.getIdHorario());
-
             int filasAfectadas = ps.executeUpdate();
             if (filasAfectadas > 0) {
                 exito = true;
@@ -185,19 +170,12 @@ public class HorarioTutoriaDAO {
         return exito;
     }
 
-    /**
-     * Recupera horarios que están disponibles (id_estudiante IS NULL) para una fecha específica.
-     * @param idFechaTutoria La ID de la planeación/fecha a buscar.
-     * @return Lista de horarios disponibles.
-     * @throws SQLException
-     */
+
     public List<HorarioTutoria> obtenerHorariosDisponiblesPorFecha(int idFechaTutoria) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<HorarioTutoria> horarios = new ArrayList<>();
-
-        // Consulta específica para slots disponibles
         String SQL_SELECT_DISPONIBLES = "SELECT id_horario, id_tutor, id_fecha_tutoria, id_estudiante, hora_inicio, hora_fin FROM " + TABLA + " WHERE id_fecha_tutoria = ? AND id_estudiante IS NULL";
         try {
             conn = ConexionBD.abrirConexion();

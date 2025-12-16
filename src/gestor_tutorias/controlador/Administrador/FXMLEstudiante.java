@@ -60,7 +60,7 @@ public class FXMLEstudiante implements Initializable {
                 List<Carrera> carrerasBD = CarreraDAO.obtenerPorFacultad(idFacultad);
                 ObservableList<Carrera> carrerasList = FXCollections.observableArrayList(carrerasBD);
                 cbCarrera.setItems(carrerasList);
-                cbCarrera.setDisable(false); // Habilitamos el combo
+                cbCarrera.setDisable(false);
 
             } catch (SQLException ex) {
                 mostrarAlerta("Error al cargar las Carreras", "No se pudieron recuperar las carreras.");
@@ -77,7 +77,6 @@ public class FXMLEstudiante implements Initializable {
         lbError.setText("");
         if (validarCampos()) {
             Estudiante est = new Estudiante();
-            // Si estamos editando, PRESERVAMOS el ID original
             if (this.estudianteEdicion != null) {
                 est.setIdEstudiante(this.estudianteEdicion.getIdEstudiante());
             }
@@ -126,28 +125,23 @@ public class FXMLEstudiante implements Initializable {
     }
 
     private boolean validarCampos() {
-        // 1. Validar Matrícula (Debe ser zS...)
+
         if (!Validacion.validarMatricula(tfMatricula, lbError)) return false;
 
-        // 2. Validar Combos
+
         if (!Validacion.validarSeleccion(cbFacultad, lbError, "Selecciona una facultad")) return false;
         if (!Validacion.validarSeleccion(cbCarrera, lbError, "Selecciona una carrera")) return false;
 
-        // 3. Validar Semestre (Que no esté vacío y que sea número)
         if (!Validacion.validarRequerido(tfSemestre, lbError, "Semestre es requerido")) return false;
         if (!Validacion.esNumeroEntero(tfSemestre.getText())) {
             lbError.setText("El semestre debe ser un número entero");
             tfSemestre.setStyle("-fx-border-color: red;");
             return false;
         }
-
-        // 4. Validar Nombre (Solo letras)
         if (!Validacion.validarNombre(tfNombre, lbError)) return false;
-
-        // 5. Validar Correo (Debe ser @estudiantes.uv.mx)
         if (!Validacion.validarCorreoEstudiante(tfCorreo, lbError)) return false;
 
-        return true; // Todo correcto
+        return true;
     }
 
     private void cerrarVentana() {

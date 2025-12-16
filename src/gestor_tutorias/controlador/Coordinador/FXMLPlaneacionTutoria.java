@@ -29,17 +29,17 @@ public class FXMLPlaneacionTutoria implements Initializable {
     private TableView<PlaneacionTutoria> reportetutoria;
 
     @FXML
-    private TableColumn<PlaneacionTutoria, Integer> fechainicio; // Muestra ID
+    private TableColumn<PlaneacionTutoria, Integer> fechainicio;
     @FXML
-    private TableColumn<PlaneacionTutoria, String> periodoescolar; // Muestra Nombre Periodo
+    private TableColumn<PlaneacionTutoria, String> periodoescolar;
     @FXML
-    private TableColumn<PlaneacionTutoria, String> carrera;        // Muestra Nombre Carrera
+    private TableColumn<PlaneacionTutoria, String> carrera;
     @FXML
-    private TableColumn<PlaneacionTutoria, String> fecha;          // Muestra Fecha
+    private TableColumn<PlaneacionTutoria, String> fecha;
     @FXML
-    private TableColumn<PlaneacionTutoria, Integer> sesion;        // Muestra # Sesión
+    private TableColumn<PlaneacionTutoria, Integer> sesion;
     @FXML
-    private TableColumn<PlaneacionTutoria, String> temas;          // Muestra Temas
+    private TableColumn<PlaneacionTutoria, String> temas;
 
     @FXML
     private Button crear;
@@ -56,10 +56,8 @@ public class FXMLPlaneacionTutoria implements Initializable {
     }
 
     private void configurarTabla() {
-        // Aquí conectamos las columnas con los atributos del POJO
-        fechainicio.setCellValueFactory(new PropertyValueFactory<>("idFechaTutoria"));
 
-        // ¡OJO AQUÍ! Usamos los atributos auxiliares para que salgan los nombres
+        fechainicio.setCellValueFactory(new PropertyValueFactory<>("idFechaTutoria"));
         periodoescolar.setCellValueFactory(new PropertyValueFactory<>("periodoNombre"));
         carrera.setCellValueFactory(new PropertyValueFactory<>("carreraNombre"));
 
@@ -81,7 +79,7 @@ public class FXMLPlaneacionTutoria implements Initializable {
 
     @FXML
     private void crearPlaneacionTutoria(ActionEvent event) {
-        abrirFormulario(null); // Null significa "Nuevo registro"
+        abrirFormulario(null);
     }
 
     @FXML
@@ -89,16 +87,16 @@ public class FXMLPlaneacionTutoria implements Initializable {
         PlaneacionTutoria seleccion = reportetutoria.getSelectionModel().getSelectedItem();
 
         if (seleccion != null) {
-            abrirFormulario(seleccion); // Pasamos la selección para editar/consultar
+            abrirFormulario(seleccion);
         } else {
             mostrarAlerta("Aviso", "Selecciona una fila de la tabla primero.");
         }
     }
 
-    // Método para abrir la ventana de formulario (la que hicimos antes)
+
     private void abrirFormulario(PlaneacionTutoria planeacion) {
         try {
-            // 1. IMPRIMIR RUTA PARA VERIFICAR
+
             String ruta = "/gestor_tutorias/vista/Coordinador/FXMLPlaneacionTutoriaConsulta.fxml";
             URL url = getClass().getResource(ruta);
 
@@ -109,7 +107,7 @@ public class FXMLPlaneacionTutoria implements Initializable {
             }
 
             FXMLLoader loader = new FXMLLoader(url);
-            Parent root = loader.load(); // <--- AQUÍ SUELE TRONAR
+            Parent root = loader.load();
 
             if (planeacion != null) {
                 FXMLPlaneacionTutoriaConsulta controlador = loader.getController();
@@ -125,7 +123,7 @@ public class FXMLPlaneacionTutoria implements Initializable {
             cargarDatosTabla();
 
         } catch (IOException ex) {
-            // ESTO NOS DIRÁ POR QUÉ FALLA
+
             System.err.println(" ERROR AL ABRIR VENTANA:");
             ex.printStackTrace();
             mostrarAlerta("Error de Carga", "Revisa la consola (letras rojas) para ver el detalle del error.");

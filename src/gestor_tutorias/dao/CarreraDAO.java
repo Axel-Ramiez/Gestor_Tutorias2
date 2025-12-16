@@ -16,7 +16,6 @@ public class CarreraDAO {
 
         if (conn != null) {
             try {
-                // Filtramos usando la llave foránea id_facultad
                 String consulta = "SELECT id_carrera, nombre, id_facultad FROM carrera WHERE id_facultad = ?";
                 PreparedStatement ps = conn.prepareStatement(consulta);
                 ps.setInt(1, idFacultad);

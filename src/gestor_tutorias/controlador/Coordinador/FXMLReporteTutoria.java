@@ -56,7 +56,6 @@ public class FXMLReporteTutoria implements Initializable {
 
     @FXML
     private void consultarReporte() throws IOException {
-        // 1. Obtener reporte seleccionado
         ReporteTutoria seleccionado = tablaReporteTutoria.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
@@ -67,16 +66,16 @@ public class FXMLReporteTutoria implements Initializable {
             return;
         }
 
-        // 2. Cargar FXML de consulta
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
                 "/gestor_tutorias/vista/Coordinador/FXMLReporteTutoriaConsulta.fxml"));
         Parent root = loader.load();
 
-        // 3. Obtener controlador y pasar el reporte
+
         FXMLReporteTutoriaConsulta controlador = loader.getController();
         controlador.cargarReporte(seleccionado);
 
-        // 4. Abrir nueva ventana
+
         Stage stage = new Stage();
         stage.setTitle("Consulta de Reporte de Tutoría");
         stage.setScene(new Scene(root));

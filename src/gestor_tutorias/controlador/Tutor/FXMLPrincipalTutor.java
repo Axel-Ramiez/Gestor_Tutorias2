@@ -21,7 +21,7 @@ public class FXMLPrincipalTutor implements Initializable {
     @FXML
     private Label lbNombreAdmin;
 
-    private Usuario usuarioSesion; // Variable para guardar la sesión
+    private Usuario usuarioSesion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -59,8 +59,6 @@ public class FXMLPrincipalTutor implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLProblematica.fxml"));
             Parent root = loader.load();
-
-            // CAMBIO AQUÍ: En lugar de buscar el Stage viejo, creamos uno nuevo
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana de atrás (opcional pero recomendado)
             stage.setScene(new Scene(root));
@@ -78,14 +76,8 @@ public class FXMLPrincipalTutor implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLReporteTutoria.fxml"));
             Parent root = loader.load();
-
-            // --- ESTO ES IMPORTANTE AUNQUE CAMBIE LA SINTAXIS ---
-            // Tenemos que pasar el usuario, si no la tabla sale vacía
             FXMLTutoria controlador = loader.getController();
             controlador.inicializarInformacion(this.usuarioSesion);
-            // ----------------------------------------------------
-
-            // CAMBIO AQUÍ: Creamos Stage nuevo
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
@@ -103,8 +95,6 @@ public class FXMLPrincipalTutor implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLHorarioTutoria.fxml"));
             Parent root = loader.load();
-
-            // CAMBIO AQUÍ: Creamos Stage nuevo
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));

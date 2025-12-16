@@ -17,9 +17,9 @@ public class FXMLReporteTutoriaConsulta {
     @FXML
     private TextField periodoEscolarField;
     @FXML
-    private TextField idTutorField;      // Mostrará el Nombre del Tutor
+    private TextField idTutorField;
     @FXML
-    private TextField idEstudianteField; // Mostrará el Nombre del Estudiante
+    private TextField idEstudianteField;
     @FXML
     private DatePicker fechaPicker;
     @FXML
@@ -27,49 +27,43 @@ public class FXMLReporteTutoriaConsulta {
     @FXML
     private CheckBox asistenciaCheckBox;
     @FXML
-    private TextField respuestaCoordinadorField; // Único editable
+    private TextField respuestaCoordinadorField;
 
     private final ReporteTutoriaDAO reporteDao = new ReporteTutoriaDAO();
     private ReporteTutoria reporteActual;
 
     @FXML
     private void initialize() {
-        // Bloquear edición de campos informativos
         periodoEscolarField.setEditable(false);
         idTutorField.setEditable(false);
         idEstudianteField.setEditable(false);
-        fechaPicker.setDisable(true); // DatePicker deshabilitado (solo lectura)
+        fechaPicker.setDisable(true);
         reporteTextArea.setEditable(false);
         asistenciaCheckBox.setDisable(true);
-
-        // Habilitar el campo de respuesta
         respuestaCoordinadorField.setEditable(true);
     }
 
     public void cargarReporte(ReporteTutoria reporte) {
         this.reporteActual = reporte;
 
-        // Cargar datos básicos
+
         idTutoriaLabel.setText(String.valueOf(reporte.getIdReporte()));
         periodoEscolarField.setText(reporte.getPeriodoEscolar());
         reporteTextArea.setText(reporte.getReporte());
         asistenciaCheckBox.setSelected(reporte.isAsistencia());
 
-        // CORRECCIÓN 1: Mostrar Nombres en lugar de IDs (Más amigable)
+
         idTutorField.setText(reporte.getNombreTutor());
         idEstudianteField.setText(reporte.getNombreEstudiante());
 
-        // Cargar respuesta existente (si la hay)
+
         if (reporte.getRespuestaCoordinador() != null) {
             respuestaCoordinadorField.setText(reporte.getRespuestaCoordinador());
         }
 
-        // CORRECCIÓN 2: Manejo de la Fecha
-        // El POJO tiene la fecha como String (yyyy-MM-dd) gracias al JOIN del DAO.
-        // getIdFechaTutoria() devuelve un INT, por eso te daba error .toLocalDate()
         if (reporte.getFecha() != null && !reporte.getFecha().isEmpty()) {
             try {
-                // Parseamos el String a LocalDate para el DatePicker
+
                 LocalDate fecha = LocalDate.parse(reporte.getFecha());
                 fechaPicker.setValue(fecha);
             } catch (Exception e) {
@@ -89,12 +83,11 @@ public class FXMLReporteTutoriaConsulta {
             }
 
             try {
-                // Actualizar en BD
                 boolean exito = reporteDao.actualizarRespuesta(reporteActual.getIdReporte(), respuesta);
 
                 if (exito) {
                     mostrarAlerta("Respuesta registrada y estado actualizado a REVISADO.", Alert.AlertType.INFORMATION);
-                    cerrarVentana(); // CORRECCIÓN 3: Cerrar ventana al terminar
+                    cerrarVentana();
                 } else {
                     mostrarAlerta("No se pudo guardar la respuesta.", Alert.AlertType.ERROR);
                 }

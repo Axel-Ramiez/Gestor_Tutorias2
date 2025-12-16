@@ -8,8 +8,6 @@ import java.util.List;
 
 public class AsignacionTutorDAO {
     private static final String TABLA = "asignacion_tutor";
-
-    // Consultas SQL usando ? para PreparedStatement
     private static final String SQL_INSERT =
             "INSERT INTO " + TABLA + " (id_tutor, id_estudiante, id_periodo) VALUES (?, ?, ?)";
     private static final String SQL_SELECT_BY_ID =
@@ -22,9 +20,6 @@ public class AsignacionTutorDAO {
             "DELETE FROM " + TABLA + " WHERE id_asignacion = ?";
 
 
-    /**
-     * Mapea un ResultSet a un objeto AsignacionTutor.
-     */
     private AsignacionTutor mapearAsignacion(ResultSet rs) throws SQLException {
         int idAsignacion = rs.getInt("id_asignacion");
         int idTutor = rs.getInt("id_tutor");
@@ -43,8 +38,6 @@ public class AsignacionTutorDAO {
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
-
-            // Asigna los parámetros
             ps.setInt(1, asignacion.getIdTutor());
             ps.setInt(2, asignacion.getIdEstudiante());
             ps.setInt(3, asignacion.getIdPeriodo());
@@ -119,12 +112,9 @@ public class AsignacionTutorDAO {
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_UPDATE);
-
-            // 1. Asigna los nuevos valores
             ps.setInt(1, asignacion.getIdTutor());
             ps.setInt(2, asignacion.getIdEstudiante());
             ps.setInt(3, asignacion.getIdPeriodo());
-            // 2. Asigna el ID para la cláusula WHERE
             ps.setInt(4, asignacion.getIdAsignacion());
 
             int filasAfectadas = ps.executeUpdate();

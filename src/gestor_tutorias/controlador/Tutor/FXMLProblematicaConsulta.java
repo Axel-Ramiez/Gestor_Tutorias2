@@ -31,9 +31,6 @@ public class FXMLProblematicaConsulta {
                 estado.getValue()
         };
 
-        // ================================
-        // FILTRO (GENÉRICO, CON FOR)
-        // ================================
         for (Object dato : datosFormulario) {
 
             FiltroGeneral filtro = new FiltroGeneral(dato);
@@ -43,9 +40,6 @@ public class FXMLProblematicaConsulta {
             filtro.aplicarFiltroPorTipo();
         }
 
-        // ================================
-        // VALIDACIÓN (POR ENTIDAD)
-        // ================================
         ValidoProblematica valido = new ValidoProblematica();
 
         boolean formularioValido = valido.validarTodo(
@@ -61,9 +55,6 @@ public class FXMLProblematicaConsulta {
             return;
         }
 
-        // ================================
-        // CONSTRUCCIÓN DEL POJO
-        // ================================
         Problematica problematica = new Problematica(
                 idproblematica.getText().isEmpty() ? 0 : Integer.parseInt(idproblematica.getText()),
                 Integer.parseInt(idreporte.getText()),
