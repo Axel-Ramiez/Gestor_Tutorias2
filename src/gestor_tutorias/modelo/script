@@ -4,19 +4,19 @@ drop database if exist gestion_tutorias;
 create database gestion_tutorias;
 use database gestion_tutorias;
 
-CREATE TABLE roles (
+CREATE TABLE rol (
   id_rol int NOT NULL AUTO_INCREMENT,
   nombre_rol varchar(50) NOT NULL,
   PRIMARY KEY (id_rol)
 );
 
-CREATE TABLE facultades (
+CREATE TABLE facultad (
   id_facultad int NOT NULL AUTO_INCREMENT,
   nombre varchar(100) NOT NULL,
   PRIMARY KEY (id_facultad)
 );
 
-CREATE TABLE carreras (
+CREATE TABLE carrera (
   id_carrera int NOT NULL AUTO_INCREMENT,
   nombre varchar(100) NOT NULL,
   id_facultad int NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE carreras (
   FOREIGN KEY (id_facultad) REFERENCES facultades (id_facultad)
 );
 
-CREATE TABLE periodos_escolares (
+CREATE TABLE periodo_escolar (
   id_periodo int NOT NULL AUTO_INCREMENT,
   nombre varchar(50) NOT NULL,
   fecha_inicio date NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE periodos_escolares (
   PRIMARY KEY (id_periodo)
 );
 
-CREATE TABLE usuarios (
+CREATE TABLE usuario (
   id_usuario int NOT NULL AUTO_INCREMENT,
   matricula varchar(20) NOT NULL,
   contrasena varchar(255) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE usuarios (
 );
 
 
-CREATE TABLE estudiantes (
+CREATE TABLE estudiante (
   id_estudiante int NOT NULL AUTO_INCREMENT,
   matricula varchar(20) NOT NULL,
   nombre_completo varchar(150) NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE planeacion_tutoria (
   FOREIGN KEY (id_carrera) REFERENCES carreras (id_carrera)
 );
 
-CREATE TABLE horarios_tutorias (
+CREATE TABLE horario_tutoria (
   id_horario int NOT NULL AUTO_INCREMENT,
   id_tutor int NOT NULL,
   id_fecha_tutoria int NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE horarios_tutorias (
 
 
 
-CREATE TABLE reportes_tutorias (
+CREATE TABLE reporte_tutoria (
   id_reporte int NOT NULL AUTO_INCREMENT,
   id_tutor int NOT NULL,
   id_estudiante int NOT NULL,
@@ -114,7 +114,7 @@ CREATE TABLE reportes_tutorias (
   FOREIGN KEY (id_fecha_tutoria) REFERENCES fechas_tutorias (id_fecha_tutoria)
 );
 
-CREATE TABLE problematicas (
+CREATE TABLE problematica (
   id_problematica int NOT NULL AUTO_INCREMENT,
   id_reporte int NOT NULL,
   titulo varchar(100) NOT NULL,

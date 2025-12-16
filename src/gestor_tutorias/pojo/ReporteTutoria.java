@@ -2,119 +2,68 @@ package gestor_tutorias.pojo;
 
 import gestor_tutorias.Enum.EstadoReporte;
 
-import java.time.LocalDateTime;
-
 public class ReporteTutoria {
     private int idReporte;
-    private int idAsignacion;
+    private int idTutor;
+    private int idEstudiante;
     private int idFechaTutoria;
-    private boolean asistio;
-    private String comentariosAsistencia;
-    private String observacionesTutor;
-    private LocalDateTime fechaRegistro;
+    private String descripcionGeneral;
+    private boolean asistencia;
     private EstadoReporte estado;
-    private String retroalimentacionCoord;
-    private LocalDateTime fechaRevision;
 
     public ReporteTutoria() {
     }
 
-    
-    
-    public ReporteTutoria(int idReporte, int idAsignacion, int idFechaTutoria, boolean asistio, String comentariosAsistencia, String observacionesTutor, LocalDateTime fechaRegistro, EstadoReporte estado, String retroalimentacionCoord, LocalDateTime fechaRevision) {
-        this.idReporte = idReporte;
-        this.idAsignacion = idAsignacion;
+    // Constructor para la inserción (sin idReporte)
+    public ReporteTutoria(int idTutor, int idEstudiante, int idFechaTutoria, String descripcionGeneral, boolean asistencia) {
+        this.idTutor = idTutor;
+        this.idEstudiante = idEstudiante;
         this.idFechaTutoria = idFechaTutoria;
-        this.asistio = asistio;
-        this.comentariosAsistencia = comentariosAsistencia;
-        this.observacionesTutor = observacionesTutor;
-        this.fechaRegistro = fechaRegistro;
-        this.estado = estado;
-        this.retroalimentacionCoord = retroalimentacionCoord;
-        this.fechaRevision = fechaRevision;
-    }
-   
-    
-
-
-// Getters y Setters
-
-    public int getIdReporte() {
-        return idReporte;
+        this.descripcionGeneral = descripcionGeneral;
+        this.asistencia = asistencia;
+        // El campo 'estado' se deja para el valor por defecto de la DB ('Pendiente')
     }
 
-    public void setIdReporte(int idReporte) {
+    // Constructor completo (útil para recuperar de la DB)
+    public ReporteTutoria(int idReporte, int idTutor, int idEstudiante, int idFechaTutoria, String descripcionGeneral, boolean asistencia, EstadoReporte estado) {
         this.idReporte = idReporte;
-    }
-
-    public int getIdAsignacion() {
-        return idAsignacion;
-    }
-
-    public void setIdAsignacion(int idAsignacion) {
-        this.idAsignacion = idAsignacion;
-    }
-
-    public int getIdFechaTutoria() {
-        return idFechaTutoria;
-    }
-
-    public void setIdFechaTutoria(int idFechaTutoria) {
+        this.idTutor = idTutor;
+        this.idEstudiante = idEstudiante;
         this.idFechaTutoria = idFechaTutoria;
-    }
-
-    public boolean isAsistio() {
-        return asistio;
-    }
-
-    public void setAsistio(boolean asistio) {
-        this.asistio = asistio;
-    }
-
-    public String getComentariosAsistencia() {
-        return comentariosAsistencia;
-    }
-
-    public void setComentariosAsistencia(String comentariosAsistencia) {
-        this.comentariosAsistencia = comentariosAsistencia;
-    }
-
-    public String getObservacionesTutor() {
-        return observacionesTutor;
-    }
-
-    public void setObservacionesTutor(String observacionesTutor) {
-        this.observacionesTutor = observacionesTutor;
-    }
-
-    public LocalDateTime getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(LocalDateTime fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
-
-    public EstadoReporte getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoReporte estado) {
+        this.descripcionGeneral = descripcionGeneral;
+        this.asistencia = asistencia;
         this.estado = estado;
     }
 
-    public String getRetroalimentacionCoord() {
-        return retroalimentacionCoord;
-    }
+    // --- GETTERS Y SETTERS ---
 
-    public void setRetroalimentacionCoord(String retroalimentacionCoord) {this.retroalimentacionCoord = retroalimentacionCoord;}
+    // id_reporte (int NOT NULL AUTO_INCREMENT) -> idReporte
+    public int getIdReporte() { return idReporte; }
+    public void setIdReporte(int idReporte) { this.idReporte = idReporte; }
 
-    public LocalDateTime getFechaRevision() {
-        return fechaRevision;
-    }
+    // id_tutor (int NOT NULL) -> idTutor
+    public int getIdTutor() { return idTutor; }
+    public void setIdTutor(int idTutor) { this.idTutor = idTutor; }
 
-    public void setFechaRevision(LocalDateTime fechaRevision) {
-        this.fechaRevision = fechaRevision;
-    }
-    
+    // id_estudiante (int NOT NULL) -> idEstudiante
+    public int getIdEstudiante() { return idEstudiante; }
+    public void setIdEstudiante(int idEstudiante) { this.idEstudiante = idEstudiante; }
+
+    // id_fecha_tutoria (int NOT NULL) -> idFechaTutoria
+    public int getIdFechaTutoria() { return idFechaTutoria; }
+    public void setIdFechaTutoria(int idFechaTutoria) { this.idFechaTutoria = idFechaTutoria; }
+
+    // descripcion_general (text) -> descripcionGeneral
+    public String getDescripcionGeneral() { return descripcionGeneral; }
+    public void setDescripcionGeneral(String descripcionGeneral) { this.descripcionGeneral = descripcionGeneral; }
+
+    // asistencia (tinyint(1) DEFAULT '0') -> asistencia
+    public boolean isAsistencia() { return asistencia; }
+    public void setAsistencia(boolean asistencia) { this.asistencia = asistencia; }
+
+    // estado (ENUM('Pendiente', 'Revisado') NOT NULL DEFAULT 'Pendiente') -> estado
+    public EstadoReporte getEstado() { return estado; }
+    public void setEstado(EstadoReporte estado) { this.estado = estado; }
+
+    // Puedes añadir equals, hashCode y toString si es necesario.
 }
