@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Administrador.FXMLEstudianteConsulta">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Administrador.FXMLUsuarioConsulta">
     <children>
         <Pane prefHeight="70.0" prefWidth="900.0" style="-fx-background-color: #006DB2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -28,9 +28,9 @@
             <columns>
                 <TableColumn fx:id="colMatricula" prefWidth="125.0" text="Matrícula" />
                 <TableColumn fx:id="colNombre" prefWidth="237.0" text="Nombre Completo" />
-                <TableColumn fx:id="colCarrera" prefWidth="171.0" text="Programa Educativo" />
-                <TableColumn fx:id="colSemestre" prefWidth="111.0" text="Semestre" />
-            <TableColumn fx:id="colCorreo" prefWidth="195.0" text="Correo" />
+                <TableColumn fx:id="colContrasena" prefWidth="171.0" text="Contraseña" />
+                <TableColumn fx:id="colRol" prefWidth="111.0" text="Rol" />
+                <TableColumn fx:id="colCorreo" prefWidth="195.0" text="Correo" />
             </columns>
         </TableView>
     </children>
