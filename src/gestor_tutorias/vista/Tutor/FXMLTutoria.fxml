@@ -16,7 +16,7 @@
         </Pane>
         <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
         <Label layoutX="261.0" layoutY="103.0" text="reporte de tutoria" />
-        <Button fx:id="crear" layoutX="490.0" layoutY="91.0" mnemonicParsing="false" onAction="#crearreportetutoria" text="crear nuevo" />
+        <Button fx:id="crear" layoutX="490.0" layoutY="91.0" mnemonicParsing="false" onAction="#crearReporteTutoria" text="crear nuevo" />
         <TableView fx:id="tablareportestutoria" layoutX="14.0" layoutY="137.0" prefHeight="174.0" prefWidth="452.0">
             <columns>
                 <TableColumn fx:id="idtutoria" prefWidth="75.0" text="id tutoria" />
@@ -27,7 +27,7 @@
                 <TableColumn fx:id="idestudiante" prefWidth="75.0" text="id estudiante" />
             </columns>
         </TableView>
-        <Button fx:id="consultar" layoutX="403.0" layoutY="91.0" mnemonicParsing="false" onAction="#consultarreportetutoria" text="consultar" />
+        <Button fx:id="consultar" layoutX="403.0" layoutY="91.0" mnemonicParsing="false" onAction="#consultarReporteTutoria" text="consultar" />
 
     </children>
 </AnchorPane>

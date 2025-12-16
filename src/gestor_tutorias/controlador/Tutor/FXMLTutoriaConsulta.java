@@ -20,7 +20,7 @@ public class FXMLTutoriaConsulta {
     @FXML private Button generarproblematica;
 
     @FXML
-    private void guardarproblematica() {
+    private void guardarProblematica() {
 
         LocalDate fechaSeleccionada = fecha.getValue();
         String periodo = periodoescolar.getText();
@@ -37,12 +37,12 @@ public class FXMLTutoriaConsulta {
     }
 
     @FXML
-    private void eliminarproblematica() {
+    private void eliminarProblematica() {
         System.out.println("Eliminar reporte de tutoría");
     }
 
     @FXML
-    private void generarproblematica() {
+    private void generarProblematica() {
         System.out.println("Generar problemática desde reporte");
         System.out.println("Temas: " + temasatratar.getText());
         System.out.println("Reporte: " + reporte.getText());

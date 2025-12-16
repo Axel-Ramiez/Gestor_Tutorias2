@@ -41,7 +41,7 @@ public class FXMLReporteTutoria implements Initializable {
     }
 
     @FXML
-    private void consultarreportetutoria() {
+    private void consultarReporteTutoria() {
         cargarReportes();
     }
 

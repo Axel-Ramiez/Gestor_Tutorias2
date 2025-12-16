@@ -26,7 +26,7 @@
                 <TableColumn fx:id="idestudiante" prefWidth="75.0" text="id estudiante" />
             </columns>
         </TableView>
-        <Button fx:id="consultar" layoutX="461.0" layoutY="90.0" mnemonicParsing="false" onAction="#consultarreportetutoria" text="consultar" />
+        <Button fx:id="consultar" layoutX="461.0" layoutY="90.0" mnemonicParsing="false" onAction="#consultarReporteTutoria" text="consultar" />
 
     </children>
 </AnchorPane>

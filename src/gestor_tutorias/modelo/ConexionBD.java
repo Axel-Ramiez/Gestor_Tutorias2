@@ -16,7 +16,7 @@ public class ConexionBD {
     private static final String URL = "jdbc:mysql://"+ IP + ":" + PORT + "/" + NAME_BD
             + "?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=America/Mexico_City";
     private static final String USER = "root";
-    private static final String PASS = "Samus_05";
+    private static final String PASS = "12345678";
     private static Connection conexion = null;
 
     public static Connection abrirConexion() {

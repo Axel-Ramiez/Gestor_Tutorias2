@@ -21,7 +21,7 @@ public class FXMLProblematicaConsulta {
     private final ProblematicaDAO dao = new ProblematicaDAO();
 
     @FXML
-    private void guardarproblematica() {
+    private void guardarProblematica() {
 
         Object[] datosFormulario = {
                 idreporte.getText(),

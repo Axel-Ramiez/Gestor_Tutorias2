@@ -55,13 +55,13 @@ public class FXMLTutoria {
     }
 
     @FXML
-    private void crearreportetutoria() {
+    private void crearReporteTutoria() {
         System.out.println("Crear nuevo reporte de tutoría");
         // Aquí abrirías FXML de creación
     }
 
     @FXML
-    private void consultarreportetutoria() {
+    private void consultarReporteTutoria() {
         ReporteTutoria seleccionado = tablareportestutoria.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
             System.out.println("Consultar reporte ID: " + seleccionado.getIdReporte());

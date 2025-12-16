@@ -5,10 +5,10 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLTutoriaConsulta">
    <children>
-      <Button fx:id="guardar" layoutX="434.0" layoutY="350.0" mnemonicParsing="false" onAction="#guardarproblematica" text="guardar" />
+      <Button fx:id="guardar" layoutX="434.0" layoutY="350.0" mnemonicParsing="false" onAction="#guardarProblematica" text="guardar" />
       <Label fx:id="reportedetutoria" layoutX="251.0" layoutY="5.0" text="Reporte de tutoria" />
       <Label fx:id="datos" layoutX="285.0" layoutY="23.0" text="datos" />
-      <Button fx:id="eliminar" layoutX="503.0" layoutY="350.0" mnemonicParsing="false" onAction="#eliminarproblematica" text="eliminar" />
+      <Button fx:id="eliminar" layoutX="503.0" layoutY="350.0" mnemonicParsing="false" onAction="#eliminarProblematica" text="eliminar" />
       <Label layoutX="127.0" layoutY="53.0" prefHeight="18.0" prefWidth="39.0" text="fecha" />
       <Label layoutX="293.0" layoutY="53.0" text="periodo escolar" />
       <Label layoutX="400.0" layoutY="53.0" text="ID tutor" />
@@ -20,7 +20,7 @@
       <Label layoutX="12.0" layoutY="121.0" text="temas a tratar en la tutoria" />
       <Label layoutX="204.0" layoutY="112.0" text="respuesta por parte del coordinador" />
       <TextField fx:id="respuestacoordinador" layoutX="202.0" layoutY="134.0" prefHeight="54.0" prefWidth="371.0" />
-      <Button fx:id="generarproblematica" layoutX="17.0" layoutY="350.0" mnemonicParsing="false" onAction="#generarproblematica" text="generar problematica" />
+      <Button fx:id="generarproblematica" layoutX="17.0" layoutY="350.0" mnemonicParsing="false" onAction="#generarProblematica" text="generar problematica" />
       <TextField fx:id="temasatratar" layoutX="9.0" layoutY="139.0" prefHeight="54.0" prefWidth="174.0" />
       <Label layoutX="28.0" layoutY="53.0" text="ID tutotria" />
       <Label layoutX="23.0" layoutY="81.0" prefHeight="26.0" prefWidth="66.0" text="Label" />

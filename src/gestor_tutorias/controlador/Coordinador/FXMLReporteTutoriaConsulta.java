@@ -84,7 +84,7 @@ public class FXMLReporteTutoriaConsulta {
     }
 
     @FXML
-    private void eliminarreportetutoria() {
+    private void eliminarReporteTutoria() {
 
         try {
             if (idtutoria.getText() == null || idtutoria.getText().isEmpty()) {

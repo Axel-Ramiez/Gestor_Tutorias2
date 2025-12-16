@@ -8,7 +8,7 @@
         <Button fx:id="guardar" layoutX="434.0" layoutY="350.0" mnemonicParsing="false" onAction="#guardarreportetutoria" text="guardar" />
         <Label layoutX="251.0" layoutY="5.0" text="Reporte de tutoria" />
         <Label layoutX="285.0" layoutY="23.0" text="datos" />
-        <Button fx:id="eliminar" layoutX="503.0" layoutY="350.0" mnemonicParsing="false" onAction="#eliminarreportetutoria" text="eliminar" />
+        <Button fx:id="eliminar" layoutX="503.0" layoutY="350.0" mnemonicParsing="false" onAction="#eliminarReporteTutoria" text="eliminar" />
         <Label layoutX="127.0" layoutY="53.0" prefHeight="18.0" prefWidth="39.0" text="fecha" />
         <Label layoutX="293.0" layoutY="53.0" text="periodo escolar" />
         <Label layoutX="400.0" layoutY="53.0" text="ID tutor" />

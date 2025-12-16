@@ -1,7 +1,7 @@
-drop database IF EXIST gestion_tutorias;
+DROP DATABASE IF EXISTS gestion_tutorias;
 
-create database gestion_tutorias;
-use gestion_tutorias;
+CREATE DATABASE gestion_tutorias;
+USE gestion_tutorias;
 
 CREATE TABLE rol (
   id_rol int NOT NULL AUTO_INCREMENT,
@@ -162,24 +162,3 @@ INSERT INTO estudiante (matricula, nombre_completo, correo, id_carrera, semestre
 ('zS20015002', 'Luis Rodriguez', 'zs20015002@estudiantes.uv.mx', 1, 5, 1, 1),
 ('zS20015003', 'Pedro Sanchez', 'zs20015003@estudiantes.uv.mx', 2, 1, 1, 0),
 ('zS20015004', 'Sofia Torres', 'zs20015004@estudiantes.uv.mx', 1, 7, 1, 1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

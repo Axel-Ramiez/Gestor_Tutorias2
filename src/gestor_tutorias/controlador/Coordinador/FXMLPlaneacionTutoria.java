@@ -39,12 +39,12 @@ public class FXMLPlaneacionTutoria implements Initializable {
     }
 
     @FXML
-    private void consultarreportetutoria() {
+    private void consultarReporteTutoria() {
         cargarPlaneaciones();
     }
 
     @FXML
-    private void crearreportetutoria() {
+    private void crearReporteTutoria() {
         // Navegación a pantalla de creación (FXMLPlaneacionTutoriaConsulta)
         // Se maneja desde el main o gestor de escenas
     }

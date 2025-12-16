@@ -21,7 +21,7 @@ public class FXMLProblematica {
     private final ProblematicaDAO dao = new ProblematicaDAO();
 
     @FXML
-    private void consultarproblematica() {
+    private void consultarProblematica() {
         try {
             List<Problematica> lista = dao.obtenerTodas();
             tablaproblematica.getItems().setAll(lista);
@@ -30,7 +30,7 @@ public class FXMLProblematica {
         }
     }
     @FXML
-    private void crearproblematica() {
+    private void crearProblematica() {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLProblematicaConsulta.fxml")

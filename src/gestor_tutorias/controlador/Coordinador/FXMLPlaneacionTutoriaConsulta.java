@@ -29,7 +29,7 @@ public class FXMLPlaneacionTutoriaConsulta {
     private final PlaneacionTutoriaDAO dao = new PlaneacionTutoriaDAO();
 
     @FXML
-    private void guardarplaneaciontutoria() {
+    private void guardarPlaneacionTutoria() {
 
         try {
             if (fecha.getValue() == null || fechacierre.getValue() == null) {
@@ -66,7 +66,7 @@ public class FXMLPlaneacionTutoriaConsulta {
     }
 
     @FXML
-    private void eliminarplaneaciontutoria() {
+    private void eliminarPlaneacionTutoria() {
         // Normalmente se elimina desde selección previa
         mostrarAlerta("Seleccione una planeación desde la lista");
     }
