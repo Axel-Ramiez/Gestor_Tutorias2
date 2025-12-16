@@ -110,7 +110,6 @@ CREATE TABLE reporte_tutoria (
   PRIMARY KEY (id_reporte),
   FOREIGN KEY (id_tutor) REFERENCES usuario (id_usuario),
   FOREIGN KEY (id_estudiante) REFERENCES estudiante (id_estudiante),
-  -- Esta es la línea que "comunica" el reporte con la planeación (y por ende, con sus temas)
   FOREIGN KEY (id_fecha_tutoria) REFERENCES planeacion_tutoria (id_fecha_tutoria)
 ) ENGINE=InnoDB;
 
