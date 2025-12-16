@@ -22,14 +22,14 @@
       <Label layoutX="228.0" layoutY="107.0" text="fecha de cierre" />
       <Label layoutX="225.0" layoutY="199.0" text="sesion" />
       <Label layoutX="27.0" layoutY="254.0" text="temas a tratar" />
-      <Button layoutX="520.0" layoutY="376.0" mnemonicParsing="false" text="guardar" />
-      <Button layoutX="419.0" layoutY="376.0" mnemonicParsing="false" text="eliminar" />
-      <TextArea layoutX="27.0" layoutY="285.0" prefHeight="74.0" prefWidth="559.0" />
-      <DatePicker layoutX="23.0" layoutY="139.0" prefHeight="26.0" prefWidth="150.0" />
-      <TextField layoutX="21.0" layoutY="224.0" prefHeight="26.0" prefWidth="150.0" />
-      <TextField layoutX="436.0" layoutY="140.0" />
-      <DatePicker layoutX="225.0" layoutY="139.0" prefHeight="26.0" prefWidth="150.0" />
-      <TextField layoutX="225.0" layoutY="224.0" />
+      <Button fx:id="guardar" layoutX="520.0" layoutY="376.0" mnemonicParsing="false" onAction="#guardarplaneaciontutoria" text="guardar" />
+      <Button fx:id="eliminar" layoutX="419.0" layoutY="376.0" mnemonicParsing="false" onAction="#eliminarplaneaciontutoria" text="eliminar" />
+      <TextArea fx:id="temastratar" layoutX="27.0" layoutY="285.0" prefHeight="74.0" prefWidth="559.0" />
+      <DatePicker fx:id="fecha" layoutX="23.0" layoutY="139.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="carrera" layoutX="21.0" layoutY="224.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="periodo" layoutX="436.0" layoutY="140.0" />
+      <DatePicker fx:id="fechacierre" layoutX="225.0" layoutY="139.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="sesion" layoutX="225.0" layoutY="224.0" />
       <Label layoutX="286.0" layoutY="81.0" text="Planeacion de tutoria" />
     </children>
 

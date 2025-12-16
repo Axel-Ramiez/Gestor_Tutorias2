@@ -16,17 +16,17 @@
         </Pane>
         <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
         <Label layoutX="261.0" layoutY="103.0" text="reporte de tutoria" />
-        <Button layoutX="490.0" layoutY="91.0" mnemonicParsing="false" text="crear nuevo" />
-        <TableView layoutX="98.0" layoutY="141.0" prefHeight="174.0" prefWidth="377.0">
+        <Button fx:id="crear" layoutX="490.0" layoutY="91.0" mnemonicParsing="false" onAction="#crearreportetutoria" text="crear nuevo" />
+        <TableView fx:id="reportetutoria" layoutX="98.0" layoutY="141.0" prefHeight="174.0" prefWidth="377.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="fechainicio" />
-                <TableColumn prefWidth="75.0" text="fechafin" />
-                <TableColumn prefWidth="75.0" text="carrera" />
-                <TableColumn prefWidth="75.0" text="periodo escolar" />
-                <TableColumn prefWidth="75.0" text="sesion" />
+                <TableColumn fx:id="fechainicio" prefWidth="75.0" text="fechainicio" />
+                <TableColumn fx:id="fechafin" prefWidth="75.0" text="fechafin" />
+                <TableColumn fx:id="carrera" prefWidth="75.0" text="carrera" />
+                <TableColumn fx:id="periodoescolar" prefWidth="75.0" text="periodo escolar" />
+                <TableColumn fx:id="sesion" prefWidth="75.0" text="sesion" />
             </columns>
         </TableView>
-        <Button layoutX="403.0" layoutY="91.0" mnemonicParsing="false" text="consultar" />
+        <Button fx:id="consultar" layoutX="403.0" layoutY="91.0" mnemonicParsing="false" onAction="#consultarreportetutoria" text="consultar" />
 
     </children>
 </AnchorPane>

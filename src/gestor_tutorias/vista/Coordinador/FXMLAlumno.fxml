@@ -16,19 +16,19 @@
        </Pane>
        <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
       <Label layoutX="261.0" layoutY="103.0" text="Alumno" />
-      <Button layoutX="490.0" layoutY="91.0" mnemonicParsing="false" text="crear nuevo" />
-      <TableView layoutX="14.0" layoutY="137.0" prefHeight="174.0" prefWidth="573.0">
+      <Button fx:id="crear" layoutX="490.0" layoutY="91.0" mnemonicParsing="false" onAction="#crearAlumno" text="crear nuevo" />
+      <TableView fx:id="tablaalumno" layoutX="14.0" layoutY="137.0" prefHeight="174.0" prefWidth="573.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="id" />
-          <TableColumn prefWidth="75.0" text="matricula" />
-            <TableColumn prefWidth="75.0" text="nombre" />
-            <TableColumn prefWidth="75.0" text="correo" />
-            <TableColumn prefWidth="75.0" text="idcarrera" />
-            <TableColumn prefWidth="75.0" text="semestre" />
-            <TableColumn prefWidth="75.0" text="activo" />
+          <TableColumn fx:id="id" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="matricula" prefWidth="75.0" text="matricula" />
+            <TableColumn fx:id="nombre" prefWidth="75.0" text="nombre" />
+            <TableColumn fx:id="correo" prefWidth="75.0" text="correo" />
+            <TableColumn fx:id="idcarrera" prefWidth="75.0" text="idcarrera" />
+            <TableColumn fx:id="semestre" prefWidth="75.0" text="semestre" />
+            <TableColumn fx:id="activo" prefWidth="75.0" text="activo" />
         </columns>
       </TableView>
-      <Button layoutX="403.0" layoutY="91.0" mnemonicParsing="false" text="consultar" />
+      <Button fx:id="consultar" layoutX="403.0" layoutY="91.0" mnemonicParsing="false" onAction="#consultarAlumno" text="consultar" />
 
    </children>
 </AnchorPane>

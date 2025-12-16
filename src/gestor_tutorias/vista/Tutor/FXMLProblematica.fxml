@@ -16,18 +16,18 @@
         </Pane>
         <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
         <Label layoutX="261.0" layoutY="103.0" text="Problematica" />
-        <Button layoutX="490.0" layoutY="91.0" mnemonicParsing="false" text="crear nuevo" />
-        <TableView layoutX="59.0" layoutY="139.0" prefHeight="174.0" prefWidth="452.0">
+        <Button fx:id="crear" layoutX="490.0" layoutY="91.0" mnemonicParsing="false" onAction="#crearproblematica" text="crear nuevo" />
+        <TableView fx:id="tablaproblematica" layoutX="59.0" layoutY="139.0" prefHeight="174.0" prefWidth="452.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="id_problematica" />
-                <TableColumn prefWidth="75.0" text="id_reporte" />
-                <TableColumn prefWidth="75.0" text="titulo" />
-                <TableColumn prefWidth="75.0" text="descripcion" />
-                <TableColumn prefWidth="75.0" text="id_experiencia_educativa" />
-                <TableColumn prefWidth="75.0" text="estado" />
+                <TableColumn fx:id="idproblematica" prefWidth="75.0" text="id_problematica" />
+                <TableColumn fx:id="idreporte" prefWidth="75.0" text="id_reporte" />
+                <TableColumn fx:id="titulo" prefWidth="75.0" text="titulo" />
+                <TableColumn fx:id="descripcion" prefWidth="75.0" text="descripcion" />
+                <TableColumn fx:id="idexperienciaeducativa" prefWidth="75.0" text="id_experiencia_educativa" />
+                <TableColumn fx:id="estado" prefWidth="75.0" text="estado" />
             </columns>
         </TableView>
-        <Button layoutX="403.0" layoutY="91.0" mnemonicParsing="false" text="consultar" />
+        <Button fx:id="consultar" layoutX="403.0" layoutY="91.0" mnemonicParsing="false" onAction="#consultarproblematica" text="consultar" />
 
     </children>
 </AnchorPane>
