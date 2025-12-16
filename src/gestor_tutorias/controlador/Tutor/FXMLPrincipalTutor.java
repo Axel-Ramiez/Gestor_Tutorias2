@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Tutor;
 
 import gestor_tutorias.pojo.Usuario;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class FXMLPrincipalCoordinador implements Initializable {
+public class FXMLPrincipalTutor implements Initializable {
 
     @FXML
     private Label lbNombreAdmin;
@@ -27,7 +27,7 @@ public class FXMLPrincipalCoordinador implements Initializable {
 
     public void inicializarInformacion(Usuario usuario) {
         if (usuario != null) {
-            lbNombreAdmin.setText("Coordinador: " + usuario.getNombreCompleto());
+            lbNombreAdmin.setText("Tutor: " + usuario.getNombreCompleto());
         }
     }
 
@@ -43,6 +43,7 @@ public class FXMLPrincipalCoordinador implements Initializable {
             stageLogin.setTitle("Iniciar Sesión");
             stageLogin.show();
 
+            // Cerrar ventana actual
             Stage stageActual = (Stage) lbNombreAdmin.getScene().getWindow();
             stageActual.close();
         } catch (IOException ex) {
@@ -51,21 +52,21 @@ public class FXMLPrincipalCoordinador implements Initializable {
     }
 
     @FXML
-    private void clicPlaneacion(ActionEvent event) {
-        mostrarAlerta("Navegación", "Ir a pantalla de Gestión de Periodos y Fechas de Tutoría.");
-        // Aquí cargarás la pantalla de Periodos que discutimos antes
+    private void clicProblematica(ActionEvent event) {
+        mostrarAlerta("Navegación", "Ir a pantalla de Registro de Problemáticas.");
+        // Aquí cargarás: /gestor_tutorias/vista/Tutor/FXMLProblematica.fxml
     }
 
     @FXML
-    private void clicReporte(ActionEvent event) {
-        mostrarAlerta("Navegación", "Ir a pantalla de Consulta de Reportes Generales.");
-        // Aquí el coordinador ve quién entregó y quién no
+    private void clicReporteTu(ActionEvent event) {
+        mostrarAlerta("Navegación", "Ir a pantalla de Llenado de Reporte de Tutoría.");
+        // Aquí cargarás: /gestor_tutorias/vista/Tutor/FXMLReporteTutoria.fxml
     }
 
     @FXML
-    private void clicEstudiante(ActionEvent event) {
-        mostrarAlerta("Navegación", "Ir a pantalla de Asignación de Tutor a Estudiante.");
-        // Aquí cargarás la pantalla de Asignación de Tutores
+    private void clicHorarioTu(ActionEvent event) {
+        mostrarAlerta("Navegación", "Ir a pantalla de Definición de Horarios.");
+        // Aquí cargarás: /gestor_tutorias/vista/Tutor/FXMLHorarios.fxml
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {

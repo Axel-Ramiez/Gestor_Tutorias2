@@ -1,6 +1,8 @@
 package gestor_tutorias.controlador;
 
 import gestor_tutorias.controlador.Administrador.FXMLPrincipalAdministradorController;
+import gestor_tutorias.controlador.Coordinador.FXMLPrincipalCoordinador;
+import gestor_tutorias.controlador.Tutor.FXMLPrincipalTutor;
 import gestor_tutorias.dao.UsuarioDAO;
 import gestor_tutorias.pojo.Usuario;
 import java.io.IOException;
@@ -25,11 +27,11 @@ public class FXMLInicioSesionController implements Initializable {
     @FXML
     private TextField tfUsuario;
     @FXML
-    private PasswordField pfPassword; // Antes se llamaba tfPassword
+    private PasswordField pfPassword;
     @FXML
-    private Label lbErrorUsuario;     // Etiqueta roja debajo del usuario
+    private Label lbErrorUsuario;
     @FXML
-    private Label lbErrorPassword;    // Etiqueta roja debajo de la contraseña
+    private Label lbErrorPassword;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,45 +62,69 @@ public class FXMLInicioSesionController implements Initializable {
         }
 
         if(isValido){
-            validarCredencialesBD(matricula, password);
+            validarCredenciales(matricula, password);
         }
     }
 
-    private void validarCredencialesBD(String matricula, String password) {
+    private void validarCredenciales(String usuario, String password) {
         try {
-            Usuario usuarioSesion = UsuarioDAO.iniciarSesion(matricula, password);
+            Usuario usuarioSesion = UsuarioDAO.iniciarSesion(usuario, password);
 
-            if(usuarioSesion != null){
-                irMenuPrincipal(usuarioSesion);
+            if (usuarioSesion != null) {
+                // --- LINEA DE DEPURACIÓN (Bórrala cuando arreglemos el problema) ---
+                System.out.println("Usuario encontrado: " + usuarioSesion.getNombreCompleto());
+                System.out.println("ID ROL detectado: " + usuarioSesion.getIdRol());
+                // ------------------------------------------------------------------
+
+                switch (usuarioSesion.getIdRol()) {
+                    case 1:
+                        irPantallaPrincipal("Administrador/FXMLPrincipalAdministrador.fxml", usuarioSesion);
+                        break;
+                    case 2:
+                        irPantallaPrincipal("Coordinador/FXMLPrincipalCoordinador.fxml", usuarioSesion);
+                        break;
+                    case 3:
+                        irPantallaPrincipal("Tutor/FXMLPrincipalTutor.fxml", usuarioSesion);
+                        break;
+                    default:
+                        lbErrorUsuario.setText("Rol no reconocido (ID: " + usuarioSesion.getIdRol() + ")");
+                }
             } else {
-                // Si el usuario no existe, mostramos alerta o mensaje en etiquetas
-                mostrarAlerta("Credenciales incorrectas", "El usuario o contraseña no son válidos.");
+                lbErrorPassword.setText("Usuario y/o contraseña incorrectos.");
             }
         } catch (SQLException ex) {
+           System.out.println("Error de conexión: " + ex.getMessage());
             ex.printStackTrace();
-            mostrarAlerta("Error de conexión", "No se pudo conectar con la base de datos.");
         }
     }
 
-    private void irMenuPrincipal(Usuario usuario) {
+
+    private void irPantallaPrincipal(String rutaFXML, Usuario usuario) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Administrador/FXMLPrincipalAdministrador.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/" + rutaFXML));
             Parent root = loader.load();
 
-            FXMLPrincipalAdministradorController controlador = loader.getController();
-            controlador.inicializarInformacion(usuario);
-
+            if (usuario.getIdRol() == 1) {
+                FXMLPrincipalAdministradorController controller = loader.getController();
+                controller.inicializarInformacion(usuario);
+            } else if (usuario.getIdRol() == 2) {
+                FXMLPrincipalCoordinador controller = loader.getController();
+                controller.inicializarInformacion(usuario);
+            } else if (usuario.getIdRol() == 3) {
+                FXMLPrincipalTutor controller = loader.getController();
+                controller.inicializarInformacion(usuario);
+            }
             Stage escenario = new Stage();
             escenario.setScene(new Scene(root));
-            escenario.setTitle("Menú Principal - Sistema de Tutorías");
+            escenario.setTitle("Sistema de Gestión de Tutorías - " + usuario.getRolNombre());
             escenario.show();
-
             Stage escenarioActual = (Stage) tfUsuario.getScene().getWindow();
             escenarioActual.close();
 
         } catch (IOException ex) {
             ex.printStackTrace();
-            mostrarAlerta("Error", "No se pudo cargar la ventana del menú principal.");
+            System.out.println("Error al cargar el menú: " + ex.getMessage());
         }
     }
 

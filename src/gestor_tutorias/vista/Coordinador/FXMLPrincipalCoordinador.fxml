@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Administrador.FXMLPrincipalAdministradorController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLPrincipalCoordinador">
     <children>
 
         <Pane prefHeight="99.0" prefWidth="900.0" style="-fx-background-color: #006DB2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -31,18 +32,18 @@
 
         <Label layoutX="14.0" layoutY="569.0" text="Universidad Veracruzana" textFill="#999999" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
 
-        <Button fx:id="planeaciontutoria" layoutX="370.0" layoutY="251.0" mnemonicParsing="false" onAction="#clickplaneaciontutoria" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Planeacion de tutorias" textFill="#333333">
+        <Button layoutX="370.0" layoutY="251.0" mnemonicParsing="false" onAction="#clicPlaneacion" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Planeacion de tutorias" textFill="#333333">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
 
-        <Button fx:id="reportetutoria" layoutX="624.0" layoutY="245.0" mnemonicParsing="false" onAction="#clickreportetutoria" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Reportes de tutoria" textFill="#333333">
+        <Button fx:id="reportetutoria" layoutX="626.0" layoutY="251.0" mnemonicParsing="false" onAction="#clicReporte" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Reportes de tutoria" textFill="#333333">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-      <Button fx:id="estudiante" layoutX="113.0" layoutY="251.0" mnemonicParsing="false" onAction="#clicestudiante" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Estudiante" textFill="#333333">
+      <Button layoutX="113.0" layoutY="251.0" mnemonicParsing="false" onAction="#clicEstudiante" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Estudiante" textFill="#333333">
          <font>
             <Font size="18.0" />
          </font>
