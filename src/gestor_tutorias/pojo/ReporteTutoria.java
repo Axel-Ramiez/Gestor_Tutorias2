@@ -3,6 +3,7 @@ package gestor_tutorias.pojo;
 import gestor_tutorias.Enum.EstadoReporte;
 
 public class ReporteTutoria {
+
     private int idReporte;
     private int idTutor;
     private int idEstudiante;
@@ -12,10 +13,16 @@ public class ReporteTutoria {
     private boolean asistencia;
     private EstadoReporte estado;
 
+
+    private String nombreTutor;
+    private String nombreEstudiante;
+    private String fecha;
+    private String periodoEscolar;
+
     public ReporteTutoria() {
     }
 
-    // Constructor para inserción (sin idReporte)
+
     public ReporteTutoria(int idTutor, int idEstudiante, int idFechaTutoria, String reporte,
                           String respuestaCoordinador, boolean asistencia) {
         this.idTutor = idTutor;
@@ -24,10 +31,9 @@ public class ReporteTutoria {
         this.reporte = reporte;
         this.respuestaCoordinador = respuestaCoordinador;
         this.asistencia = asistencia;
-        // 'estado' se deja para el valor por defecto de la DB ('Pendiente')
     }
 
-    // Constructor completo (útil para recuperar de la DB)
+
     public ReporteTutoria(int idReporte, int idTutor, int idEstudiante, int idFechaTutoria,
                           String reporte, String respuestaCoordinador, boolean asistencia, EstadoReporte estado) {
         this.idReporte = idReporte;
@@ -40,7 +46,7 @@ public class ReporteTutoria {
         this.estado = estado;
     }
 
-    // --- GETTERS Y SETTERS ---
+    // --- GETTERS Y SETTERS PRINCIPALES ---
     public int getIdReporte() { return idReporte; }
     public void setIdReporte(int idReporte) { this.idReporte = idReporte; }
 
@@ -64,6 +70,19 @@ public class ReporteTutoria {
 
     public EstadoReporte getEstado() { return estado; }
     public void setEstado(EstadoReporte estado) { this.estado = estado; }
+
+    // --- GETTERS Y SETTERS AUXILIARES (Vitales para la TableView) ---
+    public String getNombreTutor() { return nombreTutor; }
+    public void setNombreTutor(String nombreTutor) { this.nombreTutor = nombreTutor; }
+
+    public String getNombreEstudiante() { return nombreEstudiante; }
+    public void setNombreEstudiante(String nombreEstudiante) { this.nombreEstudiante = nombreEstudiante; }
+
+    public String getFecha() { return fecha; }
+    public void setFecha(String fecha) { this.fecha = fecha; }
+
+    public String getPeriodoEscolar() { return periodoEscolar; }
+    public void setPeriodoEscolar(String periodoEscolar) { this.periodoEscolar = periodoEscolar; }
 
     @Override
     public String toString() {

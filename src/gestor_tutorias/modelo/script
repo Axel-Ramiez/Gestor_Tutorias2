@@ -102,7 +102,7 @@ CREATE TABLE reporte_tutoria (
   id_reporte int NOT NULL AUTO_INCREMENT,
   id_tutor int NOT NULL,
   id_estudiante int NOT NULL,
-  id_fecha_tutoria int NOT NULL, -- <--- AQUÍ está tu referencia por ID
+  id_fecha_tutoria int NOT NULL,
   reporte text NOT NULL,
   respuesta_coordinador text,
   asistencia tinyint(1) DEFAULT '0',

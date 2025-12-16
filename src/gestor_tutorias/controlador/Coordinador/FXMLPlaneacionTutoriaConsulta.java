@@ -1,134 +1,168 @@
 package gestor_tutorias.controlador.Coordinador;
 
+import gestor_tutorias.dao.CarreraDAO;
+import gestor_tutorias.dao.PeriodoEscolarDAO;
 import gestor_tutorias.dao.PlaneacionTutoriaDAO;
+import gestor_tutorias.pojo.Carrera;
+import gestor_tutorias.pojo.PeriodoEscolar;
 import gestor_tutorias.pojo.PlaneacionTutoria;
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import gestor_tutorias.dao.PlaneacionTutoriaDAO;
-import gestor_tutorias.pojo.PlaneacionTutoria;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.stage.Stage;
 
-public class FXMLPlaneacionTutoriaConsulta {
+public class FXMLPlaneacionTutoriaConsulta implements Initializable {
 
-    @FXML
-    private Label idPlaneacion;
+    // --- ELEMENTOS DE LA GUI ---
+    @FXML private ComboBox<PeriodoEscolar> cbPeriodo;
+    @FXML private ComboBox<Carrera> cbCarrera;
+    @FXML private ComboBox<Integer> cbSesion; // 1, 2, 3
+    @FXML private DatePicker fechaTutoria;
+    @FXML private DatePicker fechaCierre;
+    @FXML private TextArea temastratar;
+    @FXML private TextField tfIdPlaneacion; // ID visible pero no editable
 
+    // --- LÓGICA ---
     private PlaneacionTutoria planeacionActual;
-
-
-    @FXML
-    private DatePicker fecha;
-
-    @FXML
-    private DatePicker fechacierre;
-
-    @FXML
-    private TextField periodo;
-
-    @FXML
-    private TextField carrera;
-
-    @FXML
-    private TextField sesion;
-
-    @FXML
-    private TextArea temastratar;
-
-    @FXML
-    private TextField id; // corresponde al fx:id="id" en FXML
-
     private final PlaneacionTutoriaDAO dao = new PlaneacionTutoriaDAO();
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        cargarCatalogos();
+        // Inicializamos las sesiones (Generalmente son 1, 2 o 3)
+        cbSesion.setItems(FXCollections.observableArrayList(1, 2, 3, 4));
+    }
+
+    private void cargarCatalogos() {
+        try {
+            // Llenar Combo de Periodos
+            List<PeriodoEscolar> periodos = PeriodoEscolarDAO.obtenerTodos();
+            cbPeriodo.setItems(FXCollections.observableArrayList(periodos));
+
+            // Llenar Combo de Carreras (Necesitas tener CarreraDAO)
+            List<Carrera> carreras = CarreraDAO.obtenerTodas();
+            cbCarrera.setItems(FXCollections.observableArrayList(carreras));
+
+        } catch (SQLException e) {
+            mostrarAlerta("Error", "No se pudieron cargar los catálogos (Periodos/Carreras).");
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void guardarPlaneacionTutoria() {
+        // 1. Validaciones
+        if (cbPeriodo.getValue() == null || cbCarrera.getValue() == null || cbSesion.getValue() == null) {
+            mostrarAlerta("Advertencia", "Seleccione Periodo, Carrera y Número de Sesión.");
+            return;
+        }
+        if (fechaTutoria.getValue() == null) {
+            mostrarAlerta("Advertencia", "Seleccione la fecha de la tutoría.");
+            return;
+        }
+
         try {
-            if (fecha.getValue() == null || fechacierre.getValue() == null) {
-                mostrarAlerta("Fechas obligatorias");
-                return;
-            }
+            // 2. Obtener datos de los ComboBox (Objetos completos)
+            int idPeriodo = cbPeriodo.getValue().getIdPeriodo();
+            int idCarrera = cbCarrera.getValue().getIdCarrera();
+            int numSesion = cbSesion.getValue();
+            LocalDate fechaT = fechaTutoria.getValue();
+            // Si fechaCierre es nula, usamos la misma fecha de tutoría
+            LocalDate fechaC = (fechaCierre.getValue() != null) ? fechaCierre.getValue() : fechaT;
+            String temas = temastratar.getText();
 
-            int idPeriodo = Integer.parseInt(periodo.getText());
-            int idCarrera = Integer.parseInt(carrera.getText());
-            int numeroSesion = Integer.parseInt(sesion.getText());
-            LocalDate fechaCierre = fechacierre.getValue();
-
+            // 3. Guardar o Actualizar
             if (planeacionActual == null) {
-                // Crear nueva planeación
-                PlaneacionTutoria nueva = new PlaneacionTutoria(
-                        idPeriodo,
-                        idCarrera,
-                        fechaCierre,
-                        numeroSesion,
-                        temastratar.getText()
-                );
+                // NUEVO
+                PlaneacionTutoria nueva = new PlaneacionTutoria();
+                nueva.setIdPeriodo(idPeriodo);
+                nueva.setIdCarrera(idCarrera);
+                nueva.setNumeroSesion(numSesion);
+                nueva.setFechaTutoria(fechaT); // Asegúrate que tu POJO tenga este campo
+                // nueva.setFechaCierre(fechaC); // Si tu BD lo maneja
+                nueva.setTemas(temas);
+
                 dao.guardarPlaneacion(nueva);
-                mostrarAlerta("Planeación guardada correctamente");
+                mostrarAlerta("Éxito", "Planeación registrada.");
             } else {
-                // Editar existente
+                // EDITAR
                 planeacionActual.setIdPeriodo(idPeriodo);
                 planeacionActual.setIdCarrera(idCarrera);
-                planeacionActual.setNumeroSesion(numeroSesion);
-                planeacionActual.setFechaCierreReportes(fechaCierre);
-                planeacionActual.setTemas(temastratar.getText());
+                planeacionActual.setNumeroSesion(numSesion);
+                planeacionActual.setFechaTutoria(fechaT);
+                planeacionActual.setTemas(temas);
 
                 dao.actualizarPlaneacion(planeacionActual);
-                mostrarAlerta("Planeación actualizada correctamente");
+                mostrarAlerta("Éxito", "Planeación actualizada.");
             }
+            cerrarVentana();
 
-            limpiarCampos();
-
-        } catch (NumberFormatException e) {
-            mostrarAlerta("Datos numéricos inválidos");
         } catch (SQLException e) {
-            e.printStackTrace();
-            mostrarAlerta("Error al guardar planeación");
+            mostrarAlerta("Error BD", "Error al guardar: " + e.getMessage());
         }
     }
 
     @FXML
     private void eliminarPlaneacionTutoria() {
+        if (planeacionActual == null) return;
+
         try {
-            if (planeacionActual != null) {
-                dao.eliminarPlaneacion(planeacionActual.getIdFechaTutoria());
-                mostrarAlerta("Planeación eliminada");
-                limpiarCampos();
-            }
+            dao.eliminarPlaneacion(planeacionActual.getIdFechaTutoria());
+            mostrarAlerta("Información", "Planeación eliminada.");
+            cerrarVentana();
         } catch (SQLException e) {
-            e.printStackTrace();
-            mostrarAlerta("Error al eliminar planeación");
+            mostrarAlerta("Error", "No se pudo eliminar (quizás ya tiene reportes asociados).");
         }
     }
 
     public void cargarPlaneacion(PlaneacionTutoria plan) {
         this.planeacionActual = plan;
-        id.setText(String.valueOf(plan.getIdFechaTutoria()));
-        periodo.setText(String.valueOf(plan.getIdPeriodo()));
-        carrera.setText(String.valueOf(plan.getIdCarrera()));
-        sesion.setText(String.valueOf(plan.getNumeroSesion()));
-        fecha.setValue(plan.getFechaCierreReportes());
-        fechacierre.setValue(plan.getFechaCierreReportes());
+        tfIdPlaneacion.setText(String.valueOf(plan.getIdFechaTutoria()));
         temastratar.setText(plan.getTemas());
+
+        // Seleccionar los valores en los ComboBox
+        // OJO: Para que esto funcione, los objetos deben ser iguales (equals) o buscamos por ID
+        seleccionarEnComboPeriodo(plan.getIdPeriodo());
+        seleccionarEnComboCarrera(plan.getIdCarrera());
+        cbSesion.setValue(plan.getNumeroSesion());
+
+        // Fechas
+        // fechaTutoria.setValue(plan.getFechaTutoria()); // Asumiendo LocalDate en POJO
     }
 
-    private void limpiarCampos() {
-        idPlaneacion.setText("");
-        periodo.clear();
-        carrera.clear();
-        sesion.clear();
-        fecha.setValue(null);
-        fechacierre.setValue(null);
-        temastratar.clear();
-        planeacionActual = null;
+    // Métodos auxiliares para seleccionar en los combos por ID
+    private void seleccionarEnComboPeriodo(int idBuscado) {
+        for (PeriodoEscolar p : cbPeriodo.getItems()) {
+            if (p.getIdPeriodo() == idBuscado) {
+                cbPeriodo.setValue(p);
+                break;
+            }
+        }
     }
 
-    private void mostrarAlerta(String mensaje) {
+    private void seleccionarEnComboCarrera(int idBuscado) {
+        for (Carrera c : cbCarrera.getItems()) {
+            if (c.getIdCarrera() == idBuscado) {
+                cbCarrera.setValue(c);
+                break;
+            }
+        }
+    }
+
+    private void cerrarVentana() {
+        Stage stage = (Stage) tfIdPlaneacion.getScene().getWindow();
+        stage.close();
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
+        alert.setTitle(titulo);
         alert.setContentText(mensaje);
         alert.showAndWait();
     }

@@ -10,14 +10,29 @@ import java.util.List;
 public class PlaneacionTutoriaDAO {
     private static final String TABLA = "planeacion_tutoria";
 
+    // INSERT: Guardamos la fecha real de la tutoría en la columna 'fecha'
     private static final String SQL_INSERT =
             "INSERT INTO " + TABLA + " (id_periodo, id_carrera, fecha, numero_sesion, temas) VALUES (?, ?, ?, ?, ?)";
+
+    // SELECTS: Agregamos INNER JOIN para obtener los nombres de Periodo y Carrera
     private static final String SQL_SELECT_BY_ID =
-            "SELECT id_fecha_tutoria, id_periodo, id_carrera, fecha, numero_sesion, temas FROM " + TABLA + " WHERE id_fecha_tutoria = ?";
+            "SELECT p.id_fecha_tutoria, p.id_periodo, p.id_carrera, p.fecha, p.numero_sesion, p.temas, " +
+                    "pe.nombre AS periodo_nombre, c.nombre AS carrera_nombre " +
+                    "FROM " + TABLA + " p " +
+                    "INNER JOIN periodo_escolar pe ON p.id_periodo = pe.id_periodo " +
+                    "INNER JOIN carrera c ON p.id_carrera = c.id_carrera " +
+                    "WHERE p.id_fecha_tutoria = ?";
+
     private static final String SQL_SELECT_ALL =
-            "SELECT id_fecha_tutoria, id_periodo, id_carrera, fecha, numero_sesion, temas FROM " + TABLA;
+            "SELECT p.id_fecha_tutoria, p.id_periodo, p.id_carrera, p.fecha, p.numero_sesion, p.temas, " +
+                    "pe.nombre AS periodo_nombre, c.nombre AS carrera_nombre " +
+                    "FROM " + TABLA + " p " +
+                    "INNER JOIN periodo_escolar pe ON p.id_periodo = pe.id_periodo " +
+                    "INNER JOIN carrera c ON p.id_carrera = c.id_carrera";
+
     private static final String SQL_UPDATE =
             "UPDATE " + TABLA + " SET id_periodo = ?, id_carrera = ?, fecha = ?, numero_sesion = ?, temas = ? WHERE id_fecha_tutoria = ?";
+
     private static final String SQL_DELETE =
             "DELETE FROM " + TABLA + " WHERE id_fecha_tutoria = ?";
 
@@ -26,11 +41,23 @@ public class PlaneacionTutoriaDAO {
         int idFechaTutoria = rs.getInt("id_fecha_tutoria");
         int idPeriodo = rs.getInt("id_periodo");
         int idCarrera = rs.getInt("id_carrera");
-        LocalDate fechaCierreReportes = rs.getDate("fecha").toLocalDate();
+
+        // Mapeamos la columna 'fecha' de la BD a fechaTutoria
+        LocalDate fechaTutoria = rs.getDate("fecha").toLocalDate();
+        // Como la BD no tiene 'fecha_cierre', usamos la misma fecha temporalmente
+        LocalDate fechaCierre = fechaTutoria;
+
         int numeroSesion = rs.getInt("numero_sesion");
         String temas = rs.getString("temas");
 
-        return new PlaneacionTutoria(idFechaTutoria, idPeriodo, idCarrera, fechaCierreReportes, numeroSesion, temas);
+        // Usamos el nuevo constructor del POJO
+        PlaneacionTutoria plan = new PlaneacionTutoria(idFechaTutoria, idPeriodo, idCarrera, fechaTutoria, fechaCierre, numeroSesion, temas);
+
+        // Llenamos los datos auxiliares para los ComboBox/Tabla
+        plan.setPeriodoNombre(rs.getString("periodo_nombre"));
+        plan.setCarreraNombre(rs.getString("carrera_nombre"));
+
+        return plan;
     }
 
     public int guardarPlaneacion(PlaneacionTutoria planeacion) throws SQLException {
@@ -45,7 +72,8 @@ public class PlaneacionTutoriaDAO {
 
             ps.setInt(1, planeacion.getIdPeriodo());
             ps.setInt(2, planeacion.getIdCarrera());
-            ps.setDate(3, Date.valueOf(planeacion.getFechaCierreReportes()));
+            // Guardamos la fecha principal de la tutoría
+            ps.setDate(3, Date.valueOf(planeacion.getFechaTutoria()));
             ps.setInt(4, planeacion.getNumeroSesion());
             ps.setString(5, planeacion.getTemas());
 
@@ -121,7 +149,8 @@ public class PlaneacionTutoriaDAO {
 
             ps.setInt(1, planeacion.getIdPeriodo());
             ps.setInt(2, planeacion.getIdCarrera());
-            ps.setDate(3, Date.valueOf(planeacion.getFechaCierreReportes()));
+            // Actualizamos la fecha principal
+            ps.setDate(3, Date.valueOf(planeacion.getFechaTutoria()));
             ps.setInt(4, planeacion.getNumeroSesion());
             ps.setString(5, planeacion.getTemas());
             ps.setInt(6, planeacion.getIdFechaTutoria());
