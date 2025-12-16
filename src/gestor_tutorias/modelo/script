@@ -1,8 +1,8 @@
 
-drop database if exist gestion_tutorias;
+drop database gestion_tutorias;
 
 create database gestion_tutorias;
-use database gestion_tutorias;
+use gestion_tutorias;
 
 CREATE TABLE rol (
   id_rol int NOT NULL AUTO_INCREMENT,
@@ -21,7 +21,7 @@ CREATE TABLE carrera (
   nombre varchar(100) NOT NULL,
   id_facultad int NOT NULL,
   PRIMARY KEY (id_carrera),
-  FOREIGN KEY (id_facultad) REFERENCES facultades (id_facultad)
+  FOREIGN KEY (id_facultad) REFERENCES facultad (id_facultad)
 );
 
 CREATE TABLE periodo_escolar (
@@ -43,7 +43,7 @@ CREATE TABLE usuario (
   activo tinyint(1) DEFAULT '1',
   PRIMARY KEY (id_usuario),
   UNIQUE KEY matricula (matricula),
-  FOREIGN KEY (id_rol) REFERENCES roles (id_rol)
+  FOREIGN KEY (id_rol) REFERENCES rol (id_rol)
 );
 
 
@@ -55,10 +55,10 @@ CREATE TABLE estudiante (
   id_carrera int NOT NULL,
   semestre int DEFAULT 1,
   activo tinyint(1) DEFAULT '1',
-  riesgo tinyint(1) DEFAULT '1'
+  riesgo tinyint(1) DEFAULT '1',
   PRIMARY KEY (id_estudiante),
   UNIQUE KEY matricula (matricula),
-  FOREIGN KEY (id_carrera) REFERENCES carreras (id_carrera)
+  FOREIGN KEY (id_carrera) REFERENCES carrera (id_carrera)
 );
 
 
@@ -68,21 +68,21 @@ CREATE TABLE asignacion_tutor (
   id_estudiante int NOT NULL,
   id_periodo int NOT NULL,
   PRIMARY KEY (id_asignacion),
-  FOREIGN KEY (id_tutor) REFERENCES usuarios (id_usuario),
-  FOREIGN KEY (id_estudiante) REFERENCES estudiantes (id_estudiante),
-  FOREIGN KEY (id_periodo) REFERENCES periodos_escolares (id_periodo)
+  FOREIGN KEY (id_tutor) REFERENCES usuario (id_usuario),
+  FOREIGN KEY (id_estudiante) REFERENCES estudiante (id_estudiante),
+  FOREIGN KEY (id_periodo) REFERENCES periodo_escolar (id_periodo)
 );
 
 CREATE TABLE planeacion_tutoria (
   id_fecha_tutoria int NOT NULL AUTO_INCREMENT,
   id_periodo int NOT NULL,
   id_carrera int NOT NULL,
-  fecha_cierre_reportes date NOT NULL,
+  fecha date NOT NULL,
   numero_sesion int NOT NULL, -- 1, 2, 3
   temas text NOT NULL,
   PRIMARY KEY (id_fecha_tutoria),
-  FOREIGN KEY (id_periodo) REFERENCES periodos_escolares (id_periodo),
-  FOREIGN KEY (id_carrera) REFERENCES carreras (id_carrera)
+  FOREIGN KEY (id_periodo) REFERENCES periodo_escolar (id_periodo),
+  FOREIGN KEY (id_carrera) REFERENCES carrera (id_carrera)
 );
 
 CREATE TABLE horario_tutoria (
@@ -93,9 +93,9 @@ CREATE TABLE horario_tutoria (
   hora_inicio time NOT NULL,
   hora_fin time NOT NULL,
   PRIMARY KEY (id_horario),
-  FOREIGN KEY (id_tutor) REFERENCES usuarios (id_usuario),
-  FOREIGN KEY (id_fecha_tutoria) REFERENCES fechas_tutorias (id_fecha_tutoria),
-  FOREIGN KEY (id_estudiante) REFERENCES estudiantes (id_estudiante)
+  FOREIGN KEY (id_tutor) REFERENCES usuario (id_usuario),
+  FOREIGN KEY (id_fecha_tutoria) REFERENCES planeacion_tutoria (id_fecha_tutoria),
+  FOREIGN KEY (id_estudiante) REFERENCES estudiante (id_estudiante)
 );
 
 
@@ -109,9 +109,9 @@ CREATE TABLE reporte_tutoria (
   asistencia tinyint(1) DEFAULT '0',
   estado ENUM('Pendiente', 'Revisado') NOT NULL DEFAULT 'Pendiente',
   PRIMARY KEY (id_reporte),
-  FOREIGN KEY (id_tutor) REFERENCES usuarios (id_usuario),
-  FOREIGN KEY (id_estudiante) REFERENCES estudiantes (id_estudiante),
-  FOREIGN KEY (id_fecha_tutoria) REFERENCES fechas_tutorias (id_fecha_tutoria)
+  FOREIGN KEY (id_tutor) REFERENCES usuario (id_usuario),
+  FOREIGN KEY (id_estudiante) REFERENCES estudiante (id_estudiante),
+  FOREIGN KEY (id_fecha_tutoria) REFERENCES planeacion_tutoria (id_fecha_tutoria)
 );
 
 CREATE TABLE problematica (
@@ -122,5 +122,44 @@ CREATE TABLE problematica (
   id_experiencia_educativa int DEFAULT NULL,
   estado ENUM('Pendiente', 'Atendida') NOT NULL DEFAULT 'Pendiente',
   PRIMARY KEY (id_problematica),
-  FOREIGN KEY (id_reporte) REFERENCES reportes_tutorias (id_reporte)
+  FOREIGN KEY (id_reporte) REFERENCES reporte_tutoria (id_reporte)
 );
+
+
+INSERT INTO rol (nombre_rol) VALUES
+('Administrador'),
+('Coordinador'),
+('Tutor');
+
+
+INSERT INTO facultad (nombre) VALUES
+('Estadística e Informática'),
+('Ingeniería'),
+('Derecho'),
+('Medicina');
+
+
+INSERT INTO carrera (nombre, id_facultad) VALUES
+('Ingeniería de Software', 1),
+('Redes y Servicios de Cómputo', 1),
+('Estadística', 1),
+('Ingeniería Civil', 2);
+
+
+INSERT INTO periodo_escolar (nombre, fecha_inicio, fecha_fin, activo) VALUES
+('FEB-JUL 2024', '2024-02-06', '2024-07-15', 0),
+('AGO-ENE 2024', '2024-08-12', '2025-01-31', 1);
+
+
+INSERT INTO usuario (matricula, contrasena, nombre_completo, correo, id_rol, activo) VALUES
+('ADM001', '12345', 'Carlos Administrador', 'admin@uv.mx', 1, 1),
+('COR001', '12345', 'Laura Coordinadora', 'lcoord@uv.mx', 2, 1),
+('PRO001', '12345', 'Juan Pérez Tutor', 'jperez@uv.mx', 3, 1),
+('PRO002', '12345', 'Maria Gomez Tutor', 'mgomez@uv.mx', 3, 1);
+
+
+INSERT INTO estudiante (matricula, nombre_completo, correo, id_carrera, semestre, activo, riesgo) VALUES
+('zS20015001', 'Ana Martinez', 'zs20015001@estudiantes.uv.mx', 1, 3, 1, 0),
+('zS20015002', 'Luis Rodriguez', 'zs20015002@estudiantes.uv.mx', 1, 5, 1, 1),
+('zS20015003', 'Pedro Sanchez', 'zs20015003@estudiantes.uv.mx', 2, 1, 1, 0),
+('zS20015004', 'Sofia Torres', 'zs20015004@estudiantes.uv.mx', 1, 7, 1, 1);

@@ -5,19 +5,25 @@ public class Estudiante {
     private String matricula;
     private String nombreCompleto;
     private String correo;
-    private int idCarrera; // Ahora guardamos el ID, no el nombre
+    private int idCarrera;
     private int semestre;
-    private boolean activo;
+    private int activo; // 1 = Activo, 0 = Inactivo
+    private int riesgo; // 1 = En Riesgo, 0 = Sin Riesgo
+
+
+    private String carreraNombre;
 
     public Estudiante() {
     }
 
-    public Estudiante(String matricula, String nombreCompleto, String correo, int idCarrera, int semestre) {
+    public Estudiante(String matricula, String nombreCompleto, String correo, int idCarrera, int semestre, int riesgo) {
         this.matricula = matricula;
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.idCarrera = idCarrera;
         this.semestre = semestre;
+        this.riesgo = riesgo;
+        this.activo = 1; // Por defecto activo
     }
 
     // --- GETTERS Y SETTERS ---
@@ -39,8 +45,14 @@ public class Estudiante {
     public int getSemestre() { return semestre; }
     public void setSemestre(int semestre) { this.semestre = semestre; }
 
-    public boolean isActivo() { return activo; }
-    public void setActivo(boolean activo) { this.activo = activo; }
+    public int getActivo() { return activo; }
+    public void setActivo(int activo) { this.activo = activo; }
+
+    public int getRiesgo() { return riesgo; }
+    public void setRiesgo(int riesgo) { this.riesgo = riesgo; }
+
+    public String getCarreraNombre() { return carreraNombre; }
+    public void setCarreraNombre(String carreraNombre) { this.carreraNombre = carreraNombre; }
 
     @Override
     public String toString() {

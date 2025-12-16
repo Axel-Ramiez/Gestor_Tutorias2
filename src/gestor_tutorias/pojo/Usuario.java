@@ -7,7 +7,10 @@ public class Usuario {
     private String nombreCompleto;
     private String correo;
     private int idRol;
-    private boolean activo;
+    private int activo; // 1 = Activo, 0 = Inactivo
+
+
+    private String rolNombre;
 
     public Usuario() {
     }
@@ -18,6 +21,7 @@ public class Usuario {
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.idRol = idRol;
+        this.activo = 1;
     }
 
     // --- GETTERS Y SETTERS ---
@@ -39,11 +43,14 @@ public class Usuario {
     public int getIdRol() { return idRol; }
     public void setIdRol(int idRol) { this.idRol = idRol; }
 
-    public boolean isActivo() { return activo; }
-    public void setActivo(boolean activo) { this.activo = activo; }
+    public int getActivo() { return activo; }
+    public void setActivo(int activo) { this.activo = activo; }
+
+    public String getRolNombre() { return rolNombre; }
+    public void setRolNombre(String rolNombre) { this.rolNombre = rolNombre; }
 
     @Override
     public String toString() {
-        return nombreCompleto; // Para que se vea bonito en los ComboBox
+        return nombreCompleto;
     }
 }
