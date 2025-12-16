@@ -21,7 +21,7 @@
         <TextField fx:id="tfBusqueda" layoutX="30.0" layoutY="90.0" prefHeight="30.0" prefWidth="300.0" promptText="Buscar por matrícula o nombre..." />
 
         <Button layoutX="550.0" layoutY="90.0" mnemonicParsing="false" onAction="#clicRegistrar" prefHeight="30.0" prefWidth="100.0" style="-fx-cursor: hand;" text="Registrar" />
-        <Button layoutX="660.0" layoutY="90.0" mnemonicParsing="false" onAction="#clicModificar" prefHeight="30.0" prefWidth="100.0" style="-fx-cursor: hand;" text="Modificar" />
+        <Button layoutX="660.0" layoutY="90.0" mnemonicParsing="false" onAction="#clicEditar" prefHeight="30.0" prefWidth="100.0" style="-fx-cursor: hand;" text="Editar" />
         <Button layoutX="770.0" layoutY="90.0" mnemonicParsing="false" onAction="#clicEliminar" prefHeight="30.0" prefWidth="100.0" style="-fx-cursor: hand;" text="Eliminar" />
 
         <TableView fx:id="tbEstudiantes" layoutX="30.0" layoutY="140.0" prefHeight="430.0" prefWidth="840.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="140.0">

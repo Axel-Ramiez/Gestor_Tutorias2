@@ -1,7 +1,6 @@
-package gestor_tutorias.controlador.Administrador; // <--- AQUÍ ESTABA EL DETALLE
+package gestor_tutorias.controlador.Administrador;
 
 import gestor_tutorias.pojo.Usuario;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FXMLPrincipalAdministradorController implements Initializable {
@@ -22,6 +22,7 @@ public class FXMLPrincipalAdministradorController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
     }
 
     public void inicializarInformacion(Usuario usuarioAdmin){
@@ -35,9 +36,7 @@ public class FXMLPrincipalAdministradorController implements Initializable {
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/FXMLInicioSesion.fxml"));
-
             Parent root = loader.load();
-
 
             Scene scene = new Scene(root);
             Stage stageLogin = new Stage();
@@ -57,12 +56,34 @@ public class FXMLPrincipalAdministradorController implements Initializable {
 
     @FXML
     private void clicGestionarUsuarios(ActionEvent event) {
-        mostrarAlerta("Navegación", "Aquí se abrirá la pantalla de Gestión de Usuarios.");
+        irPantalla("/gestor_tutorias/vista/Administrador/FXMLUsuarioConsulta.fxml", "Gestión de Usuarios");
     }
 
     @FXML
     private void clicGestionarEstudiante(ActionEvent event) {
-        mostrarAlerta("Navegación", "Aquí se abrirá la pantalla de Asignar Tutores.");
+
+        irPantalla("/gestor_tutorias/vista/Administrador/FXMLEstudianteConsulta.fxml", "Gestión de Estudiantes");
+    }
+
+
+    private void irPantalla(String rutaFXML, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle(titulo);
+
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            mostrarAlerta("Error de Navegación", "No se pudo cargar la ventana: " + rutaFXML);
+        }
     }
 
     private void mostrarAlerta(String titulo, String mensaje){

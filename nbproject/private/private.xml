@@ -6,6 +6,8 @@
             <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/vista/FXMLInicioSesion.fxml</file>
             <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/controlador/FXMLInicioSesionController.java</file>
             <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/vista/Administrador/FXMLPrincipalAdministrador.fxml</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/controlador/Administrador/FXMLUsuarioConsulta.java</file>
+            <file>file:/C:/Users/raxel/Documents/NetBeansProjects/Gestor_Tutorias/src/gestor_tutorias/controlador/Administrador/FXMLEstudianteConsulta.java</file>
         </group>
     </open-files>
 </project-private>

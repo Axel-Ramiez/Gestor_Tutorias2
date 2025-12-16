@@ -210,7 +210,6 @@ public class Valido {
 
     public void validarFechaNoFutura(LocalDate fecha) {
         if (fecha.isAfter(LocalDate.now())) {
-            ✔
             valido = false;
         }
     }

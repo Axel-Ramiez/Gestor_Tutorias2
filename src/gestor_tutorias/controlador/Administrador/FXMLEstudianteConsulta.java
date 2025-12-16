@@ -2,6 +2,9 @@ package gestor_tutorias.controlador.Administrador;
 
 import gestor_tutorias.dao.EstudianteDAO;
 import gestor_tutorias.pojo.Estudiante;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,13 +13,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class FXMLEstudianteConsulta implements Initializable {
 
@@ -46,17 +54,16 @@ public class FXMLEstudianteConsulta implements Initializable {
     private void configurarColumnas() {
         colMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
         colNombre.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
-        colCarrera.setCellValueFactory(new PropertyValueFactory("idCarrera"));
+        colCarrera.setCellValueFactory(new PropertyValueFactory("carreraNombre"));
         colSemestre.setCellValueFactory(new PropertyValueFactory("semestre"));
         colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
     }
 
     private void cargarEstudiantes() {
         try {
-            // Este método debes tenerlo en tu EstudianteDAO
             List<Estudiante> resultado = EstudianteDAO.obtenerTodos();
             estudiantesList = FXCollections.observableArrayList(resultado);
-            tbEstudiantes.setItems(estudiantesList);
+            configurarBusqueda();
         } catch (SQLException ex) {
             mostrarAlerta("Error de BD", "No se pudieron cargar los estudiantes.");
             ex.printStackTrace();
@@ -65,14 +72,51 @@ public class FXMLEstudianteConsulta implements Initializable {
 
     @FXML
     private void clicRegistrar(ActionEvent event) {
-        mostrarAlerta("Navegación", "Ir a pantalla de registrar Estudiante.");
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Administrador/FXMLEstudiante.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana de atrás
+            stage.setScene(scene);
+            stage.setTitle("Registrar Estudiante");
+            stage.showAndWait();
+
+            cargarEstudiantes();
+
+        } catch (IOException ex) {
+            System.err.println("Error al cargar la ventana de registro: " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     @FXML
-    private void clicModificar(ActionEvent event) {
+    private void clicEditar(ActionEvent event) {
         Estudiante estudianteSeleccionado = tbEstudiantes.getSelectionModel().getSelectedItem();
+
         if (estudianteSeleccionado != null) {
-            mostrarAlerta("Selección", "Vas a editar a: " + estudianteSeleccionado.getNombreCompleto());
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Administrador/FXMLEstudiante.fxml"));
+                Parent root = loader.load();
+
+                // Pasamos los datos
+                FXMLEstudiante controlador = loader.getController();
+                controlador.inicializarValores(estudianteSeleccionado);
+
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(scene);
+                stage.setTitle("Editar Estudiante");
+                stage.showAndWait();
+
+                cargarEstudiantes();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         } else {
             mostrarAlerta("Aviso", "Selecciona un estudiante.");
         }
@@ -112,5 +156,35 @@ public class FXMLEstudianteConsulta implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    private void configurarBusqueda() {
+        if (estudiantesList != null) {
+            FilteredList<Estudiante> filtro = new FilteredList<>(estudiantesList, p -> true);
+            tfBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {
+                filtro.setPredicate(estudiante -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerNewValue = newValue.toLowerCase();
+                    if (estudiante.getNombreCompleto() != null &&
+                            estudiante.getNombreCompleto().toLowerCase().contains(lowerNewValue)) {
+                        return true;
+                    }
+                    if (estudiante.getMatricula() != null &&
+                            estudiante.getMatricula().toLowerCase().contains(lowerNewValue)) {
+                        return true;
+                    }
+                    if (estudiante.getCarreraNombre() != null &&
+                            estudiante.getCarreraNombre().toLowerCase().contains(lowerNewValue)) {
+                        return true;
+                    }
+                    return false; // No coincide
+                });
+            });
+            SortedList<Estudiante> sortedData = new SortedList<>(filtro);
+            sortedData.comparatorProperty().bind(tbEstudiantes.comparatorProperty());
+            tbEstudiantes.setItems(sortedData);
+        }
     }
 }
