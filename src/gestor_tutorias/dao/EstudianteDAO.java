@@ -37,6 +37,36 @@ public class EstudianteDAO {
         return lista;
     }
 
+    public static List<Estudiante> obtenerEstudiantesEnRiesgo() throws SQLException {
+        List<Estudiante> lista = new ArrayList<>();
+        Connection conn = ConexionBD.abrirConexion();
+        if (conn != null) {
+            try {
+                String consulta = "SELECT e.*, c.nombre AS nombre_carrera " +
+                        "FROM estudiante e " +
+                        "INNER JOIN carrera c ON e.id_carrera = c.id_carrera " +
+                        "WHERE e.riesgo = 1 AND e.activo = 1";
+                PreparedStatement ps = conn.prepareStatement(consulta);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    Estudiante e = new Estudiante();
+                    e.setIdEstudiante(rs.getInt("id_estudiante"));
+                    e.setMatricula(rs.getString("matricula"));
+                    e.setNombreCompleto(rs.getString("nombre_completo"));
+                    e.setSemestre(rs.getInt("semestre"));
+                    e.setCorreo(rs.getString("correo"));
+                    e.setIdCarrera(rs.getInt("id_carrera"));
+                    lista.add(e);
+                }
+                rs.close();
+                ps.close();
+            } finally {
+                ConexionBD.cerrarConexion(conn);
+            }
+        }
+        return lista;
+    }
+
 
     public static boolean registrarEstudiante(Estudiante est) throws SQLException {
         boolean resultado = false;

@@ -12,18 +12,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FXMLPrincipalCoordinador implements Initializable {
 
-    @FXML
-    private Label lbNombreAdmin;
+    @FXML private Label lbNombreAdmin;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
-
+    public void initialize(URL url, ResourceBundle rb) { }
 
     public void inicializarInformacion(Usuario usuario) {
         if (usuario != null) {
@@ -33,43 +30,63 @@ public class FXMLPrincipalCoordinador implements Initializable {
 
     @FXML
     private void clicCerrarSesion(ActionEvent event) {
+        // ... (Tu código de cerrar sesión que ya funcionaba) ...
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/FXMLInicioSesion.fxml"));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-            Stage stageLogin = new Stage();
-            stageLogin.setScene(scene);
-            stageLogin.setTitle("Iniciar Sesión");
-            stageLogin.show();
-
             Stage stageActual = (Stage) lbNombreAdmin.getScene().getWindow();
             stageActual.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/FXMLInicioSesion.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) { ex.printStackTrace(); }
     }
+
+    // --- AQUÍ ESTÁ LA MAGIA PARA ABRIR LAS VENTANAS DE TU COMPAÑERO ---
 
     @FXML
     private void clicPlaneacion(ActionEvent event) {
-        mostrarAlerta("Navegación", "Ir a pantalla de Gestión de Periodos y Fechas de Tutoría.");
-        // Aquí cargarás la pantalla de Periodos que discutimos antes
+        // Abre: FXMLPlaneacionTutoriaConsulta.fxml
+        abrirVentana("/gestor_tutorias/vista/Coordinador/FXMLPlaneacionTutoria.fxml", "Planeación de Tutoría");
     }
 
     @FXML
     private void clicReporte(ActionEvent event) {
-        mostrarAlerta("Navegación", "Ir a pantalla de Consulta de Reportes Generales.");
-        // Aquí el coordinador ve quién entregó y quién no
+        // Abre: FXMLReporteTutoriaConsulta.fxml
+        abrirVentana("/gestor_tutorias/vista/Coordinador/FXMLReporteTutoria.fxml", "Reporte de Tutoría");
     }
 
     @FXML
     private void clicEstudiante(ActionEvent event) {
-        mostrarAlerta("Navegación", "Ir a pantalla de Asignación de Tutor a Estudiante.");
-        // Aquí cargarás la pantalla de Asignación de Tutores
+        // Abre: FXMLAlumnoConsulta.fxml
+        abrirVentana("/gestor_tutorias/vista/Coordinador/FXMLAlumno.fxml", "Gestión de Alumno");
+    }
+
+    @FXML
+    private void clicRiesgo(ActionEvent event) {
+        abrirVentana("/gestor_tutorias/vista/Coordinador/FXMLEstudiantesRiesgo.fxml", "Estudiantes en Riesgo");
+    }
+
+    private void abrirVentana(String ruta, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ruta));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana de atrás
+            stage.setScene(scene);
+            stage.setTitle(titulo);
+            stage.showAndWait();
+        } catch (IOException ex) {
+            System.err.println("Error al cargar: " + ruta);
+            ex.printStackTrace();
+            mostrarAlerta("Error", "No se encontró el archivo: " + ruta);
+        }
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
