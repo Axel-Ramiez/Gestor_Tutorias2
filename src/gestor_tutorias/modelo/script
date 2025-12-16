@@ -55,6 +55,7 @@ CREATE TABLE estudiantes (
   id_carrera int NOT NULL,
   semestre int DEFAULT 1,
   activo tinyint(1) DEFAULT '1',
+  riesgo tinyint(1) DEFAULT '1'
   PRIMARY KEY (id_estudiante),
   UNIQUE KEY matricula (matricula),
   FOREIGN KEY (id_carrera) REFERENCES carreras (id_carrera)
