@@ -15,7 +15,7 @@ public class Estudiante {
 
     public Estudiante() {
     }
-
+//
     public Estudiante(String matricula, String nombreCompleto, String correo, int idCarrera, int semestre, int riesgo) {
         this.matricula = matricula;
         this.nombreCompleto = nombreCompleto;

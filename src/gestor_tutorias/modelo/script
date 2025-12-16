@@ -163,3 +163,4 @@ INSERT INTO estudiante (matricula, nombre_completo, correo, id_carrera, semestre
 ('zS20015002', 'Luis Rodriguez', 'zs20015002@estudiantes.uv.mx', 1, 5, 1, 1),
 ('zS20015003', 'Pedro Sanchez', 'zs20015003@estudiantes.uv.mx', 2, 1, 1, 0),
 ('zS20015004', 'Sofia Torres', 'zs20015004@estudiantes.uv.mx', 1, 7, 1, 1);
+

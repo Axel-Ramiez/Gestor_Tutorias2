@@ -133,5 +133,5 @@ public class UsuarioDAO {
         u.setIdRol(rs.getInt("id_rol"));
         u.setRolNombre(rs.getString("nombre_rol"));
         return u;
-    }
+    }//
 }
