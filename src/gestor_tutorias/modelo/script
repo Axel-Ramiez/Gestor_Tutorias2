@@ -1,5 +1,8 @@
 
+drop database if exist gestion_tutorias;
 
+create database gestion_tutorias;
+use database gestion_tutorias;
 
 CREATE TABLE roles (
   id_rol int NOT NULL AUTO_INCREMENT,
@@ -58,7 +61,7 @@ CREATE TABLE estudiantes (
 );
 
 
-CREATE TABLE asignaciones (
+CREATE TABLE asignacion_tutor (
   id_asignacion int NOT NULL AUTO_INCREMENT,
   id_tutor int NOT NULL,
   id_estudiante int NOT NULL,
@@ -69,12 +72,13 @@ CREATE TABLE asignaciones (
   FOREIGN KEY (id_periodo) REFERENCES periodos_escolares (id_periodo)
 );
 
-CREATE TABLE fechas_tutorias (
+CREATE TABLE planeacion_tutoria (
   id_fecha_tutoria int NOT NULL AUTO_INCREMENT,
   id_periodo int NOT NULL,
   id_carrera int NOT NULL,
   fecha_cierre_reportes date NOT NULL,
   numero_sesion int NOT NULL, -- 1, 2, 3
+  temas text NOT NULL,
   PRIMARY KEY (id_fecha_tutoria),
   FOREIGN KEY (id_periodo) REFERENCES periodos_escolares (id_periodo),
   FOREIGN KEY (id_carrera) REFERENCES carreras (id_carrera)

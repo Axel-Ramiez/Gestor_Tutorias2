@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gestor_tutorias.controlador.Coordinador.FXMLReporteTutoria"
-            prefHeight="400.0" prefWidth="600.0">
 
+<?import javafx.scene.image.ImageView?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLReporteTutoria">
+    <children>
+        <Pane prefHeight="73.0" prefWidth="600.0">
+            <children>
+                <ImageView fitHeight="53.0" fitWidth="67.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+                <Label layoutX="81.0" layoutY="26.0" text="Sistema de tutorias - UV" />
+                <Label layoutX="365.0" layoutY="34.0" text="usuario: Coordinador" />
+                <Label layoutX="519.0" layoutY="34.0" text="cerrar sesion" />
+            </children>
+        </Pane>
+        <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
+        <Label layoutX="261.0" layoutY="103.0" text="reporte de tutoria" />
+        <Button layoutX="490.0" layoutY="91.0" mnemonicParsing="false" text="crear nuevo" />
+        <TableView layoutX="14.0" layoutY="137.0" prefHeight="174.0" prefWidth="452.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="id tutoria" />
+                <TableColumn prefWidth="75.0" text="fecha" />
+                <TableColumn prefWidth="75.0" text="hora" />
+                <TableColumn prefWidth="75.0" text="periodo escolar" />
+                <TableColumn prefWidth="75.0" text="id tutor" />
+                <TableColumn prefWidth="75.0" text="id estudiante" />
+            </columns>
+        </TableView>
+        <Button layoutX="403.0" layoutY="91.0" mnemonicParsing="false" text="consultar" />
+
+    </children>
 </AnchorPane>
