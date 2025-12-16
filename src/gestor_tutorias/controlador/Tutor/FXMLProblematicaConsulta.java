@@ -5,6 +5,7 @@ import gestor_tutorias.Enum.EstatusProblematica;
 import gestor_tutorias.filtro.FiltroGeneral;
 import gestor_tutorias.pojo.Problematica;
 import gestor_tutorias.validacion.Valido;
+import gestor_tutorias.validacion.ValidoProblematica;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -32,7 +33,7 @@ public class FXMLProblematicaConsulta {
         };
 
         // ================================
-        // FILTRO + VALIDACIÓN
+        // FILTRO (GENÉRICO, CON FOR)
         // ================================
         for (Object dato : datosFormulario) {
 
@@ -41,10 +42,24 @@ public class FXMLProblematicaConsulta {
             filtro.filtrarDenialOfService();
             filtro.filtrarZeroDay();
             filtro.aplicarFiltroPorTipo();
+        }
 
-            Valido valido = new Valido(dato);
-            valido.validacionGeneral();
-            valido.aplicarValidacionPorTipo();
+        // ================================
+        // VALIDACIÓN (POR ENTIDAD)
+        // ================================
+        ValidoProblematica valido = new ValidoProblematica();
+
+        boolean formularioValido = valido.validarTodo(
+                idreporte.getText(),
+                titulo.getText(),
+                descripcion.getText(),
+                idexperienciaeducativa.getText(),
+                EstatusProblematica.valueOf(estado.getValue())
+        );
+
+        if (!formularioValido) {
+            System.out.println("Formulario inválido");
+            return;
         }
 
         // ================================
@@ -67,6 +82,7 @@ public class FXMLProblematicaConsulta {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     private void eliminarproblematica() {
