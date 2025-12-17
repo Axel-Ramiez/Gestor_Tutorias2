@@ -1,25 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLReporteTutoriaConsulta">
+<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLReporteTutoriaConsulta">
     <children>
-        <Button fx:id="guardar" layoutX="511.0" layoutY="352.0" mnemonicParsing="false" onAction="#guardarReporteTutoria" text="guardar" />
-        <Label layoutX="251.0" layoutY="5.0" text="Reporte de tutoria" />
-        <Label layoutX="285.0" layoutY="23.0" text="datos" />
-        <Label layoutX="109.0" layoutY="53.0" prefHeight="18.0" prefWidth="39.0" text="fecha" />
-        <Label layoutX="293.0" layoutY="53.0" text="periodo escolar" />
-        <Label layoutX="400.0" layoutY="53.0" text="ID tutor" />
-        <Label layoutX="507.0" layoutY="62.0" text="ID estudiante" />
-        <TextField fx:id="periodoEscolarField" layoutX="293.0" layoutY="80.0" prefHeight="26.0" prefWidth="82.0" />
-        <TextField fx:id="idTutorField" layoutX="401.0" layoutY="80.0" prefHeight="26.0" prefWidth="82.0" />
-        <TextField fx:id="idEstudianteField" layoutX="507.0" layoutY="81.0" prefHeight="26.0" prefWidth="66.0" />
-        <DatePicker fx:id="fechaPicker" layoutX="109.0" layoutY="79.0" prefHeight="26.0" prefWidth="74.0" />
-        <TextField fx:id="respuestaCoordinadorField" layoutX="16.0" layoutY="139.0" prefHeight="62.0" prefWidth="558.0" />
-        <TextArea fx:id="reporteTextArea" layoutX="16.0" layoutY="245.0" prefHeight="75.0" prefWidth="558.0" />
-        <CheckBox fx:id="asistenciaCheckBox" layoutX="204.0" layoutY="84.0" mnemonicParsing="false" />
-        <TextField fx:id="idTutoria" layoutX="28.0" layoutY="80.0" prefHeight="26.0" prefWidth="58.0" />
+        <Label layoutX="240.0" layoutY="15.0" text="Detalle de Reporte">
+            <font><Font name="System Bold" size="18.0" /></font>
+        </Label>
 
+        <GridPane hgap="10.0" layoutX="25.0" layoutY="55.0" vgap="10.0">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="100.0" />
+                <ColumnConstraints prefWidth="180.0" />
+                <ColumnConstraints prefWidth="100.0" />
+                <ColumnConstraints prefWidth="180.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints prefHeight="30.0" />
+                <RowConstraints prefHeight="30.0" />
+                <RowConstraints prefHeight="30.0" />
+            </rowConstraints>
+            <children>
+                <Label text="ID Reporte:" />
+                <TextField fx:id="tfIdReporte" disable="true" editable="false" GridPane.columnIndex="1" />
+
+                <Label text="ID Estudiante:" GridPane.columnIndex="2" />
+                <TextField fx:id="tfIdEstudiante" disable="true" GridPane.columnIndex="3" />
+
+                <Label text="ID Tutor:" GridPane.rowIndex="1" />
+                <TextField fx:id="tfIdTutor" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Label text="ID Fecha/Plan:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <TextField fx:id="tfIdFechaTutoria" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                <Label text="Asistencia:" GridPane.rowIndex="2" />
+                <CheckBox fx:id="chbAsistencia" disable="true" mnemonicParsing="false" text="Asistió" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                <Label text="Estado:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <ComboBox fx:id="cbEstado" prefWidth="180.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            </children>
+        </GridPane>
+
+        <Label layoutX="25.0" layoutY="175.0" text="Reporte / Observaciones:" />
+        <TextArea fx:id="taReporte" disable="true" layoutX="25.0" layoutY="195.0" prefHeight="90.0" prefWidth="600.0" wrapText="true" />
+
+        <Label layoutX="25.0" layoutY="300.0" text="Respuesta del Coordinador:" />
+        <TextArea fx:id="taRespuesta" layoutX="25.0" layoutY="320.0" prefHeight="90.0" prefWidth="600.0" wrapText="true" />
+
+        <HBox layoutX="25.0" layoutY="440.0" spacing="15.0" />
+
+        <HBox layoutX="420.0" layoutY="440.0" spacing="15.0" />
+          <Button fx:id="btnGuardar" layoutX="535.0" layoutY="440.0" onAction="#guardarReporte" prefWidth="90.0" style="-fx-background-color: #4CAF50;" text="Responder" textFill="WHITE" />
     </children>
 </AnchorPane>

@@ -1,120 +1,126 @@
 package gestor_tutorias.controlador.Coordinador;
 
+import gestor_tutorias.Enum.EstadoReporte;
 import gestor_tutorias.dao.ReporteTutoriaDAO;
 import gestor_tutorias.pojo.ReporteTutoria;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-public class FXMLReporteTutoriaConsulta {
+public class FXMLReporteTutoriaConsulta implements Initializable {
 
     @FXML
-    private Label idTutoriaLabel;
+    private TextField tfIdReporte;
     @FXML
-    private TextField periodoEscolarField;
+    private TextField tfIdEstudiante;
     @FXML
-    private TextField idTutorField;
+    private TextField tfIdTutor;
     @FXML
-    private TextField idEstudianteField;
+    private TextField tfIdFechaTutoria;
     @FXML
-    private DatePicker fechaPicker;
+    private CheckBox chbAsistencia;
     @FXML
-    private TextArea reporteTextArea;
+    private ComboBox<EstadoReporte> cbEstado;
     @FXML
-    private CheckBox asistenciaCheckBox;
+    private TextArea taReporte;
     @FXML
-    private TextField respuestaCoordinadorField;
+    private TextArea taRespuesta;
 
-    private final ReporteTutoriaDAO reporteDao = new ReporteTutoriaDAO();
     private ReporteTutoria reporteActual;
 
-    @FXML
-    private void initialize() {
-        periodoEscolarField.setEditable(false);
-        idTutorField.setEditable(false);
-        idEstudianteField.setEditable(false);
-        fechaPicker.setDisable(true);
-        reporteTextArea.setEditable(false);
-        asistenciaCheckBox.setDisable(true);
-        respuestaCoordinadorField.setEditable(true);
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        cbEstado.setItems(FXCollections.observableArrayList(EstadoReporte.values()));
+        aplicarEstiloLectura();
     }
 
-    public void cargarReporte(ReporteTutoria reporte) {
+    public void inicializarDatos(ReporteTutoria reporte) {
         this.reporteActual = reporte;
 
+        tfIdReporte.setText(String.valueOf(reporte.getIdReporte()));
 
-        idTutoriaLabel.setText(String.valueOf(reporte.getIdReporte()));
-        periodoEscolarField.setText(reporte.getPeriodoEscolar());
-        reporteTextArea.setText(reporte.getReporte());
-        asistenciaCheckBox.setSelected(reporte.isAsistencia());
+        if(reporte.getNombreEstudiante() != null)
+            tfIdEstudiante.setText(reporte.getNombreEstudiante());
+        else
+            tfIdEstudiante.setText(String.valueOf(reporte.getIdEstudiante()));
 
+        if(reporte.getNombreTutor() != null)
+            tfIdTutor.setText(reporte.getNombreTutor());
+        else
+            tfIdTutor.setText(String.valueOf(reporte.getIdTutor()));
 
-        idTutorField.setText(reporte.getNombreTutor());
-        idEstudianteField.setText(reporte.getNombreEstudiante());
+        tfIdFechaTutoria.setText(reporte.getFecha() != null ? reporte.getFecha() : String.valueOf(reporte.getIdFechaTutoria()));
 
+        chbAsistencia.setSelected(reporte.isAsistencia());
+        cbEstado.setValue(reporte.getEstado());
+        taReporte.setText(reporte.getReporte());
 
         if (reporte.getRespuestaCoordinador() != null) {
-            respuestaCoordinadorField.setText(reporte.getRespuestaCoordinador());
-        }
-
-        if (reporte.getFecha() != null && !reporte.getFecha().isEmpty()) {
-            try {
-
-                LocalDate fecha = LocalDate.parse(reporte.getFecha());
-                fechaPicker.setValue(fecha);
-            } catch (Exception e) {
-                System.out.println("Error al parsear la fecha: " + e.getMessage());
-            }
+            taRespuesta.setText(reporte.getRespuestaCoordinador());
         }
     }
 
     @FXML
-    private void guardarReporteTutoria() {
-        if (reporteActual != null) {
-            String respuesta = respuestaCoordinadorField.getText().trim();
+    private void guardarReporte(ActionEvent event) {
+        String respuesta = taRespuesta.getText();
+        EstadoReporte nuevoEstado = cbEstado.getValue();
 
-            if (respuesta.isEmpty()) {
-                mostrarAlerta("Por favor, escribe una respuesta antes de guardar.", Alert.AlertType.WARNING);
-                return;
+        if (nuevoEstado == null) {
+            mostrarAlerta("Error", "Debe seleccionar un estado.");
+            return;
+        }
+
+        reporteActual.setRespuestaCoordinador(respuesta);
+        reporteActual.setEstado(nuevoEstado);
+
+        try {
+            ReporteTutoriaDAO dao = new ReporteTutoriaDAO();
+
+            boolean exito = dao.actualizarReporte(reporteActual);
+
+            if (exito) {
+                mostrarAlerta("Éxito", "El reporte ha sido respondido y actualizado.");
+                cerrarVentana();
+            } else {
+                mostrarAlerta("Error", "No se pudo guardar la respuesta en la base de datos.");
             }
-
-            try {
-                // Se invoca al método que solo recibe el ID y el String de respuesta
-                boolean exito = reporteDao.actualizarRespuesta(reporteActual.getIdReporte(), respuesta);
-
-                if (exito) {
-                    mostrarAlerta("Respuesta registrada y estado actualizado a REVISADO.", Alert.AlertType.INFORMATION);
-                    cerrarVentana();
-                } else {
-                    mostrarAlerta("No se pudo guardar la respuesta.", Alert.AlertType.ERROR);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                mostrarAlerta("Error de conexión: " + e.getMessage(), Alert.AlertType.ERROR);
-            }
-        } else {
-            mostrarAlerta("No hay reporte seleccionado.", Alert.AlertType.WARNING);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            mostrarAlerta("Error de conexión", "Error al conectar con la base de datos.");
         }
     }
 
-    @FXML
-    private void clicCancelar() {
-        cerrarVentana();
+    private void aplicarEstiloLectura() {
+        String estiloVisible = "-fx-opacity: 1; -fx-text-fill: black; -fx-background-color: #f4f4f4;";
+
+        tfIdReporte.setStyle(estiloVisible);
+        tfIdEstudiante.setStyle(estiloVisible);
+        tfIdTutor.setStyle(estiloVisible);
+        tfIdFechaTutoria.setStyle(estiloVisible);
+        taReporte.setStyle(estiloVisible);
+        chbAsistencia.setStyle("-fx-opacity: 1;");
     }
 
-    private void cerrarVentana() {
-        Stage stage = (Stage) respuestaCoordinadorField.getScene().getWindow();
-        stage.close();
-    }
-
-    private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
-        Alert alert = new Alert(tipo);
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    private void cerrarVentana() {
+        Stage stage = (Stage) tfIdReporte.getScene().getWindow();
+        stage.close();
     }
 }
