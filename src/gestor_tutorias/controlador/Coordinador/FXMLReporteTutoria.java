@@ -55,7 +55,7 @@ public class FXMLReporteTutoria implements Initializable {
     }
 
     @FXML
-    private void consultarReporte() throws IOException {
+    private void consultarReporteTutoria() throws IOException {
         ReporteTutoria seleccionado = tablaReporteTutoria.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
