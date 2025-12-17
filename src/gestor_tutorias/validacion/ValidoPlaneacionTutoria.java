@@ -13,9 +13,6 @@ public class ValidoPlaneacionTutoria {
         this.planeacion = planeacion;
     }
 
-    // ================================
-    // VALIDACIÓN GENERAL DEL POJO
-    // ================================
 
     public void validarPlaneacion() {
         validarIdPeriodo();
@@ -25,9 +22,6 @@ public class ValidoPlaneacionTutoria {
         validarTemas();
     }
 
-    // ================================
-    // id_periodo (FK)
-    // ================================
 
     private void validarIdPeriodo() {
         if (planeacion.getIdPeriodo() <= 0) {
@@ -35,9 +29,6 @@ public class ValidoPlaneacionTutoria {
         }
     }
 
-    // ================================
-    // id_carrera (FK)
-    // ================================
 
     private void validarIdCarrera() {
         if (planeacion.getIdCarrera() <= 0) {
@@ -45,9 +36,6 @@ public class ValidoPlaneacionTutoria {
         }
     }
 
-    // ================================
-    // fecha (date NOT NULL)
-    // ================================
 
     private void validarFecha() {
         LocalDate fecha = planeacion.getFechaCierreReportes();
@@ -57,15 +45,11 @@ public class ValidoPlaneacionTutoria {
             return;
         }
 
-        // No permitir fechas absurdas
         if (fecha.isBefore(LocalDate.of(2000, 1, 1))) {
             valido = false;
         }
     }
 
-    // ================================
-    // numero_sesion (1, 2, 3)
-    // ================================
 
     private void validarNumeroSesion() {
         int sesion = planeacion.getNumeroSesion();
@@ -75,9 +59,6 @@ public class ValidoPlaneacionTutoria {
         }
     }
 
-    // ================================
-    // temas (text NOT NULL)
-    // ================================
 
     private void validarTemas() {
         String temas = planeacion.getTemas();
@@ -87,15 +68,11 @@ public class ValidoPlaneacionTutoria {
             return;
         }
 
-        // Longitud razonable (TEXT, pero no infinito en UI)
         if (temas.length() > 2000) {
             valido = false;
         }
     }
 
-    // ================================
-    // ESTADO FINAL
-    // ================================
 
     public boolean esValido() {
         return valido;

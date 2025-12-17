@@ -139,7 +139,6 @@ public class EstudianteDAO {
         Connection conn = ConexionBD.abrirConexion();
         if (conn != null) {
             try {
-                // Asumiendo que en tu BD la tabla estudiante tiene una columna 'id_tutor'
                 String consulta = "UPDATE estudiante SET id_tutor = ? WHERE id_estudiante = ?";
                 PreparedStatement ps = conn.prepareStatement(consulta);
                 ps.setInt(1, idTutor);

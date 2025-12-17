@@ -10,7 +10,6 @@
 
     <children>
 
-        <!-- BARRA SUPERIOR -->
         <Pane prefHeight="99.0" style="-fx-background-color: #006DB2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
 
@@ -61,7 +60,7 @@
             </font>
         </Button>
 
-        <!-- FOOTER -->
+
         <Label text="Universidad Veracruzana" textFill="#999999" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
       <Button layoutX="375.0" layoutY="362.0" onAction="#clicProblematica" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Problematica">
          <font>

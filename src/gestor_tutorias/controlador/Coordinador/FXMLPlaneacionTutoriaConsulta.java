@@ -118,7 +118,6 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
         cbSesion.setValue(plan.getNumeroSesion());
     }
 
-    // Métodos auxiliares para seleccionar en los combos por ID
     private void seleccionarEnComboPeriodo(int idBuscado) {
         for (PeriodoEscolar p : cbPeriodo.getItems()) {
             if (p.getIdPeriodo() == idBuscado) {

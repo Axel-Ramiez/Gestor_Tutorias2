@@ -192,36 +192,38 @@ public class ReporteTutoriaDAO {
 
     public List<ReporteTutoria> obtenerPorTutor(int idTutor) throws SQLException {
         List<ReporteTutoria> reportes = new ArrayList<>();
-        // Se asume que tienes una clase de conexión llamada ConexionBD
-        Connection conexion = ConexionBD.abrirConexion();
 
-        if (conexion != null) {
-            try {
-                // Consulta que une (JOIN) con la tabla estudiante para obtener el nombre
-                String consulta = "SELECT r.id_reporte, r.fecha, r.periodo_escolar, r.estado, r.asistencia, " +
-                        "e.nombre_completo AS nombre_estudiante " +
+        String sql =
+                "SELECT r.id_reporte, r.estado, r.asistencia, " +
+                        "e.nombre_completo AS nombre_estudiante, " +
+                        "p.fecha AS fecha_tutoria, " +
+                        "pe.nombre AS periodo_nombre " +
                         "FROM reporte_tutoria r " +
                         "INNER JOIN estudiante e ON r.id_estudiante = e.id_estudiante " +
+                        "INNER JOIN planeacion_tutoria p ON r.id_fecha_tutoria = p.id_fecha_tutoria " +
+                        "INNER JOIN periodo_escolar pe ON p.id_periodo = pe.id_periodo " +
                         "WHERE r.id_tutor = ?";
 
-                PreparedStatement prepararSentencia = conexion.prepareStatement(consulta);
-                prepararSentencia.setInt(1, idTutor);
-                ResultSet resultado = prepararSentencia.executeQuery();
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-                while (resultado.next()) {
-                    ReporteTutoria reporte = new ReporteTutoria();
-                    reporte.setIdReporte(resultado.getInt("id_reporte"));
-                    reporte.setFecha(resultado.getString("fecha"));
-                    reporte.setPeriodoEscolar(resultado.getString("periodo_escolar"));
-                    reporte.setEstado(EstadoReporte.valueOf(resultado.getString("estado")));
-                    reporte.setAsistencia(resultado.getBoolean("asistencia"));
-                    reporte.setNombreEstudiante(resultado.getString("nombre_estudiante"));
-                    reportes.add(reporte);
+            ps.setInt(1, idTutor);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ReporteTutoria r = new ReporteTutoria();
+                    r.setIdReporte(rs.getInt("id_reporte"));
+                    r.setEstado(EstadoReporte.fromString(rs.getString("estado")));
+                    r.setAsistencia(rs.getBoolean("asistencia"));
+                    r.setNombreEstudiante(rs.getString("nombre_estudiante"));
+                    r.setFecha(rs.getString("fecha_tutoria"));
+                    r.setPeriodoEscolar(rs.getString("periodo_nombre"));
+
+                    reportes.add(r);
                 }
-            } finally {
-                conexion.close();
             }
         }
         return reportes;
     }
+
 }

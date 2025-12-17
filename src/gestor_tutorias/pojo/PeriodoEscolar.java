@@ -15,7 +15,6 @@ public class PeriodoEscolar {
         this.nombre = nombre;
     }
 
-    // --- GETTERS Y SETTERS ---
     public int getIdPeriodo() { return idPeriodo; }
     public void setIdPeriodo(int idPeriodo) { this.idPeriodo = idPeriodo; }
 

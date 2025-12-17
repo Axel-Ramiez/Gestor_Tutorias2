@@ -30,39 +30,17 @@ public class General {
         return texto;
     }
     public String normalizarRuta(String ruta){
-        /*
-         * USO:
-         * Normaliza rutas eliminando secuencias peligrosas.
-         *
-         * ATAQUE:
-         * Path Traversal
-         *
-         * CAPA:
-         * FILTRO
-         *
-         * NOTA:
-         * Se usa solo si el sistema necesita aceptar rutas controladas.
-         */
+
         return ruta;
     }
 
 
 
-    // =================================================================
-    // PUNTO DE CONTROL CENTRAL
-    // =================================================================
-
-    /**
-     * Punto central de control para validar cualquier dato.
-     * Recibe el dato como String (entrada del usuario) y lo valida según el tipo esperado.
-     */
     public boolean validarDato(String datoString, Object tipoDatoEsperado) {
-        // Usa trim() inmediatamente para quitar espacios de borde antes de validar
         String datoLimpio = (datoString != null) ? datoString.trim() : null;
 
         boolean esValido = false;
 
-        // Si es null o String, se usa String.
         if (tipoDatoEsperado == null || tipoDatoEsperado instanceof String) {
             esValido = validarTipoString(datoLimpio);
         } else if (tipoDatoEsperado instanceof Integer) {
@@ -76,18 +54,12 @@ public class General {
         } else if (tipoDatoEsperado instanceof Character) {
             esValido = validarTipoChar(datoLimpio);
         } else if (tipoDatoEsperado instanceof Class && ((Class<?>) tipoDatoEsperado).isEnum()) {
-            // Manejo de ENUM: se pasa el String y la clase ENUM esperada
             esValido = validarTipoEnum(datoLimpio, (Class<? extends Enum>) tipoDatoEsperado);
         }
 
         return esValido;
     }
 
-    // =================================================================
-    // MÉTODOS DE VALIDACIÓN POR TIPO DE DATO (CON LÓGICA BÁSICA)
-    // =================================================================
-
-    // --- MÉTODOS PARA INT/INTEGER ---
 
     public boolean validarTipoInt(String dato) {
         if (!campoVacioInt(dato)) return false;
@@ -121,7 +93,6 @@ public class General {
     }
     public boolean reglaDeNegocioInt(int valor) { return valor >= 0; }
 
-    // --- MÉTODOS PARA DOUBLE/DOUBLE ---
 
     public boolean validarTipoDouble(String dato) {
         if (!campoVacioDouble(dato)) return false;
@@ -155,7 +126,6 @@ public class General {
     }
     public boolean reglaDeNegocioDouble(double valor) { return valor >= 0.0; }
 
-    // --- MÉTODOS PARA FLOAT/FLOAT ---
 
     public boolean validarTipoFloat(String dato) {
         if (!campoVacioFloat(dato)) return false;
@@ -189,13 +159,11 @@ public class General {
     }
     public boolean reglaDeNegocioFloat(float valor) { return valor >= 0.0f; }
 
-    // --- MÉTODOS PARA DATE/LOCALDATE ---
 
     public boolean validarTipoDate(String dato) {
         if (!campoVacioDate(dato)) return false;
         if (!puroEspacioDate(dato)) return false;
         if (!datoCompatibleDate(dato)) return false;
-        // La longitud está fija en el formato YYYY-MM-DD
         if (!caracterDifusoDate(dato)) return false;
 
         try {
@@ -220,9 +188,8 @@ public class General {
             return false;
         }
     }
-    public boolean reglaDeNegocioDate(LocalDate fecha) { return !fecha.isAfter(LocalDate.now()); } // No permitir fechas futuras
+    public boolean reglaDeNegocioDate(LocalDate fecha) { return !fecha.isAfter(LocalDate.now()); }
 
-    // --- MÉTODOS PARA CHAR/CHARACTER ---
 
     public boolean validarTipoChar(String dato) {
         if (!campoVacioChar(dato)) return false;
@@ -239,10 +206,9 @@ public class General {
     public boolean puroEspacioChar(String dato) { return !dato.trim().isEmpty(); }
     public boolean longitudMaximaChar(String dato, int longitudMaxima) { return dato.length() == 1; }
     public boolean longitudMinimaChar(String dato, int longitudMinima) { return dato.length() == 1; }
-    public boolean caracterDifusoChar(String dato) { return dato.matches("^\\S$"); } // Un solo caracter no espacio
+    public boolean caracterDifusoChar(String dato) { return dato.matches("^\\S$"); }
     public boolean datoCompatibleChar(String dato) { return dato.length() == 1; }
 
-    // --- MÉTODOS PARA STRING/STRING ---
 
     public boolean validarTipoString(String dato) {
         if (!campoVacioString(dato)) return false;
@@ -260,12 +226,11 @@ public class General {
     public boolean puroEspacioString(String dato) { return !dato.trim().isEmpty(); }
     public boolean longitudMaximaString(String dato, int longitudMaxima) { return dato.length() <= longitudMaxima; }
     public boolean longitudMinimaString(String dato, int longitudMinima) { return dato.length() >= longitudMinima; }
-    public boolean caracterDifusoString(String dato) { return !dato.contains("<") && !dato.contains(">"); } // Prevenir XSS simple
-    public boolean datoCompatibleString(String dato) { return true; } // Siempre compatible si pasó los filtros
-    public boolean reglaDeNegocioString(String dato) { return true; } // Por defecto true
+    public boolean caracterDifusoString(String dato) { return !dato.contains("<") && !dato.contains(">"); }
+    public boolean datoCompatibleString(String dato) { return true; }
+    public boolean reglaDeNegocioString(String dato) { return true; }
     public boolean validacionEspecificaString(String dato) { return true; }
 
-    // --- MÉTODOS PARA ENUM ---
 
     public boolean validarTipoEnum(String dato, Class<? extends Enum> enumClass) {
         if (!campoVacioString(dato)) return false;
@@ -277,7 +242,6 @@ public class General {
 
     public boolean datoCompatibleEnum(String dato, Class<? extends Enum> enumClass) {
         try {
-            // Intenta encontrar el valor dentro del ENUM
             Enum.valueOf(enumClass, dato.trim());
             return true;
         } catch (IllegalArgumentException e) {
@@ -285,20 +249,16 @@ public class General {
         }
     }
 
-    // --- MÉTODOS DE VALIDACIÓN DE AUTENTICACIÓN Y ESPECÍFICOS DE CLASE ---
 
     public boolean autenticacionInicioSecion(String matricula, String contrasena) {
         return false;
     }
 
     public boolean validacionEspecificaUsuario(String matricula, String correo) {
-        // Ejemplo: Validar formato de correo con regex
-        // return correo.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$");
         return false;
     }
 
     public boolean validacionEspecificaReporteTutoria(int idTutor, int idEstudiante, LocalDate fecha) {
-        // Ejemplo: Verificar que idTutor existe en la BD
         return false;
     }
 }

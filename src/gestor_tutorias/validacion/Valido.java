@@ -12,9 +12,6 @@ public class Valido {
         this.dato = dato;
     }
 
-    // ================================
-    // VALIDACIÓN GENERAL (TODOS LOS TIPOS)
-    // ================================
 
     public void validacionGeneral() {
         validarNoNulo();
@@ -28,24 +25,15 @@ public class Valido {
     }
 
     public void validarRangoGeneral() {
-        /*
-         Validación genérica de coherencia.
-         Aquí solo se valida que el dato tenga sentido lógico
-         (no reglas de negocio).
-        */
+
         if (!valido) {
             return;
         }
 
-        // Ejemplo: evitar objetos vacíos inesperados
         if (dato instanceof String && ((String) dato).trim().isEmpty()) {
             valido = false;
         }
     }
-
-    // ================================
-    // DECISIÓN POR TIPO
-    // ================================
 
     public void aplicarValidacionPorTipo() {
         if (!valido) {
@@ -69,9 +57,6 @@ public class Valido {
         }
     }
 
-    // ================================
-    // VALIDACIÓN TIPO STRING
-    // ================================
 
     private void validacionTipoString(String valor) {
         validarStringNoVacio(valor);
@@ -99,7 +84,7 @@ public class Valido {
     public void validarStringFormato(String valor) {
         if (!valido) return;
 
-        // Validación genérica: solo caracteres imprimibles
+
         for (char c : valor.toCharArray()) {
             if (Character.isISOControl(c)) {
                 valido = false;
@@ -114,9 +99,6 @@ public class Valido {
         }
     }
 
-    // ================================
-    // VALIDACIÓN TIPO INT / INTEGER
-    // ================================
 
     private void validacionTipoInt(Integer valor) {
         validarNumeroMinimo(valor);
@@ -137,15 +119,12 @@ public class Valido {
     }
 
     public void validarNumeroRango(Integer valor) {
-        // Rango lógico básico
+
         if (valor < -1_000_000 || valor > 1_000_000) {
             valido = false;
         }
     }
 
-    // ================================
-    // VALIDACIÓN TIPO FLOAT / DOUBLE
-    // ================================
 
     private void validacionTipoDecimal(Number valor) {
         validarDecimalMinimo(valor);
@@ -171,9 +150,6 @@ public class Valido {
         }
     }
 
-    // ================================
-    // VALIDACIÓN TIPO BOOLEAN
-    // ================================
 
     private void validacionTipoBoolean(Boolean valor) {
         validarBooleanPermitido(valor);
@@ -185,9 +161,6 @@ public class Valido {
         }
     }
 
-    // ================================
-    // VALIDACIÓN TIPO ENUM
-    // ================================
 
     private void validacionTipoEnum(Enum<?> valor) {
         validarEnumPermitido(valor);
@@ -199,9 +172,6 @@ public class Valido {
         }
     }
 
-    // ================================
-    // VALIDACIÓN TIPO FECHA (LocalDate)
-    // ================================
 
     private void validacionTipoFecha(LocalDate fecha) {
         validarFechaNoFutura(fecha);
@@ -220,9 +190,6 @@ public class Valido {
         }
     }
 
-    // ================================
-    // VALIDACIÓN TIPO HORA (Time)
-    // ================================
 
     private void validacionTipoHora(Time hora) {
         validarHoraInicio(hora);
@@ -243,15 +210,12 @@ public class Valido {
     }
 
     public void validarRangoHorario(Time hora) {
-        // Validación técnica básica
+
         if (hora.getTime() < 0) {
             valido = false;
         }
     }
 
-    // ================================
-    // ESTADO
-    // ================================
 
     public boolean esValido() {
         return valido;

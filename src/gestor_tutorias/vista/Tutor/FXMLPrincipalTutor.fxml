@@ -13,7 +13,7 @@
 
    <children>
 
-      <!-- BARRA SUPERIOR -->
+
       <Pane prefHeight="99.0"
             AnchorPane.topAnchor="0.0"
             AnchorPane.leftAnchor="0.0"
@@ -87,7 +87,7 @@
          </font>
       </Button>
 
-      <!-- FOOTER -->
+
       <Label text="Universidad Veracruzana"
              textFill="#999999"
              AnchorPane.leftAnchor="14.0"

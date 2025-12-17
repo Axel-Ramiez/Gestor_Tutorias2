@@ -3,6 +3,7 @@ package gestor_tutorias.pojo;
 import gestor_tutorias.Enum.EstatusProblematica;
 
 public class Problematica {
+
     private int idProblematica;
     private int idReporte;
     private String titulo;
@@ -10,20 +11,27 @@ public class Problematica {
     private Integer idExperienciaEducativa;
     private EstatusProblematica estado;
 
+
     public Problematica() {
+        this.estado = EstatusProblematica.PENDIENTE;
     }
 
+    public Problematica(int idReporte, String titulo,
+                        String descripcion, Integer idExperienciaEducativa,
+                        EstatusProblematica estado) {
 
-    public Problematica(int idReporte, String titulo, String descripcion, Integer idExperienciaEducativa, EstatusProblematica estado) {
         this.idReporte = idReporte;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.idExperienciaEducativa = idExperienciaEducativa;
-        this.estado = estado;
+        this.estado = (estado != null) ? estado : EstatusProblematica.PENDIENTE;
     }
 
-    // Constructor completo para recuperar de la DB
-    public Problematica(int idProblematica, int idReporte, String titulo, String descripcion, Integer idExperienciaEducativa, EstatusProblematica estado) {
+    public Problematica(int idProblematica, int idReporte,
+                        String titulo, String descripcion,
+                        Integer idExperienciaEducativa,
+                        EstatusProblematica estado) {
+
         this.idProblematica = idProblematica;
         this.idReporte = idReporte;
         this.titulo = titulo;
@@ -32,23 +40,52 @@ public class Problematica {
         this.estado = estado;
     }
 
-    // --- GETTERS Y SETTERS ---
 
-    public int getIdProblematica() { return idProblematica; }
-    public void setIdProblematica(int idProblematica) { this.idProblematica = idProblematica; }
+    public int getIdProblematica() {
+        return idProblematica;
+    }
 
-    public int getIdReporte() { return idReporte; }
-    public void setIdReporte(int idReporte) { this.idReporte = idReporte; }
+    public void setIdProblematica(int idProblematica) {
+        this.idProblematica = idProblematica;
+    }
 
-    public String getTitulo() { return titulo; }
-    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public int getIdReporte() {
+        return idReporte;
+    }
 
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public void setIdReporte(int idReporte) {
+        this.idReporte = idReporte;
+    }
 
-    public Integer getIdExperienciaEducativa() { return idExperienciaEducativa; }
-    public void setIdExperienciaEducativa(Integer idExperienciaEducativa) { this.idExperienciaEducativa = idExperienciaEducativa; }
+    public String getTitulo() {
+        return titulo;
+    }
 
-    public EstatusProblematica getEstado() { return estado; }
-    public void setEstado(EstatusProblematica estado) { this.estado = estado; }
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Integer getIdExperienciaEducativa() {
+        return idExperienciaEducativa;
+    }
+
+    public void setIdExperienciaEducativa(Integer idExperienciaEducativa) {
+        this.idExperienciaEducativa = idExperienciaEducativa;
+    }
+
+    public EstatusProblematica getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstatusProblematica estado) {
+        this.estado = estado;
+    }
 }

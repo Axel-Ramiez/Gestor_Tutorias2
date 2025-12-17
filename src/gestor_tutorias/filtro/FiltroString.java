@@ -9,15 +9,9 @@ public class FiltroString {
         this.dato = dato;
     }
 
-    // ================================
-    // FILTROS STRING
-    // ================================
 
     public void filtrarPhishingString() {
-        /*
-         Ataque: Phishing.
-         Detección básica de URLs sospechosas o intentos de engaño.
-        */
+
         if (dato == null) {
             seguro = false;
             return;
@@ -26,16 +20,11 @@ public class FiltroString {
         String texto = dato.toLowerCase();
 
         if (texto.contains("http://") || texto.contains("https://")) {
-            // Presencia de enlaces en campos que no deberían tenerlos
             seguro = false;
         }
     }
 
     public void filtrarXSSString() {
-        /*
-         Ataque: Cross-Site Scripting (XSS).
-         Detección básica de etiquetas y scripts.
-        */
         if (!seguro) {
             return;
         }
@@ -52,15 +41,10 @@ public class FiltroString {
     }
 
     public void filtrarSpoofingString() {
-        /*
-         Ataque: Spoofing.
-         Uso de caracteres invisibles o confusos.
-        */
         if (!seguro) {
             return;
         }
 
-        // Caracteres de control no imprimibles
         for (char c : dato.toCharArray()) {
             if (Character.isISOControl(c) && c != '\n' && c != '\r' && c != '\t') {
                 seguro = false;
@@ -70,10 +54,6 @@ public class FiltroString {
     }
 
     public void filtrarSQLInjectionString() {
-        /*
-         Ataque: SQL Injection.
-         Detección de palabras clave y patrones comunes.
-        */
         if (!seguro) {
             return;
         }
@@ -93,10 +73,6 @@ public class FiltroString {
     }
 
     public void filtrarDivulgacionInformacionString() {
-        /*
-         Ataque: Divulgación de información.
-         Evita exponer datos sensibles.
-        */
         if (!seguro) {
             return;
         }
@@ -112,10 +88,6 @@ public class FiltroString {
             seguro = false;
         }
     }
-
-    // ================================
-    // ESTADO DEL FILTRO
-    // ================================
 
     public boolean esSeguro() {
         return seguro;

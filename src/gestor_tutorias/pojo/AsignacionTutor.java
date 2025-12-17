@@ -4,7 +4,7 @@ public class AsignacionTutor {
     private int idAsignacion;
     private int idTutor;
     private int idEstudiante;
-    private int idPeriodo; // Mapea directamente a la clave foránea id_periodo
+    private int idPeriodo;
 
     public AsignacionTutor() {
     }

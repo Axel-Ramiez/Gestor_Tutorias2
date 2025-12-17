@@ -13,9 +13,6 @@ public class ValidoEstudiante {
         this.estudiante = estudiante;
     }
 
-    // ================================
-    // VALIDACIÓN GENERAL DEL POJO
-    // ================================
 
     public void validarEstudiante() {
         validarMatricula();
@@ -27,9 +24,6 @@ public class ValidoEstudiante {
         validarRiesgo();
     }
 
-    // ================================
-    // MATRÍCULA
-    // ================================
 
     private void validarMatricula() {
         String matricula = estudiante.getMatricula();
@@ -39,22 +33,16 @@ public class ValidoEstudiante {
             return;
         }
 
-        // Longitud exacta
         if (matricula.length() != 10) {
             valido = false;
             return;
         }
 
-        // Patrón institucional: zS20015001
         String regex = "^[a-z][A-Z][0-9]{8}$";
         if (!Pattern.matches(regex, matricula)) {
             valido = false;
         }
     }
-
-    // ================================
-    // NOMBRE COMPLETO
-    // ================================
 
     private void validarNombreCompleto() {
         String nombre = estudiante.getNombreCompleto();
@@ -69,21 +57,15 @@ public class ValidoEstudiante {
             return;
         }
 
-        // Solo letras y espacios (incluye acentos)
         String regex = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$";
         if (!Pattern.matches(regex, nombre)) {
             valido = false;
         }
     }
 
-    // ================================
-    // CORREO
-    // ================================
-
     private void validarCorreo() {
         String correo = estudiante.getCorreo();
 
-        // Puede ser null (según BD)
         if (correo == null) {
             return;
         }
@@ -93,16 +75,12 @@ public class ValidoEstudiante {
             return;
         }
 
-        // Dominio institucional obligatorio
         String regex = "^[a-zA-Z0-9._%+-]+@estudiantes\\.uv\\.mx$";
         if (!Pattern.matches(regex, correo)) {
             valido = false;
         }
     }
 
-    // ================================
-    // ID CARRERA
-    // ================================
 
     private void validarIdCarrera() {
         int idCarrera = estudiante.getIdCarrera();
@@ -112,9 +90,6 @@ public class ValidoEstudiante {
         }
     }
 
-    // ================================
-    // SEMESTRE
-    // ================================
 
     private void validarSemestre() {
         int semestre = estudiante.getSemestre();
@@ -125,9 +100,6 @@ public class ValidoEstudiante {
         }
     }
 
-    // ================================
-    // ACTIVO
-    // ================================
 
     private void validarActivo() {
         int activo = estudiante.getActivo();
@@ -137,9 +109,6 @@ public class ValidoEstudiante {
         }
     }
 
-    // ================================
-    // RIESGO
-    // ================================
 
     private void validarRiesgo() {
         int riesgo = estudiante.getRiesgo();
@@ -149,9 +118,6 @@ public class ValidoEstudiante {
         }
     }
 
-    // ================================
-    // ESTADO FINAL
-    // ================================
 
     public boolean esValido() {
         return valido;

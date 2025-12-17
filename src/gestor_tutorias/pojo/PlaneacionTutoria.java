@@ -3,23 +3,20 @@ package gestor_tutorias.pojo;
 import java.time.LocalDate;
 
 public class PlaneacionTutoria {
-    // --- ATRIBUTOS DE LA BASE DE DATOS ---
     private int idFechaTutoria;
     private int idPeriodo;
     private int idCarrera;
-    private LocalDate fechaTutoria;        // FECHA REAL DE LA SESIÓN
-    private LocalDate fechaCierreReportes; // FECHA LÍMITE PARA ENTREGAR
+    private LocalDate fechaTutoria;
+    private LocalDate fechaCierreReportes;
     private int numeroSesion;
     private String temas;
 
-    // --- ATRIBUTOS AUXILIARES (Para mostrar en Tablas/Vistas) ---
-    private String periodoNombre; // Ej. "FEB-JUL 2025"
-    private String carreraNombre; // Ej. "Ingeniería de Software"
+    private String periodoNombre;
+    private String carreraNombre;
 
     public PlaneacionTutoria() {
     }
 
-    // Constructor para inserción (Sin ID)
     public PlaneacionTutoria(int idPeriodo, int idCarrera, LocalDate fechaTutoria, LocalDate fechaCierreReportes, int numeroSesion, String temas) {
         this.idPeriodo = idPeriodo;
         this.idCarrera = idCarrera;
@@ -29,7 +26,6 @@ public class PlaneacionTutoria {
         this.temas = temas;
     }
 
-    // Constructor completo (Recuperar de BD)
     public PlaneacionTutoria(int idFechaTutoria, int idPeriodo, int idCarrera, LocalDate fechaTutoria, LocalDate fechaCierreReportes, int numeroSesion, String temas) {
         this.idFechaTutoria = idFechaTutoria;
         this.idPeriodo = idPeriodo;
@@ -40,7 +36,6 @@ public class PlaneacionTutoria {
         this.temas = temas;
     }
 
-    // --- GETTERS Y SETTERS PRINCIPALES ---
 
     public int getIdFechaTutoria() { return idFechaTutoria; }
     public void setIdFechaTutoria(int idFechaTutoria) { this.idFechaTutoria = idFechaTutoria; }
@@ -63,7 +58,6 @@ public class PlaneacionTutoria {
     public String getTemas() { return temas; }
     public void setTemas(String temas) { this.temas = temas; }
 
-    // --- GETTERS Y SETTERS AUXILIARES ---
 
     public String getPeriodoNombre() { return periodoNombre; }
     public void setPeriodoNombre(String periodoNombre) { this.periodoNombre = periodoNombre; }
@@ -73,7 +67,6 @@ public class PlaneacionTutoria {
 
     @Override
     public String toString() {
-        // Esto ayuda a ver qué objeto es si lo imprimes en consola
         return "Sesión " + numeroSesion + " - " + fechaTutoria;
     }
 }

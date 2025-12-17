@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 
 public class FXMLInicioSesionController implements Initializable {
 
-    // Variables que coinciden con TU FXML
     @FXML
     private TextField tfUsuario;
     @FXML

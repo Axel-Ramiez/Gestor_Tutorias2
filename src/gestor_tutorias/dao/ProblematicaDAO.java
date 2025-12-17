@@ -21,7 +21,6 @@ public class ProblematicaDAO {
     private static final String SQL_DELETE =
             "DELETE FROM " + TABLA + " WHERE id_problematica = ?";
 
-    // Helper para convertir ResultSet a POJO
     private Problematica mapearProblematica(ResultSet rs) throws SQLException {
         int idProblematica = rs.getInt("id_problematica");
         int idReporte = rs.getInt("id_reporte");
@@ -91,7 +90,12 @@ public class ProblematicaDAO {
                 ps.setNull(4, Types.INTEGER);
             }
 
-            ps.setString(5, problematica.getEstado().getValorBD());
+            ps.setString(5,
+                    problematica.getEstado() != null
+                            ? problematica.getEstado().getValorBD()
+                            : EstatusProblematica.PENDIENTE.getValorBD()
+            );
+
             ps.setInt(6, problematica.getIdProblematica());
 
             exito = ps.executeUpdate() > 0;
@@ -102,7 +106,6 @@ public class ProblematicaDAO {
         return exito;
     }
 
-    // --- MÉTODOS QUE FALTABAN ---
 
     public List<Problematica> obtenerTodas() throws SQLException {
         List<Problematica> lista = new ArrayList<>();

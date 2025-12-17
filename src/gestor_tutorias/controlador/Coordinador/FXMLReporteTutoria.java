@@ -103,7 +103,6 @@ public class FXMLReporteTutoria implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
-            // Recargar tabla al cerrar la ventana por si cambió el estado
             cargarReportes();
 
         } catch (IOException ex) {

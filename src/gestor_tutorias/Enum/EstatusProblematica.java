@@ -20,6 +20,6 @@ public enum EstatusProblematica {
                 return estatus;
             }
         }
-        return PENDIENTE; // Valor por defecto o lanzar excepción
+        return PENDIENTE;
     }
 }

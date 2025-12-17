@@ -51,7 +51,6 @@ public class AsignacionTutorDAO {
                 }
             }
         } finally {
-            // Cierra recursos de manera segura
             if (rs != null) rs.close();
             if (ps != null) ps.close();
             ConexionBD.cerrarConexion(conn);

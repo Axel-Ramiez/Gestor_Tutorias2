@@ -45,7 +45,6 @@ public class FXMLPrincipalTutor implements Initializable {
             stageLogin.setTitle("Iniciar Sesión");
             stageLogin.show();
 
-            // Aquí SÍ usamos tu lógica antigua para cerrar la actual
             Stage stageActual = (Stage) lbNombreAdmin.getScene().getWindow();
             stageActual.close();
         } catch (IOException ex) {
@@ -59,7 +58,7 @@ public class FXMLPrincipalTutor implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLProblematica.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana de atrás (opcional pero recomendado)
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.setTitle("Registro de Problemáticas");
             stage.showAndWait();
@@ -72,15 +71,24 @@ public class FXMLPrincipalTutor implements Initializable {
 
     @FXML
     private void clicReporteTu(ActionEvent event) {
+        if (usuarioSesion == null) {
+            mostrarAlerta("Sesión no iniciada", "No hay información del tutor.");
+            return;
+        }
+
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLReporteTutoria.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLReporteTutoria.fxml")
+            );
             Parent root = loader.load();
+
             FXMLReporteTutoria controlador = loader.getController();
-            controlador.inicializarInformacion(this.usuarioSesion);
+            controlador.inicializarInformacion(usuarioSesion);
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
             stage.setTitle("Reporte de Tutoría");
+            stage.setScene(new Scene(root));
             stage.showAndWait();
 
         } catch (IOException e) {
@@ -88,6 +96,7 @@ public class FXMLPrincipalTutor implements Initializable {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     private void clicHorarioTu(ActionEvent event) {

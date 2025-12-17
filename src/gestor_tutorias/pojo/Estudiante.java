@@ -7,15 +7,15 @@ public class Estudiante {
     private String correo;
     private int idCarrera;
     private int semestre;
-    private int activo; // 1 = Activo, 0 = Inactivo
-    private int riesgo; // 1 = En Riesgo, 0 = Sin Riesgo
+    private int activo;
+    private int riesgo;
     private int idTutor;
     private String tutorNombre;
     private String carreraNombre;
 
     public Estudiante() {
     }
-//
+
     public Estudiante(String matricula, String nombreCompleto, String correo, int idCarrera, int semestre, int riesgo) {
         this.matricula = matricula;
         this.nombreCompleto = nombreCompleto;
@@ -23,10 +23,9 @@ public class Estudiante {
         this.idCarrera = idCarrera;
         this.semestre = semestre;
         this.riesgo = riesgo;
-        this.activo = 1; // Por defecto activo
+        this.activo = 1;
     }
 
-    // --- GETTERS Y SETTERS ---
     public int getIdEstudiante() { return idEstudiante; }
     public void setIdEstudiante(int idEstudiante) { this.idEstudiante = idEstudiante; }
 

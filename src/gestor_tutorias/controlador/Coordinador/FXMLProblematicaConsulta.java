@@ -25,7 +25,7 @@ public class FXMLProblematicaConsulta implements Initializable {
     @FXML
     private TextField tfIdExperiencia;
     @FXML
-    private ComboBox<EstatusProblematica> cbEstado; // ComboBox tipado con el Enum
+    private ComboBox<EstatusProblematica> cbEstado;
     @FXML
     private TextField tfTitulo;
     @FXML

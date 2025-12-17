@@ -21,7 +21,6 @@ public class Carrera {
         this.idFacultad = idFacultad;
     }
 
-    // --- GETTERS Y SETTERS ---
     public int getIdCarrera() {
         return idCarrera;
     }

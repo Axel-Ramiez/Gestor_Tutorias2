@@ -6,9 +6,7 @@ public class ValidoProblematica {
 
     private boolean valido = true;
 
-    // ================================
-    // VALIDACIÓN GENERAL
-    // ================================
+
 
     public boolean validarTodo(
             String idReporte,
@@ -26,9 +24,7 @@ public class ValidoProblematica {
         return valido;
     }
 
-    // ================================
-    // VALIDACIONES POR CAMPO
-    // ================================
+
 
     public void validarIdReporte(String valor) {
         if (!valido) return;
@@ -99,9 +95,7 @@ public class ValidoProblematica {
         }
     }
 
-    // ================================
-    // ESTADO
-    // ================================
+
 
     public boolean esValido() {
         return valido;
