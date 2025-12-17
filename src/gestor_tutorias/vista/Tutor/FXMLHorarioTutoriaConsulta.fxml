@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="420.0" prefWidth="650.0"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gestor_tutorias.controlador.Tutor.FXMLHorarioTutoriaConsulta">
+
+    <children>
+
+        <Pane prefHeight="60.0" prefWidth="650.0"
+              style="-fx-background-color: #283593;">
+            <children>
+                <Label layoutX="20.0" layoutY="18.0"
+                       text="Consultar / Editar Horario"
+                       textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="16.0"/>
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+
+        <TableView fx:id="tvHorario"
+                   layoutX="20.0" layoutY="80.0"
+                   prefWidth="610.0" prefHeight="200.0">
+
+            <columns>
+                <TableColumn fx:id="colIdHorario" text="ID" prefWidth="60"/>
+                <TableColumn fx:id="colNombreTutor" text="Tutor" prefWidth="160"/>
+                <TableColumn fx:id="colFechaTutoria" text="Fecha" prefWidth="140"/>
+                <TableColumn fx:id="colHoraInicio" text="Inicio" prefWidth="120"/>
+                <TableColumn fx:id="colHoraFin" text="Fin" prefWidth="120"/>
+            </columns>
+
+        </TableView>
+
+        <GridPane layoutX="150.0" layoutY="300.0"
+                  hgap="10" vgap="10">
+
+            <Label text="Hora Inicio (HH:mm)"/>
+            <TextField fx:id="txtHoraInicio" GridPane.columnIndex="1"/>
+
+            <Label text="Hora Fin (HH:mm)" GridPane.rowIndex="1"/>
+            <TextField fx:id="txtHoraFin" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        </GridPane>
+
+        <Button layoutX="220.0" layoutY="360.0"
+                text="Guardar"
+                onAction="#guardar"/>
+
+        <Button layoutX="420.0" layoutY="360.0"
+                text="Cancelar"
+                onAction="#cancelar"/>
+
+    </children>
+</AnchorPane>

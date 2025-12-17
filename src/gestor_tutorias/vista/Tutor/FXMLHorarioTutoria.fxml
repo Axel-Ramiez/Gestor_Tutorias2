@@ -1,34 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
+<AnchorPane prefHeight="450.0" prefWidth="700.0"
             xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="gestor_tutorias.controlador.Tutor.FXMLHorarioTutoria">
 
    <children>
 
-      <Pane layoutX="0.0" layoutY="0.0" prefHeight="100.0" prefWidth="600.0"
+      <Pane prefHeight="70.0" prefWidth="700.0"
             style="-fx-background-color: #283593;">
          <children>
-            <Label layoutX="20.0" layoutY="35.0"
-                   text="Asignación de Horario de Tutoría"
-                   textFill="WHITE"/>
+            <Label layoutX="20.0" layoutY="22.0"
+                   text="Gestión de Horarios"
+                   textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0"/>
+               </font>
+            </Label>
+
+            <Hyperlink layoutX="600.0" layoutY="25.0"
+                       text="Cerrar"
+                       onAction="#clicCerrarSesion"
+                       textFill="WHITE"/>
          </children>
       </Pane>
 
-      <Button fx:id="btnAsignar"
-              layoutX="200.0" layoutY="160.0"
-              text="Asignar Horario"
-              onAction="#clicAsignarHorario"/>
+      <Button layoutX="420.0" layoutY="90.0"
+              text="Consultar"
+              onAction="#consultarHorario"/>
+      <Button layoutX="520.0" layoutY="90.0"
+              text="Crear"
+              onAction="#crearHorario"/>
+      <TableView fx:id="tvHorario"
+                 layoutX="40.0" layoutY="140.0"
+                 prefWidth="620.0" prefHeight="260.0">
 
-      <Button fx:id="btnRegresar"
-              layoutX="200.0" layoutY="210.0"
-              text="Regresar"
-              onAction="#clicRegresar"/>
+         <columns>
+            <TableColumn fx:id="colIdHorario" text="ID" prefWidth="60"/>
+            <TableColumn fx:id="colIdTutor" text="Tutor" prefWidth="100"/>
+            <TableColumn fx:id="colIdFechaTutoria" text="Fecha" prefWidth="140"/>
+            <TableColumn fx:id="colHoraInicio" text="Hora Inicio" prefWidth="150"/>
+            <TableColumn fx:id="colHoraFin" text="Hora Fin" prefWidth="150"/>
+         </columns>
+
+      </TableView>
 
    </children>
 </AnchorPane>
