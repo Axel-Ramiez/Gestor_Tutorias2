@@ -113,7 +113,6 @@ CREATE TABLE reporte_tutoria (
   FOREIGN KEY (id_fecha_tutoria) REFERENCES planeacion_tutoria (id_fecha_tutoria)
 ) ENGINE=InnoDB;
 
-
 CREATE TABLE problematica (
   id_problematica int NOT NULL AUTO_INCREMENT,
   id_reporte int NOT NULL,

@@ -21,7 +21,7 @@ public class ProblematicaDAO {
     private static final String SQL_DELETE =
             "DELETE FROM " + TABLA + " WHERE id_problematica = ?";
 
-
+    // Helper para convertir ResultSet a POJO
     private Problematica mapearProblematica(ResultSet rs) throws SQLException {
         int idProblematica = rs.getInt("id_problematica");
         int idReporte = rs.getInt("id_reporte");
@@ -33,7 +33,8 @@ public class ProblematicaDAO {
             idExperienciaEducativa = null;
         }
 
-        EstatusProblematica estado = EstatusProblematica.valueOf(rs.getString("estado"));
+        String estadoString = rs.getString("estado");
+        EstatusProblematica estado = EstatusProblematica.fromString(estadoString);
 
         return new Problematica(idProblematica, idReporte, titulo, descripcion, idExperienciaEducativa, estado);
     }
@@ -47,12 +48,9 @@ public class ProblematicaDAO {
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
-
-
             ps.setInt(1, problematica.getIdReporte());
             ps.setString(2, problematica.getTitulo());
             ps.setString(3, problematica.getDescripcion());
-
 
             if (problematica.getIdExperienciaEducativa() != null) {
                 ps.setInt(4, problematica.getIdExperienciaEducativa());
@@ -60,20 +58,13 @@ public class ProblematicaDAO {
                 ps.setNull(4, Types.INTEGER);
             }
 
-
-            if (problematica.getEstado() != null) {
-                ps.setString(5, problematica.getEstado().toString());
-            } else {
-                ps.setString(5, "Pendiente");
-            }
+            ps.setString(5, (problematica.getEstado() != null) ?
+                    problematica.getEstado().getValorBD() : EstatusProblematica.PENDIENTE.getValorBD());
 
             int filasAfectadas = ps.executeUpdate();
-
             if (filasAfectadas > 0) {
                 rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    idGenerado = rs.getInt(1);
-                }
+                if (rs.next()) idGenerado = rs.getInt(1);
             }
         } finally {
             if (rs != null) rs.close();
@@ -83,18 +74,66 @@ public class ProblematicaDAO {
         return idGenerado;
     }
 
+    public boolean actualizarProblematica(Problematica problematica) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        boolean exito = false;
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_UPDATE);
+            ps.setInt(1, problematica.getIdReporte());
+            ps.setString(2, problematica.getTitulo());
+            ps.setString(3, problematica.getDescripcion());
+
+            if (problematica.getIdExperienciaEducativa() != null) {
+                ps.setInt(4, problematica.getIdExperienciaEducativa());
+            } else {
+                ps.setNull(4, Types.INTEGER);
+            }
+
+            ps.setString(5, problematica.getEstado().getValorBD());
+            ps.setInt(6, problematica.getIdProblematica());
+
+            exito = ps.executeUpdate() > 0;
+        } finally {
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return exito;
+    }
+
+    // --- MÉTODOS QUE FALTABAN ---
+
+    public List<Problematica> obtenerTodas() throws SQLException {
+        List<Problematica> lista = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_SELECT_ALL);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(mapearProblematica(rs));
+            }
+        } finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return lista;
+    }
+
     public Problematica obtenerPorId(int idProblematica) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         Problematica problematica = null;
-
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_SELECT_BY_ID);
             ps.setInt(1, idProblematica);
             rs = ps.executeQuery();
-
             if (rs.next()) {
                 problematica = mapearProblematica(rs);
             }
@@ -106,77 +145,15 @@ public class ProblematicaDAO {
         return problematica;
     }
 
-    public List<Problematica> obtenerTodas() throws SQLException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        List<Problematica> problematicas = new ArrayList<>();
-
-        try {
-            conn = ConexionBD.abrirConexion();
-            ps = conn.prepareStatement(SQL_SELECT_ALL);
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                problematicas.add(mapearProblematica(rs));
-            }
-        } finally {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            ConexionBD.cerrarConexion(conn);
-        }
-        return problematicas;
-    }
-
-    public boolean actualizarProblematica(Problematica problematica) throws SQLException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        boolean exito = false;
-
-        try {
-            conn = ConexionBD.abrirConexion();
-            ps = conn.prepareStatement(SQL_UPDATE);
-
-            // 1. Asigna los nuevos valores
-            ps.setInt(1, problematica.getIdReporte());
-            ps.setString(2, problematica.getTitulo());
-            ps.setString(3, problematica.getDescripcion());
-
-            if (problematica.getIdExperienciaEducativa() != null) {
-                ps.setInt(4, problematica.getIdExperienciaEducativa());
-            } else {
-                ps.setNull(4, Types.INTEGER);
-            }
-
-            ps.setString(5, problematica.getEstado().toString());
-
-            ps.setInt(6, problematica.getIdProblematica());
-
-            int filasAfectadas = ps.executeUpdate();
-            if (filasAfectadas > 0) {
-                exito = true;
-            }
-        } finally {
-            if (ps != null) ps.close();
-            ConexionBD.cerrarConexion(conn);
-        }
-        return exito;
-    }
-
     public boolean eliminarProblematica(int idProblematica) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         boolean exito = false;
-
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_DELETE);
             ps.setInt(1, idProblematica);
-
-            int filasAfectadas = ps.executeUpdate();
-            if (filasAfectadas > 0) {
-                exito = true;
-            }
+            exito = ps.executeUpdate() > 0;
         } finally {
             if (ps != null) ps.close();
             ConexionBD.cerrarConexion(conn);

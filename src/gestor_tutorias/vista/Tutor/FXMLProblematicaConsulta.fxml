@@ -2,23 +2,53 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLProblematicaConsulta">
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLProblematicaConsulta">
    <children>
-      <Label layoutX="14.0" layoutY="63.0" text="id problematica" />
-      <Label layoutX="150.0" layoutY="63.0" text="idreporte" />
-      <Label layoutX="16.0" layoutY="143.0" text="titulo" />
-      <Label layoutX="265.0" layoutY="63.0" text="id experencia educativa" />
-      <Label layoutX="454.0" layoutY="63.0" text="estado" />
-      <Label layoutX="12.0" layoutY="227.0" text="descripcion " />
-      <TextField fx:id="idproblematica" layoutX="14.0" layoutY="92.0" prefHeight="26.0" prefWidth="83.0" />
-      <TextField fx:id="idreporte" layoutX="150.0" layoutY="92.0" prefHeight="26.0" prefWidth="50.0" />
-      <TextField fx:id="idexperienciaeducativa" layoutX="265.0" layoutY="92.0" prefHeight="26.0" prefWidth="125.0" />
-      <TextField fx:id="titulo" layoutX="14.0" layoutY="174.0" prefHeight="33.0" prefWidth="535.0" />
-      <ChoiceBox fx:id="estado" layoutX="436.0" layoutY="93.0" prefHeight="26.0" prefWidth="104.0" />
-      <TextField fx:id="descripcion" layoutX="14.0" layoutY="257.0" prefHeight="45.0" prefWidth="535.0" />
-      <Button fx:id="guardar" layoutX="390.0" layoutY="340.0" mnemonicParsing="false" onAction="#guardarProblematica" text="guardar" />
-      <Button fx:id="eliminar" layoutX="481.0" layoutY="340.0" mnemonicParsing="false" onAction="#eliminarProblematica" text="eliminar" />
-      <Label layoutX="243.0" layoutY="34.0" text="Problematica" />
+      <Label layoutX="225.0" layoutY="20.0" text="Detalle de Problemática">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+
+      <GridPane hgap="10.0" layoutX="30.0" layoutY="60.0" vgap="15.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label text="ID Problemática:" />
+            <TextField fx:id="tfIdProblematica" editable="false" prefWidth="80.0" style="-fx-background-color: #eeeeee;" GridPane.columnIndex="1" />
+
+            <Label text="ID Reporte:" GridPane.columnIndex="2" />
+            <TextField fx:id="tfIdReporte" GridPane.columnIndex="3" />
+
+            <Label text="ID Exp. Educativa:" GridPane.rowIndex="1" />
+            <TextField fx:id="tfIdExperiencia" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Estado:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cbEstado" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+
+      <Label layoutX="30.0" layoutY="145.0" text="Título:" />
+      <TextField fx:id="tfTitulo" layoutX="30.0" layoutY="165.0" prefHeight="26.0" prefWidth="540.0" />
+
+      <Label layoutX="30.0" layoutY="205.0" text="Descripción detallada:" />
+      <TextArea fx:id="taDescripcion" layoutX="30.0" layoutY="225.0" prefHeight="130.0" prefWidth="540.0" wrapText="true" />
+
+      <HBox layoutX="360.0" layoutY="380.0" spacing="20.0">
+         <children>
+            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarProblematica" prefWidth="100.0" style="-fx-background-color: #4CAF50;" text="Guardar" textFill="WHITE" />
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarProblematica" prefWidth="100.0" style="-fx-background-color: #f44336;" text="Eliminar" textFill="WHITE" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

@@ -866,4 +866,18 @@ public class FXMLEstudianteConsulta {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-}
+}..
+
+
+CREATE TABLE problematica (
+  id_problematica int NOT NULL AUTO_INCREMENT,
+  id_reporte int NOT NULL,
+  titulo varchar(100) NOT NULL,
+  descripcion text NOT NULL,
+  id_experiencia_educativa int DEFAULT NULL,
+  estado enum('Pendiente','Atendida') NOT NULL DEFAULT 'Pendiente',
+  PRIMARY KEY (id_problematica),
+  KEY id_reporte (id_reporte),
+  CONSTRAINT problematica_ibfk_1 FOREIGN KEY (id_reporte) REFERENCES reporte_tutoria (id_reporte)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;

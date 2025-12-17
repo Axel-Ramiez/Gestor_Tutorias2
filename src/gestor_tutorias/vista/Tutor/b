@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0"
+            style="-fx-background-color: white;"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gestor_tutorias.controlador.Tutor.FXMLPrincipalTutor">
+
+   <children>
+
+      <!-- BARRA SUPERIOR -->
+      <Pane prefHeight="99.0"
+            AnchorPane.topAnchor="0.0"
+            AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0"
+            style="-fx-background-color: #006DB2;">
+         <children>
+
+            <ImageView fitHeight="86.0" fitWidth="105.0"
+                       layoutX="27.0" layoutY="7.0"
+                       preserveRatio="true">
+               <image>
+                  <Image url="@../../recurso/flor-azul%20-%20copia-Photoroom.png"/>
+               </image>
+            </ImageView>
+
+            <Label layoutX="140.0" layoutY="35.0"
+                   text="Sistema de Tutorías - UV"
+                   textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0"/>
+               </font>
+            </Label>
+
+            <Label fx:id="lbNombreAdmin"
+                   layoutX="500.0" layoutY="20.0"
+                   prefWidth="280.0"
+                   alignment="CENTER_RIGHT"
+                   text="Tutor:"
+                   textFill="WHITE">
+               <font>
+                  <Font size="14.0"/>
+               </font>
+            </Label>
+
+            <Button layoutX="800.0" layoutY="15.0"
+                    text="Salir"
+                    textFill="WHITE"
+                    style="-fx-background-color: #004e80; -fx-cursor: hand;"
+                    onAction="#clicCerrarSesion"/>
+         </children>
+      </Pane>
+
+      <!-- BOTONES -->
+      <Button layoutX="189.0" layoutY="175.0"
+              prefHeight="145.0" prefWidth="223.0"
+              text="Reporte de Tutoría"
+              style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;"
+              onAction="#clicReporteTu">
+         <font>
+            <Font size="18.0"/>
+         </font>
+      </Button>
+
+      <Button layoutX="491.0" layoutY="175.0"
+              prefHeight="145.0" prefWidth="223.0"
+              text="Problemática"
+              style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;"
+              onAction="#clicProblematica">
+         <font>
+            <Font size="18.0"/>
+         </font>
+      </Button>
+
+      <Button layoutX="189.0" layoutY="364.0"
+              prefHeight="145.0" prefWidth="223.0"
+              text="Asignar Horario de Tutoría"
+              style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;"
+              onAction="#clicHorarioTu">
+         <font>
+            <Font size="18.0"/>
+         </font>
+      </Button>
+
+      <!-- FOOTER -->
+      <Label text="Universidad Veracruzana"
+             textFill="#999999"
+             AnchorPane.leftAnchor="14.0"
+             AnchorPane.bottomAnchor="14.0"/>
+
+   </children>
+</AnchorPane>
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLProblematicaConsulta">
+   <children>
+      <Label layoutX="14.0" layoutY="63.0" text="id problematica" />
+      <Label layoutX="150.0" layoutY="63.0" text="idreporte" />
+      <Label layoutX="16.0" layoutY="143.0" text="titulo" />
+      <Label layoutX="265.0" layoutY="63.0" text="id experencia educativa" />
+      <Label layoutX="454.0" layoutY="63.0" text="estado" />
+      <Label layoutX="12.0" layoutY="227.0" text="descripcion " />
+      <TextField fx:id="idproblematica" layoutX="14.0" layoutY="92.0" prefHeight="26.0" prefWidth="83.0" />
+      <TextField fx:id="idreporte" layoutX="150.0" layoutY="92.0" prefHeight="26.0" prefWidth="50.0" />
+      <TextField fx:id="idexperienciaeducativa" layoutX="265.0" layoutY="92.0" prefHeight="26.0" prefWidth="125.0" />
+      <TextField fx:id="titulo" layoutX="14.0" layoutY="174.0" prefHeight="33.0" prefWidth="535.0" />
+      <ChoiceBox fx:id="estado" layoutX="436.0" layoutY="93.0" prefHeight="26.0" prefWidth="104.0" />
+      <TextField fx:id="descripcion" layoutX="14.0" layoutY="257.0" prefHeight="45.0" prefWidth="535.0" />
+      <Button fx:id="guardar" layoutX="390.0" layoutY="340.0" mnemonicParsing="false" onAction="#guardarProblematica" text="guardar" />
+      <Button fx:id="eliminar" layoutX="481.0" layoutY="340.0" mnemonicParsing="false" onAction="#eliminarProblematica" text="eliminar" />
+      <Label layoutX="243.0" layoutY="34.0" text="Problematica" />
+   </children>
+</AnchorPane>
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLProblematica">
+    <children>
+        <Pane prefHeight="73.0" prefWidth="600.0">
+            <children>
+                <ImageView fitHeight="53.0" fitWidth="67.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+                <Label layoutX="81.0" layoutY="26.0" text="Sistema de tutorias - UV" />
+                <Label layoutX="365.0" layoutY="34.0" text="usuario: Coordinador" />
+                <Label layoutX="519.0" layoutY="34.0" text="cerrar sesion" />
+            </children>
+        </Pane>
+        <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
+        <Label layoutX="261.0" layoutY="103.0" text="Problematica" />
+        <Button fx:id="crear" layoutX="490.0" layoutY="91.0" mnemonicParsing="false" onAction="#crearProblematica" text="crear nuevo" />
+        <TableView fx:id="tablaproblematica" layoutX="59.0" layoutY="139.0" prefHeight="174.0" prefWidth="452.0">
+            <columns>
+                <TableColumn fx:id="idproblematica" prefWidth="75.0" text="id_problematica" />
+                <TableColumn fx:id="idreporte" prefWidth="75.0" text="id_reporte" />
+                <TableColumn fx:id="titulo" prefWidth="75.0" text="titulo" />
+                <TableColumn fx:id="descripcion" prefWidth="75.0" text="descripcion" />
+                <TableColumn fx:id="idexperienciaeducativa" prefWidth="75.0" text="id_experiencia_educativa" />
+                <TableColumn fx:id="estado" prefWidth="75.0" text="estado" />
+            </columns>
+        </TableView>
+        <Button fx:id="consultar" layoutX="403.0" layoutY="91.0" mnemonicParsing="false" onAction="#consultarProblematica" text="consultar" />
+
+    </children>
+</AnchorPane>
+
+package gestor_tutorias.pojo;
+
+import gestor_tutorias.Enum.EstatusProblematica;
+
+public class Problematica {
+    private int idProblematica;
+    private int idReporte;
+    private String titulo;
+    private String descripcion;
+    private Integer idExperienciaEducativa;
+    private EstatusProblematica estado;
+
+    public Problematica() {
+    }
+    public Problematica(int idReporte, String titulo, String descripcion, Integer idExperienciaEducativa) {
+        this.idReporte = idReporte;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.idExperienciaEducativa = idExperienciaEducativa;
+    }
+
+    // Constructor completo (útil para recuperar de la DB)
+    public Problematica(int idProblematica, int idReporte, String titulo, String descripcion, Integer idExperienciaEducativa, EstatusProblematica estado) {
+        this.idProblematica = idProblematica;
+        this.idReporte = idReporte;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.idExperienciaEducativa = idExperienciaEducativa;
+        this.estado = estado;
+    }
+
+    // --- GETTERS Y SETTERS ---
+
+    // id_problematica (int NOT NULL AUTO_INCREMENT) -> idProblematica
+    public int getIdProblematica() { return idProblematica; }
+    public void setIdProblematica(int idProblematica) { this.idProblematica = idProblematica; }
+
+    // id_reporte (int NOT NULL) -> idReporte
+    public int getIdReporte() { return idReporte; }
+    public void setIdReporte(int idReporte) { this.idReporte = idReporte; }
+
+    // titulo (varchar(100) NOT NULL) -> titulo
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+
+
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
+
+    public Integer getIdExperienciaEducativa() { return idExperienciaEducativa; }
+    public void setIdExperienciaEducativa(Integer idExperienciaEducativa) { this.idExperienciaEducativa = idExperienciaEducativa; }
+
+
+    public EstatusProblematica getEstado() { return estado; }
+    public void setEstado(EstatusProblematica estado) { this.estado = estado; }
+}
+
+package gestor_tutorias.Enum;
+
+public enum TipoProblematica {
+    ACADEMICA("Academica"),
+    PERSONAL("Personal"),
+    SALUD("Salud"),
+    ECONOMICA("Economica");
+
+
+    private final String valorBD;
+
+
+    TipoProblematica(String valorBD) {
+        this.valorBD = valorBD;
+    }
+
+
+    public String getValorBD() {
+        return valorBD;
+    }
+
+
+    public static TipoProblematica fromString(String text) {
+        for (TipoProblematica tipo : TipoProblematica.values()) {
+            if (tipo.valorBD.equalsIgnoreCase(text)) {
+                return tipo;
+            }
+        }
+        throw new IllegalArgumentException("Tipo de problemática no válido: " + text);
+    }
+}
+
+package gestor_tutorias.Enum;
+
+public enum EstatusProblematica {
+    ABIERTA("Abierta"),
+    EN_SEGUIMIENTO("En Seguimiento"),
+    CERRADA("Cerrada");
+
+    private final String valorBD;
+
+    EstatusProblematica(String valorBD) {
+        this.valorBD = valorBD;
+    }
+
+    public String getValorBD() {
+        return valorBD;
+    }
+
+    public static EstatusProblematica fromString(String text) {
+        for (EstatusProblematica estatus : EstatusProblematica.values()) {
+            if (estatus.valorBD.equalsIgnoreCase(text)) {
+                return estatus;
+            }
+        }
+        throw new IllegalArgumentException("Estatus no válido: " + text);
+    }
+}
+
+package gestor_tutorias.dao;
+
+import gestor_tutorias.pojo.Problematica;
+import gestor_tutorias.modelo.ConexionBD;
+import gestor_tutorias.Enum.EstatusProblematica;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProblematicaDAO {
+    private static final String TABLA = "problematica";
+
+    private static final String SQL_INSERT =
+            "INSERT INTO " + TABLA + " (id_reporte, titulo, descripcion, id_experiencia_educativa, estado) VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_SELECT_BY_ID =
+            "SELECT id_problematica, id_reporte, titulo, descripcion, id_experiencia_educativa, estado FROM " + TABLA + " WHERE id_problematica = ?";
+    private static final String SQL_SELECT_ALL =
+            "SELECT id_problematica, id_reporte, titulo, descripcion, id_experiencia_educativa, estado FROM " + TABLA;
+    private static final String SQL_UPDATE =
+            "UPDATE " + TABLA + " SET id_reporte = ?, titulo = ?, descripcion = ?, id_experiencia_educativa = ?, estado = ? WHERE id_problematica = ?";
+    private static final String SQL_DELETE =
+            "DELETE FROM " + TABLA + " WHERE id_problematica = ?";
+
+
+    private Problematica mapearProblematica(ResultSet rs) throws SQLException {
+        int idProblematica = rs.getInt("id_problematica");
+        int idReporte = rs.getInt("id_reporte");
+        String titulo = rs.getString("titulo");
+        String descripcion = rs.getString("descripcion");
+
+        Integer idExperienciaEducativa = rs.getInt("id_experiencia_educativa");
+        if (rs.wasNull()) {
+            idExperienciaEducativa = null;
+        }
+
+        EstatusProblematica estado = EstatusProblematica.valueOf(rs.getString("estado"));
+
+        return new Problematica(idProblematica, idReporte, titulo, descripcion, idExperienciaEducativa, estado);
+    }
+
+    public int guardarProblematica(Problematica problematica) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int idGenerado = -1;
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+
+
+            ps.setInt(1, problematica.getIdReporte());
+            ps.setString(2, problematica.getTitulo());
+            ps.setString(3, problematica.getDescripcion());
+
+
+            if (problematica.getIdExperienciaEducativa() != null) {
+                ps.setInt(4, problematica.getIdExperienciaEducativa());
+            } else {
+                ps.setNull(4, Types.INTEGER);
+            }
+
+
+            if (problematica.getEstado() != null) {
+                ps.setString(5, problematica.getEstado().toString());
+            } else {
+                ps.setString(5, "Pendiente");
+            }
+
+            int filasAfectadas = ps.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    idGenerado = rs.getInt(1);
+                }
+            }
+        } finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return idGenerado;
+    }
+
+    public Problematica obtenerPorId(int idProblematica) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Problematica problematica = null;
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_SELECT_BY_ID);
+            ps.setInt(1, idProblematica);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                problematica = mapearProblematica(rs);
+            }
+        } finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return problematica;
+    }
+
+    public List<Problematica> obtenerTodas() throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Problematica> problematicas = new ArrayList<>();
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_SELECT_ALL);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                problematicas.add(mapearProblematica(rs));
+            }
+        } finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return problematicas;
+    }
+
+    public boolean actualizarProblematica(Problematica problematica) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        boolean exito = false;
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_UPDATE);
+
+            // 1. Asigna los nuevos valores
+            ps.setInt(1, problematica.getIdReporte());
+            ps.setString(2, problematica.getTitulo());
+            ps.setString(3, problematica.getDescripcion());
+
+            if (problematica.getIdExperienciaEducativa() != null) {
+                ps.setInt(4, problematica.getIdExperienciaEducativa());
+            } else {
+                ps.setNull(4, Types.INTEGER);
+            }
+
+            ps.setString(5, problematica.getEstado().toString());
+
+            ps.setInt(6, problematica.getIdProblematica());
+
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas > 0) {
+                exito = true;
+            }
+        } finally {
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return exito;
+    }
+
+    public boolean eliminarProblematica(int idProblematica) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        boolean exito = false;
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            ps = conn.prepareStatement(SQL_DELETE);
+            ps.setInt(1, idProblematica);
+
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas > 0) {
+                exito = true;
+            }
+        } finally {
+            if (ps != null) ps.close();
+            ConexionBD.cerrarConexion(conn);
+        }
+        return exito;
+    }
+}
+
+package gestor_tutorias.controlador.Tutor;
+
+import gestor_tutorias.dao.ProblematicaDAO;
+import gestor_tutorias.Enum.EstatusProblematica;
+import gestor_tutorias.filtro.FiltroGeneral;
+import gestor_tutorias.pojo.Problematica;
+import gestor_tutorias.validacion.ValidoProblematica;
+import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
+
+public class FXMLProblematicaConsulta {
+    @FXML private TextField idproblematica;
+    @FXML private TextField idreporte;
+    @FXML private TextField titulo;
+    @FXML private TextField descripcion;
+    @FXML private TextField idexperienciaeducativa;
+    @FXML private ChoiceBox<EstatusProblematica> estado;
+
+    private final ProblematicaDAO dao = new ProblematicaDAO();
+    private FXMLProblematica padre;
+
+    public void inicializarFormulario(Problematica problematica, FXMLProblematica padre) {
+        if (problematica != null) {
+            // Llenar los campos con los datos de la problemática
+            idproblematica.setText(String.valueOf(problematica.getIdProblematica()));
+            idreporte.setText(String.valueOf(problematica.getIdReporte()));
+            titulo.setText(problematica.getTitulo());
+            descripcion.setText(problematica.getDescripcion());
+            idexperienciaeducativa.setText(problematica.getIdExperienciaEducativa() != null ?
+                    String.valueOf(problematica.getIdExperienciaEducativa()) : "");
+            estado.setValue(problematica.getEstado());
+        }
+        // Guardar referencia al controlador padre para recargar tabla si se hace cambio
+        this.padre = padre;
+    }
+
+    @FXML
+    private void guardarProblematica() {
+
+        Object[] datosFormulario = {
+                idreporte.getText(),
+                titulo.getText(),
+                descripcion.getText(),
+                idexperienciaeducativa.getText(),
+                estado.getValue()
+        };
+
+        for (Object dato : datosFormulario) {
+
+            FiltroGeneral filtro = new FiltroGeneral(dato);
+            filtro.filtrarVacio();
+            filtro.filtrarDenialOfService();
+            filtro.filtrarZeroDay();
+            filtro.aplicarFiltroPorTipo();
+        }
+
+        ValidoProblematica valido = new ValidoProblematica();
+
+        boolean formularioValido = valido.validarTodo(
+                idreporte.getText(),
+                titulo.getText(),
+                descripcion.getText(),
+                idexperienciaeducativa.getText(),
+                EstatusProblematica.valueOf(String.valueOf(estado.getValue()))
+        );
+
+        if (!formularioValido) {
+            System.out.println("Formulario inválido");
+            return;
+        }
+
+        Problematica problematica = new Problematica(
+                idproblematica.getText().isEmpty() ? 0 : Integer.parseInt(idproblematica.getText()),
+                Integer.parseInt(idreporte.getText()),
+                titulo.getText(),
+                descripcion.getText(),
+                idexperienciaeducativa.getText().isEmpty()
+                        ? null
+                        : Integer.parseInt(idexperienciaeducativa.getText()),
+                EstatusProblematica.valueOf(String.valueOf(estado.getValue()))
+        );
+
+        try {
+            dao.guardarProblematica(problematica);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    private void eliminarproblematica() {
+        try {
+            int id = Integer.parseInt(idproblematica.getText());
+            dao.eliminarProblematica(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+package gestor_tutorias.controlador.Tutor;
+
+import gestor_tutorias.dao.ProblematicaDAO;
+import gestor_tutorias.pojo.Problematica;
+import gestor_tutorias.Enum.EstatusProblematica;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+public class FXMLProblematica {
+
+    @FXML
+    private TableView<Problematica> tablaproblematica;
+
+    @FXML
+    private TableColumn<Problematica, Integer> idproblematica;
+
+    @FXML
+    private TableColumn<Problematica, Integer> idreporte;
+
+    @FXML
+    private TableColumn<Problematica, String> titulo;
+
+    @FXML
+    private TableColumn<Problematica, String> descripcion;
+
+    @FXML
+    private TableColumn<Problematica, Integer> idexperienciaeducativa;
+
+    @FXML
+    private TableColumn<Problematica, EstatusProblematica> estado;
+
+    private final ProblematicaDAO dao = new ProblematicaDAO();
+    private ObservableList<Problematica> listaObservable;
+
+    private Problematica selectedProblematica;
+
+    @FXML
+    private void initialize() {
+        // Configurar las columnas
+        idproblematica.setCellValueFactory(new PropertyValueFactory<>("idProblematica"));
+        idreporte.setCellValueFactory(new PropertyValueFactory<>("idReporte"));
+        titulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        descripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        idexperienciaeducativa.setCellValueFactory(new PropertyValueFactory<>("idExperienciaEducativa"));
+        estado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+
+        // Permitir seleccionar una fila
+        tablaproblematica.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
+            selectedProblematica = newSel;
+        });
+
+        // Cargar datos al iniciar
+        cargarProblematica();
+    }
+
+    private void cargarProblematica() {
+        try {
+            List<Problematica> lista = dao.obtenerTodas();
+            listaObservable = FXCollections.observableArrayList(lista);
+            tablaproblematica.setItems(listaObservable);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo cargar las problemáticas");
+        }
+    }
+
+    @FXML
+    private void consultarProblematica() {
+        if (selectedProblematica == null) {
+            mostrarAlerta("Atención", "Seleccione una problemática de la tabla para consultar");
+            return;
+        }
+        abrirVentanaProblematica(selectedProblematica);
+    }
+
+    @FXML
+    private void crearProblematica() {
+        abrirVentanaProblematica(null);
+    }
+
+    private void abrirVentanaProblematica(Problematica problematica) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLProblematicaConsulta.fxml")
+            );
+            Parent root = loader.load();
+
+            FXMLProblematicaConsulta controlador = loader.getController();
+            controlador.inicializarFormulario(problematica, this);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.setTitle(problematica == null ? "Crear Problematica" : "Consultar Problematica");
+            stage.showAndWait();
+
+            // Recargar tabla después de cerrar la ventana
+            cargarProblematica();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo abrir la ventana de problematica");
+        }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+}

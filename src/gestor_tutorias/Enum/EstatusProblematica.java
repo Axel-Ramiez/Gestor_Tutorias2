@@ -1,9 +1,8 @@
 package gestor_tutorias.Enum;
 
 public enum EstatusProblematica {
-    ABIERTA("Abierta"),
-    EN_SEGUIMIENTO("En Seguimiento"),
-    CERRADA("Cerrada");
+    PENDIENTE("Pendiente"),
+    ATENDIDA("Atendida");
 
     private final String valorBD;
 
@@ -21,6 +20,6 @@ public enum EstatusProblematica {
                 return estatus;
             }
         }
-        throw new IllegalArgumentException("Estatus no válido: " + text);
+        return PENDIENTE; // Valor por defecto o lanzar excepción
     }
 }
