@@ -101,7 +101,7 @@ public class FXMLPrincipalTutor implements Initializable {
     @FXML
     private void clicHorarioTu(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLHorarioTutoria.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLHorarioTutoriaConsulta.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

@@ -1,129 +1,179 @@
 package gestor_tutorias.controlador.Tutor;
 
 import gestor_tutorias.dao.HorarioTutoriaDAO;
+import gestor_tutorias.dao.PlaneacionTutoriaDAO; // Necesario para llenar el combo de fechas
 import gestor_tutorias.pojo.HorarioTutoria;
-import javafx.beans.property.SimpleObjectProperty;
+import gestor_tutorias.pojo.PlaneacionTutoria;
+import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.sql.SQLException;
-import java.time.LocalTime;
-
-public class FXMLHorarioTutoriaConsulta {
-
-    @FXML private TableView<HorarioTutoria> tvHorario;
-    @FXML private TableColumn<HorarioTutoria, Integer> colIdHorario;
-    @FXML private TableColumn<HorarioTutoria, String> colNombreTutor;
-    @FXML private TableColumn<HorarioTutoria, String> colFechaTutoria;
-    @FXML private TableColumn<HorarioTutoria, LocalTime> colHoraInicio;
-    @FXML private TableColumn<HorarioTutoria, LocalTime> colHoraFin;
-
-    @FXML private TextField txtHoraInicio;
-    @FXML private TextField txtHoraFin;
-
-    private boolean modoCrear;
-    private HorarioTutoria horarioSeleccionado;
-
-    private final ObservableList<HorarioTutoria> horarios =
-            FXCollections.observableArrayList();
-
-    private final HorarioTutoriaDAO dao = new HorarioTutoriaDAO();
+public class FXMLHorarioTutoriaConsulta implements Initializable {
 
     @FXML
-    private void initialize() {
+    private ComboBox<PlaneacionTutoria> cbDia;
+    @FXML
+    private ComboBox<Integer> cbHoraInicio;
+    @FXML
+    private ComboBox<Integer> cbMinutoInicio;
+    @FXML
+    private ComboBox<Integer> cbHoraFin;
+    @FXML
+    private ComboBox<Integer> cbMinutoFin;
+    @FXML
+    private TableView<HorarioTutoria> tvHorarios;
+    @FXML
+    private TableColumn<HorarioTutoria, String> colDia;
+    @FXML
+    private TableColumn<HorarioTutoria, String> colInicio;
+    @FXML
+    private TableColumn<HorarioTutoria, String> colFin;
+    private final int ID_TUTOR_ACTUAL = 3;
 
-        colIdHorario.setCellValueFactory(new PropertyValueFactory<>("idHorario"));
-        colNombreTutor.setCellValueFactory(new PropertyValueFactory<>("nombreTutor"));
-        colFechaTutoria.setCellValueFactory(new PropertyValueFactory<>("fechaTutoria"));
+    private ObservableList<HorarioTutoria> listaHorarios;
+    private ObservableList<PlaneacionTutoria> listaFechasDisponibles;
 
-        colHoraInicio.setCellValueFactory(c ->
-                new SimpleObjectProperty<>(c.getValue().getHoraInicio()));
-        colHoraFin.setCellValueFactory(c ->
-                new SimpleObjectProperty<>(c.getValue().getHoraFin()));
-
-        tvHorario.getSelectionModel().selectedItemProperty().addListener(
-                (obs, old, nuevo) -> cargarFormulario(nuevo)
-        );
-
-        cargarHorarios();
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        configurarTabla();
+        cargarCombosTiempo();
+        cargarFechasDisponibles();
+        cargarHorariosTabla();
     }
 
-    public void inicializarModo(boolean crear) {
-        this.modoCrear = crear;
+    private void configurarTabla() {
+        colDia.setCellValueFactory(new PropertyValueFactory<>("fechaTutoria")); // Muestra el String "2025-..."
+        colInicio.setCellValueFactory(new PropertyValueFactory<>("horaInicio"));
+        colFin.setCellValueFactory(new PropertyValueFactory<>("horaFin"));
+    }
 
-        if (crear) {
-            tvHorario.setDisable(true);
-            limpiarFormulario();
-        } else {
-            tvHorario.setDisable(false);
+    private void cargarCombosTiempo() {
+        ObservableList<Integer> horas = FXCollections.observableArrayList();
+        for (int i = 7; i <= 20; i++) {
+            horas.add(i);
+        }
+        cbHoraInicio.setItems(horas);
+        cbHoraFin.setItems(horas);
+        ObservableList<Integer> minutos = FXCollections.observableArrayList(0, 15, 30, 45);
+        cbMinutoInicio.setItems(minutos);
+        cbMinutoFin.setItems(minutos);
+    }
+
+    private void cargarFechasDisponibles() {
+        try {
+            PlaneacionTutoriaDAO daoPlaneacion = new PlaneacionTutoriaDAO();
+            List<PlaneacionTutoria> fechas = daoPlaneacion.obtenerTodas();
+            listaFechasDisponibles = FXCollections.observableArrayList(fechas);
+            cbDia.setItems(listaFechasDisponibles);
+        } catch (SQLException ex) {
+            mostrarAlerta("Error", "No se pudieron cargar las fechas disponibles.");
+            ex.printStackTrace();
+        }
+    }
+
+    private void cargarHorariosTabla() {
+        try {
+            HorarioTutoriaDAO dao = new HorarioTutoriaDAO();
+            List<HorarioTutoria> resultados = dao.obtenerPorTutor(ID_TUTOR_ACTUAL);
+            listaHorarios = FXCollections.observableArrayList(resultados);
+            tvHorarios.setItems(listaHorarios);
+        } catch (SQLException ex) {
+            mostrarAlerta("Error BD", "Error al consultar los horarios registrados.");
+            ex.printStackTrace();
         }
     }
 
     @FXML
-    private void guardar(ActionEvent event) {
+    private void clicGuardar(ActionEvent event) {
+        if (cbDia.getValue() == null || cbHoraInicio.getValue() == null || cbMinutoInicio.getValue() == null
+                || cbHoraFin.getValue() == null || cbMinutoFin.getValue() == null) {
+            mostrarAlerta("Campos vacíos", "Por favor selecciona la fecha y las horas completas.");
+            return;
+        }
+
+        PlaneacionTutoria fechaSeleccionada = cbDia.getValue();
+        LocalTime inicio = LocalTime.of(cbHoraInicio.getValue(), cbMinutoInicio.getValue());
+        LocalTime fin = LocalTime.of(cbHoraFin.getValue(), cbMinutoFin.getValue());
+
+        if (!fin.isAfter(inicio)) {
+            mostrarAlerta("Horas inválidas", "La hora de fin debe ser posterior a la de inicio.");
+            return;
+        }
+        HorarioTutoria nuevoHorario = new HorarioTutoria();
+        nuevoHorario.setIdTutor(ID_TUTOR_ACTUAL);
+        nuevoHorario.setIdFechaTutoria(fechaSeleccionada.getIdFechaTutoria());
+        nuevoHorario.setIdEstudiante(null);
+        nuevoHorario.setHoraInicio(inicio);
+        nuevoHorario.setHoraFin(fin);
         try {
-            LocalTime inicio = LocalTime.parse(txtHoraInicio.getText());
-            LocalTime fin = LocalTime.parse(txtHoraFin.getText());
+            HorarioTutoriaDAO dao = new HorarioTutoriaDAO();
+            int idGenerado = dao.guardarHorario(nuevoHorario);
 
-            if (modoCrear) {
-                HorarioTutoria nuevo = new HorarioTutoria();
-                nuevo.setHoraInicio(inicio);
-                nuevo.setHoraFin(fin);
-
-                dao.guardarHorario(nuevo);
-            } else if (horarioSeleccionado != null) {
-                horarioSeleccionado.setHoraInicio(inicio);
-                horarioSeleccionado.setHoraFin(fin);
-
-                dao.actualizarHorario(horarioSeleccionado);
+            if (idGenerado > 0) {
+                mostrarAlerta("Éxito", "Horario registrado correctamente.");
+                cargarHorariosTabla();
+                limpiarCampos();
+            } else {
+                mostrarAlerta("Error", "No se pudo guardar el horario.");
             }
-
-            cargarHorarios();
-            limpiarFormulario();
-
-        } catch (Exception e) {
-            mostrarAlerta("Error", "Formato inválido (HH:mm)");
+        } catch (SQLException ex) {
+            mostrarAlerta("Error BD", "Error de conexión al guardar.");
+            ex.printStackTrace();
         }
     }
 
     @FXML
-    private void cancelar(ActionEvent event) {
-        ((Stage) tvHorario.getScene().getWindow()).close();
-    }
+    private void clicEliminar(ActionEvent event) {
+        HorarioTutoria seleccionado = tvHorarios.getSelectionModel().getSelectedItem();
 
-    private void cargarHorarios() {
+        if (seleccionado == null) {
+            mostrarAlerta("Selección requerida", "Selecciona un horario de la tabla para eliminar.");
+            return;
+        }
+
+        if (seleccionado.getIdEstudiante() != null && seleccionado.getIdEstudiante() > 0) {
+            mostrarAlerta("Aviso", "No puedes eliminar un horario que ya fue reservado por un estudiante.");
+            return;
+        }
+
         try {
-            horarios.setAll(dao.obtenerTodos());
-            tvHorario.setItems(horarios);
-        } catch (SQLException e) {
-            mostrarAlerta("Error", "No se pudieron cargar los horarios");
+            HorarioTutoriaDAO dao = new HorarioTutoriaDAO();
+            boolean exito = dao.eliminarHorario(seleccionado.getIdHorario());
+
+            if (exito) {
+                mostrarAlerta("Eliminado", "Horario eliminado correctamente.");
+                cargarHorariosTabla();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
-    private void cargarFormulario(HorarioTutoria h) {
-        if (h != null && !modoCrear) {
-            horarioSeleccionado = h;
-            txtHoraInicio.setText(h.getHoraInicio().toString());
-            txtHoraFin.setText(h.getHoraFin().toString());
-        }
+    private void limpiarCampos() {
+        cbDia.setValue(null);
+        cbHoraInicio.setValue(null);
+        cbMinutoInicio.setValue(null);
+        cbHoraFin.setValue(null);
+        cbMinutoFin.setValue(null);
     }
 
-    private void limpiarFormulario() {
-        horarioSeleccionado = null;
-        txtHoraInicio.clear();
-        txtHoraFin.clear();
-    }
-
-    private void mostrarAlerta(String t, String m) {
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle(t);
-        a.setHeaderText(null);
-        a.setContentText(m);
-        a.showAndWait();
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

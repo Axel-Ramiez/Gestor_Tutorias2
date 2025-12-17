@@ -102,6 +102,28 @@ public class HorarioTutoriaDAO {
         return lista;
     }
 
+    public List<HorarioTutoria> obtenerPorTutor(int idTutor) throws SQLException {
+        List<HorarioTutoria> lista = new ArrayList<>();
+        String sql = "SELECT h.*, p.fecha AS fecha_texto " +
+                "FROM horario_tutoria h " +
+                "INNER JOIN planeacion_tutoria p ON h.id_fecha_tutoria = p.id_fecha_tutoria " +
+                "WHERE h.id_tutor = ?";
+
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idTutor);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                HorarioTutoria horario = mapearHorario(rs);
+                horario.setFechaTutoria(rs.getString("fecha_texto"));
+                lista.add(horario);
+            }
+        }
+        return lista;
+    }
+
     public boolean actualizarHorario(HorarioTutoria horario) throws SQLException {
         try (Connection conn = ConexionBD.abrirConexion();
              PreparedStatement ps = conn.prepareStatement(SQL_UPDATE)) {

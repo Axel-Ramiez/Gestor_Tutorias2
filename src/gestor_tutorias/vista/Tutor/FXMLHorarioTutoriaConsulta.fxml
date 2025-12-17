@@ -1,61 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="420.0" prefWidth="650.0"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gestor_tutorias.controlador.Tutor.FXMLHorarioTutoriaConsulta">
-
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLHorarioTutoriaConsulta">
     <children>
-
-        <Pane prefHeight="60.0" prefWidth="650.0"
-              style="-fx-background-color: #283593;">
+        <Pane prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: #006DB2;">
             <children>
-                <Label layoutX="20.0" layoutY="18.0"
-                       text="Consultar / Editar Horario"
-                       textFill="WHITE">
+                <Label layoutX="24.0" layoutY="14.0" text="Gestión de Horarios" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="16.0"/>
+                        <Font name="System Bold" size="22.0" />
                     </font>
                 </Label>
             </children>
         </Pane>
 
-        <TableView fx:id="tvHorario"
-                   layoutX="20.0" layoutY="80.0"
-                   prefWidth="610.0" prefHeight="200.0">
+        <Label layoutX="30.0" layoutY="80.0" text="Nuevo Horario">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
 
+        <Label layoutX="30.0" layoutY="120.0" text="Día de la semana:" />
+        <ComboBox fx:id="cbDia" layoutX="30.0" layoutY="140.0" prefWidth="200.0" promptText="Seleccione día" />
+
+        <Label layoutX="30.0" layoutY="180.0" text="Hora Inicio:" />
+        <ComboBox fx:id="cbHoraInicio" layoutX="30.0" layoutY="200.0" prefHeight="25.0" prefWidth="90.0" />
+        <ComboBox fx:id="cbMinutoInicio" layoutX="130.0" layoutY="200.0" prefHeight="25.0" prefWidth="90.0" />
+
+        <Label layoutX="30.0" layoutY="240.0" text="Hora Fin:" />
+        <ComboBox fx:id="cbHoraFin" layoutX="30.0" layoutY="260.0" prefHeight="25.0" prefWidth="90.0" />
+        <ComboBox fx:id="cbMinutoFin" layoutX="130.0" layoutY="260.0" prefHeight="25.0" prefWidth="90.0" />
+
+        <Button layoutX="30.0" layoutY="320.0" mnemonicParsing="false" onAction="#clicGuardar" prefHeight="30.0" prefWidth="200.0" text="Registrar Horario" />
+
+        <TableView fx:id="tvHorarios" layoutX="260.0" layoutY="80.0" prefHeight="300.0" prefWidth="410.0">
             <columns>
-                <TableColumn fx:id="colIdHorario" text="ID" prefWidth="60"/>
-                <TableColumn fx:id="colNombreTutor" text="Tutor" prefWidth="160"/>
-                <TableColumn fx:id="colFechaTutoria" text="Fecha" prefWidth="140"/>
-                <TableColumn fx:id="colHoraInicio" text="Inicio" prefWidth="120"/>
-                <TableColumn fx:id="colHoraFin" text="Fin" prefWidth="120"/>
+                <TableColumn fx:id="colDia" prefWidth="130.0" text="Día" />
+                <TableColumn fx:id="colInicio" prefWidth="130.0" text="Hora Inicio" />
+                <TableColumn fx:id="colFin" prefWidth="130.0" text="Hora Fin" />
             </columns>
-
         </TableView>
 
-        <GridPane layoutX="150.0" layoutY="300.0"
-                  hgap="10" vgap="10">
-
-            <Label text="Hora Inicio (HH:mm)"/>
-            <TextField fx:id="txtHoraInicio" GridPane.columnIndex="1"/>
-
-            <Label text="Hora Fin (HH:mm)" GridPane.rowIndex="1"/>
-            <TextField fx:id="txtHoraFin" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-
-        </GridPane>
-
-        <Button layoutX="220.0" layoutY="360.0"
-                text="Guardar"
-                onAction="#guardar"/>
-
-        <Button layoutX="420.0" layoutY="360.0"
-                text="Cancelar"
-                onAction="#cancelar"/>
-
+        <Button layoutX="260.0" layoutY="390.0" mnemonicParsing="false" onAction="#clicEliminar" text="Eliminar Seleccionado" />
     </children>
 </AnchorPane>
