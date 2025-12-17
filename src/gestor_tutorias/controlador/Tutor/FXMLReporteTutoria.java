@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -49,9 +48,18 @@ public class FXMLReporteTutoria implements Initializable {
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
         colAsistencia.setCellValueFactory(new PropertyValueFactory<>("asistencia"));
 
-        // Listener de selección igual al de FXMLProblematica
         tvReportes.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             reporteSeleccionado = newSel;
+        });
+
+        tvReportes.setRowFactory(tv -> {
+            TableRow<ReporteTutoria> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    consultarReporteTutoria();
+                }
+            });
+            return row;
         });
     }
 
@@ -71,14 +79,14 @@ public class FXMLReporteTutoria implements Initializable {
             listaObservable = FXCollections.observableArrayList(lista);
             tvReportes.setItems(listaObservable);
         } catch (SQLException e) {
-            mostrarAlerta("Error de conexión", "No se pudieron obtener los reportes de la base de datos.");
+            mostrarAlerta("Error de datos", "Error al conectar con la base de datos.");
         }
     }
 
     @FXML
     private void consultarReporteTutoria() {
         if (reporteSeleccionado == null) {
-            mostrarAlerta("Selección requerida", "Por favor, selecciona un reporte de la lista.");
+            mostrarAlerta("Seleccion requerida", "Selecciona un reporte de la tabla.");
             return;
         }
         abrirVentanaTutoria(reporteSeleccionado, false);
@@ -93,21 +101,16 @@ public class FXMLReporteTutoria implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLReporteTutoriaConsulta.fxml"));
             Parent root = loader.load();
-
-            // Acceso al controlador de consulta (Hijo)
             FXMLReporteTutoriaConsulta controlador = loader.getController();
             controlador.inicializarFormulario(reporte, tutorSesion, this, esEdicion);
-
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle(reporte == null ? "Registrar Reporte de Tutoría" : "Consultar Reporte");
+            stage.setTitle("Detalle de Reporte");
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
-            cargarDatos(); // Refrescar tabla tras cerrar ventana
+            cargarDatos();
         } catch (IOException e) {
-            mostrarAlerta("Error", "No se pudo cargar la vista de detalle.");
-            e.printStackTrace();
+            mostrarAlerta("Error de sistema", "No se pudo cargar la vista de consulta.");
         }
     }
 
