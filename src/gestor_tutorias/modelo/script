@@ -1,4 +1,4 @@
-drop database IF EXIST gestion_tutorias;
+drop database IF EXISTS gestion_tutorias;
 
 create database gestion_tutorias;
 use gestion_tutorias;
