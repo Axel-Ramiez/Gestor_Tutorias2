@@ -83,7 +83,8 @@ public class FXMLReporteTutoriaConsulta {
             }
 
             try {
-                boolean exito = reporteDao.actualizarReporte(reporteActual.getIdReporte(), respuesta);
+                // Se invoca al método que solo recibe el ID y el String de respuesta
+                boolean exito = reporteDao.actualizarRespuesta(reporteActual.getIdReporte(), respuesta);
 
                 if (exito) {
                     mostrarAlerta("Respuesta registrada y estado actualizado a REVISADO.", Alert.AlertType.INFORMATION);

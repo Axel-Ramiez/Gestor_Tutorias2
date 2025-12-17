@@ -34,6 +34,29 @@ public class ReporteTutoriaDAO {
                     "INNER JOIN planeacion_tutoria p ON r.id_fecha_tutoria = p.id_fecha_tutoria " +
                     "INNER JOIN periodo_escolar pe ON p.id_periodo = pe.id_periodo ";
 
+    public boolean actualizarRespuesta(int idReporte, String respuesta) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        boolean exito = false;
+        String sql = "UPDATE reporte_tutoria SET respuesta_coordinador = ?, estado = ? WHERE id_reporte = ?";
+
+        try {
+            conn = ConexionBD.abrirConexion();
+            if (conn != null) {
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, respuesta);
+                ps.setString(2, EstadoReporte.REVISADO.getValorBD());
+                ps.setInt(3, idReporte);
+
+                exito = ps.executeUpdate() > 0;
+            }
+        } finally {
+            if (ps != null) ps.close();
+            if (conn != null) ConexionBD.cerrarConexion(conn);
+        }
+        return exito;
+    }
+
     public int guardarReporte(ReporteTutoria reporteObj) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;

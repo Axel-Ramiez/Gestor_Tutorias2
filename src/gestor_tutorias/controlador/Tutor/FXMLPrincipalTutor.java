@@ -8,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -76,7 +75,7 @@ public class FXMLPrincipalTutor implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLReporteTutoria.fxml"));
             Parent root = loader.load();
-            FXMLTutoria controlador = loader.getController();
+            FXMLReporteTutoria controlador = loader.getController();
             controlador.inicializarInformacion(this.usuarioSesion);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
