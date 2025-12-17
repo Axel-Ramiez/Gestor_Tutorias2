@@ -26,28 +26,58 @@ public class Estudiante {
         this.activo = 1;
     }
 
-    public int getIdEstudiante() { return idEstudiante; }
-    public void setIdEstudiante(int idEstudiante) { this.idEstudiante = idEstudiante; }
+    public int getIdEstudiante() {
+        return idEstudiante;
+    }
+    public void setIdEstudiante(int idEstudiante) {
+        this.idEstudiante = idEstudiante;
+    }
 
-    public String getMatricula() { return matricula; }
-    public void setMatricula(String matricula) { this.matricula = matricula; }
+    public String getMatricula() {
+        return matricula;
+    }
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 
-    public String getNombreCompleto() { return nombreCompleto; }
-    public void setNombreCompleto(String nombreCompleto) { this.nombreCompleto = nombreCompleto; }
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
 
-    public String getCorreo() { return correo; }
-    public void setCorreo(String correo) { this.correo = correo; }
+    public String getCorreo() {
+        return correo;
+    }
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 
-    public int getIdCarrera() { return idCarrera; }
-    public void setIdCarrera(int idCarrera) { this.idCarrera = idCarrera; }
+    public int getIdCarrera() {
+        return idCarrera;
+    }
+    public void setIdCarrera(int idCarrera) {
+        this.idCarrera = idCarrera;
+    }
 
-    public int getSemestre() { return semestre; }
-    public void setSemestre(int semestre) { this.semestre = semestre; }
+    public int getSemestre() {
+        return semestre;
+    }
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
+    }
 
-    public int getActivo() { return activo; }
-    public void setActivo(int activo) { this.activo = activo; }
+    public int getActivo() {
+        return activo;
+    }
+    public void setActivo(int activo) {
+        this.activo = activo;
+    }
 
-    public int getRiesgo() { return riesgo; }
+    public int getRiesgo() {
+        return riesgo;
+    }
     public void setRiesgo(int riesgo) {
         this.riesgo = riesgo;
     }

@@ -37,33 +37,69 @@ public class PlaneacionTutoria {
     }
 
 
-    public int getIdFechaTutoria() { return idFechaTutoria; }
-    public void setIdFechaTutoria(int idFechaTutoria) { this.idFechaTutoria = idFechaTutoria; }
+    public int getIdFechaTutoria() {
+        return idFechaTutoria;
+    }
+    public void setIdFechaTutoria(int idFechaTutoria) {
+        this.idFechaTutoria = idFechaTutoria;
+    }
 
-    public int getIdPeriodo() { return idPeriodo; }
-    public void setIdPeriodo(int idPeriodo) { this.idPeriodo = idPeriodo; }
+    public int getIdPeriodo() {
+        return idPeriodo;
+    }
+    public void setIdPeriodo(int idPeriodo) {
+        this.idPeriodo = idPeriodo;
+    }
 
-    public int getIdCarrera() { return idCarrera; }
-    public void setIdCarrera(int idCarrera) { this.idCarrera = idCarrera; }
+    public int getIdCarrera() {
+        return idCarrera;
+    }
+    public void setIdCarrera(int idCarrera) {
+        this.idCarrera = idCarrera;
+    }
 
-    public LocalDate getFechaTutoria() { return fechaTutoria; }
-    public void setFechaTutoria(LocalDate fechaTutoria) { this.fechaTutoria = fechaTutoria; }
+    public LocalDate getFechaTutoria() {
+        return fechaTutoria;
+    }
+    public void setFechaTutoria(LocalDate fechaTutoria) {
+        this.fechaTutoria = fechaTutoria;
+    }
 
-    public LocalDate getFechaCierreReportes() { return fechaCierreReportes; }
-    public void setFechaCierreReportes(LocalDate fechaCierreReportes) { this.fechaCierreReportes = fechaCierreReportes; }
+    public LocalDate getFechaCierreReportes() {
+        return fechaCierreReportes;
+    }
+    public void setFechaCierreReportes(LocalDate fechaCierreReportes) {
+        this.fechaCierreReportes = fechaCierreReportes;
+    }
 
-    public int getNumeroSesion() { return numeroSesion; }
-    public void setNumeroSesion(int numeroSesion) { this.numeroSesion = numeroSesion; }
+    public int getNumeroSesion() {
+        return numeroSesion;
+    }
+    public void setNumeroSesion(int numeroSesion) {
+        this.numeroSesion = numeroSesion;
+    }
 
-    public String getTemas() { return temas; }
-    public void setTemas(String temas) { this.temas = temas; }
+    public String getTemas() {
+        return temas;
+    }
+    public void setTemas(String temas) {
+        this.temas = temas;
+    }
 
 
-    public String getPeriodoNombre() { return periodoNombre; }
-    public void setPeriodoNombre(String periodoNombre) { this.periodoNombre = periodoNombre; }
+    public String getPeriodoNombre() {
+        return periodoNombre;
+    }
+    public void setPeriodoNombre(String periodoNombre) {
+        this.periodoNombre = periodoNombre;
+    }
 
-    public String getCarreraNombre() { return carreraNombre; }
-    public void setCarreraNombre(String carreraNombre) { this.carreraNombre = carreraNombre; }
+    public String getCarreraNombre() {
+        return carreraNombre;
+    }
+    public void setCarreraNombre(String carreraNombre) {
+        this.carreraNombre = carreraNombre;
+    }
 
     @Override
     public String toString() {

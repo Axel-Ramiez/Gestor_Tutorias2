@@ -59,34 +59,42 @@ public class ReporteTutoria {
     }
 
     public void setIdReporte(int idReporte) {
+
         this.idReporte = idReporte;
     }
 
     public int getIdTutor() {
+
         return idTutor;
     }
 
     public void setIdTutor(int idTutor) {
+
         this.idTutor = idTutor;
     }
 
     public int getIdEstudiante() {
+
         return idEstudiante;
     }
 
     public void setIdEstudiante(int idEstudiante) {
+
         this.idEstudiante = idEstudiante;
     }
 
     public int getIdFechaTutoria() {
+
         return idFechaTutoria;
     }
 
     public void setIdFechaTutoria(int idFechaTutoria) {
+
         this.idFechaTutoria = idFechaTutoria;
     }
 
     public String getReporte() {
+
         return reporte;
     }
 

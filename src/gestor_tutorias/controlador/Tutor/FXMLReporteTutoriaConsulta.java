@@ -64,14 +64,17 @@ public class FXMLReporteTutoriaConsulta {
             }
 
             if (exito) {
+                boolean enRiesgo = !r.isAsistencia();
+                gestor_tutorias.dao.EstudianteDAO estudianteDAO = new gestor_tutorias.dao.EstudianteDAO();
+                estudianteDAO.actualizarEstatusRiesgo(r.getIdEstudiante(), enRiesgo);
                 padre.refrescarTabla();
                 cerrar();
             } else {
                 mostrarAlerta("Error", "No se guardaron cambios.");
             }
-
         } catch (SQLException e) {
             mostrarAlerta("Error BD", e.getMessage());
+            e.printStackTrace();
         } catch (NumberFormatException e) {
             mostrarAlerta("Error", "Los IDs deben ser numéricos.");
         }
