@@ -9,8 +9,8 @@ public class Estudiante {
     private int semestre;
     private int activo; // 1 = Activo, 0 = Inactivo
     private int riesgo; // 1 = En Riesgo, 0 = Sin Riesgo
-
-
+    private int idTutor;
+    private String tutorNombre;
     private String carreraNombre;
 
     public Estudiante() {
@@ -49,10 +49,29 @@ public class Estudiante {
     public void setActivo(int activo) { this.activo = activo; }
 
     public int getRiesgo() { return riesgo; }
-    public void setRiesgo(int riesgo) { this.riesgo = riesgo; }
+    public void setRiesgo(int riesgo) {
+        this.riesgo = riesgo;
+    }
 
-    public String getCarreraNombre() { return carreraNombre; }
-    public void setCarreraNombre(String carreraNombre) { this.carreraNombre = carreraNombre; }
+    public String getCarreraNombre() {
+        return carreraNombre;
+    }
+    public void setCarreraNombre(String carreraNombre) {
+        this.carreraNombre = carreraNombre;
+    }
+
+    public int getIdTutor() { return idTutor; }
+
+    public void setIdTutor(int idTutor) {
+        this.idTutor = idTutor;
+    }
+    public String getTutorNombre() {
+        return tutorNombre;
+    }
+
+    public void setTutorNombre(String tutorNombre) {
+        this.tutorNombre = tutorNombre;
+    }
 
     @Override
     public String toString() {

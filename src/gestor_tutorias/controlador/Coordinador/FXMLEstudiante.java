@@ -2,7 +2,6 @@ package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.dao.EstudianteDAO;
 import gestor_tutorias.pojo.Estudiante;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -19,71 +18,74 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FXMLEstudiante implements Initializable {
 
     @FXML
     private TableView<Estudiante> tablaEstudiante;
-
     @FXML
-    private TableColumn<Estudiante, Integer> id;
-
+    private TableColumn colMatricula;
     @FXML
-    private TableColumn<Estudiante, String> matricula;
-
+    private TableColumn colNombreCompleto;
     @FXML
-    private TableColumn<Estudiante, String> nombre;
-
+    private TableColumn colCarrera;
     @FXML
-    private TableColumn<Estudiante, String> correo;
-
+    private TableColumn colSemestre;
     @FXML
-    private TableColumn<Estudiante, Integer> idCarrera;
-
-    @FXML
-    private TableColumn<Estudiante, Integer> semestre;
-
-    @FXML
-    private TableColumn<Estudiante, Integer> activo;
+    private TableColumn colTutor;
 
     private ObservableList<Estudiante> lista;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        id.setCellValueFactory(new PropertyValueFactory<>("idEstudiante"));
-        matricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
-        nombre.setCellValueFactory(new PropertyValueFactory<>("nombreCompleto"));
-        correo.setCellValueFactory(new PropertyValueFactory<>("correo"));
-        idCarrera.setCellValueFactory(new PropertyValueFactory<>("idCarrera"));
-        semestre.setCellValueFactory(new PropertyValueFactory<>("semestre"));
-        activo.setCellValueFactory(new PropertyValueFactory<>("activo"));
-
+        configurarColumnas();
         cargarAlumnos();
     }
 
+    private void configurarColumnas() {
+        colMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
+        colNombreCompleto.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
+        colSemestre.setCellValueFactory(new PropertyValueFactory("semestre"));
+        colCarrera.setCellValueFactory(new PropertyValueFactory("carreraNombre"));
+        colTutor.setCellValueFactory(new PropertyValueFactory("tutorNombre"));
+    }
+
     @FXML
-    private void consultarAlumno() throws IOException {
+    private void clicConsultar() {
         Estudiante seleccionado = tablaEstudiante.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText(null);
-            alert.setContentText("Seleccione un estudiante de la lista");
+            alert.setContentText("Seleccione un estudiante de la lista para asignar tutor.");
             alert.showAndWait();
             return;
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLEstudianteConsulta.fxml"));
-        Parent root = loader.load();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLEstudianteConsulta.fxml"));
+            Parent root = loader.load();
 
-        FXMLEstudianteConsulta controlador = loader.getController();
-        controlador.cargarEstudiante(seleccionado);
+            FXMLEstudianteConsulta controlador = loader.getController();
+            controlador.cargarEstudiante(seleccionado);
 
-        Stage stage = new Stage();
-        stage.setTitle("Consulta de Estudiante");
-        stage.setScene(new Scene(root));
-        stage.show();
+            Stage stage = new Stage();
+            stage.setTitle("Asignar Tutor");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            cargarAlumnos();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("No se pudo abrir la ventana de consulta: " + ex.getMessage());
+            alert.showAndWait();
+        }
     }
 
     private void cargarAlumnos() {
@@ -93,6 +95,10 @@ public class FXMLEstudiante implements Initializable {
             tablaEstudiante.setItems(lista);
         } catch (SQLException e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión");
+            alert.setContentText("No se pudo conectar con la base de datos.");
+            alert.showAndWait();
         }
     }
 }

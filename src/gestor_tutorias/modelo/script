@@ -47,18 +47,21 @@ CREATE TABLE usuario (
 
 
 CREATE TABLE estudiante (
-  id_estudiante int NOT NULL AUTO_INCREMENT,
-  matricula varchar(20) NOT NULL,
-  nombre_completo varchar(150) NOT NULL,
-  correo varchar(100) DEFAULT NULL,
-  id_carrera int NOT NULL,
-  semestre int DEFAULT 1,
-  activo tinyint(1) DEFAULT '1',
-  riesgo tinyint(1) DEFAULT '1',
+  id_estudiante INT NOT NULL AUTO_INCREMENT,
+  matricula VARCHAR(20) NOT NULL,
+  nombre_completo VARCHAR(150) NOT NULL,
+  correo VARCHAR(100) DEFAULT NULL,
+  id_carrera INT NOT NULL,
+  id_tutor INT DEFAULT NULL, -- Nueva columna integrada
+  semestre INT DEFAULT 1,
+  activo TINYINT(1) DEFAULT 1,
+  riesgo TINYINT(1) DEFAULT 1,
   PRIMARY KEY (id_estudiante),
-  UNIQUE KEY matricula (matricula),
-  FOREIGN KEY (id_carrera) REFERENCES carrera (id_carrera)
-);
+  UNIQUE KEY (matricula),
+  -- Definición de llaves foráneas
+  CONSTRAINT fk_estudiante_carrera FOREIGN KEY (id_carrera) REFERENCES carrera (id_carrera),
+  CONSTRAINT fk_estudiante_tutor FOREIGN KEY (id_tutor) REFERENCES usuario (id_usuario)
+) ENGINE=InnoDB;
 
 
 CREATE TABLE asignacion_tutor (

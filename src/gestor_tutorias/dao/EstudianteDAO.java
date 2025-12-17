@@ -17,10 +17,11 @@ public class EstudianteDAO {
 
         if(conn != null){
             try {
-
-                String consulta = "SELECT e.*, c.nombre AS nombre_carrera " +
+                String consulta = "SELECT e.*, c.nombre AS nombre_carrera, " +
+                        "u.nombre_completo AS nombre_tutor " +
                         "FROM estudiante e " +
                         "INNER JOIN carrera c ON e.id_carrera = c.id_carrera " +
+                        "LEFT JOIN usuario u ON e.id_tutor = u.id_usuario " +
                         "WHERE e.activo = 1 " +
                         "ORDER BY e.matricula ASC";
 
@@ -133,6 +134,25 @@ public class EstudianteDAO {
         return resultado;
     }
 
+    public static boolean asignarTutor(int idEstudiante, int idTutor) throws SQLException {
+        boolean resultado = false;
+        Connection conn = ConexionBD.abrirConexion();
+        if (conn != null) {
+            try {
+                // Asumiendo que en tu BD la tabla estudiante tiene una columna 'id_tutor'
+                String consulta = "UPDATE estudiante SET id_tutor = ? WHERE id_estudiante = ?";
+                PreparedStatement ps = conn.prepareStatement(consulta);
+                ps.setInt(1, idTutor);
+                ps.setInt(2, idEstudiante);
+
+                resultado = ps.executeUpdate() > 0;
+            } finally {
+                ConexionBD.cerrarConexion(conn);
+            }
+        }
+        return resultado;
+    }
+
     private static Estudiante mapearEstudiante(ResultSet rs) throws SQLException {
         Estudiante est = new Estudiante();
         est.setIdEstudiante(rs.getInt("id_estudiante"));
@@ -143,6 +163,8 @@ public class EstudianteDAO {
         est.setSemestre(rs.getInt("semestre"));
         est.setRiesgo(rs.getInt("riesgo"));
         est.setCarreraNombre(rs.getString("nombre_carrera"));
+        est.setIdTutor(rs.getInt("id_tutor"));
+        est.setTutorNombre(rs.getString("nombre_tutor"));
         return est;
     }
 }//
