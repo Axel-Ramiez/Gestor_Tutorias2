@@ -124,14 +124,9 @@ public class FXMLEstudianteConsulta implements Initializable {
     }
 
     private void cargarListaTutores() {
-        listaTutores = FXCollections.observableArrayList();
         try {
-            List<Usuario> todosLosUsuarios = UsuarioDAO.obtenerTodos();
-            for (Usuario u : todosLosUsuarios) {
-                if (u.getIdRol() == ID_ROL_TUTOR) {
-                    listaTutores.add(u);
-                }
-            }
+            List<Usuario> resultados = UsuarioDAO.obtenerTutores();
+            listaTutores = FXCollections.observableArrayList(resultados);
             cbTutor.setItems(listaTutores);
 
         } catch (SQLException ex) {
@@ -150,9 +145,6 @@ public class FXMLEstudianteConsulta implements Initializable {
     }
 
 
-    @FXML
-    private void cargarCarreras(ActionEvent event) {
-    }
 
     @FXML
     private void clicAsigTutor(ActionEvent event) {

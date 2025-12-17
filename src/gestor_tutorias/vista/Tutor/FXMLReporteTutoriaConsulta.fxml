@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLReporteTutoriaConsulta">
+<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLReporteTutoriaConsulta">
    <children>
       <Label layoutX="240.0" layoutY="15.0" text="Detalle de Reporte">
          <font><Font name="System Bold" size="18.0" /></font>
@@ -39,7 +40,7 @@
             <CheckBox fx:id="chbAsistencia" mnemonicParsing="false" text="Asistió" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
             <Label text="Estado:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <ComboBox fx:id="cbEstado" prefWidth="180.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <ComboBox fx:id="cbEstado" disable="true" prefWidth="180.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
       </GridPane>
 
@@ -47,13 +48,9 @@
       <TextArea fx:id="taReporte" layoutX="25.0" layoutY="195.0" prefHeight="90.0" prefWidth="600.0" wrapText="true" />
 
       <Label layoutX="25.0" layoutY="300.0" text="Respuesta del Coordinador:" />
-      <TextArea fx:id="taRespuesta" layoutX="25.0" layoutY="320.0" prefHeight="90.0" prefWidth="600.0" wrapText="true" />
+      <TextArea fx:id="taRespuesta" disable="true" editable="false" layoutX="25.0" layoutY="320.0" prefHeight="90.0" prefWidth="600.0" wrapText="true" />
 
-      <HBox layoutX="25.0" layoutY="440.0" spacing="15.0">
-         <children>
-            <Button fx:id="btnProblematica" onAction="#generarProblematica" style="-fx-background-color: #FF9800;" text="Generar Problemática" textFill="WHITE" />
-         </children>
-      </HBox>
+      <HBox layoutX="25.0" layoutY="440.0" spacing="15.0" />
 
       <HBox layoutX="420.0" layoutY="440.0" spacing="15.0">
          <children>

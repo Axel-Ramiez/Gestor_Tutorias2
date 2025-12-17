@@ -81,6 +81,30 @@ public class UsuarioDAO {
         return resultado;
     }
 
+    public static List<Usuario> obtenerTutores() throws SQLException {
+        List<Usuario> lista = new ArrayList<>();
+        Connection conn = ConexionBD.abrirConexion();
+
+        if (conn != null) {
+            try {
+                String consulta = "SELECT u.*, r.nombre_rol " +
+                        "FROM usuario u " +
+                        "INNER JOIN rol r ON u.id_rol = r.id_rol " +
+                        "WHERE u.activo = 1 AND u.id_rol = 3 " +
+                        "ORDER BY u.nombre_completo ASC";
+
+                PreparedStatement ps = conn.prepareStatement(consulta);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    lista.add(mapearUsuario(rs));
+                }
+            } finally {
+                ConexionBD.cerrarConexion(conn);
+            }
+        }
+        return lista;
+    }
 
     public static boolean editarUsuario(Usuario u) throws SQLException {
         boolean resultado = false;
