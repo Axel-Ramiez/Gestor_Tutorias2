@@ -1,50 +1,71 @@
 package gestor_tutorias.controlador.Tutor;
 
+import gestor_tutorias.Enum.EstadoReporte;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import java.time.LocalDate;
 
 public class FXMLTutoriaConsulta {
 
-    @FXML private DatePicker fecha;
-    @FXML private TextField periodoescolar;
-    @FXML private TextField idtutor;
-    @FXML private TextField idestudiante;
-    @FXML private TextField temasatratar;
-    @FXML private TextField respuestacoordinador;
-    @FXML private TextArea reporte;
-    @FXML private CheckBox asistencia;
+    // Campos de texto y entrada
+    @FXML private TextField tfIdReporte;
+    @FXML private TextField tfIdEstudiante;
+    @FXML private TextField tfIdTutor;
+    @FXML private TextField tfIdFechaTutoria;
+    @FXML private CheckBox chbAsistencia;
+    @FXML private ComboBox<EstadoReporte> cbEstado;
 
-    @FXML private Button guardar;
-    @FXML private Button eliminar;
-    @FXML private Button generarproblematica;
+    // Áreas de texto
+    @FXML private TextArea taReporte;
+    @FXML private TextArea taRespuesta;
+
+    // Botones
+    @FXML private Button btnProblematica;
+    @FXML private Button btnGuardar;
+    @FXML private Button btnEliminar;
 
     @FXML
-    private void guardarProblematica() {
+    private void initialize() {
+        // Por defecto, definimos todo como editable para cumplir tu solicitud inicial
+        configurarEdicion(true);
+    }
 
-        LocalDate fechaSeleccionada = fecha.getValue();
-        String periodo = periodoescolar.getText();
-        String tutor = idtutor.getText();
-        String estudiante = idestudiante.getText();
-        boolean asistio = asistencia.isSelected();
+    /**
+     * Define el estado de edición de todos los elementos de la vista
+     * @param editable true para habilitar edición, false para solo lectura
+     */
+    public void configurarEdicion(boolean editable) {
+        // TextFields
+        tfIdReporte.setEditable(false); // Siempre falso por ser PK Autoincremental
+        tfIdEstudiante.setEditable(editable);
+        tfIdTutor.setEditable(editable);
+        tfIdFechaTutoria.setEditable(editable);
 
-        System.out.println("Guardando reporte de tutoría");
-        System.out.println("Fecha: " + fechaSeleccionada);
-        System.out.println("Periodo: " + periodo);
-        System.out.println("Tutor: " + tutor);
-        System.out.println("Estudiante: " + estudiante);
-        System.out.println("Asistencia: " + asistio);
+        // Controles de selección
+        chbAsistencia.setDisable(!editable);
+        cbEstado.setDisable(!editable);
+
+        // Áreas de texto
+        taReporte.setEditable(editable);
+        taRespuesta.setEditable(editable);
+
+        // Botones
+        btnGuardar.setDisable(!editable);
+        btnEliminar.setDisable(!editable);
+        btnProblematica.setDisable(!editable);
     }
 
     @FXML
-    private void eliminarProblematica() {
-        System.out.println("Eliminar reporte de tutoría");
+    private void guardarReporte() {
+        // Método vacío para implementación
+    }
+
+    @FXML
+    private void eliminarReporte() {
+        // Método vacío para implementación
     }
 
     @FXML
     private void generarProblematica() {
-        System.out.println("Generar problemática desde reporte");
-        System.out.println("Temas: " + temasatratar.getText());
-        System.out.println("Reporte: " + reporte.getText());
+        // Método vacío para implementación
     }
 }

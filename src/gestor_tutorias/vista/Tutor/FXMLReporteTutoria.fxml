@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLTutoria">
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLTutoria">
     <children>
-        <Pane prefHeight="73.0" prefWidth="600.0">
+        <Pane prefHeight="73.0" prefWidth="800.0" style="-fx-background-color: #283593;">
             <children>
-                <ImageView fitHeight="53.0" fitWidth="67.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
-                <Label layoutX="81.0" layoutY="26.0" text="Sistema de tutorias - UV" />
-                <Label layoutX="365.0" layoutY="34.0" text="usuario: Coordinador" />
+                <Label layoutX="20.0" layoutY="24.0" text="Sistema de Tutorías - UV" textFill="WHITE">
+                    <font><Font name="System Bold" size="18.0" /></font>
+                </Label>
+                <Label layoutX="550.0" layoutY="28.0" text="Rol: Tutor / Coordinador" textFill="WHITE" />
             </children>
         </Pane>
-        <Label layoutX="8.0" layoutY="378.0" text="UNIVERSIDAD VERACRUZANA" />
-        <Label layoutX="261.0" layoutY="103.0" text="reporte de tutoria" />
-        <Button fx:id="crear" layoutX="490.0" layoutY="91.0" mnemonicParsing="false" onAction="#crearReporteTutoria" text="crear nuevo" />
-        <TableView fx:id="tablareportestutoria" layoutX="14.0" layoutY="137.0" prefHeight="174.0" prefWidth="452.0">
+
+        <Label layoutX="325.0" layoutY="85.0" text="Reportes de Tutoría">
+            <font><Font size="16.0" /></font>
+        </Label>
+
+        <HBox layoutX="560.0" layoutY="115.0" spacing="10.0">
+            <children>
+                <Button fx:id="btnConsultar" onAction="#consultarReporteTutoria" text="Consultar" />
+                <Button fx:id="btnCrear" onAction="#crearReporteTutoria" text="Crear Nuevo" />
+            </children>
+        </HBox>
+
+        <TableView fx:id="tvReportes" layoutX="20.0" layoutY="150.0" prefHeight="240.0" prefWidth="760.0">
             <columns>
-                <TableColumn fx:id="idtutoria" prefWidth="75.0" text="id tutoria" />
-                <TableColumn fx:id="fecha" prefWidth="75.0" text="fecha" />
-                <TableColumn fx:id="hora" prefWidth="75.0" text="hora" />
-                <TableColumn fx:id="periodoescolar" prefWidth="75.0" text="periodo escolar" />
-                <TableColumn fx:id="idtutor" prefWidth="75.0" text="id tutor" />
-                <TableColumn fx:id="idestudiante" prefWidth="75.0" text="id estudiante" />
+                <TableColumn fx:id="colIdReporte" prefWidth="60.0" text="ID" />
+                <TableColumn fx:id="colFecha" prefWidth="100.0" text="Fecha" />
+                <TableColumn fx:id="colPeriodo" prefWidth="150.0" text="Periodo" />
+                <TableColumn fx:id="colEstudiante" prefWidth="200.0" text="Estudiante" />
+                <TableColumn fx:id="colEstado" prefWidth="100.0" text="Estado" />
+                <TableColumn fx:id="colAsistencia" prefWidth="80.0" text="Asistencia" />
             </columns>
         </TableView>
-        <Button fx:id="consultar" layoutX="403.0" layoutY="91.0" mnemonicParsing="false" onAction="#consultarReporteTutoria" text="consultar" />
 
+        <Label layoutX="20.0" layoutY="410.0" text="UNIVERSIDAD VERACRUZANA" textFill="#808080" />
     </children>
 </AnchorPane>

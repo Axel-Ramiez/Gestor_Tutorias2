@@ -10,10 +10,10 @@ public class ReporteTutoria {
     private int idFechaTutoria;
     private String reporte;
     private String respuestaCoordinador;
-    private boolean asistencia;
+    private boolean asistencia; // Mapea a tinyint(1)
     private EstadoReporte estado;
 
-
+    // Variables auxiliares para visualización en UI (Joins en SQL)
     private String nombreTutor;
     private String nombreEstudiante;
     private String fecha;
@@ -22,18 +22,19 @@ public class ReporteTutoria {
     public ReporteTutoria() {
     }
 
-
+    // Constructor para insertar nuevo reporte (Sin ID)
     public ReporteTutoria(int idTutor, int idEstudiante, int idFechaTutoria, String reporte,
-                          String respuestaCoordinador, boolean asistencia) {
+                          String respuestaCoordinador, boolean asistencia, EstadoReporte estado) {
         this.idTutor = idTutor;
         this.idEstudiante = idEstudiante;
         this.idFechaTutoria = idFechaTutoria;
         this.reporte = reporte;
         this.respuestaCoordinador = respuestaCoordinador;
         this.asistencia = asistencia;
+        this.estado = (estado != null) ? estado : EstadoReporte.PENDIENTE;
     }
 
-
+    // Constructor completo para recuperar de la BD
     public ReporteTutoria(int idReporte, int idTutor, int idEstudiante, int idFechaTutoria,
                           String reporte, String respuestaCoordinador, boolean asistencia, EstadoReporte estado) {
         this.idReporte = idReporte;
@@ -46,7 +47,8 @@ public class ReporteTutoria {
         this.estado = estado;
     }
 
-    // --- GETTERS Y SETTERS PRINCIPALES ---
+    // --- GETTERS Y SETTERS ---
+
     public int getIdReporte() { return idReporte; }
     public void setIdReporte(int idReporte) { this.idReporte = idReporte; }
 
@@ -71,7 +73,7 @@ public class ReporteTutoria {
     public EstadoReporte getEstado() { return estado; }
     public void setEstado(EstadoReporte estado) { this.estado = estado; }
 
-    // --- GETTERS Y SETTERS AUXILIARES (Vitales para la TableView) ---
+    // --- GETTERS Y SETTERS AUXILIARES ---
     public String getNombreTutor() { return nombreTutor; }
     public void setNombreTutor(String nombreTutor) { this.nombreTutor = nombreTutor; }
 
@@ -83,19 +85,5 @@ public class ReporteTutoria {
 
     public String getPeriodoEscolar() { return periodoEscolar; }
     public void setPeriodoEscolar(String periodoEscolar) { this.periodoEscolar = periodoEscolar; }
-
-    @Override
-    public String toString() {
-        return "ReporteTutoria{" +
-                "idReporte=" + idReporte +
-                ", idTutor=" + idTutor +
-                ", idEstudiante=" + idEstudiante +
-                ", idFechaTutoria=" + idFechaTutoria +
-                ", reporte='" + reporte + '\'' +
-                ", respuestaCoordinador='" + respuestaCoordinador + '\'' +
-                ", asistencia=" + asistencia +
-                ", estado=" + estado +
-                '}';
-    }
 }
 

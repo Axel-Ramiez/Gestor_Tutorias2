@@ -83,7 +83,7 @@ public class FXMLReporteTutoriaConsulta {
             }
 
             try {
-                boolean exito = reporteDao.actualizarRespuesta(reporteActual.getIdReporte(), respuesta);
+                boolean exito = reporteDao.actualizarReporte(reporteActual.getIdReporte(), respuesta);
 
                 if (exito) {
                     mostrarAlerta("Respuesta registrada y estado actualizado a REVISADO.", Alert.AlertType.INFORMATION);
