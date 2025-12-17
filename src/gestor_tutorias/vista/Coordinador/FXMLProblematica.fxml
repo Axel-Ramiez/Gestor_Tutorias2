@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLProblematica">
+    <children>
+        <Pane prefHeight="73.0" prefWidth="700.0" style="-fx-background-color: #283593;">
+            <children>
+                <Label layoutX="20.0" layoutY="24.0" text="Sistema de Tutorías - UV" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblUsuario" layoutX="450.0" layoutY="28.0" text="Usuario: Tutor" textFill="WHITE" />
+            </children>
+        </Pane>
+
+        <Label layoutX="273.0" layoutY="90.0" text="Listado de Problemáticas">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Button fx:id="btnConsultar" layoutX="575.0" layoutY="118.0" mnemonicParsing="false" onAction="#consultarProblematica" prefWidth="100.0" text="Consultar" />
+
+        <TableView fx:id="tvProblematica" layoutX="25.0" layoutY="160.0" prefHeight="230.0" prefWidth="650.0">
+            <columns>
+                <TableColumn fx:id="colIdProblematica" prefWidth="50.0" text="ID" />
+                <TableColumn fx:id="colIdReporte" prefWidth="70.0" text="ID Reporte" />
+                <TableColumn fx:id="colTitulo" prefWidth="150.0" text="Título" />
+                <TableColumn fx:id="colDescripcion" prefWidth="180.0" text="Descripción" />
+                <TableColumn fx:id="colEE" prefWidth="100.0" text="ID Exp. Ed." />
+                <TableColumn fx:id="colEstado" prefWidth="100.0" text="Estado" />
+            </columns>
+        </TableView>
+
+        <Label layoutX="25.0" layoutY="410.0" text="UNIVERSIDAD VERACRUZANA" textFill="#666666" />
+    </children>
+</AnchorPane>

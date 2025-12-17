@@ -1,4 +1,4 @@
-drop database IF EXISTS gestion_tutorias;
+drop database IF EXIST gestion_tutorias;
 
 create database gestion_tutorias;
 use gestion_tutorias;
@@ -52,15 +52,28 @@ CREATE TABLE estudiante (
   nombre_completo VARCHAR(150) NOT NULL,
   correo VARCHAR(100) DEFAULT NULL,
   id_carrera INT NOT NULL,
-  id_tutor INT DEFAULT NULL,
+  id_tutor INT DEFAULT NULL, -- Nueva columna integrada
   semestre INT DEFAULT 1,
   activo TINYINT(1) DEFAULT 1,
   riesgo TINYINT(1) DEFAULT 1,
   PRIMARY KEY (id_estudiante),
   UNIQUE KEY (matricula),
+  -- Definición de llaves foráneas
   CONSTRAINT fk_estudiante_carrera FOREIGN KEY (id_carrera) REFERENCES carrera (id_carrera),
   CONSTRAINT fk_estudiante_tutor FOREIGN KEY (id_tutor) REFERENCES usuario (id_usuario)
 ) ENGINE=InnoDB;
+
+
+CREATE TABLE asignacion_tutor (
+  id_asignacion int NOT NULL AUTO_INCREMENT,
+  id_tutor int NOT NULL,
+  id_estudiante int NOT NULL,
+  id_periodo int NOT NULL,
+  PRIMARY KEY (id_asignacion),
+  FOREIGN KEY (id_tutor) REFERENCES usuario (id_usuario),
+  FOREIGN KEY (id_estudiante) REFERENCES estudiante (id_estudiante),
+  FOREIGN KEY (id_periodo) REFERENCES periodo_escolar (id_periodo)
+);
 
 CREATE TABLE planeacion_tutoria (
   id_fecha_tutoria int NOT NULL AUTO_INCREMENT,

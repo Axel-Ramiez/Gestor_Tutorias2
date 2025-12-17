@@ -7,13 +7,13 @@ public class Problematica {
     private int idReporte;
     private String titulo;
     private String descripcion;
-    private Integer idExperienciaEducativa; // Uso de Integer por el DEFAULT NULL
+    private Integer idExperienciaEducativa;
     private EstatusProblematica estado;
 
     public Problematica() {
     }
 
-    // Constructor para insertar nuevos registros (el ID lo genera la DB)
+
     public Problematica(int idReporte, String titulo, String descripcion, Integer idExperienciaEducativa, EstatusProblematica estado) {
         this.idReporte = idReporte;
         this.titulo = titulo;

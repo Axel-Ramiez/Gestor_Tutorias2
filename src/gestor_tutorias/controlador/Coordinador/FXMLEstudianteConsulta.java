@@ -56,11 +56,15 @@ public class FXMLEstudianteConsulta implements Initializable {
 
     private void configurarCamposSoloLectura() {
         tfMatricula.setDisable(true);
+        tfMatricula.setStyle("-fx-opacity: 1; -fx-text-fill: black; -fx-background-color: #f0f0f0;");
         tfNombre.setDisable(true);
+        tfNombre.setStyle("-fx-opacity: 1; -fx-text-fill: black; -fx-background-color: #f0f0f0;");
         tfCorreo.setDisable(true);
+        tfCorreo.setStyle("-fx-opacity: 1; -fx-text-fill: black; -fx-background-color: #f0f0f0;");
         tfSemestre.setDisable(true);
-        cbFacultad.setDisable(true);
+        tfSemestre.setStyle("-fx-opacity: 1; -fx-text-fill: black; -fx-background-color: #f0f0f0;");
         cbCarrera.setDisable(true);
+        cbCarrera.setStyle("-fx-opacity: 1; -fx-text-fill: black; -fx-background-color: #f0f0f0;");
     }
 
     @FXML
@@ -122,10 +126,7 @@ public class FXMLEstudianteConsulta implements Initializable {
     private void cargarListaTutores() {
         listaTutores = FXCollections.observableArrayList();
         try {
-            // Obtenemos todos los usuarios
             List<Usuario> todosLosUsuarios = UsuarioDAO.obtenerTodos();
-
-            // Filtramos en memoria solo los que tienen Rol de Tutor (ID 2)
             for (Usuario u : todosLosUsuarios) {
                 if (u.getIdRol() == ID_ROL_TUTOR) {
                     listaTutores.add(u);
@@ -140,7 +141,6 @@ public class FXMLEstudianteConsulta implements Initializable {
     }
 
     private void seleccionarTutorEnCombo(int idTutorActual) {
-        // Recorremos los items del combo para encontrar el que coincide con el ID
         for (Usuario u : cbTutor.getItems()) {
             if (u.getIdUsuario() == idTutorActual) {
                 cbTutor.getSelectionModel().select(u);

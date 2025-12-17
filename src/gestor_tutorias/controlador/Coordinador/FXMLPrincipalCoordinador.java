@@ -107,26 +107,24 @@ public class FXMLPrincipalCoordinador implements Initializable {
 
     @FXML
     private void clicRiesgo(ActionEvent event) {
-        abrirVentana("/gestor_tutorias/vista/Coordinador/FXMLEstudiantesRiesgo.fxml", "Estudiantes en Riesgo");
-    }
-
-    private void abrirVentana(String ruta, String titulo) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(ruta));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLEstudiantesRiesgo.fxml")
+            );
+
             Parent root = loader.load();
 
-            Scene scene = new Scene(root);
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(scene);
-            stage.setTitle(titulo);
-            stage.showAndWait();
-        } catch (IOException ex) {
-            System.err.println("Error al cargar: " + ruta);
-            ex.printStackTrace();
-            mostrarAlerta("Error", "No se encontró el archivo: " + ruta);
+            stage.setScene(new Scene(root));
+            stage.setTitle("Problematica");
+            stage.show();
+
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo abrir Problematica.");
+            e.printStackTrace();
         }
     }
+
 
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -134,5 +132,24 @@ public class FXMLPrincipalCoordinador implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    public void clicProblematica(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLProblematica.fxml")
+            );
+
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Problematica");
+            stage.show();
+
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo abrir Problematica.");
+            e.printStackTrace();
+        }
     }
 }
