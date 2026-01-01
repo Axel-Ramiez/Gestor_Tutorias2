@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class ConexionBD {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String NAME_BD = "gestion_tutorias";
+    private static final String NAME_BD = "gestion_tutoria";
     private static final String IP = "localhost";
     private static final String PORT  = "3306";
     private static final String URL = "jdbc:mysql://"+ IP + ":" + PORT + "/" + NAME_BD
@@ -27,6 +27,7 @@ public class ConexionBD {
             System.err.println("Error de conexión: " + ex.getMessage());
             ex.printStackTrace();
         }
+        System.out.println("hay cinexion");
         return conexion;
     }
 

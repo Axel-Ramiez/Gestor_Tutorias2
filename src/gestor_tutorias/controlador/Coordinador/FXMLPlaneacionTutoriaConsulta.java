@@ -1,11 +1,11 @@
-package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.dao.CarreraDAO;
 import gestor_tutorias.dao.PeriodoEscolarDAO;
-import gestor_tutorias.dao.PlaneacionTutoriaDAO;
+//import gestor_tutorias.dao.PlaneacionTutoriaDAO;
 import gestor_tutorias.pojo.Carrera;
 import gestor_tutorias.pojo.PeriodoEscolar;
-import gestor_tutorias.pojo.PlaneacionTutoria;
+//import gestor_tutorias.pojo.PlaneacionTutoria;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -27,7 +27,7 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
     @FXML private TextField tfIdPlaneacion;
 
 
-    private PlaneacionTutoria planeacionActual;
+    //private PlaneacionTutoria planeacionActual;
     private final PlaneacionTutoriaDAO dao = new PlaneacionTutoriaDAO();
 
     @Override
@@ -148,3 +148,5 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
         alert.showAndWait();
     }
 }
+
+ */

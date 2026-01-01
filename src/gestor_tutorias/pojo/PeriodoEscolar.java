@@ -1,58 +1,72 @@
 package gestor_tutorias.pojo;
 
+import java.time.LocalDate;
+
 public class PeriodoEscolar {
-    private int idPeriodo;
-    private String nombre;
-    private String fechaInicio;
-    private String fechaFin;
-    private int activo;
+
+    private int idPeriodoEscolar;
+    private String nombrePeriodoEscolar;
+    private LocalDate fechaInicioPeriodoEscolar;
+    private LocalDate fechaFinPeriodoEscolar;
+    private boolean activoPeriodoEscolar;
 
     public PeriodoEscolar() {
     }
 
-    public PeriodoEscolar(int idPeriodo, String nombre) {
-        this.idPeriodo = idPeriodo;
-        this.nombre = nombre;
+    public PeriodoEscolar(int idPeriodoEscolar,
+                          String nombrePeriodoEscolar,
+                          LocalDate fechaInicioPeriodoEscolar,
+                          LocalDate fechaFinPeriodoEscolar,
+                          boolean activoPeriodoEscolar) {
+        this.idPeriodoEscolar = idPeriodoEscolar;
+        this.nombrePeriodoEscolar = nombrePeriodoEscolar;
+        this.fechaInicioPeriodoEscolar = fechaInicioPeriodoEscolar;
+        this.fechaFinPeriodoEscolar = fechaFinPeriodoEscolar;
+        this.activoPeriodoEscolar = activoPeriodoEscolar;
     }
 
-    public int getIdPeriodo() {
-        return idPeriodo;
-    }
-    public void setIdPeriodo(int idPeriodo) {
-        this.idPeriodo = idPeriodo;
+    public int getIdPeriodoEscolar() {
+        return idPeriodoEscolar;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setIdPeriodoEscolar(int idPeriodoEscolar) {
+        this.idPeriodoEscolar = idPeriodoEscolar;
     }
 
-    public String getFechaInicio() {
-        return fechaInicio;
-    }
-    public void setFechaInicio(String fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public String getNombrePeriodoEscolar() {
+        return nombrePeriodoEscolar;
     }
 
-    public String getFechaFin() {
-        return fechaFin;
-    }
-    public void setFechaFin(String fechaFin) {
-        this.fechaFin = fechaFin;
+    public void setNombrePeriodoEscolar(String nombrePeriodoEscolar) {
+        this.nombrePeriodoEscolar = nombrePeriodoEscolar;
     }
 
-    public int getActivo() {
-        return activo;
-    }
-    public void setActivo(int activo) {
-        this.activo = activo;
+    public LocalDate getFechaInicioPeriodoEscolar() {
+        return fechaInicioPeriodoEscolar;
     }
 
+    public void setFechaInicioPeriodoEscolar(LocalDate fechaInicioPeriodoEscolar) {
+        this.fechaInicioPeriodoEscolar = fechaInicioPeriodoEscolar;
+    }
+
+    public LocalDate getFechaFinPeriodoEscolar() {
+        return fechaFinPeriodoEscolar;
+    }
+
+    public void setFechaFinPeriodoEscolar(LocalDate fechaFinPeriodoEscolar) {
+        this.fechaFinPeriodoEscolar = fechaFinPeriodoEscolar;
+    }
+
+    public boolean isActivoPeriodoEscolar() {
+        return activoPeriodoEscolar;
+    }
+
+    public void setActivoPeriodoEscolar(boolean activoPeriodoEscolar) {
+        this.activoPeriodoEscolar = activoPeriodoEscolar;
+    }
 
     @Override
     public String toString() {
-        return nombre;
+        return nombrePeriodoEscolar;
     }
 }

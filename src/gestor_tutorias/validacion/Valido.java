@@ -1,4 +1,4 @@
-package gestor_tutorias.validacion;
+package gestor_tutorias.validacion;/*package gestor_tutorias.validacion;
 
 import java.sql.Time;
 import java.time.LocalDate;
@@ -222,3 +222,6 @@ public class Valido {
     }
 }
 
+
+
+ */

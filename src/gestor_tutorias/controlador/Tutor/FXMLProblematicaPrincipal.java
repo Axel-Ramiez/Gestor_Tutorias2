@@ -1,26 +1,21 @@
 package gestor_tutorias.controlador.Tutor;
 
-import gestor_tutorias.dao.ProblematicaDAO;
-import gestor_tutorias.pojo.Problematica;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
+public class FXMLProblematicaPrincipal {
+    public void eliminarProblematica(ActionEvent actionEvent) {
+    }
 
-public class FXMLProblematica implements Initializable {
+    public void editarProblematica(ActionEvent actionEvent) {
+    }
 
+    public void consultarProblematica(ActionEvent actionEvent) {
+    }
+
+    public void crearProblematica(ActionEvent actionEvent) {
+
+    }
+/*
     @FXML private TableView<Problematica> tvProblematica;
 
     @FXML private TableColumn<Problematica, Integer> colIdProblematica;
@@ -114,4 +109,6 @@ public class FXMLProblematica implements Initializable {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+ */
 }

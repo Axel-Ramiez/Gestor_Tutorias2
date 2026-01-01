@@ -1,31 +1,44 @@
 package gestor_tutorias.pojo;
 
 public class Estudiante {
+
     private int idEstudiante;
-    private String matricula;
-    private String nombreCompleto;
-    private String correo;
+    private String matriculaEstudiante;
+    private String nombreEstudiante;
+    private String apellidoPaternoEstudiante;
+    private String apellidoMaternoEstudiante;
+    private String correoEstudiante;
+    private int semestreEstudiante;
+    private int activoEstudiante;
+    private int riesgoEstudiante;
     private int idCarrera;
-    private int semestre;
-    private int activo;
-    private int riesgo;
-    private int idTutor;
-    private String tutorNombre;
+    private Integer idUsuario; // puede ser NULL
+
+    // --- CAMPOS AUXILIARES (NO BD) ---
     private String carreraNombre;
+    private String tutorNombre;
 
     public Estudiante() {
     }
 
-    public Estudiante(String matricula, String nombreCompleto, String correo, int idCarrera, int semestre, int riesgo) {
-        this.matricula = matricula;
-        this.nombreCompleto = nombreCompleto;
-        this.correo = correo;
+    // Constructor típico para INSERT
+    public Estudiante(String matriculaEstudiante, String nombreEstudiante,
+                      String apellidoPaternoEstudiante, String apellidoMaternoEstudiante,
+                      String correoEstudiante, int semestreEstudiante,
+                      int riesgoEstudiante, int idCarrera) {
+
+        this.matriculaEstudiante = matriculaEstudiante;
+        this.nombreEstudiante = nombreEstudiante;
+        this.apellidoPaternoEstudiante = apellidoPaternoEstudiante;
+        this.apellidoMaternoEstudiante = apellidoMaternoEstudiante;
+        this.correoEstudiante = correoEstudiante;
+        this.semestreEstudiante = semestreEstudiante;
+        this.riesgoEstudiante = riesgoEstudiante;
         this.idCarrera = idCarrera;
-        this.semestre = semestre;
-        this.riesgo = riesgo;
-        this.activo = 1;
+        this.activoEstudiante = 1;
     }
 
+    // --- GETTERS Y SETTERS ---
     public int getIdEstudiante() {
         return idEstudiante;
     }
@@ -33,25 +46,60 @@ public class Estudiante {
         this.idEstudiante = idEstudiante;
     }
 
-    public String getMatricula() {
-        return matricula;
+    public String getMatriculaEstudiante() {
+        return matriculaEstudiante;
     }
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setMatriculaEstudiante(String matriculaEstudiante) {
+        this.matriculaEstudiante = matriculaEstudiante;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getNombreEstudiante() {
+        return nombreEstudiante;
     }
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setNombreEstudiante(String nombreEstudiante) {
+        this.nombreEstudiante = nombreEstudiante;
+    }
+
+    public String getApellidoPaternoEstudiante() {
+        return apellidoPaternoEstudiante;
+    }
+    public void setApellidoPaternoEstudiante(String apellidoPaternoEstudiante) {
+        this.apellidoPaternoEstudiante = apellidoPaternoEstudiante;
+    }
+
+    public String getApellidoMaternoEstudiante() {
+        return apellidoMaternoEstudiante;
+    }
+    public void setApellidoMaternoEstudiante(String apellidoMaternoEstudiante) {
+        this.apellidoMaternoEstudiante = apellidoMaternoEstudiante;
+    }
+
+    public String getCorreoEstudiante() {
+        return correoEstudiante;
+    }
+    public void setCorreoEstudiante(String correoEstudiante) {
+        this.correoEstudiante = correoEstudiante;
+    }
+
+    public int getSemestreEstudiante() {
+        return semestreEstudiante;
+    }
+    public void setSemestreEstudiante(int semestreEstudiante) {
+        this.semestreEstudiante = semestreEstudiante;
+    }
+
+    public int getActivoEstudiante() {
+        return activoEstudiante;
+    }
+    public void setActivoEstudiante(int activoEstudiante) {
+        this.activoEstudiante = activoEstudiante;
+    }
+
+    public int getRiesgoEstudiante() {
+        return riesgoEstudiante;
+    }
+    public void setRiesgoEstudiante(int riesgoEstudiante) {
+        this.riesgoEstudiante = riesgoEstudiante;
     }
 
     public int getIdCarrera() {
@@ -61,27 +109,14 @@ public class Estudiante {
         this.idCarrera = idCarrera;
     }
 
-    public int getSemestre() {
-        return semestre;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
-    public void setSemestre(int semestre) {
-        this.semestre = semestre;
-    }
-
-    public int getActivo() {
-        return activo;
-    }
-    public void setActivo(int activo) {
-        this.activo = activo;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public int getRiesgo() {
-        return riesgo;
-    }
-    public void setRiesgo(int riesgo) {
-        this.riesgo = riesgo;
-    }
-
+    // --- CAMPOS AUX ---
     public String getCarreraNombre() {
         return carreraNombre;
     }
@@ -89,21 +124,15 @@ public class Estudiante {
         this.carreraNombre = carreraNombre;
     }
 
-    public int getIdTutor() { return idTutor; }
-
-    public void setIdTutor(int idTutor) {
-        this.idTutor = idTutor;
-    }
     public String getTutorNombre() {
         return tutorNombre;
     }
-
     public void setTutorNombre(String tutorNombre) {
         this.tutorNombre = tutorNombre;
     }
 
     @Override
     public String toString() {
-        return nombreCompleto + " (" + matricula + ")";
+        return nombreEstudiante + " " + apellidoPaternoEstudiante + " (" + matriculaEstudiante + ")";
     }
 }

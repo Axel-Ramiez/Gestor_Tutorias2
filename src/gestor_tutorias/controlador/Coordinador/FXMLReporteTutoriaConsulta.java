@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.Enum.EstadoReporte;
 import gestor_tutorias.dao.ReporteTutoriaDAO;
@@ -124,3 +124,6 @@ public class FXMLReporteTutoriaConsulta implements Initializable {
         stage.close();
     }
 }
+
+
+ */

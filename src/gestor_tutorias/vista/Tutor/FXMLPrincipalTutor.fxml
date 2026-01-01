@@ -5,94 +5,56 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0"
-            style="-fx-background-color: white;"
-            xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gestor_tutorias.controlador.Tutor.FXMLPrincipalTutor">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLPrincipalTutor">
 
    <children>
 
 
-      <Pane prefHeight="99.0"
-            AnchorPane.topAnchor="0.0"
-            AnchorPane.leftAnchor="0.0"
-            AnchorPane.rightAnchor="0.0"
-            style="-fx-background-color: #006DB2;">
+      <Pane prefHeight="99.0" style="-fx-background-color: #006DB2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
 
-            <ImageView fitHeight="86.0" fitWidth="105.0"
-                       layoutX="27.0" layoutY="7.0"
-                       preserveRatio="true">
+            <ImageView fitHeight="86.0" fitWidth="105.0" layoutX="27.0" layoutY="7.0" preserveRatio="true">
                <image>
-                  <Image url="@../../recurso/flor-azul%20-%20copia-Photoroom.png"/>
+                  <Image url="@../../recurso/flor-azul%20-%20copia-Photoroom.png" />
                </image>
             </ImageView>
 
-            <Label layoutX="140.0" layoutY="35.0"
-                   text="Sistema de Tutorías - UV"
-                   textFill="WHITE">
+            <Label layoutX="140.0" layoutY="35.0" text="Sistema de Tutorías - UV" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="20.0"/>
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Label>
 
-            <Label fx:id="lbNombreAdmin"
-                   layoutX="500.0" layoutY="20.0"
-                   prefWidth="280.0"
-                   alignment="CENTER_RIGHT"
-                   text="Tutor:"
-                   textFill="WHITE">
+            <Label fx:id="lbNombreAdmin" alignment="CENTER_RIGHT" layoutX="499.0" layoutY="40.0" prefWidth="280.0" text="Tutor:" textFill="WHITE">
                <font>
-                  <Font size="14.0"/>
+                  <Font size="14.0" />
                </font>
             </Label>
 
-            <Button layoutX="800.0" layoutY="15.0"
-                    text="Salir"
-                    textFill="WHITE"
-                    style="-fx-background-color: #004e80; -fx-cursor: hand;"
-                    onAction="#clicCerrarSesion"/>
+            <Button layoutX="834.0" layoutY="38.0" onAction="#clicCerrarSesion" style="-fx-background-color: #004e80; -fx-cursor: hand;" text="Salir" textFill="WHITE" />
          </children>
       </Pane>
 
       <!-- BOTONES -->
-      <Button layoutX="189.0" layoutY="175.0"
-              prefHeight="145.0" prefWidth="223.0"
-              text="Reporte de Tutoría"
-              style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;"
-              onAction="#clicReporteTu">
+      <Button layoutX="189.0" layoutY="175.0" onAction="#clicReporteTu" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Reporte de Tutoría">
          <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
          </font>
       </Button>
 
-      <Button layoutX="491.0" layoutY="175.0"
-              prefHeight="145.0" prefWidth="223.0"
-              text="Problemática"
-              style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;"
-              onAction="#clicProblematica">
+      <Button layoutX="491.0" layoutY="175.0" onAction="#clicProblematica" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Problemática">
          <font>
-            <Font size="18.0"/>
-         </font>
-      </Button>
-
-      <Button layoutX="189.0" layoutY="364.0"
-              prefHeight="145.0" prefWidth="223.0"
-              text="Asignar Horario de Tutoría"
-              style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;"
-              onAction="#clicHorarioTu">
-         <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
          </font>
       </Button>
 
 
-      <Label text="Universidad Veracruzana"
-             textFill="#999999"
-             AnchorPane.leftAnchor="14.0"
-             AnchorPane.bottomAnchor="14.0"/>
+      <Label layoutX="6.0" layoutY="577.0" text="Universidad Veracruzana" textFill="#999999" AnchorPane.bottomAnchor="5.399999999999977" AnchorPane.leftAnchor="6.0" />
+      <Button layoutX="189.0" layoutY="381.0" onAction="#clicHorarioTu" prefHeight="145.0" prefWidth="223.0" style="-fx-background-color: #EEEEEE; -fx-border-color: #CCCCCC; -fx-cursor: hand;" text="Horario de tutoria">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
 
    </children>
 </AnchorPane>
-

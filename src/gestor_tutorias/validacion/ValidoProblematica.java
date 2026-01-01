@@ -1,4 +1,4 @@
-package gestor_tutorias.validacion;
+package gestor_tutorias.validacion;/*package gestor_tutorias.validacion;
 
 import gestor_tutorias.Enum.EstatusProblematica;
 
@@ -101,3 +101,6 @@ public class ValidoProblematica {
         return valido;
     }
 }
+
+
+ */

@@ -1,31 +1,36 @@
 package gestor_tutorias.pojo;
 
 public class Usuario {
+
     private int idUsuario;
-    private String matricula;
-    private String contrasena;
-    private String nombreCompleto;
-    private String correo;
+    private String noPersonalUsuario;
+    private String contrasenaUsuario;
+    private String nombreUsuario;
+    private String apellidoPaternoUsuario;
+    private String apellidoMaternoUsuario;
+    private String correoUsuario;
+    private int activoUsuario;
     private int idRol;
-    private int activo;
-
-
-
-    private String rolNombre;
 
     public Usuario() {
     }
 
-    public Usuario(String matricula, String contrasena, String nombreCompleto, String correo, int idRol) {
-        this.matricula = matricula;
-        this.contrasena = contrasena;
-        this.nombreCompleto = nombreCompleto;
-        this.correo = correo;
+    public Usuario(String noPersonalUsuario, String contrasenaUsuario,
+                   String nombreUsuario, String apellidoPaternoUsuario,
+                   String apellidoMaternoUsuario, String correoUsuario,
+                   int idRol) {
+        this.noPersonalUsuario = noPersonalUsuario;
+        this.contrasenaUsuario = contrasenaUsuario;
+        this.nombreUsuario = nombreUsuario;
+        this.apellidoPaternoUsuario = apellidoPaternoUsuario;
+        this.apellidoMaternoUsuario = apellidoMaternoUsuario;
+        this.correoUsuario = correoUsuario;
         this.idRol = idRol;
-        this.activo = 1;
+        this.activoUsuario = 1;
     }
 
     // --- GETTERS Y SETTERS ---
+
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -33,32 +38,53 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
-    public String getMatricula() {
-        return matricula;
+    public String getNoPersonalUsuario() {
+        return noPersonalUsuario;
     }
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setNoPersonalUsuario(String noPersonalUsuario) {
+        this.noPersonalUsuario = noPersonalUsuario;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getContrasenaUsuario() {
+        return contrasenaUsuario;
     }
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setContrasenaUsuario(String contrasenaUsuario) {
+        this.contrasenaUsuario = contrasenaUsuario;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getApellidoPaternoUsuario() {
+        return apellidoPaternoUsuario;
+    }
+    public void setApellidoPaternoUsuario(String apellidoPaternoUsuario) {
+        this.apellidoPaternoUsuario = apellidoPaternoUsuario;
+    }
+
+    public String getApellidoMaternoUsuario() {
+        return apellidoMaternoUsuario;
+    }
+    public void setApellidoMaternoUsuario(String apellidoMaternoUsuario) {
+        this.apellidoMaternoUsuario = apellidoMaternoUsuario;
+    }
+
+    public String getCorreoUsuario() {
+        return correoUsuario;
+    }
+    public void setCorreoUsuario(String correoUsuario) {
+        this.correoUsuario = correoUsuario;
+    }
+
+    public int getActivoUsuario() {
+        return activoUsuario;
+    }
+    public void setActivoUsuario(int activoUsuario) {
+        this.activoUsuario = activoUsuario;
     }
 
     public int getIdRol() {
@@ -68,22 +94,8 @@ public class Usuario {
         this.idRol = idRol;
     }
 
-    public int getActivo() {
-        return activo;
-    }
-    public void setActivo(int activo) {
-        this.activo = activo;
-    }
-
-    public String getRolNombre() {
-        return rolNombre;
-    }
-    public void setRolNombre(String rolNombre) {
-        this.rolNombre = rolNombre;
-    }
-
     @Override
     public String toString() {
-        return nombreCompleto;
+        return nombreUsuario + " " + apellidoPaternoUsuario;
     }
 }

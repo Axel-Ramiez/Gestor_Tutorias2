@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Administrador;
+package gestor_tutorias.controlador.Administrador;/*package gestor_tutorias.controlador.Administrador;
 
 
 import gestor_tutorias.validacion.Validacion;
@@ -114,3 +114,4 @@ public class FXMLUsuario implements Initializable {
         alert.showAndWait();
     }
 }
+*/

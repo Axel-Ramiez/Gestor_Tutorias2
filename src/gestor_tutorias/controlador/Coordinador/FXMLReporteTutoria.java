@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.dao.ReporteTutoriaDAO;
 import gestor_tutorias.pojo.ReporteTutoria;
@@ -24,7 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class FXMLReporteTutoria implements Initializable {
+public class FXMLReporteTutoriaPrincipal implements Initializable {
 
     @FXML
     private TableView<ReporteTutoria> tvReportes;
@@ -121,3 +121,6 @@ public class FXMLReporteTutoria implements Initializable {
 }
 
 
+
+
+ */

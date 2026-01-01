@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.Enum.EstatusProblematica; // ¡Ojo aquí! Usar el Enum del POJO
 import gestor_tutorias.dao.ProblematicaDAO;
@@ -44,10 +44,10 @@ public class FXMLProblematicaConsulta implements Initializable {
         this.problematicaActual = problematica;
 
         tfIdProblematica.setText(String.valueOf(problematica.getIdProblematica()));
-        tfIdReporte.setText(String.valueOf(problematica.getIdReporte()));
+        tfIdReporte.setText(String.valueOf(problematica.getIdReporteTutoria()));
 
-        if (problematica.getIdExperienciaEducativa() != null) {
-            tfIdExperiencia.setText(String.valueOf(problematica.getIdExperienciaEducativa()));
+        if (problematica.getIdCarrera() != null) {
+            tfIdExperiencia.setText(String.valueOf(problematica.getIdCarrera()));
         } else {
             tfIdExperiencia.setText("N/A");
         }
@@ -107,3 +107,6 @@ public class FXMLProblematicaConsulta implements Initializable {
         stage.close();
     }
 }
+
+
+ */

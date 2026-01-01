@@ -1,4 +1,4 @@
-package gestor_tutorias.dao;
+package gestor_tutorias.dao;/*package gestor_tutorias.dao;
 
 import gestor_tutorias.pojo.PlaneacionTutoria;
 import gestor_tutorias.modelo.ConexionBD;
@@ -177,3 +177,4 @@ public class PlaneacionTutoriaDAO {
         return exito;
     }
 }
+*/

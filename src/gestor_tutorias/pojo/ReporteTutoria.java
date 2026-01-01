@@ -2,104 +2,70 @@ package gestor_tutorias.pojo;
 
 import gestor_tutorias.Enum.EstadoReporte;
 
+import java.time.LocalDate;
+
 public class ReporteTutoria {
 
+    private int idReporte;               // id_reporte_tutoria
+    private LocalDate fechaReporte;      // fecha_reporte_tutoria
+    private String textoReporte;         // texto_reporte_tutoria
+    private String respuestaCoordinador; // respuesta_coordinador
+    private boolean asistencia;          // asistencia_reporte_tutoria
+    private EstadoReporte estado;         // estado_reporte_tutoria
 
-    private int idReporte;
-    private int idTutor;
-    private int idEstudiante;
-    private int idFechaTutoria;
-    private String reporte;
-    private String respuestaCoordinador;
-    private boolean asistencia;
-    private EstadoReporte estado;
+    private int idUsuario;               // id_usuario
+    private int idEstudiante;             // id_estudiante
+    private int idPeriodoEscolar;         // id_periodo_escolar
 
+    // Campos auxiliares (JOINs)
     private String nombreTutor;
     private String nombreEstudiante;
-    private String fecha;
     private String periodoEscolar;
-
 
     public ReporteTutoria() {
         this.estado = EstadoReporte.PENDIENTE;
         this.asistencia = false;
     }
 
-    public ReporteTutoria(int idTutor, int idEstudiante, int idFechaTutoria,
-                          String reporte, String respuestaCoordinador,
-                          boolean asistencia, EstadoReporte estado) {
+    public ReporteTutoria(int idUsuario, int idEstudiante, int idPeriodoEscolar,
+                          LocalDate fechaReporte, String textoReporte,
+                          String respuestaCoordinador, boolean asistencia,
+                          EstadoReporte estado) {
 
-        this.idTutor = idTutor;
+        this.idUsuario = idUsuario;
         this.idEstudiante = idEstudiante;
-        this.idFechaTutoria = idFechaTutoria;
-        this.reporte = reporte;
+        this.idPeriodoEscolar = idPeriodoEscolar;
+        this.fechaReporte = fechaReporte;
+        this.textoReporte = textoReporte;
         this.respuestaCoordinador = respuestaCoordinador;
         this.asistencia = asistencia;
         this.estado = (estado != null) ? estado : EstadoReporte.PENDIENTE;
     }
 
-    public ReporteTutoria(int idReporte, int idTutor, int idEstudiante,
-                          int idFechaTutoria, String reporte,
-                          String respuestaCoordinador, boolean asistencia,
-                          EstadoReporte estado) {
-
-        this.idReporte = idReporte;
-        this.idTutor = idTutor;
-        this.idEstudiante = idEstudiante;
-        this.idFechaTutoria = idFechaTutoria;
-        this.reporte = reporte;
-        this.respuestaCoordinador = respuestaCoordinador;
-        this.asistencia = asistencia;
-        this.estado = estado;
-    }
-
+    // Getters y setters ↓↓↓
 
     public int getIdReporte() {
         return idReporte;
     }
 
     public void setIdReporte(int idReporte) {
-
         this.idReporte = idReporte;
     }
 
-    public int getIdTutor() {
-
-        return idTutor;
+    public LocalDate getFechaReporte() {
+        return fechaReporte;
     }
 
-    public void setIdTutor(int idTutor) {
-
-        this.idTutor = idTutor;
+    public void setFechaReporte(LocalDate fechaReporte) {
+        this.fechaReporte = fechaReporte;
     }
 
-    public int getIdEstudiante() {
-
-        return idEstudiante;
+    public String getTextoReporte() {
+        return textoReporte;
     }
 
-    public void setIdEstudiante(int idEstudiante) {
-
-        this.idEstudiante = idEstudiante;
-    }
-
-    public int getIdFechaTutoria() {
-
-        return idFechaTutoria;
-    }
-
-    public void setIdFechaTutoria(int idFechaTutoria) {
-
-        this.idFechaTutoria = idFechaTutoria;
-    }
-
-    public String getReporte() {
-
-        return reporte;
-    }
-
-    public void setReporte(String reporte) {
-        this.reporte = reporte;
+    public void setTextoReporte(String textoReporte) {
+        this.textoReporte = textoReporte;
     }
 
     public String getRespuestaCoordinador() {
@@ -126,6 +92,29 @@ public class ReporteTutoria {
         this.estado = estado;
     }
 
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public int getIdEstudiante() {
+        return idEstudiante;
+    }
+
+    public void setIdEstudiante(int idEstudiante) {
+        this.idEstudiante = idEstudiante;
+    }
+
+    public int getIdPeriodoEscolar() {
+        return idPeriodoEscolar;
+    }
+
+    public void setIdPeriodoEscolar(int idPeriodoEscolar) {
+        this.idPeriodoEscolar = idPeriodoEscolar;
+    }
 
     public String getNombreTutor() {
         return nombreTutor;
@@ -143,14 +132,6 @@ public class ReporteTutoria {
         this.nombreEstudiante = nombreEstudiante;
     }
 
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
     public String getPeriodoEscolar() {
         return periodoEscolar;
     }
@@ -159,5 +140,3 @@ public class ReporteTutoria {
         this.periodoEscolar = periodoEscolar;
     }
 }
-
-

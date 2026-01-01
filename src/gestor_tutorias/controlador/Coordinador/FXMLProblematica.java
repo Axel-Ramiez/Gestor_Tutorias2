@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.dao.ProblematicaDAO;
 import gestor_tutorias.pojo.Problematica;
@@ -23,7 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class FXMLProblematica implements Initializable {
+public class FXMLProblematicaPrincipal implements Initializable {
 
     @FXML
     private TableView<Problematica> tvProblematica;
@@ -105,3 +105,6 @@ public class FXMLProblematica implements Initializable {
         alert.showAndWait();
     }
 }
+
+
+ */

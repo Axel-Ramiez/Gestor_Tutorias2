@@ -1,4 +1,4 @@
-package gestor_tutorias.validacion;
+package gestor_tutorias.validacion;/*package gestor_tutorias.validacion;
 
 import gestor_tutorias.pojo.PlaneacionTutoria;
 
@@ -78,3 +78,6 @@ public class ValidoPlaneacionTutoria {
         return valido;
     }
 }
+
+
+ */

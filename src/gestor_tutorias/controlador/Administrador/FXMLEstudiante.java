@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Administrador;
+package gestor_tutorias.controlador.Administrador;/*package gestor_tutorias.controlador.Administrador;
 
 import gestor_tutorias.validacion.Validacion;
 import gestor_tutorias.dao.CarreraDAO;
@@ -157,3 +157,5 @@ public class FXMLEstudiante implements Initializable {
         alert.showAndWait();
     }
 }
+
+ */

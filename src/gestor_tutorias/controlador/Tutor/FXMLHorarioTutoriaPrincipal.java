@@ -1,29 +1,27 @@
 package gestor_tutorias.controlador.Tutor;
 
-import gestor_tutorias.dao.HorarioTutoriaDAO;
-import gestor_tutorias.dao.PlaneacionTutoriaDAO; // Necesario para llenar el combo de fechas
-import gestor_tutorias.pojo.HorarioTutoria;
-import gestor_tutorias.pojo.PlaneacionTutoria;
-import java.net.URL;
-import java.sql.SQLException;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+//import gestor_tutorias.dao.PlaneacionTutoriaDAO; // Necesario para llenar el combo de fechas
+//import gestor_tutorias.pojo.PlaneacionTutoria;
+
+
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
-public class FXMLHorarioTutoriaConsulta implements Initializable {
+public class FXMLHorarioTutoriaPrincipal {
+    public void clicCrear(ActionEvent actionEvent) {
+    }
 
-    @FXML
-    private ComboBox<PlaneacionTutoria> cbDia;
+    public void clicEditar(ActionEvent actionEvent) {
+    }
+
+    public void clicConsultar(ActionEvent actionEvent) {
+    }
+
+    public void clicEliminar(ActionEvent actionEvent) {
+
+    }
+/*
+//    @FXML
+//    private ComboBox<PlaneacionTutoria> cbDia;
     @FXML
     private ComboBox<Integer> cbHoraInicio;
     @FXML
@@ -43,14 +41,14 @@ public class FXMLHorarioTutoriaConsulta implements Initializable {
     private final int ID_TUTOR_ACTUAL = 3;
 
     private ObservableList<HorarioTutoria> listaHorarios;
-    private ObservableList<PlaneacionTutoria> listaFechasDisponibles;
+ //   private ObservableList<PlaneacionTutoria> listaFechasDisponibles;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarCombosTiempo();
-        cargarFechasDisponibles();
-        cargarHorariosTabla();
+        //cargarFechasDisponibles();
+        //cargarHorariosTabla();
     }
 
     private void configurarTabla() {
@@ -176,4 +174,10 @@ public class FXMLHorarioTutoriaConsulta implements Initializable {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+
+ */
 }
+
+
+

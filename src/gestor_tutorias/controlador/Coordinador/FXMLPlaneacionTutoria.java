@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.dao.PlaneacionTutoriaDAO;
 import gestor_tutorias.pojo.PlaneacionTutoria;
@@ -141,3 +141,5 @@ public class FXMLPlaneacionTutoria implements Initializable {
         alert.showAndWait();
     }
 }
+
+ */

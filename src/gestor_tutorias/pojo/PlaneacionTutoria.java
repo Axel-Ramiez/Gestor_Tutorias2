@@ -1,4 +1,4 @@
-package gestor_tutorias.pojo;
+package gestor_tutorias.pojo;/*package gestor_tutorias.pojo;
 
 import java.time.LocalDate;
 
@@ -106,3 +106,4 @@ public class PlaneacionTutoria {
         return "Sesión " + numeroSesion + " - " + fechaTutoria;
     }
 }
+*/

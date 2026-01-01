@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Administrador;
+package gestor_tutorias.controlador.Administrador;/*package gestor_tutorias.controlador.Administrador;
 
 import gestor_tutorias.dao.EstudianteDAO;
 import gestor_tutorias.pojo.Estudiante;
@@ -128,7 +128,7 @@ public class FXMLEstudianteConsulta implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmar eliminación");
             alert.setHeaderText(null);
-            alert.setContentText("¿Eliminar al estudiante " + estudianteSeleccionado.getNombreCompleto() + "?");
+            alert.setContentText("¿Eliminar al estudiante " + estudianteSeleccionado.getNombreEstudiante() + "?");
 
             if (alert.showAndWait().get() == ButtonType.OK) {
                 try {
@@ -166,12 +166,12 @@ public class FXMLEstudianteConsulta implements Initializable {
                         return true;
                     }
                     String lowerNewValue = newValue.toLowerCase();
-                    if (estudiante.getNombreCompleto() != null &&
-                            estudiante.getNombreCompleto().toLowerCase().contains(lowerNewValue)) {
+                    if (estudiante.getNombreEstudiante() != null &&
+                            estudiante.getNombreEstudiante().toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
-                    if (estudiante.getMatricula() != null &&
-                            estudiante.getMatricula().toLowerCase().contains(lowerNewValue)) {
+                    if (estudiante.getMatriculaEstudiante() != null &&
+                            estudiante.getMatriculaEstudiante().toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
                     if (estudiante.getCarreraNombre() != null &&
@@ -187,3 +187,4 @@ public class FXMLEstudianteConsulta implements Initializable {
         }
     }
 }
+*/

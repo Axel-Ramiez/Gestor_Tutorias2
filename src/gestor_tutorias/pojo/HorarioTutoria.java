@@ -1,73 +1,75 @@
 package gestor_tutorias.pojo;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class HorarioTutoria {
 
-    private int idHorario;
-    private int idTutor;
-    private int idFechaTutoria;
-    private Integer idEstudiante;
-    private LocalTime horaInicio;
-    private LocalTime horaFin;
+    private int idHorarioTutoria;
+    private LocalDate fechaHorarioTutoria;
+    private LocalTime horaInicioHorarioTutoria;
+    private LocalTime horaFinHorarioTutoria;
+    private int idUsuario;              // tutor
+    private Integer idEstudiante;        // puede ser null
 
+    // --- CAMPOS AUXILIARES (NO BD) ---
     private String nombreTutor;
     private String nombreEstudiante;
-    private String fechaTutoria;
-    private boolean ocupado;
-
 
     public HorarioTutoria() {
     }
 
-    public HorarioTutoria(int idTutor, int idFechaTutoria,
-                          Integer idEstudiante,
-                          LocalTime horaInicio, LocalTime horaFin) {
+    public HorarioTutoria(LocalDate fechaHorarioTutoria,
+                          LocalTime horaInicioHorarioTutoria,
+                          LocalTime horaFinHorarioTutoria,
+                          int idUsuario,
+                          Integer idEstudiante) {
 
-        this.idTutor = idTutor;
-        this.idFechaTutoria = idFechaTutoria;
+        this.fechaHorarioTutoria = fechaHorarioTutoria;
+        this.horaInicioHorarioTutoria = horaInicioHorarioTutoria;
+        this.horaFinHorarioTutoria = horaFinHorarioTutoria;
+        this.idUsuario = idUsuario;
         this.idEstudiante = idEstudiante;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.ocupado = (idEstudiante != null);
     }
 
-    public HorarioTutoria(int idHorario, int idTutor, int idFechaTutoria,
-                          Integer idEstudiante,
-                          LocalTime horaInicio, LocalTime horaFin) {
-
-        this.idHorario = idHorario;
-        this.idTutor = idTutor;
-        this.idFechaTutoria = idFechaTutoria;
-        this.idEstudiante = idEstudiante;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.ocupado = (idEstudiante != null);
+    public int getIdHorarioTutoria() {
+        return idHorarioTutoria;
     }
 
-
-    public int getIdHorario() {
-        return idHorario;
+    public void setIdHorarioTutoria(int idHorarioTutoria) {
+        this.idHorarioTutoria = idHorarioTutoria;
     }
 
-    public void setIdHorario(int idHorario) {
-        this.idHorario = idHorario;
+    public LocalDate getFechaHorarioTutoria() {
+        return fechaHorarioTutoria;
     }
 
-    public int getIdTutor() {
-        return idTutor;
+    public void setFechaHorarioTutoria(LocalDate fechaHorarioTutoria) {
+        this.fechaHorarioTutoria = fechaHorarioTutoria;
     }
 
-    public void setIdTutor(int idTutor) {
-        this.idTutor = idTutor;
+    public LocalTime getHoraInicioHorarioTutoria() {
+        return horaInicioHorarioTutoria;
     }
 
-    public int getIdFechaTutoria() {
-        return idFechaTutoria;
+    public void setHoraInicioHorarioTutoria(LocalTime horaInicioHorarioTutoria) {
+        this.horaInicioHorarioTutoria = horaInicioHorarioTutoria;
     }
 
-    public void setIdFechaTutoria(int idFechaTutoria) {
-        this.idFechaTutoria = idFechaTutoria;
+    public LocalTime getHoraFinHorarioTutoria() {
+        return horaFinHorarioTutoria;
+    }
+
+    public void setHoraFinHorarioTutoria(LocalTime horaFinHorarioTutoria) {
+        this.horaFinHorarioTutoria = horaFinHorarioTutoria;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public Integer getIdEstudiante() {
@@ -76,26 +78,9 @@ public class HorarioTutoria {
 
     public void setIdEstudiante(Integer idEstudiante) {
         this.idEstudiante = idEstudiante;
-        this.ocupado = (idEstudiante != null);
     }
 
-    public LocalTime getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(LocalTime horaInicio) {
-        this.horaInicio = horaInicio;
-    }
-
-    public LocalTime getHoraFin() {
-        return horaFin;
-    }
-
-    public void setHoraFin(LocalTime horaFin) {
-        this.horaFin = horaFin;
-    }
-
-
+    // --- AUXILIARES ---
     public String getNombreTutor() {
         return nombreTutor;
     }
@@ -112,15 +97,7 @@ public class HorarioTutoria {
         this.nombreEstudiante = nombreEstudiante;
     }
 
-    public String getFechaTutoria() {
-        return fechaTutoria;
-    }
-
-    public void setFechaTutoria(String fechaTutoria) {
-        this.fechaTutoria = fechaTutoria;
-    }
-
     public boolean isOcupado() {
-        return ocupado;
+        return idEstudiante != null;
     }
 }

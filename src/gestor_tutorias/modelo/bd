@@ -1,0 +1,151 @@
+DROP DATABASE IF EXISTS gestion_tutoria;
+CREATE DATABASE gestion_tutoria;
+USE gestion_tutoria;
+
+CREATE TABLE `facultad` (
+  `id_facultad` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre_facultad` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO facultad (nombre_facultad) VALUES
+('Facultad de Estadistica y Economia');
+
+CREATE TABLE `rol` (
+  `id_rol` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre_rol` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO rol (nombre_rol) VALUES
+('Administrador'),
+('Coordinador'),
+('Tutor');
+
+CREATE TABLE `periodo_escolar` (
+  `id_periodo_escolar` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre_periodo_escolar` varchar(50) NOT NULL,
+  `fecha_inicio_periodo_escolar` date NOT NULL,
+  `fecha_fin_periodo_escolar` date NOT NULL,
+  `activo_periodo_escolar` tinyint(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO periodo_escolar (nombre_periodo_escolar, fecha_inicio_periodo_escolar, fecha_fin_periodo_escolar, activo_periodo_escolar) VALUES
+('FEB-JUL 2025', '2025-02-15', '2025-06-15', 0),
+('AGO-ENE 2025', '2025-08-15', '2025-12-15', 1),
+('FEB-JUL 2026', '2026-02-15', '2026-06-15', 0);
+
+CREATE TABLE `usuario` (
+  `id_usuario` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `no_Personal_usuario` varchar(20) NOT NULL UNIQUE KEY,
+  `contrasena_usuario` varchar(255) NOT NULL,
+  `nombre_usuario` varchar(150) NOT NULL,
+  `apellido_paterno_usuario` varchar(150) NOT NULL,
+  `apellido_materno_usuario` varchar(150) NOT NULL,
+  `correo_usuario` varchar(100) DEFAULT NULL UNIQUE,
+  `activo_usuario` tinyint(1) DEFAULT '1',
+  `id_rol` int NOT NULL,
+  KEY `id_rol` (`id_rol`),
+  CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO usuario (no_Personal_usuario, contrasena_usuario, nombre_usuario, apellido_paterno_usuario, apellido_materno_usuario, correo_usuario, activo_usuario, id_rol) VALUES
+('ADM001', '12345', 'Laura', 'Ramírez', 'Hernández', 'lamirez@uv.mx', 1, 1),
+('ADM002', '12345', 'Roberto', 'Villa', 'Zuares', 'rotes@uv.mx', 0, 1),
+('CORD001', '12345', 'Juan', 'Perez', 'Pereira', 'jira@uv.mx', 1, 2),
+('CORD002', '12345', 'María', 'García', 'López', 'marcia@uv.mx', 0, 2),
+('TUT001', '12345', 'Carlos', 'Rodríguez', 'Martínez', 'cariez@uv.mx', 1, 3),
+('TUT002', '12345', 'Ana', 'Fernández', 'Gómez', 'andez@uv.mx', 0, 3);
+
+CREATE TABLE `carrera` (
+  `id_carrera` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre_carrera` varchar(100) NOT NULL UNIQUE,
+  `id_facultad` int NOT NULL,
+  KEY `id_facultad` (`id_facultad`),
+  CONSTRAINT `fk_carrera_facultad` FOREIGN KEY (`id_facultad`) REFERENCES `facultad` (`id_facultad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO carrera (nombre_carrera, id_facultad) VALUES
+('Ingenieria en Ciencia de Datos', 1),
+('Ingenieria en Sistemas y Tecnologías de la Informacion', 1),
+('Ingenieria de Software', 1),
+('Ingenieria de Ciberseguridad e Infraestructura de Computo', 1);
+
+CREATE TABLE `estudiante` (
+  `id_estudiante` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `matricula_estudiante` varchar(20) NOT NULL UNIQUE,
+  `nombre_estudiante` varchar(150) NOT NULL,
+  `apellido_paterno_estudiante` varchar(150) NOT NULL,
+  `apellido_materno_estudiante` varchar(150) NOT NULL,
+  `correo_estudiante` varchar(100) DEFAULT NULL UNIQUE,
+  `semestre_estudiante` int DEFAULT '1',
+  `activo_estudiante` tinyint(1) DEFAULT '1',
+  `riesgo_estudiante` tinyint(1) DEFAULT '1',
+  `id_carrera` int NOT NULL,
+  `id_usuario` int DEFAULT NULL,
+  KEY `id_carrera` (`id_carrera`),
+  KEY `id_usuario` (`id_usuario`),
+  CONSTRAINT `fk_estudiante_carrera` FOREIGN KEY (`id_carrera`) REFERENCES `carrera` (`id_carrera`),
+  CONSTRAINT `fk_estudiante_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO estudiante (matricula_estudiante, nombre_estudiante, apellido_paterno_estudiante, apellido_materno_estudiante, correo_estudiante, semestre_estudiante, activo_estudiante, riesgo_estudiante, id_carrera, id_usuario) VALUES
+('zS23021469', 'Juan', 'Pérez', 'González', 'juanperez@estudiantes.uv.mx', 5, 1, 1, 1, 5),
+('zS23021468', 'Sofía', 'Martínez', 'Ruiz', 'sofiamartinez@estudiantes.uv.mx', 3, 1, 1, 2, 6),
+('zS22021469', 'Diego', 'Hernández', 'Castillo', 'diegohernandez@estudiantes.uv.mx', 7, 1, 0, 3, 5),
+('zS22021468', 'Valeria', 'Torres', 'Morales', 'valeriatorres@estudiantes.uv.mx', 4, 1, 1, 4, 6),
+('zS21021469', 'Andrés', 'Castro', 'Vargas', 'andrescastro@estudiantes.uv.mx', 6, 1, 1, 4, NULL);
+
+CREATE TABLE `horario_tutoria` (
+  `id_horario_tutoria` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `fecha_horario_tutoria` date NOT NULL,
+  `hora_inicio_horario_tutoria` time NOT NULL,
+  `hora_fin_horario_tutoria` time NOT NULL,
+  `id_usuario` int NOT NULL,
+  `id_estudiante` int DEFAULT NULL,
+  KEY `id_usuario` (`id_usuario`),
+  KEY `id_estudiante` (`id_estudiante`),
+  CONSTRAINT `fk_horario_tutoria_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  CONSTRAINT `fk_horario_tutoria_estudiante` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO horario_tutoria (fecha_horario_tutoria, hora_inicio_horario_tutoria, hora_fin_horario_tutoria, id_usuario, id_estudiante) VALUES
+('2025-03-15', '10:00:00', '11:00:00', 5, 1),
+('2025-03-16', '14:00:00', '15:00:00', 6, 2),
+('2025-03-17', '09:00:00', '10:00:00', 5, 3),
+('2025-03-18', '16:00:00', '17:00:00', 6, 4),
+('2025-03-19', '11:00:00', '12:00:00', 5, 5);
+
+CREATE TABLE `reporte_tutoria` (
+  `id_reporte_tutoria` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `fecha_reporte_tutoria` date NOT NULL,
+  `texto_reporte_tutoria` text NOT NULL,
+  `respuesta_coordinador` text,
+  `asistencia_reporte_tutoria` tinyint(1) DEFAULT '0',
+  `estado_reporte_tutoria` enum('Pendiente','Revisado') NOT NULL DEFAULT 'Pendiente',
+  `id_usuario` int NOT NULL,
+  `id_estudiante` int NOT NULL,
+  `id_periodo_escolar` int NOT NULL,
+  KEY `id_usuario` (`id_usuario`),
+  KEY `id_estudiante` (`id_estudiante`),
+  KEY `id_periodo_escolar` (`id_periodo_escolar`),
+  CONSTRAINT `reporte_tutoria_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  CONSTRAINT `reporte_tutoria_estudiante` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`),
+  CONSTRAINT `reporte_tutoria_periodo_escolar` FOREIGN KEY (`id_periodo_escolar`) REFERENCES `periodo_escolar` (`id_periodo_escolar`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO reporte_tutoria (fecha_reporte_tutoria, texto_reporte_tutoria, respuesta_coordinador, asistencia_reporte_tutoria, estado_reporte_tutoria, id_usuario, id_estudiante, id_periodo_escolar) VALUES
+('2025-03-15', 'El estudiante presenta dificultades en cálculo diferencial. Se recomienda apoyo adicional.', 'Se asignará tutoría especializada.', 1, 'Revisado', 5, 1, 1),
+('2025-03-16', 'Problemas de adaptación al ambiente universitario.', NULL, 1, 'Pendiente', 6, 2, 1),
+('2025-03-17', 'Dificultades económicas que afectan su desempeño académico.', 'Se canalizará al departamento de asistencia social.', 0, 'Revisado', 5, 3, 2),
+('2025-03-18', 'Excelente progreso en el semestre actual.', '¡Felicidades por el buen trabajo!', 1, 'Revisado', 6, 4, 3),
+('2025-03-19', 'Necesita mejorar hábitos de estudio.', NULL, 1, 'Pendiente', 5, 5, 2);
+
+CREATE TABLE `problematica` (
+  `id_problematica` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `titulo_problematica` varchar(100) NOT NULL,
+  `descripcion_problematica` text NOT NULL,
+  `estado_problematica` enum('Pendiente','Atendida') NOT NULL DEFAULT 'Pendiente',
+  `id_reporte_tutoria` int NOT NULL,
+  `id_carrera` int DEFAULT NULL,
+  KEY `id_reporte_tutoria` (`id_reporte_tutoria`),
+  KEY `id_carrera` (`id_carrera`),
+  CONSTRAINT `fk_problematica_reporte_tutoria` FOREIGN KEY (`id_reporte_tutoria`) REFERENCES `reporte_tutoria` (`id_reporte_tutoria`),
+  CONSTRAINT `fk_problematica_carrera` FOREIGN KEY (`id_carrera`) REFERENCES `carrera` (`id_carrera`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO problematica (titulo_problematica, descripcion_problematica, estado_problematica, id_reporte_tutoria, id_carrera) VALUES
+('Dificultades en matemáticas', 'Problemas para comprender conceptos de cálculo diferencial e integral.', 'Pendiente', 1, 1),
+('Problemas de adaptación', 'Dificultad para integrarse al ambiente universitario y hacer amigos.', 'Atendida', 2, 2),
+('Problemas económicos', 'Falta de recursos para materiales y transporte.', 'Pendiente', 3, 3),
+('Falta de motivación', 'Desinterés en algunas materias específicas.', 'Atendida', 4, 4),
+('Mala administración del tiempo', 'No organiza adecuadamente su tiempo para estudio y tareas.', 'Pendiente', 5, 4);

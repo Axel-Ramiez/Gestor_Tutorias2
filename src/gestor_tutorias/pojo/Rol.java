@@ -1,6 +1,7 @@
 package gestor_tutorias.pojo;
 
 public class Rol {
+
     private int idRol;
     private String nombreRol;
 
@@ -11,7 +12,6 @@ public class Rol {
         this.idRol = idRol;
         this.nombreRol = nombreRol;
     }
-
 
     public int getIdRol() {
         return idRol;
@@ -28,6 +28,9 @@ public class Rol {
     public void setNombreRol(String nombreRol) {
         this.nombreRol = nombreRol;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return nombreRol;
+    }
 }

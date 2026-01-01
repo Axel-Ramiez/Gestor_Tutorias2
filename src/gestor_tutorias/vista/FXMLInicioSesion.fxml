@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.FXMLInicioSesionController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.FXMLInicioSesionController">
    <children>
       <Pane prefHeight="400.0" prefWidth="300.0">
          <children>
@@ -24,13 +21,13 @@
                <font>
                   <Font size="21.0" />
                </font></Label>
-            <Label fx:id="lbUsuario" layoutX="130.0" layoutY="129.0" text="Usuario" />
+            <Label fx:id="lbUsuario" layoutX="130.0" layoutY="129.0" text="noPersonal" />
             <Label fx:id="lbPassword" layoutX="120.0" layoutY="200.0" text="Contraseña" />
             <TextField fx:id="tfUsuario" alignment="CENTER" layoutX="76.0" layoutY="149.0" promptText="User123" />
             <PasswordField fx:id="pfPassword" alignment="CENTER" layoutX="76.0" layoutY="220.0" promptText="*****" />
             <Button fx:id="botonIniciar" layoutX="121.0" layoutY="271.0" mnemonicParsing="false" onAction="#clicIniciarSesion" text="Ingresar" />
-            <Label fx:id="lbErrorUsuario" layoutX="136.0" layoutY="174.0" textFill="RED" />
-            <Label fx:id="lbErrorPassword" layoutX="136.0" layoutY="245.0" textFill="RED" />
+            <Label fx:id="lbErrorUsuario" layoutX="94.0" layoutY="174.0" prefHeight="17.0" prefWidth="129.0" textAlignment="CENTER" textFill="RED" />
+            <Label fx:id="lbErrorPassword" layoutX="96.0" layoutY="245.0" prefHeight="17.0" prefWidth="129.0" textAlignment="CENTER" textFill="RED" />
          </children>
       </Pane>
    </children>

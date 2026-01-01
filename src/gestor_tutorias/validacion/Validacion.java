@@ -1,4 +1,4 @@
-package gestor_tutorias.validacion;
+package gestor_tutorias.validacion;/*package gestor_tutorias.validacion;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -162,3 +162,6 @@ public class Validacion {
         control.setStyle("");
     }
 }
+
+
+ */

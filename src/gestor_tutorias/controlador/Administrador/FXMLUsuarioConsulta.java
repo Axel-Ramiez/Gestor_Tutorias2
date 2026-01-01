@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Administrador;
+package gestor_tutorias.controlador.Administrador;/*package gestor_tutorias.controlador.Administrador;
 
 import gestor_tutorias.dao.UsuarioDAO;
 import gestor_tutorias.pojo.Usuario;
@@ -195,3 +195,4 @@ public class FXMLUsuarioConsulta implements Initializable {
         }
     }
 }
+*/

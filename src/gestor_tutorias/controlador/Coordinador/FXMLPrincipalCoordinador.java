@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.pojo.Usuario;
 import java.io.IOException;
@@ -67,7 +67,7 @@ public class FXMLPrincipalCoordinador implements Initializable {
     private void clicReporte(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLReporteTutoria.fxml")
+                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLReporteTutoriaPrincipal.fxml")
             );
 
             Parent root = loader.load();
@@ -137,7 +137,7 @@ public class FXMLPrincipalCoordinador implements Initializable {
     public void clicProblematica(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLProblematica.fxml")
+                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLProblematicaPrincipal.fxml")
             );
 
             Parent root = loader.load();
@@ -153,3 +153,5 @@ public class FXMLPrincipalCoordinador implements Initializable {
         }
     }
 }
+
+ */

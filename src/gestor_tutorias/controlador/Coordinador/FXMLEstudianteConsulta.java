@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.dao.EstudianteDAO;
 import gestor_tutorias.dao.UsuarioDAO;
@@ -162,4 +162,4 @@ public class FXMLEstudianteConsulta implements Initializable {
         Stage stage = (Stage) tfNombre.getScene().getWindow();
         stage.close();
     }
-}
+}*/

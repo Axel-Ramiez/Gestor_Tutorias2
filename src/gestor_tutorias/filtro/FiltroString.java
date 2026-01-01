@@ -1,4 +1,4 @@
-package gestor_tutorias.filtro;
+package gestor_tutorias.filtro;/*package gestor_tutorias.filtro;
 
 public class FiltroString {
 
@@ -93,3 +93,6 @@ public class FiltroString {
         return seguro;
     }
 }
+
+
+ */

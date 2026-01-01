@@ -5,41 +5,39 @@ import gestor_tutorias.Enum.EstatusProblematica;
 public class Problematica {
 
     private int idProblematica;
-    private int idReporte;
+    private int idReporteTutoria;
     private String titulo;
     private String descripcion;
-    private Integer idExperienciaEducativa;
+    private Integer idCarrera; // ✅ CORRECTO
     private EstatusProblematica estado;
-
 
     public Problematica() {
         this.estado = EstatusProblematica.PENDIENTE;
     }
 
-    public Problematica(int idReporte, String titulo,
-                        String descripcion, Integer idExperienciaEducativa,
+    public Problematica(int idReporteTutoria, String titulo,
+                        String descripcion, Integer idCarrera,
                         EstatusProblematica estado) {
 
-        this.idReporte = idReporte;
+        this.idReporteTutoria = idReporteTutoria;
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.idExperienciaEducativa = idExperienciaEducativa;
+        this.idCarrera = idCarrera;
         this.estado = (estado != null) ? estado : EstatusProblematica.PENDIENTE;
     }
 
-    public Problematica(int idProblematica, int idReporte,
+    public Problematica(int idProblematica, int idReporteTutoria,
                         String titulo, String descripcion,
-                        Integer idExperienciaEducativa,
+                        Integer idCarrera,
                         EstatusProblematica estado) {
 
         this.idProblematica = idProblematica;
-        this.idReporte = idReporte;
+        this.idReporteTutoria = idReporteTutoria;
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.idExperienciaEducativa = idExperienciaEducativa;
+        this.idCarrera = idCarrera;
         this.estado = estado;
     }
-
 
     public int getIdProblematica() {
         return idProblematica;
@@ -49,12 +47,12 @@ public class Problematica {
         this.idProblematica = idProblematica;
     }
 
-    public int getIdReporte() {
-        return idReporte;
+    public int getIdReporteTutoria() {
+        return idReporteTutoria;
     }
 
-    public void setIdReporte(int idReporte) {
-        this.idReporte = idReporte;
+    public void setIdReporteTutoria(int idReporteTutoria) {
+        this.idReporteTutoria = idReporteTutoria;
     }
 
     public String getTitulo() {
@@ -73,12 +71,12 @@ public class Problematica {
         this.descripcion = descripcion;
     }
 
-    public Integer getIdExperienciaEducativa() {
-        return idExperienciaEducativa;
+    public Integer getIdCarrera() {
+        return idCarrera;
     }
 
-    public void setIdExperienciaEducativa(Integer idExperienciaEducativa) {
-        this.idExperienciaEducativa = idExperienciaEducativa;
+    public void setIdCarrera(Integer idCarrera) {
+        this.idCarrera = idCarrera;
     }
 
     public EstatusProblematica getEstado() {

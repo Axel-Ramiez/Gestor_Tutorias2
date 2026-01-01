@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLProblematicaPrincipal">
+
+    <children>
+
+        <!-- Encabezado -->
+        <Pane prefHeight="73.0" prefWidth="700.0" style="-fx-background-color: #283593;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label layoutX="20.0" layoutY="24.0" text="Sistema de Tutorías - UV" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+
+                <Label fx:id="lblUsuario" layoutX="450.0" layoutY="28.0" text="Usuario: Tutor" textFill="WHITE" />
+            </children>
+        </Pane>
+
+        <!-- Título -->
+        <Label layoutX="260.0" layoutY="90.0" text="Listado de Problemáticas">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+
+        <!-- Botones -->
+        <HBox layoutX="437.0" layoutY="122.0" spacing="10.0">
+            <children>
+                <Button fx:id="btnCrear" onAction="#crearProblematica" text="Crear" />
+
+                <Button fx:id="btnConsultar" onAction="#consultarProblematica" text="Consultar" />
+
+                <Button fx:id="btnEditar" onAction="#editarProblematica" text="Editar" />
+
+                <Button fx:id="btnEliminar" onAction="#eliminarProblematica" text="Eliminar" />
+            </children>
+        </HBox>
+
+        <!-- Tabla -->
+        <TableView fx:id="tvProblematica" layoutX="25.0" layoutY="165.0" prefHeight="230.0" prefWidth="650.0">
+
+            <columns>
+                <TableColumn fx:id="colIdProblematica" prefWidth="60.0" text="ID" />
+
+                <TableColumn fx:id="colIdReporteTutoria" prefWidth="90.0" text="ID Reporte" />
+
+                <TableColumn fx:id="colTitulo" prefWidth="150.0" text="Título" />
+
+                <TableColumn fx:id="colDescripcion" prefWidth="200.0" text="Descripción" />
+
+                <TableColumn fx:id="colIdCarrera" prefWidth="90.0" text="ID Carrera" />
+
+                <TableColumn fx:id="colEstado" prefWidth="100.0" text="Estado" />
+            </columns>
+        </TableView>
+
+        <!-- Pie -->
+        <Label layoutX="25.0" layoutY="410.0" text="UNIVERSIDAD VERACRUZANA" textFill="#666666" />
+
+    </children>
+</AnchorPane>

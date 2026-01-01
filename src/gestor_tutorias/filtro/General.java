@@ -1,4 +1,4 @@
-package gestor_tutorias.filtro;
+package gestor_tutorias.filtro;/*package gestor_tutorias.filtro;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -262,3 +262,5 @@ public class General {
         return false;
     }
 }
+
+ */

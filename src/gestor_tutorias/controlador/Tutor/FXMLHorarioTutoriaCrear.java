@@ -2,9 +2,7 @@ package gestor_tutorias.controlador.Tutor;
 
 import javafx.event.ActionEvent;
 
-public class FXMLReporteTutoriaConsulta {
-
-
+public class FXMLHorarioTutoriaCrear {
     public void clicCancelar(ActionEvent actionEvent) {
     }
 
@@ -15,6 +13,3 @@ public class FXMLReporteTutoriaConsulta {
 
     }
 }
-
-
-

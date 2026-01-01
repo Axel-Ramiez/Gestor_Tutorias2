@@ -1,4 +1,4 @@
-package gestor_tutorias.filtro;
+package gestor_tutorias.filtro;/*package gestor_tutorias.filtro;
 
 public class FiltroGeneral {
 
@@ -54,3 +54,6 @@ public class FiltroGeneral {
         return seguro;
     }
 }
+
+
+ */

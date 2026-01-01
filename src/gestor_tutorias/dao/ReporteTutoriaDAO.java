@@ -1,63 +1,46 @@
 package gestor_tutorias.dao;
 
-import gestor_tutorias.pojo.ReporteTutoria;
-import gestor_tutorias.modelo.ConexionBD;
 import gestor_tutorias.Enum.EstadoReporte;
+import gestor_tutorias.modelo.ConexionBD;
+import gestor_tutorias.pojo.ReporteTutoria;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReporteTutoriaDAO {
+
     private static final String TABLA = "reporte_tutoria";
 
     private static final String SQL_INSERT =
-            "INSERT INTO " + TABLA + " (id_tutor, id_estudiante, id_fecha_tutoria, reporte, respuesta_coordinador, asistencia, estado) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            "INSERT INTO " + TABLA +
+                    " (id_usuario, id_estudiante, id_periodo_escolar, fecha_reporte_tutoria, texto_reporte_tutoria, respuesta_coordinador, asistencia_reporte_tutoria, estado_reporte_tutoria) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String SQL_UPDATE =
-            "UPDATE " + TABLA + " SET id_tutor = ?, id_estudiante = ?, id_fecha_tutoria = ?, reporte = ?, respuesta_coordinador = ?, asistencia = ?, estado = ? " +
-                    "WHERE id_reporte = ?";
+            "UPDATE " + TABLA +
+                    " SET id_usuario = ?, id_estudiante = ?, id_periodo_escolar = ?, fecha_reporte_tutoria = ?, " +
+                    "texto_reporte_tutoria = ?, respuesta_coordinador = ?, asistencia_reporte_tutoria = ?, estado_reporte_tutoria = ? " +
+                    "WHERE id_reporte_tutoria = ?";
 
     private static final String SQL_DELETE =
-            "DELETE FROM " + TABLA + " WHERE id_reporte = ?";
+            "DELETE FROM " + TABLA + " WHERE id_reporte_tutoria = ?";
 
     private static final String SQL_SELECT_DETALLADO_BASE =
-            "SELECT r.id_reporte, r.id_tutor, r.id_estudiante, r.id_fecha_tutoria, " +
-                    "r.reporte, r.respuesta_coordinador, r.asistencia, r.estado, " +
+            "SELECT r.id_reporte_tutoria, r.id_usuario, r.id_estudiante, r.id_periodo_escolar, " +
+                    "r.fecha_reporte_tutoria, r.texto_reporte_tutoria, r.respuesta_coordinador, " +
+                    "r.asistencia_reporte_tutoria, r.estado_reporte_tutoria, " +
                     "u.nombre_completo AS nombre_tutor, " +
                     "e.nombre_completo AS nombre_estudiante, " +
-                    "p.fecha AS fecha_tutoria, " +
                     "pe.nombre AS periodo_nombre " +
                     "FROM " + TABLA + " r " +
-                    "INNER JOIN usuario u ON r.id_tutor = u.id_usuario " +
+                    "INNER JOIN usuario u ON r.id_usuario = u.id_usuario " +
                     "INNER JOIN estudiante e ON r.id_estudiante = e.id_estudiante " +
-                    "INNER JOIN planeacion_tutoria p ON r.id_fecha_tutoria = p.id_fecha_tutoria " +
-                    "INNER JOIN periodo_escolar pe ON p.id_periodo = pe.id_periodo ";
+                    "INNER JOIN periodo_escolar pe ON r.id_periodo_escolar = pe.id_periodo_escolar ";
 
-    public boolean actualizarRespuesta(int idReporte, String respuesta) throws SQLException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        boolean exito = false;
-        String sql = "UPDATE reporte_tutoria SET respuesta_coordinador = ?, estado = ? WHERE id_reporte = ?";
+    /* ========================= GUARDAR ========================= */
 
-        try {
-            conn = ConexionBD.abrirConexion();
-            if (conn != null) {
-                ps = conn.prepareStatement(sql);
-                ps.setString(1, respuesta);
-                ps.setString(2, EstadoReporte.REVISADO.getValorBD());
-                ps.setInt(3, idReporte);
-
-                exito = ps.executeUpdate() > 0;
-            }
-        } finally {
-            if (ps != null) ps.close();
-            if (conn != null) ConexionBD.cerrarConexion(conn);
-        }
-        return exito;
-    }
-
-    public int guardarReporte(ReporteTutoria reporteObj) throws SQLException {
+    public int guardarReporte(ReporteTutoria reporte) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -66,22 +49,21 @@ public class ReporteTutoriaDAO {
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, reporteObj.getIdTutor());
-            ps.setInt(2, reporteObj.getIdEstudiante());
-            ps.setInt(3, reporteObj.getIdFechaTutoria());
-            ps.setString(4, reporteObj.getReporte());
-            ps.setString(5, reporteObj.getRespuestaCoordinador());
-            ps.setBoolean(6, reporteObj.isAsistencia());
 
-            // CORRECCIÓN: Usar getValorBD() ("Pendiente" / "Revisado")
-            String estadoStr = (reporteObj.getEstado() != null) ?
-                    reporteObj.getEstado().getValorBD() : EstadoReporte.PENDIENTE.getValorBD();
-            ps.setString(7, estadoStr);
+            ps.setInt(1, reporte.getIdUsuario());
+            ps.setInt(2, reporte.getIdEstudiante());
+            ps.setInt(3, reporte.getIdPeriodoEscolar());
+            ps.setDate(4, Date.valueOf(reporte.getFechaReporte()));
+            ps.setString(5, reporte.getTextoReporte());
+            ps.setString(6, reporte.getRespuestaCoordinador());
+            ps.setBoolean(7, reporte.isAsistencia());
+            ps.setString(8, reporte.getEstado().getValorBD());
 
-            int filasAfectadas = ps.executeUpdate();
-            if (filasAfectadas > 0) {
+            if (ps.executeUpdate() > 0) {
                 rs = ps.getGeneratedKeys();
-                if (rs.next()) idGenerado = rs.getInt(1);
+                if (rs.next()) {
+                    idGenerado = rs.getInt(1);
+                }
             }
         } finally {
             cerrarRecursos(conn, ps, rs);
@@ -89,22 +71,26 @@ public class ReporteTutoriaDAO {
         return idGenerado;
     }
 
-    public boolean actualizarReporte(ReporteTutoria reporteObj) throws SQLException {
+    /* ========================= ACTUALIZAR ========================= */
+
+    public boolean actualizarReporte(ReporteTutoria reporte) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
-        boolean exito = false;
+        boolean exito;
+
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_UPDATE);
-            ps.setInt(1, reporteObj.getIdTutor());
-            ps.setInt(2, reporteObj.getIdEstudiante());
-            ps.setInt(3, reporteObj.getIdFechaTutoria());
-            ps.setString(4, reporteObj.getReporte());
-            ps.setString(5, reporteObj.getRespuestaCoordinador());
-            ps.setBoolean(6, reporteObj.isAsistencia());
-            // CORRECCIÓN: getValorBD()
-            ps.setString(7, reporteObj.getEstado().getValorBD());
-            ps.setInt(8, reporteObj.getIdReporte());
+
+            ps.setInt(1, reporte.getIdUsuario());
+            ps.setInt(2, reporte.getIdEstudiante());
+            ps.setInt(3, reporte.getIdPeriodoEscolar());
+            ps.setDate(4, Date.valueOf(reporte.getFechaReporte()));
+            ps.setString(5, reporte.getTextoReporte());
+            ps.setString(6, reporte.getRespuestaCoordinador());
+            ps.setBoolean(7, reporte.isAsistencia());
+            ps.setString(8, reporte.getEstado().getValorBD());
+            ps.setInt(9, reporte.getIdReporte());
 
             exito = ps.executeUpdate() > 0;
         } finally {
@@ -113,19 +99,12 @@ public class ReporteTutoriaDAO {
         return exito;
     }
 
-    public List<ReporteTutoria> obtenerTodos() throws SQLException {
-        return ejecutarConsultaListado(SQL_SELECT_DETALLADO_BASE);
-    }
-
-    public ReporteTutoria obtenerPorId(int idReporte) throws SQLException {
-        String sql = SQL_SELECT_DETALLADO_BASE + " WHERE r.id_reporte = ?";
-        List<ReporteTutoria> resultados = ejecutarConsultaListado(sql, idReporte);
-        return resultados.isEmpty() ? null : resultados.get(0);
-    }
+    /* ========================= ELIMINAR ========================= */
 
     public boolean eliminarReporte(int idReporte) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
+
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_DELETE);
@@ -136,20 +115,42 @@ public class ReporteTutoriaDAO {
         }
     }
 
-    private List<ReporteTutoria> ejecutarConsultaListado(String sql, Object... parametros) throws SQLException {
+    /* ========================= CONSULTAS ========================= */
+
+    public List<ReporteTutoria> obtenerTodos() throws SQLException {
+        return ejecutarConsultaListado(SQL_SELECT_DETALLADO_BASE);
+    }
+
+    public ReporteTutoria obtenerPorId(int idReporte) throws SQLException {
+        String sql = SQL_SELECT_DETALLADO_BASE + " WHERE r.id_reporte_tutoria = ?";
+        List<ReporteTutoria> lista = ejecutarConsultaListado(sql, idReporte);
+        return lista.isEmpty() ? null : lista.get(0);
+    }
+
+    public List<ReporteTutoria> obtenerPorTutor(int idUsuario) throws SQLException {
+        String sql = SQL_SELECT_DETALLADO_BASE + " WHERE r.id_usuario = ?";
+        return ejecutarConsultaListado(sql, idUsuario);
+    }
+
+    /* ========================= MAPEOS ========================= */
+
+    private List<ReporteTutoria> ejecutarConsultaListado(String sql, Object... params) throws SQLException {
         List<ReporteTutoria> lista = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(sql);
-            for (int i = 0; i < parametros.length; i++) {
-                ps.setObject(i + 1, parametros[i]);
+
+            for (int i = 0; i < params.length; i++) {
+                ps.setObject(i + 1, params[i]);
             }
+
             rs = ps.executeQuery();
             while (rs.next()) {
-                lista.add(mapearReporteConDetalles(rs));
+                lista.add(mapearReporte(rs));
             }
         } finally {
             cerrarRecursos(conn, ps, rs);
@@ -157,28 +158,27 @@ public class ReporteTutoriaDAO {
         return lista;
     }
 
-    private ReporteTutoria mapearReporteConDetalles(ResultSet rs) throws SQLException {
-        int idReporte = rs.getInt("id_reporte");
-        int idTutor = rs.getInt("id_tutor");
-        int idEstudiante = rs.getInt("id_estudiante");
-        int idFechaTutoria = rs.getInt("id_fecha_tutoria");
-        String reporte = rs.getString("reporte");
-        String respuestaCoordinador = rs.getString("respuesta_coordinador");
-        boolean asistencia = rs.getBoolean("asistencia");
+    private ReporteTutoria mapearReporte(ResultSet rs) throws SQLException {
+        ReporteTutoria r = new ReporteTutoria();
 
-        // CORRECCIÓN: Usar fromString() para manejar "Pendiente"/"Revisado"
-        EstadoReporte estado = EstadoReporte.fromString(rs.getString("estado"));
-
-        ReporteTutoria r = new ReporteTutoria(idReporte, idTutor, idEstudiante, idFechaTutoria,
-                reporte, respuestaCoordinador, asistencia, estado);
+        r.setIdReporte(rs.getInt("id_reporte_tutoria"));
+        r.setIdUsuario(rs.getInt("id_usuario"));
+        r.setIdEstudiante(rs.getInt("id_estudiante"));
+        r.setIdPeriodoEscolar(rs.getInt("id_periodo_escolar"));
+        r.setFechaReporte(rs.getDate("fecha_reporte_tutoria").toLocalDate());
+        r.setTextoReporte(rs.getString("texto_reporte_tutoria"));
+        r.setRespuestaCoordinador(rs.getString("respuesta_coordinador"));
+        r.setAsistencia(rs.getBoolean("asistencia_reporte_tutoria"));
+        r.setEstado(EstadoReporte.fromString(rs.getString("estado_reporte_tutoria")));
 
         r.setNombreTutor(rs.getString("nombre_tutor"));
         r.setNombreEstudiante(rs.getString("nombre_estudiante"));
-        r.setFecha(rs.getString("fecha_tutoria"));
         r.setPeriodoEscolar(rs.getString("periodo_nombre"));
 
         return r;
     }
+
+    /* ========================= UTILIDAD ========================= */
 
     private void cerrarRecursos(Connection conn, PreparedStatement ps, ResultSet rs) {
         try {
@@ -189,41 +189,4 @@ public class ReporteTutoriaDAO {
             e.printStackTrace();
         }
     }
-
-    public List<ReporteTutoria> obtenerPorTutor(int idTutor) throws SQLException {
-        List<ReporteTutoria> reportes = new ArrayList<>();
-
-        String sql =
-                "SELECT r.id_reporte, r.estado, r.asistencia, " +
-                        "e.nombre_completo AS nombre_estudiante, " +
-                        "p.fecha AS fecha_tutoria, " +
-                        "pe.nombre AS periodo_nombre " +
-                        "FROM reporte_tutoria r " +
-                        "INNER JOIN estudiante e ON r.id_estudiante = e.id_estudiante " +
-                        "INNER JOIN planeacion_tutoria p ON r.id_fecha_tutoria = p.id_fecha_tutoria " +
-                        "INNER JOIN periodo_escolar pe ON p.id_periodo = pe.id_periodo " +
-                        "WHERE r.id_tutor = ?";
-
-        try (Connection conn = ConexionBD.abrirConexion();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, idTutor);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    ReporteTutoria r = new ReporteTutoria();
-                    r.setIdReporte(rs.getInt("id_reporte"));
-                    r.setEstado(EstadoReporte.fromString(rs.getString("estado")));
-                    r.setAsistencia(rs.getBoolean("asistencia"));
-                    r.setNombreEstudiante(rs.getString("nombre_estudiante"));
-                    r.setFecha(rs.getString("fecha_tutoria"));
-                    r.setPeriodoEscolar(rs.getString("periodo_nombre"));
-
-                    reportes.add(r);
-                }
-            }
-        }
-        return reportes;
-    }
-
 }

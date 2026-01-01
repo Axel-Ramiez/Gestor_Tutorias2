@@ -1,16 +1,18 @@
 package gestor_tutorias.controlador.Tutor;
 
-import gestor_tutorias.Enum.EstatusProblematica;
-import gestor_tutorias.dao.ProblematicaDAO;
-import gestor_tutorias.pojo.Problematica;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
-
-import java.sql.SQLException;
+import javafx.event.ActionEvent;
 
 public class FXMLProblematicaConsulta {
+    public void clicCancelar(ActionEvent actionEvent) {
+    }
 
+    public void clicCerrar(ActionEvent actionEvent) {
+    }
+
+    public void clicGuardar(ActionEvent actionEvent) {
+
+    }
+/*
     @FXML private TextField tfIdProblematica;
     @FXML private TextField tfIdReporte;
     @FXML private TextField tfIdExperiencia;
@@ -22,10 +24,10 @@ public class FXMLProblematicaConsulta {
     @FXML private Button btnEliminar;
 
     private final ProblematicaDAO dao = new ProblematicaDAO();
-    private FXMLProblematica padre;
+    private FXMLProblematicaPrincipal padre;
     private boolean esNuevo = true;
 
-    public void inicializarFormulario(Problematica p, FXMLProblematica padre) {
+    public void inicializarFormulario(Problematica p, FXMLProblematicaPrincipal padre) {
         this.padre = padre;
         cbEstado.getItems().setAll(EstatusProblematica.values());
 
@@ -126,4 +128,8 @@ public class FXMLProblematicaConsulta {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
+
+ */
+
 }
