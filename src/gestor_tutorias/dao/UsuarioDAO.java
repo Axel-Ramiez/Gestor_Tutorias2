@@ -18,7 +18,7 @@ public class UsuarioDAO {
 
         if (conn != null) {
             try {
-                // CAMBIO 1: Agregamos el INNER JOIN y seleccionamos r.nombre_rol
+
                 String sql =
                         "SELECT u.*, r.nombre_rol " +
                                 "FROM usuario u " +
@@ -127,7 +127,7 @@ public class UsuarioDAO {
     }
 
     public static boolean editarUsuario(Usuario u) throws SQLException {
-        // Este se queda igual
+
         boolean resultado = false;
         Connection conn = ConexionBD.abrirConexion();
 
@@ -181,7 +181,7 @@ public class UsuarioDAO {
         return resultado;
     }
 
-    /* ================= MAPEO ================= */
+
 
     private static Usuario mapearUsuario(ResultSet rs) throws SQLException {
         Usuario u = new Usuario();
