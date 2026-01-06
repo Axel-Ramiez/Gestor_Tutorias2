@@ -18,9 +18,11 @@ public class UsuarioDAO {
 
         if (conn != null) {
             try {
+                // CAMBIO 1: Agregamos el INNER JOIN y seleccionamos r.nombre_rol
                 String sql =
-                        "SELECT u.* " +
+                        "SELECT u.*, r.nombre_rol " +
                                 "FROM usuario u " +
+                                "INNER JOIN rol r ON u.id_rol = r.id_rol " +
                                 "WHERE u.no_Personal_usuario = ? " +
                                 "AND u.contrasena_usuario = ? " +
                                 "AND u.activo_usuario = 1";
@@ -47,9 +49,11 @@ public class UsuarioDAO {
         if (conn != null) {
             try {
                 String sql =
-                        "SELECT * FROM usuario " +
-                                "WHERE activo_usuario = 1 " +
-                                "ORDER BY nombre_usuario, apellido_paterno_usuario";
+                        "SELECT u.*, r.nombre_rol " +
+                                "FROM usuario u " +
+                                "INNER JOIN rol r ON u.id_rol = r.id_rol " +
+                                "WHERE u.activo_usuario = 1 " +
+                                "ORDER BY u.nombre_usuario, u.apellido_paterno_usuario";
 
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery();
@@ -65,6 +69,7 @@ public class UsuarioDAO {
     }
 
     public static boolean registrarUsuario(Usuario u) throws SQLException {
+
         boolean resultado = false;
         Connection conn = ConexionBD.abrirConexion();
 
@@ -76,7 +81,6 @@ public class UsuarioDAO {
                                 "apellido_paterno_usuario, apellido_materno_usuario, " +
                                 "correo_usuario, id_rol, activo_usuario) " +
                                 "VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
-
 
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, u.getNoPersonalUsuario());
@@ -101,10 +105,13 @@ public class UsuarioDAO {
 
         if (conn != null) {
             try {
+
                 String sql =
-                        "SELECT * FROM usuario " +
-                                "WHERE activo_usuario = 1 AND id_rol = 3 " +
-                                "ORDER BY nombre_usuario, apellido_paterno_usuario";
+                        "SELECT u.*, r.nombre_rol " +
+                                "FROM usuario u " +
+                                "INNER JOIN rol r ON u.id_rol = r.id_rol " +
+                                "WHERE u.activo_usuario = 1 AND u.id_rol = 3 " +
+                                "ORDER BY u.nombre_usuario, u.apellido_paterno_usuario";
 
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery();
@@ -120,6 +127,7 @@ public class UsuarioDAO {
     }
 
     public static boolean editarUsuario(Usuario u) throws SQLException {
+        // Este se queda igual
         boolean resultado = false;
         Connection conn = ConexionBD.abrirConexion();
 
@@ -127,13 +135,13 @@ public class UsuarioDAO {
             try {
                 String sql =
                         "UPDATE usuario SET " +
-                                "no_Personal_usuario = ?,\n" +
-                                "nombre_usuario = ?,\n" +
-                                "apellido_paterno_usuario = ?,\n" +
-                                "apellido_materno_usuario = ?,\n" +
-                                "correo_usuario = ?,\n" +
-                                "id_rol = ?,\n" +
-                                "contrasena_usuario = ?\n" +
+                                "no_Personal_usuario = ?, " +
+                                "nombre_usuario = ?, " +
+                                "apellido_paterno_usuario = ?, " +
+                                "apellido_materno_usuario = ?, " +
+                                "correo_usuario = ?, " +
+                                "id_rol = ?, " +
+                                "contrasena_usuario = ? " +
                                 "WHERE id_usuario = ?";
 
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -160,7 +168,8 @@ public class UsuarioDAO {
 
         if (conn != null) {
             try {
-                String sql = "UPDATE usuario SET activo = 0 WHERE id_usuario = ?";
+
+                String sql = "UPDATE usuario SET activo_usuario = 0 WHERE id_usuario = ?";
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setInt(1, idUsuario);
 
@@ -176,6 +185,8 @@ public class UsuarioDAO {
 
     private static Usuario mapearUsuario(ResultSet rs) throws SQLException {
         Usuario u = new Usuario();
+
+        u.setIdUsuario(rs.getInt("id_usuario"));
         u.setNoPersonalUsuario(rs.getString("no_Personal_usuario"));
         u.setContrasenaUsuario(rs.getString("contrasena_usuario"));
         u.setNombreUsuario(rs.getString("nombre_usuario"));
@@ -184,6 +195,9 @@ public class UsuarioDAO {
         u.setCorreoUsuario(rs.getString("correo_usuario"));
         u.setActivoUsuario(rs.getInt("activo_usuario"));
         u.setIdRol(rs.getInt("id_rol"));
+        u.setNombreRol(rs.getString("nombre_rol"));
+
         return u;
     }
 }
+

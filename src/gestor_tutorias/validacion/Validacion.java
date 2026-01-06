@@ -1,4 +1,4 @@
-package gestor_tutorias.validacion;/*package gestor_tutorias.validacion;
+package gestor_tutorias.validacion;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -21,7 +21,7 @@ public class Validacion {
 
     private static final String PATRON_NOMBRE = "^[a-zA-ZÀ-ÿ\\u00f1\\u00d1\\s]+$";
 
-    private static final String PATRON_TELEFONO = "^\\d{10}$";
+    private static final String PATRON_NO_PERSONAL = "^[a-zA-Z0-9]{1,20}$";
 
 
 
@@ -35,6 +35,10 @@ public class Validacion {
 
     public static boolean esCorreoEstudianteValido(String correo) {
         return correo != null && Pattern.matches(PATRON_CORREO_ESTUDIANTE, correo);
+    }
+
+    public static boolean esNoPersonalValido(String noPersonal) {
+        return noPersonal != null && Pattern.matches(PATRON_NO_PERSONAL, noPersonal);
     }
 
     public static boolean esCorreoPersonalValido(String correo) {
@@ -67,6 +71,15 @@ public class Validacion {
         }
     }
 
+    public static boolean validarNoPersonal(TextInputControl campo, Label etiquetaError) {
+        if (!esNoPersonalValido(campo.getText())) {
+            marcarError(campo, etiquetaError, "Inválido. Solo letras y números (Máx 20). Ej: ADM001");
+            return false;
+        } else {
+            limpiarError(campo, etiquetaError);
+            return true;
+        }
+    }
 
     public static boolean validarMatricula(TextInputControl campo, Label etiquetaError) {
         if (!esMatriculaValida(campo.getText())) {
@@ -162,6 +175,3 @@ public class Validacion {
         control.setStyle("");
     }
 }
-
-
- */

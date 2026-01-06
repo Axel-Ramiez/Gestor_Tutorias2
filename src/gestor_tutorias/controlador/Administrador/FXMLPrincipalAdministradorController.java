@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Administrador;/*package gestor_tutorias.controlador.Administrador;
+package gestor_tutorias.controlador.Administrador;
 
 import gestor_tutorias.pojo.Usuario;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class FXMLPrincipalAdministradorController implements Initializable {
 
     public void inicializarInformacion(Usuario usuarioAdmin){
         if(usuarioAdmin != null){
-            lbNombreAdmin.setText("Usuario: " + usuarioAdmin.getNombreCompleto());
+            lbNombreAdmin.setText("Usuario: " + usuarioAdmin.getNombreUsuario());
         }
     }
 
@@ -94,4 +94,3 @@ public class FXMLPrincipalAdministradorController implements Initializable {
         alerta.showAndWait();
     }
 }
-*/

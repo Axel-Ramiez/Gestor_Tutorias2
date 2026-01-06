@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.pojo.Usuario;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class FXMLPrincipalCoordinador implements Initializable {
 
     public void inicializarInformacion(Usuario usuario) {
         if (usuario != null) {
-            lbNombreAdmin.setText("Coordinador: " + usuario.getNombreCompleto());
+            lbNombreAdmin.setText("Coordinador: " + usuario.getNombreUsuario());
         }
     }
 
@@ -153,5 +153,3 @@ public class FXMLPrincipalCoordinador implements Initializable {
         }
     }
 }
-
- */

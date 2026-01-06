@@ -3,6 +3,8 @@ package gestor_tutorias.controlador;
 //import gestor_tutorias.controlador.Administrador.FXMLPrincipalAdministradorController;
 //import gestor_tutorias.controlador.Coordinador.FXMLPrincipalCoordinador;
 
+import gestor_tutorias.controlador.Administrador.FXMLPrincipalAdministradorController;
+import gestor_tutorias.controlador.Coordinador.FXMLPrincipalCoordinador;
 import gestor_tutorias.controlador.Tutor.FXMLPrincipalTutor;
 import gestor_tutorias.dao.UsuarioDAO;
 import gestor_tutorias.pojo.Usuario;
@@ -69,11 +71,11 @@ public class FXMLInicioSesionController {
 
             switch (usuarioSesion.getIdRol()) {
                 case 1:
-                 //   abrirPrincipalAdministrador(usuarioSesion);
+                    abrirPrincipalAdministrador(usuarioSesion);
                     break;
 
                 case 2:
-                  //  abrirPrincipalCoordinador(usuarioSesion);
+                    //  abrirPrincipalCoordinador(usuarioSesion);
                     break;
 
                 case 3:
@@ -90,7 +92,6 @@ public class FXMLInicioSesionController {
             e.printStackTrace();
         }
     }
-    /*
 
     private void abrirPrincipalAdministrador(Usuario usuario) {
         try {
@@ -99,7 +100,7 @@ public class FXMLInicioSesionController {
             );
             Parent root = loader.load();
 
-            FXMLPrincipalAdministrador controller = loader.getController();
+            FXMLPrincipalAdministradorController controller = loader.getController();
             controller.inicializarInformacion(usuario); // preparado para futuro
 
             Stage stage = new Stage();
@@ -107,7 +108,8 @@ public class FXMLInicioSesionController {
             stage.setTitle("Principal Administrador");
             stage.show();
 
-            cerrarVentanaActual();
+            Stage actual = (Stage) tfUsuario.getScene().getWindow();
+            actual.close();
 
         } catch (IOException e) {
             mostrarAlerta("Error", "No se pudo abrir la ventana principal del administrador");
@@ -131,7 +133,8 @@ public class FXMLInicioSesionController {
             stage.setTitle("Principal Coordinador");
             stage.show();
 
-            cerrarVentanaActual();
+            Stage actual = (Stage) tfUsuario.getScene().getWindow();
+            actual.close();
 
         } catch (IOException e) {
             mostrarAlerta("Error", "No se pudo abrir la ventana principal del coordinador");
@@ -139,7 +142,7 @@ public class FXMLInicioSesionController {
         }
     }
 
-    */
+
     private void abrirPrincipalTutor(Usuario usuario) {
         try {
             FXMLLoader loader = new FXMLLoader(

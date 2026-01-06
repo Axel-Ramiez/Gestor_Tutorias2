@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Administrador;/*package gestor_tutorias.controlador.Administrador;
+package gestor_tutorias.controlador.Administrador;
 
 import gestor_tutorias.dao.UsuarioDAO;
 import gestor_tutorias.pojo.Usuario;
@@ -29,14 +29,19 @@ import javafx.stage.Stage;
 
 public class FXMLUsuarioConsulta implements Initializable {
 
+
     @FXML
     private TextField tfBusqueda;
     @FXML
     private TableView<Usuario> tbUsuario;
     @FXML
-    private TableColumn colMatricula;
+    private TableColumn colNoPersonal;
     @FXML
     private TableColumn colNombre;
+    @FXML
+    private TableColumn colApellidoMaterno;
+    @FXML
+    private TableColumn colApellidoPaterno;
     @FXML
     private TableColumn colContrasena;
     @FXML
@@ -55,11 +60,13 @@ public class FXMLUsuarioConsulta implements Initializable {
 
     private void configurarColumnas() {
 
-        colMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
-        colNombre.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
-        colContrasena.setCellValueFactory(new PropertyValueFactory("contrasena"));
-        colRol.setCellValueFactory(new PropertyValueFactory("rolNombre"));
-        colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
+        colNoPersonal.setCellValueFactory(new PropertyValueFactory("noPersonalUsuario"));
+        colNombre.setCellValueFactory(new PropertyValueFactory("nombreUsuario"));
+        colApellidoPaterno.setCellValueFactory(new PropertyValueFactory("apellidoPaternoUsuario"));
+        colApellidoMaterno.setCellValueFactory(new PropertyValueFactory("apellidoMaternoUsuario"));
+        colContrasena.setCellValueFactory(new PropertyValueFactory("contrasenaUsuario"));
+        colRol.setCellValueFactory(new PropertyValueFactory("nombreRol"));
+        colCorreo.setCellValueFactory(new PropertyValueFactory("correoUsuario"));
     }
 
     private void cargarUsuarios() {
@@ -133,14 +140,14 @@ public class FXMLUsuarioConsulta implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmar eliminación");
             alert.setHeaderText(null);
-            alert.setContentText("¿Estás seguro de eliminar al usuario " + usuarioSeleccionado.getNombreCompleto() + "?");
+            alert.setContentText("¿Estás seguro de eliminar al usuario " + usuarioSeleccionado.getNombreUsuario() + "?");
 
             if (alert.showAndWait().get() == ButtonType.OK) {
                 try {
                     boolean exito = UsuarioDAO.eliminarUsuario(usuarioSeleccionado.getIdUsuario());
                     if (exito) {
                         mostrarAlerta("Éxito", "Usuario eliminado correctamente.");
-                        cargarUsuarios(); // Recargar tabla
+                        cargarUsuarios();
                     } else {
                         mostrarAlerta("Error", "No se pudo eliminar el usuario.");
                     }
@@ -170,23 +177,32 @@ public class FXMLUsuarioConsulta implements Initializable {
                         return true;
                     }
                     String lowerNewValue = newValue.toLowerCase();
-                    if (usuario.getNombreCompleto() != null &&
-                            usuario.getNombreCompleto().toLowerCase().contains(lowerNewValue)) {
+                    if (usuario.getNombreUsuario() != null &&
+                            usuario.getNombreUsuario().toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
-                    if (usuario.getMatricula() != null &&
-                            usuario.getMatricula().toLowerCase().contains(lowerNewValue)) {
+                    if (usuario.getApellidoPaternoUsuario() != null &&
+                            usuario.getApellidoPaternoUsuario().toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
-                    if (usuario.getCorreo() != null &&
-                            usuario.getCorreo().toLowerCase().contains(lowerNewValue)) {
+                    if (usuario.getApellidoMaternoUsuario() != null &&
+                            usuario.getApellidoMaternoUsuario().toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
-                    if (usuario.getRolNombre() != null &&
-                            usuario.getRolNombre().toLowerCase().contains(lowerNewValue)) {
+                    if (usuario.getNombreRol() != null &&
+                            usuario.getNombreRol().toLowerCase().contains(lowerNewValue)) {
+                        return true;
+                    }
+                    if (usuario.getNoPersonalUsuario() != null &&
+                            usuario.getNoPersonalUsuario().toLowerCase().contains(lowerNewValue)) {
+                        return true;
+                    }
+                    if (usuario.getCorreoUsuario() != null &&
+                            usuario.getCorreoUsuario().toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
                     return false;
+
                 });
             });
             SortedList<Usuario> sortedData = new SortedList<>(filtro);
@@ -195,4 +211,3 @@ public class FXMLUsuarioConsulta implements Initializable {
         }
     }
 }
-*/

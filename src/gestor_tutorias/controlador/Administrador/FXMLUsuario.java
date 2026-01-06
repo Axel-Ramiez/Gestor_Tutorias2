@@ -1,5 +1,4 @@
-package gestor_tutorias.controlador.Administrador;/*package gestor_tutorias.controlador.Administrador;
-
+package gestor_tutorias.controlador.Administrador;
 
 import gestor_tutorias.validacion.Validacion;
 import javafx.stage.Stage;
@@ -18,12 +17,21 @@ import javafx.stage.Stage;
 
 public class FXMLUsuario implements Initializable {
 
-    @FXML private TextField tfMatricula;
+    @FXML private TextField tfNoPersonal;
     @FXML private ComboBox<String> cbRol;
     @FXML private TextField tfNombre;
+    @FXML private TextField tfApellidoPaterno;
+    @FXML private TextField tfApellidoMaterno;
     @FXML private TextField tfCorreo;
     @FXML private PasswordField pfContrasena;
-    @FXML private Label lbError;
+    @FXML private Label lblErrorNoPersonal;
+    @FXML private Label lblErrorNombre;
+    @FXML private Label lblErrorApellidoPaterno;
+    @FXML private Label lblErrorApellidoMaterno;
+    @FXML private Label lblErrorCorreo;
+    @FXML private Label lblErrorContrasena;
+    @FXML private Label lblErrorRol;
+
 
     private Usuario usuarioEdicion;
 
@@ -43,48 +51,58 @@ public class FXMLUsuario implements Initializable {
 
     @FXML
     private void clicGuardar(ActionEvent event) {
-        lbError.setText("");
-        if (validarCampos()) {
+        if (!validarCampos()) {
+            return;
+        }
 
-            Usuario u = new Usuario();
-            u.setMatricula(tfMatricula.getText());
-            u.setNombreCompleto(tfNombre.getText());
-            u.setCorreo(tfCorreo.getText());
-            u.setContrasena(pfContrasena.getText());
-            String rolSeleccionado = cbRol.getValue();
-            int idRol = (rolSeleccionado.equals("Administrador")) ? 1 :
-                    (rolSeleccionado.equals("Coordinador")) ? 2 : 3;
-            u.setIdRol(idRol);
-            u.setActivo(1);
+        Usuario u = new Usuario();
+        u.setNoPersonalUsuario(tfNoPersonal.getText());
+        u.setNombreUsuario(tfNombre.getText());
+        u.setApellidoPaternoUsuario(tfApellidoPaterno.getText());
+        u.setApellidoMaternoUsuario(tfApellidoMaterno.getText());
+        u.setCorreoUsuario(tfCorreo.getText());
+        u.setContrasenaUsuario(pfContrasena.getText());
 
-            try {
-                boolean exito;
-                if (usuarioEdicion == null) {
-                    exito = UsuarioDAO.registrarUsuario(u);
-                } else {
-                    u.setIdUsuario(usuarioEdicion.getIdUsuario());
-                    exito = UsuarioDAO.editarUsuario(u);
-                }
-                if (exito) {
-                    mostrarAlerta("Éxito", "Usuario guardado correctamente.");
-                    cerrarVentana();
-                } else {
-                    lbError.setText("Error al guardar.");
-                }
-            } catch (SQLException ex) {
-                lbError.setText("Error BD: " + ex.getMessage());
+        String rolSeleccionado = (String) cbRol.getValue();
+        int idRol = 3;
+        if ("Administrador".equals(rolSeleccionado)) {
+            idRol = 1;
+        } else if ("Coordinador".equals(rolSeleccionado)) {
+            idRol = 2;
+        }
+        u.setIdRol(idRol);
+        u.setActivoUsuario(1);
+
+        try {
+            boolean exito;
+            if (usuarioEdicion == null) {
+                exito = UsuarioDAO.registrarUsuario(u);
+            } else {
+                u.setIdUsuario(usuarioEdicion.getIdUsuario());
+                exito = UsuarioDAO.editarUsuario(u);
             }
+
+            if (exito) {
+                mostrarAlerta("Éxito", "Usuario guardado correctamente.");
+                cerrarVentana();
+            } else {
+                mostrarAlerta("Error", "No se pudo guardar. Verifica que el No. Personal o Correo no estén repetidos.");
+            }
+        } catch (SQLException ex) {
+            mostrarAlerta("Error BD", "Error de conexión: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
     public void inicializarValores(Usuario usuario) {
         this.usuarioEdicion = usuario;
-        tfMatricula.setText(usuario.getMatricula());
-        tfNombre.setText(usuario.getNombreCompleto());
-        tfCorreo.setText(usuario.getCorreo());
-        pfContrasena.setText(usuario.getContrasena());
-        cbRol.setValue(usuario.getRolNombre());
-        tfMatricula.setEditable(false);
+        tfNoPersonal.setText(usuario.getNoPersonalUsuario());
+        tfNombre.setText(usuario.getNombreUsuario());
+        tfApellidoPaterno.setText(usuario.getApellidoPaternoUsuario());
+        tfApellidoMaterno.setText(usuario.getApellidoMaternoUsuario());
+        tfCorreo.setText(usuario.getCorreoUsuario());
+        pfContrasena.setText(usuario.getContrasenaUsuario());
+        tfNoPersonal.setEditable(false);
     }
 
     @FXML
@@ -93,16 +111,42 @@ public class FXMLUsuario implements Initializable {
     }
 
     private boolean validarCampos() {
-        if (!Validacion.validarRequerido(tfMatricula, lbError, "El No. Personal es obligatorio")) return false;
-        if (!Validacion.validarSeleccion(cbRol, lbError, "Selecciona un rol")) return false;
-        if (!Validacion.validarNombre(tfNombre, lbError)) return false;
-        if (!Validacion.validarCorreoPersonal(tfCorreo, lbError)) return false;
-        if (!Validacion.validarRequerido(pfContrasena, lbError, "La contraseña es obligatoria")) return false;
-        return true;
+        boolean valido = true;
+
+        if (!Validacion.validarLongitud(tfNoPersonal, lblErrorNoPersonal, 1, 20)) {
+            valido = false;
+        } else if (!Validacion.validarNoPersonal(tfNoPersonal, lblErrorNoPersonal)) {
+            valido = false;
+        }
+
+        if (!Validacion.validarLongitud(tfNombre, lblErrorNombre, 1, 150)) {
+            valido = false;
+        } else if (!Validacion.validarNombre(tfNombre, lblErrorNombre)) {
+            valido = false;
+        }
+
+        if (!Validacion.validarLongitud(tfApellidoPaterno, lblErrorApellidoPaterno, 1, 150)) valido = false;
+        else if (!Validacion.validarNombre(tfApellidoPaterno, lblErrorApellidoPaterno)) valido = false;
+
+        if (!Validacion.validarLongitud(tfApellidoMaterno, lblErrorApellidoMaterno, 1, 150)) valido = false;
+        else if (!Validacion.validarNombre(tfApellidoMaterno, lblErrorApellidoMaterno)) valido = false;
+
+        if (!Validacion.validarLongitud(tfCorreo, lblErrorCorreo, 1, 100)) valido = false;
+        else if (!Validacion.validarCorreoPersonal(tfCorreo, lblErrorCorreo)) valido = false;
+
+        if (!Validacion.validarLongitud(pfContrasena, lblErrorContrasena, 5, 50)) {
+            valido = false;
+        }
+
+        if (!Validacion.validarSeleccion(cbRol, lblErrorRol, "Selecciona un rol")) {
+            valido = false;
+        }
+
+        return valido;
     }
 
     private void cerrarVentana() {
-        Stage stage = (Stage) tfMatricula.getScene().getWindow();
+        Stage stage = (Stage) tfNoPersonal.getScene().getWindow();
         stage.close();
     }
 
@@ -114,4 +158,3 @@ public class FXMLUsuario implements Initializable {
         alert.showAndWait();
     }
 }
-*/

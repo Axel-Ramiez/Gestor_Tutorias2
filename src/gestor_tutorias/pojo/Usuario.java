@@ -11,6 +11,7 @@ public class Usuario {
     private String correoUsuario;
     private int activoUsuario;
     private int idRol;
+    private String nombreRol;
 
     public Usuario() {
     }
@@ -92,6 +93,13 @@ public class Usuario {
     }
     public void setIdRol(int idRol) {
         this.idRol = idRol;
+    }
+
+    public String getNombreRol() {
+        return nombreRol;
+    }
+    public void setNombreRol(String nombreRol) {
+        this.nombreRol = nombreRol;
     }
 
     @Override
