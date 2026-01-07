@@ -21,7 +21,7 @@
         <TextField fx:id="tfMatricula" layoutX="52.0" layoutY="196.0" prefHeight="30.0" prefWidth="296.0" promptText="zS2001..." />
 
         <Label layoutX="380.0" layoutY="261.0" text="Facultad" />
-        <ComboBox fx:id="cbFacultad" layoutX="380.0" layoutY="282.0" prefHeight="30.0" prefWidth="265.0" promptText="Seleccione facultad..." />
+        <ComboBox fx:id="cbFacultad" layoutX="380.0" layoutY="282.0" prefHeight="30.0" prefWidth="265.0" promptText="Seleccione facultad" />
 
         <Label layoutX="52.0" layoutY="261.0" text="Programa Educativo (Carrera)" />
         <ComboBox fx:id="cbCarrera" disable="true" layoutX="52.0" layoutY="283.0" prefHeight="30.0" prefWidth="296.0" promptText="Seleccione una carrera" />

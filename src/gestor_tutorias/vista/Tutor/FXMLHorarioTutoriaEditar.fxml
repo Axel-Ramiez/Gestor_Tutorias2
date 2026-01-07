@@ -1,95 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="450.0" prefWidth="700.0"
-            style="-fx-background-color: white;"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gestor_tutorias.controlador.Tutor.FXMLHorarioTutoriaEditar">
+<AnchorPane prefHeight="450.0" prefWidth="700.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Tutor.FXMLHorarioTutoriaEditar">
 
     <children>
 
         <!-- ENCABEZADO -->
-        <Pane prefHeight="60.0"
-              style="-fx-background-color: #283593;"
-              AnchorPane.topAnchor="0.0"
-              AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0">
+        <Pane prefHeight="60.0" style="-fx-background-color: #283593;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
             <children>
-                <Label layoutX="20.0" layoutY="15.0"
-                       text="Editar Horario de Tutoría"
-                       textFill="WHITE">
+                <Label layoutX="20.0" layoutY="15.0" text="Editar Horario de Tutoría" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="22.0"/>
+                        <Font name="System Bold" size="22.0" />
                     </font>
                 </Label>
             </children>
         </Pane>
 
         <!-- ID -->
-        <Label layoutX="30.0" layoutY="80.0" text="ID Horario"/>
-        <Label fx:id="lbIdHorario"
-               layoutX="30.0" layoutY="105.0"
-               style="-fx-font-weight: bold;"/>
+        <Label layoutX="30.0" layoutY="80.0" text="ID Horario" />
+        <Label fx:id="lbIdHorario" layoutX="30.0" layoutY="105.0" prefHeight="17.0" prefWidth="62.0" style="-fx-font-weight: bold;" />
 
         <!-- FECHA -->
-        <Label layoutX="200.0" layoutY="80.0" text="Fecha"/>
-        <DatePicker fx:id="dpFecha"
-                    layoutX="200.0" layoutY="100.0"
-                    prefWidth="200.0"/>
+        <Label layoutX="200.0" layoutY="80.0" text="Fecha" />
+        <DatePicker fx:id="dpFecha" layoutX="200.0" layoutY="100.0" prefWidth="200.0" />
 
         <!-- TUTOR -->
-        <Label layoutX="430.0" layoutY="80.0" text="Tutor"/>
-        <ComboBox fx:id="cbTutor"
-                  layoutX="430.0" layoutY="100.0"
-                  prefWidth="220.0"/>
+        <Label layoutX="430.0" layoutY="80.0" text="Tutor" />
+        <ComboBox fx:id="cbTutor" layoutX="430.0" layoutY="100.0" prefWidth="220.0" />
 
         <!-- HORA INICIO -->
-        <Label layoutX="30.0" layoutY="150.0" text="Hora Inicio"/>
-        <ComboBox fx:id="cbHoraInicio"
-                  layoutX="30.0" layoutY="170.0"
-                  prefWidth="100.0"/>
-        <ComboBox fx:id="cbMinutoInicio"
-                  layoutX="140.0" layoutY="170.0"
-                  prefWidth="90.0"/>
+        <Label layoutX="30.0" layoutY="150.0" text="Hora Inicio" />
+        <ComboBox fx:id="cbHoraInicio" layoutX="30.0" layoutY="170.0" prefWidth="100.0" />
+        <ComboBox fx:id="cbMinutoInicio" layoutX="140.0" layoutY="170.0" prefWidth="90.0" />
 
         <!-- HORA FIN -->
-        <Label layoutX="260.0" layoutY="150.0" text="Hora Fin"/>
-        <ComboBox fx:id="cbHoraFin"
-                  layoutX="260.0" layoutY="170.0"
-                  prefWidth="100.0"/>
-        <ComboBox fx:id="cbMinutoFin"
-                  layoutX="370.0" layoutY="170.0"
-                  prefWidth="90.0"/>
+        <Label layoutX="260.0" layoutY="150.0" text="Hora Fin" />
+        <ComboBox fx:id="cbHoraFin" layoutX="260.0" layoutY="170.0" prefWidth="100.0" />
+        <ComboBox fx:id="cbMinutoFin" layoutX="370.0" layoutY="170.0" prefWidth="90.0" />
 
         <!-- ESTUDIANTE -->
-        <Label layoutX="30.0" layoutY="230.0" text="Estudiante (opcional)"/>
-        <ComboBox fx:id="cbEstudiante"
-                  layoutX="30.0" layoutY="250.0"
-                  prefWidth="400.0"/>
+        <Label layoutX="30.0" layoutY="230.0" text="Estudiante (opcional)" />
+        <ComboBox fx:id="cbEstudiante" layoutX="30.0" layoutY="250.0" prefWidth="400.0" />
 
         <!-- PERIODO -->
-        <Label layoutX="430.0" layoutY="230.0" text="Periodo Escolar"/>
-        <ComboBox fx:id="cbPeriodo"
-                  layoutX="430.0" layoutY="250.0"
-                  prefWidth="220.0"/>
+        <Label layoutX="430.0" layoutY="230.0" text="Periodo Escolar" />
+        <ComboBox fx:id="cbPeriodo" layoutX="430.0" layoutY="250.0" prefWidth="220.0" />
 
         <!-- BOTONES -->
-        <Button layoutX="360.0" layoutY="360.0"
-                text="Cancelar"
-                onAction="#clicCancelar"/>
+        <Button layoutX="360.0" layoutY="360.0" onAction="#clicCancelar" text="Cancelar" />
 
-        <Button layoutX="460.0" layoutY="360.0"
-                text="Cerrar"
-                onAction="#clicCerrar"/>
+        <Button layoutX="460.0" layoutY="360.0" onAction="#clicCerrar" text="Cerrar" />
 
-        <Button layoutX="560.0" layoutY="360.0"
-                text="Guardar"
-                onAction="#clicGuardar"/>
+        <Button layoutX="560.0" layoutY="360.0" onAction="#clicGuardar" text="Guardar" />
 
     </children>
 </AnchorPane>

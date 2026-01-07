@@ -22,7 +22,6 @@ public class FXMLPrincipalTutor {
 
     @FXML
     private void initialize() {
-        // inicialización básica
     }
 
     public void inicializarInformacion(Usuario usuario) {

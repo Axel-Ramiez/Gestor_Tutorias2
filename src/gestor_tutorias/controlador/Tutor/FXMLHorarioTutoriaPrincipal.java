@@ -33,14 +33,13 @@ public class FXMLHorarioTutoriaPrincipal {
     private final HorarioTutoriaDAO horarioDAO = new HorarioTutoriaDAO();
     private ObservableList<HorarioTutoria> listaHorarios;
 
-    /* ===================== CICLO DE VIDA ===================== */
+
     @FXML
     private void initialize() {
         configurarTabla();
         cargarHorarios();
     }
 
-    /* ===================== CONFIGURACIÓN TABLA ===================== */
     private void configurarTabla() {
 
         colIdHorario.setCellValueFactory(c ->
@@ -97,7 +96,7 @@ public class FXMLHorarioTutoriaPrincipal {
         );
     }
 
-    /* ===================== CARGA DATOS ===================== */
+
     private void cargarHorarios() {
         try {
             List<HorarioTutoria> horarios = horarioDAO.obtenerTodos();
@@ -110,7 +109,6 @@ public class FXMLHorarioTutoriaPrincipal {
     }
 
 
-    /* ===================== ACCIONES ===================== */
 
     public void clicCrear(ActionEvent actionEvent) {
         cambiarVentana(
@@ -174,7 +172,7 @@ public class FXMLHorarioTutoriaPrincipal {
         }
     }
 
-    /* ===================== UTIL ===================== */
+
     private void cambiarVentana(String rutaFXML, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
