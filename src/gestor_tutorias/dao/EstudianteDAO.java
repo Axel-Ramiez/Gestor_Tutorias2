@@ -21,9 +21,10 @@ public class EstudianteDAO {
 
         if (conn != null) {
             try {
+                // CORRECCIÓN AQUÍ: Usamos CONCAT para crear el nombre completo
                 String consulta =
                         "SELECT e.*, c.nombre_carrera AS nombre_carrera, " +
-                                "u.nombre_completo AS nombre_tutor " +
+                                "CONCAT(u.nombre_usuario, ' ', u.apellido_paterno_usuario) AS nombre_tutor " +
                                 "FROM estudiante e " +
                                 "INNER JOIN carrera c ON e.id_carrera = c.id_carrera " +
                                 "LEFT JOIN usuario u ON e.id_usuario = u.id_usuario " +

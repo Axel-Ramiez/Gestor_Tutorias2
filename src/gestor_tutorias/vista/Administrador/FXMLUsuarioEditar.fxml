@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="700.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Administrador.FXMLUsuario">
+    <children>
+        <Pane prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: #006DB2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label layoutX="20.0" layoutY="15.0" text="Editar Usuario" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+
+        <Label layoutX="30.0" layoutY="90.0" text="No. Personal" textFill="#666666" />
+        <TextField fx:id="tfNoPersonal" layoutX="30.0" layoutY="110.0" prefHeight="30.0" prefWidth="265.0" promptText="ADM001" />
+
+        <Label layoutX="330.0" layoutY="90.0" text="Rol" textFill="#666666" />
+        <ComboBox fx:id="cbRol" layoutX="330.0" layoutY="110.0" prefHeight="30.0" prefWidth="200.0" promptText="Seleccione un rol" />
+
+        <Label layoutX="30.0" layoutY="180.0" text="Nombre" textFill="#666666" />
+        <TextField fx:id="tfNombre" layoutX="30.0" layoutY="200.0" prefHeight="30.0" prefWidth="117.0" promptText="Juan" />
+
+        <Label layoutX="30.0" layoutY="277.0" text="Correo Institucional" textFill="#666666" />
+        <TextField fx:id="tfCorreo" layoutX="30.0" layoutY="297.0" prefHeight="30.0" prefWidth="265.0" promptText="usuario@uv.mx" />
+
+        <Label layoutX="330.0" layoutY="277.0" text="Contraseña de Acceso" textFill="#666666" />
+        <PasswordField fx:id="pfContrasena" layoutX="330.0" layoutY="297.0" prefHeight="30.0" prefWidth="300.0" promptText="********" />
+
+        <Label fx:id="lblErrorCorreo" layoutX="30.0" layoutY="334.0" prefHeight="17.0" prefWidth="160.0" textFill="RED" />
+
+        <Button layoutX="460.0" layoutY="390.0" mnemonicParsing="false" onAction="#clicCancelar" prefHeight="35.0" prefWidth="100.0" style="-fx-cursor: hand;" text="Cancelar" textFill="#333333" />
+        <Button layoutX="570.0" layoutY="390.0" mnemonicParsing="false" onAction="#clicGuardar" prefHeight="35.0" prefWidth="100.0" style="-fx-cursor: hand;" text="Guardar" textFill="#333333" />
+        <TextField fx:id="tfApellidoPaterno" layoutX="180.0" layoutY="200.0" prefHeight="30.0" prefWidth="117.0" promptText="Pérez" />
+        <TextField fx:id="tfApellidoMaterno" layoutX="330.0" layoutY="200.0" prefHeight="30.0" prefWidth="117.0" promptText="López" />
+        <Label layoutX="180.0" layoutY="180.0" text="Apellido Paterno" textFill="#666666" />
+        <Label layoutX="330.0" layoutY="180.0" text="Apellido Materno" textFill="#666666" />
+        <Label fx:id="lblErrorNoPersonal" layoutX="30.0" layoutY="147.0" prefHeight="17.0" prefWidth="160.0" textFill="RED" />
+        <Label fx:id="lblErrorRol" layoutX="330.0" layoutY="147.0" prefHeight="17.0" prefWidth="160.0" textFill="RED" />
+        <Label fx:id="lblErrorNombre" layoutX="30.0" layoutY="238.0" prefHeight="17.0" prefWidth="117.0" textFill="RED" />
+        <Label fx:id="lblErrorApellidoPaterno" layoutX="180.0" layoutY="238.0" prefHeight="17.0" prefWidth="117.0" textFill="RED" />
+        <Label fx:id="lblErrorApellidoMaterno" layoutX="330.0" layoutY="238.0" prefHeight="17.0" prefWidth="117.0" textFill="RED" />
+        <Label fx:id="lblErrorContrasena" layoutX="330.0" layoutY="334.0" prefHeight="17.0" prefWidth="160.0" textFill="RED" />
+    </children>
+</AnchorPane>

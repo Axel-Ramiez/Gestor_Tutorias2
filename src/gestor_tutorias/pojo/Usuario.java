@@ -70,6 +70,7 @@ public class Usuario {
     public String getApellidoMaternoUsuario() {
         return apellidoMaternoUsuario;
     }
+
     public void setApellidoMaternoUsuario(String apellidoMaternoUsuario) {
         this.apellidoMaternoUsuario = apellidoMaternoUsuario;
     }

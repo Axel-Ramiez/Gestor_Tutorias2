@@ -107,7 +107,7 @@ public class FXMLUsuarioConsulta implements Initializable {
 
         if (usuarioSeleccionado != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Administrador/FXMLUsuario.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Administrador/FXMLUsuarioEditar.fxml"));
                 Parent root = loader.load();
 
                 FXMLUsuario controlador = loader.getController();
