@@ -12,16 +12,13 @@ public class Estudiante {
     private int activoEstudiante;
     private int riesgoEstudiante;
     private int idCarrera;
-    private Integer idUsuario; // puede ser NULL
-
-    // --- CAMPOS AUXILIARES (NO BD) ---
+    private Integer idUsuario;
     private String carreraNombre;
     private String tutorNombre;
 
     public Estudiante() {
     }
 
-    // Constructor típico para INSERT
     public Estudiante(String matriculaEstudiante, String nombreEstudiante,
                       String apellidoPaternoEstudiante, String apellidoMaternoEstudiante,
                       String correoEstudiante, int semestreEstudiante,
@@ -38,7 +35,7 @@ public class Estudiante {
         this.activoEstudiante = 1;
     }
 
-    // --- GETTERS Y SETTERS ---
+
     public int getIdEstudiante() {
         return idEstudiante;
     }
@@ -116,7 +113,7 @@ public class Estudiante {
         this.idUsuario = idUsuario;
     }
 
-    // --- CAMPOS AUX ---
+
     public String getCarreraNombre() {
         return carreraNombre;
     }

@@ -9,7 +9,7 @@
     <children>
         <Pane prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: #006DB2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label layoutX="20.0" layoutY="15.0" text="Registro de Estudiantes" textFill="WHITE">
+                <Label layoutX="20.0" layoutY="15.0" text="Editar Estudiante" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -39,16 +39,16 @@
 
         <Button layoutX="433.0" layoutY="390.0" mnemonicParsing="false" onAction="#clicCancelar" prefHeight="35.0" prefWidth="100.0" style="-fx-cursor: hand;" text="Cancelar" textFill="#333333" />
         <Button layoutX="543.0" layoutY="390.0" mnemonicParsing="false" onAction="#clicGuardar" prefHeight="35.0" prefWidth="100.0" style="-fx-cursor: hand;" text="Guardar" textFill="#333333" />
-      <TextField fx:id="tfApellidoPaterno" layoutX="206.0" layoutY="102.0" prefHeight="30.0" prefWidth="141.0" promptText="Contreras" />
-      <TextField fx:id="tfApellidoMaterno" layoutX="378.0" layoutY="101.0" prefHeight="30.0" prefWidth="141.0" promptText="Luna" />
-      <Label layoutX="206.0" layoutY="82.0" text="Apellido Paterno" />
-      <Label layoutX="378.0" layoutY="81.0" text="Apellido Materno" />
-      <Label fx:id="lblErrorApellidoPaterno" layoutX="206.0" layoutY="142.0" prefHeight="17.0" prefWidth="141.0" textFill="RED" />
-      <Label fx:id="lblErrorApellidoMaterno" layoutX="378.0" layoutY="142.0" prefHeight="17.0" prefWidth="141.0" textFill="RED" />
-      <Label fx:id="lblErrorSemestre" layoutX="548.0" layoutY="142.0" prefHeight="17.0" prefWidth="93.0" textFill="RED" />
-      <Label fx:id="lblErrorMatricula" layoutX="50.0" layoutY="232.0" prefHeight="17.0" prefWidth="296.0" textFill="RED" />
-      <Label fx:id="lblErrorCorreo" layoutX="378.0" layoutY="232.0" prefHeight="17.0" prefWidth="265.0" textFill="RED" />
-      <Label fx:id="lblErrorFacultad" layoutX="380.0" layoutY="322.0" prefHeight="17.0" prefWidth="265.0" textFill="RED" />
-      <Label fx:id="lblErrorCarrera" layoutX="50.0" layoutY="322.0" prefHeight="17.0" prefWidth="296.0" textFill="RED" />
+        <TextField fx:id="tfApellidoPaterno" layoutX="206.0" layoutY="102.0" prefHeight="30.0" prefWidth="141.0" promptText="Contreras" />
+        <TextField fx:id="tfApellidoMaterno" layoutX="378.0" layoutY="101.0" prefHeight="30.0" prefWidth="141.0" promptText="Luna" />
+        <Label layoutX="206.0" layoutY="82.0" text="Apellido Paterno" />
+        <Label layoutX="378.0" layoutY="81.0" text="Apellido Materno" />
+        <Label fx:id="lblErrorApellidoPaterno" layoutX="206.0" layoutY="142.0" prefHeight="17.0" prefWidth="141.0" textFill="RED" />
+        <Label fx:id="lblErrorApellidoMaterno" layoutX="378.0" layoutY="142.0" prefHeight="17.0" prefWidth="141.0" textFill="RED" />
+        <Label fx:id="lblErrorSemestre" layoutX="548.0" layoutY="142.0" prefHeight="17.0" prefWidth="93.0" textFill="RED" />
+        <Label fx:id="lblErrorMatricula" layoutX="50.0" layoutY="232.0" prefHeight="17.0" prefWidth="296.0" textFill="RED" />
+        <Label fx:id="lblErrorCorreo" layoutX="378.0" layoutY="232.0" prefHeight="17.0" prefWidth="265.0" textFill="RED" />
+        <Label fx:id="lblErrorFacultad" layoutX="380.0" layoutY="322.0" prefHeight="17.0" prefWidth="265.0" textFill="RED" />
+        <Label fx:id="lblErrorCarrera" layoutX="50.0" layoutY="322.0" prefHeight="17.0" prefWidth="296.0" textFill="RED" />
     </children>
 </AnchorPane>

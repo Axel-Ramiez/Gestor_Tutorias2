@@ -71,4 +71,30 @@ public class CarreraDAO {
         }
         return lista;
     }
+
+    public static Carrera obtenerPorId(int idCarrera) throws SQLException {
+        Carrera carrera = null;
+        Connection conn = ConexionBD.abrirConexion();
+
+        if (conn != null) {
+            try {
+                String consulta = "SELECT * FROM carrera WHERE id_carrera = ?";
+                PreparedStatement ps = conn.prepareStatement(consulta);
+                ps.setInt(1, idCarrera);
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    carrera = new Carrera();
+                    carrera.setIdCarrera(rs.getInt("id_carrera"));
+                    carrera.setNombreCarrera(rs.getString("nombre_carrera"));
+                    carrera.setIdFacultad(rs.getInt("id_facultad"));
+                }
+                rs.close();
+                ps.close();
+            } finally {
+                ConexionBD.cerrarConexion(conn);
+            }
+        }
+        return carrera;
+    }
 }

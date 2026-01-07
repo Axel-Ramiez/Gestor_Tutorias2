@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Administrador;/*package gestor_tutorias.controlador.Administrador;
+package gestor_tutorias.controlador.Administrador;
 
 import gestor_tutorias.dao.EstudianteDAO;
 import gestor_tutorias.pojo.Estudiante;
@@ -42,6 +42,10 @@ public class FXMLEstudianteConsulta implements Initializable {
     private TableColumn colSemestre;
     @FXML
     private TableColumn colCorreo;
+    @FXML
+    private TableColumn colApellidoPaterno;
+    @FXML
+    private TableColumn colApellidoMaterno;
 
     private ObservableList<Estudiante> estudiantesList;
 
@@ -52,11 +56,13 @@ public class FXMLEstudianteConsulta implements Initializable {
     }
 
     private void configurarColumnas() {
-        colMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
-        colNombre.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
+        colMatricula.setCellValueFactory(new PropertyValueFactory("matriculaEstudiante"));
+        colNombre.setCellValueFactory(new PropertyValueFactory("nombreEstudiante"));
+        colApellidoPaterno.setCellValueFactory(new PropertyValueFactory("apellidoPaternoEstudiante"));
+        colApellidoMaterno.setCellValueFactory(new PropertyValueFactory("apellidoMaternoEstudiante"));
         colCarrera.setCellValueFactory(new PropertyValueFactory("carreraNombre"));
-        colSemestre.setCellValueFactory(new PropertyValueFactory("semestre"));
-        colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
+        colSemestre.setCellValueFactory(new PropertyValueFactory("semestreEstudiante"));
+        colCorreo.setCellValueFactory(new PropertyValueFactory("correoEstudiante"));
     }
 
     private void cargarEstudiantes() {
@@ -98,7 +104,7 @@ public class FXMLEstudianteConsulta implements Initializable {
 
         if (estudianteSeleccionado != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Administrador/FXMLEstudiante.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Administrador/FXMLEstudianteEditar.fxml"));
                 Parent root = loader.load();
 
                 FXMLEstudiante controlador = loader.getController();
@@ -170,12 +176,27 @@ public class FXMLEstudianteConsulta implements Initializable {
                             estudiante.getNombreEstudiante().toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
+                    if (estudiante.getApellidoPaternoEstudiante() != null &&
+                            estudiante.getApellidoMaternoEstudiante().toLowerCase().contains(lowerNewValue)) {
+                        return true;
+                    }
+                    if (estudiante.getApellidoMaternoEstudiante() != null &&
+                            estudiante.getApellidoMaternoEstudiante().toLowerCase().contains(lowerNewValue)) {
+                        return true;
+                    }
                     if (estudiante.getMatriculaEstudiante() != null &&
                             estudiante.getMatriculaEstudiante().toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
                     if (estudiante.getCarreraNombre() != null &&
                             estudiante.getCarreraNombre().toLowerCase().contains(lowerNewValue)) {
+                        return true;
+                    }
+                    if (estudiante.getCorreoEstudiante() != null &&
+                        estudiante.getCorreoEstudiante().toLowerCase().contains(lowerNewValue)) {
+                        return true;
+                    }
+                    if (String .valueOf(estudiante.getIdEstudiante()).toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
                     return false;
@@ -187,4 +208,3 @@ public class FXMLEstudianteConsulta implements Initializable {
         }
     }
 }
-*/
