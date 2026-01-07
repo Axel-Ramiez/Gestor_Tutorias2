@@ -1,8 +1,8 @@
 package gestor_tutorias.dao;
 
-import gestor_tutorias.Enum.EstatusProblematica;
-import gestor_tutorias.modelo.ConexionBD;
 import gestor_tutorias.pojo.Problematica;
+import gestor_tutorias.modelo.ConexionBD;
+import gestor_tutorias.Enum.EstatusProblematica;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,25 +13,36 @@ public class ProblematicaDAO {
     private static final String TABLA = "problematica";
 
     private static final String SQL_INSERT =
-            "INSERT INTO " + TABLA +
-                    " (id_reporte_tutoria, titulo, descripcion, id_carrera, estado) " +
+            "INSERT INTO problematica " +
+                    "(id_reporte_tutoria, titulo_problematica, descripcion_problematica, id_carrera, estado_problematica) " +
                     "VALUES (?, ?, ?, ?, ?)";
 
+
     private static final String SQL_SELECT_BY_ID =
-            "SELECT id_problematica, id_reporte_tutoria, titulo, descripcion, id_carrera, estado " +
-                    "FROM " + TABLA + " WHERE id_problematica = ?";
+            "SELECT id_problematica, id_reporte_tutoria, titulo_problematica, " +
+                    "descripcion_problematica, id_carrera, estado_problematica " +
+                    "FROM problematica WHERE id_problematica = ?";
+
 
     private static final String SQL_SELECT_ALL =
-            "SELECT id_problematica, id_reporte_tutoria, titulo, descripcion, id_carrera, estado " +
-                    "FROM " + TABLA;
+            "SELECT id_problematica, id_reporte_tutoria, titulo_problematica, " +
+                    "descripcion_problematica, id_carrera, estado_problematica " +
+                    "FROM problematica";
+
 
     private static final String SQL_UPDATE =
-            "UPDATE " + TABLA +
-                    " SET id_reporte_tutoria = ?, titulo = ?, descripcion = ?, id_carrera = ?, estado = ? " +
+            "UPDATE problematica SET " +
+                    "id_reporte_tutoria = ?, " +
+                    "titulo_problematica = ?, " +
+                    "descripcion_problematica = ?, " +
+                    "id_carrera = ?, " +
+                    "estado_problematica = ? " +
                     "WHERE id_problematica = ?";
 
+
     private static final String SQL_DELETE =
-            "DELETE FROM " + TABLA + " WHERE id_problematica = ?";
+            "DELETE FROM problematica WHERE id_problematica = ?";
+
 
     /* ===================== MAPEO ===================== */
 
@@ -39,8 +50,8 @@ public class ProblematicaDAO {
 
         int idProblematica = rs.getInt("id_problematica");
         int idReporteTutoria = rs.getInt("id_reporte_tutoria");
-        String titulo = rs.getString("titulo");
-        String descripcion = rs.getString("descripcion");
+        String titulo = rs.getString("titulo_problematica");
+        String descripcion = rs.getString("descripcion_problematica");
 
         Integer idCarrera = rs.getInt("id_carrera");
         if (rs.wasNull()) {
@@ -48,7 +59,9 @@ public class ProblematicaDAO {
         }
 
         EstatusProblematica estado =
-                EstatusProblematica.fromString(rs.getString("estado"));
+                EstatusProblematica.fromString(
+                        rs.getString("estado_problematica")
+                );
 
         return new Problematica(
                 idProblematica,
@@ -59,6 +72,7 @@ public class ProblematicaDAO {
                 estado
         );
     }
+
 
     /* ===================== CRUD ===================== */
 
