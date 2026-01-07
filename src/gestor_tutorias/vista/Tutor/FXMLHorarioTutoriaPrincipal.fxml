@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="450.0" prefWidth="750.0"
+<AnchorPane prefHeight="450.0" prefWidth="820.0"
             xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="gestor_tutorias.controlador.Tutor.FXMLHorarioTutoriaPrincipal">
@@ -12,7 +12,7 @@
     <children>
 
         <!-- ENCABEZADO -->
-        <Pane prefHeight="60.0" prefWidth="750.0"
+        <Pane prefHeight="60.0" prefWidth="820.0"
               style="-fx-background-color: #006DB2;"
               AnchorPane.topAnchor="0.0"
               AnchorPane.leftAnchor="0.0"
@@ -30,26 +30,22 @@
         </Pane>
 
         <!-- BOTONES -->
-        <Button fx:id="btnCrear"
-                layoutX="30.0" layoutY="80.0"
+        <Button layoutX="30.0" layoutY="80.0"
                 prefWidth="100.0"
                 text="Crear"
                 onAction="#clicCrear"/>
 
-        <Button fx:id="btnEditar"
-                layoutX="140.0" layoutY="80.0"
+        <Button layoutX="140.0" layoutY="80.0"
                 prefWidth="100.0"
                 text="Editar"
                 onAction="#clicEditar"/>
 
-        <Button fx:id="btnConsultar"
-                layoutX="250.0" layoutY="80.0"
+        <Button layoutX="250.0" layoutY="80.0"
                 prefWidth="110.0"
                 text="Consultar"
                 onAction="#clicConsultar"/>
 
-        <Button fx:id="btnEliminar"
-                layoutX="370.0" layoutY="80.0"
+        <Button layoutX="370.0" layoutY="80.0"
                 prefWidth="110.0"
                 text="Eliminar"
                 onAction="#clicEliminar"/>
@@ -59,32 +55,36 @@
                    layoutX="30.0"
                    layoutY="130.0"
                    prefHeight="280.0"
-                   prefWidth="690.0">
+                   prefWidth="760.0">
 
             <columns>
                 <TableColumn fx:id="colIdHorario"
-                             prefWidth="90.0"
+                             prefWidth="70.0"
                              text="ID"/>
 
                 <TableColumn fx:id="colFecha"
-                             prefWidth="130.0"
+                             prefWidth="110.0"
                              text="Fecha"/>
 
                 <TableColumn fx:id="colHoraInicio"
-                             prefWidth="120.0"
+                             prefWidth="100.0"
                              text="Hora Inicio"/>
 
                 <TableColumn fx:id="colHoraFin"
-                             prefWidth="120.0"
+                             prefWidth="100.0"
                              text="Hora Fin"/>
 
                 <TableColumn fx:id="colTutor"
-                             prefWidth="110.0"
+                             prefWidth="90.0"
                              text="Tutor"/>
 
                 <TableColumn fx:id="colEstudiante"
-                             prefWidth="120.0"
+                             prefWidth="110.0"
                              text="Estudiante"/>
+
+                <TableColumn fx:id="colPeriodoEscolar"
+                             prefWidth="120.0"
+                             text="Periodo Escolar"/>
             </columns>
         </TableView>
 
