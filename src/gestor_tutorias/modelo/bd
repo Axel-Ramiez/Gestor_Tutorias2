@@ -95,17 +95,20 @@ CREATE TABLE `horario_tutoria` (
   `hora_fin_horario_tutoria` time NOT NULL,
   `id_usuario` int NOT NULL,
   `id_estudiante` int DEFAULT NULL,
+  `id_periodo_escolar` int DEFAULT NULL,
   KEY `id_usuario` (`id_usuario`),
   KEY `id_estudiante` (`id_estudiante`),
+  KEY `id_periodo_escolar` (`id_periodo_escolar`),
   CONSTRAINT `fk_horario_tutoria_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  CONSTRAINT `fk_horario_tutoria_estudiante` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`)
+  CONSTRAINT `fk_horario_tutoria_estudiante` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`),
+  CONSTRAINT `fk_horario_tutoria_periodo_escolar` FOREIGN KEY (`id_periodo_escolar`) REFERENCES `periodo_escolar` (`id_periodo_escolar`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO horario_tutoria (fecha_horario_tutoria, hora_inicio_horario_tutoria, hora_fin_horario_tutoria, id_usuario, id_estudiante) VALUES
-('2025-03-15', '10:00:00', '11:00:00', 5, 1),
-('2025-03-16', '14:00:00', '15:00:00', 6, 2),
-('2025-03-17', '09:00:00', '10:00:00', 5, 3),
-('2025-03-18', '16:00:00', '17:00:00', 6, 4),
-('2025-03-19', '11:00:00', '12:00:00', 5, 5);
+INSERT INTO horario_tutoria (fecha_horario_tutoria, hora_inicio_horario_tutoria, hora_fin_horario_tutoria, id_usuario, id_estudiante, id_periodo_escolar) VALUES
+('2025-03-15', '10:00:00', '11:00:00', 5, 1, 1),
+('2025-03-16', '14:00:00', '15:00:00', 6, 2, 1),
+('2025-03-17', '09:00:00', '10:00:00', 5, 3, 1),
+('2025-03-18', '16:00:00', '17:00:00', 6, 4, 1),
+('2025-03-19', '11:00:00', '12:00:00', 5, 5, 1);
 
 CREATE TABLE `reporte_tutoria` (
   `id_reporte_tutoria` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
