@@ -5,17 +5,22 @@ import java.time.LocalTime;
 
 public class HorarioTutoria {
 
+    // ===== CAMPOS BD =====
     private int idHorarioTutoria;
     private LocalDate fechaHorarioTutoria;
     private LocalTime horaInicioHorarioTutoria;
     private LocalTime horaFinHorarioTutoria;
-    private int idUsuario;              // tutor
-    private Integer idEstudiante;        // puede ser null
 
-    // --- CAMPOS AUXILIARES (NO BD) ---
+    private int idUsuario;               // tutor (NOT NULL)
+    private Integer idEstudiante;        // puede ser NULL
+    private Integer idPeriodoEscolar;    // puede ser NULL
+
+    // ===== CAMPOS AUXILIARES (NO BD) =====
     private String nombreTutor;
     private String nombreEstudiante;
+    private String nombrePeriodoEscolar;
 
+    // ===== CONSTRUCTORES =====
     public HorarioTutoria() {
     }
 
@@ -23,14 +28,18 @@ public class HorarioTutoria {
                           LocalTime horaInicioHorarioTutoria,
                           LocalTime horaFinHorarioTutoria,
                           int idUsuario,
-                          Integer idEstudiante) {
+                          Integer idEstudiante,
+                          Integer idPeriodoEscolar) {
 
         this.fechaHorarioTutoria = fechaHorarioTutoria;
         this.horaInicioHorarioTutoria = horaInicioHorarioTutoria;
         this.horaFinHorarioTutoria = horaFinHorarioTutoria;
         this.idUsuario = idUsuario;
         this.idEstudiante = idEstudiante;
+        this.idPeriodoEscolar = idPeriodoEscolar;
     }
+
+    // ===== GETTERS & SETTERS =====
 
     public int getIdHorarioTutoria() {
         return idHorarioTutoria;
@@ -80,7 +89,16 @@ public class HorarioTutoria {
         this.idEstudiante = idEstudiante;
     }
 
-    // --- AUXILIARES ---
+    public Integer getIdPeriodoEscolar() {
+        return idPeriodoEscolar;
+    }
+
+    public void setIdPeriodoEscolar(Integer idPeriodoEscolar) {
+        this.idPeriodoEscolar = idPeriodoEscolar;
+    }
+
+    // ===== AUXILIARES =====
+
     public String getNombreTutor() {
         return nombreTutor;
     }
@@ -97,6 +115,15 @@ public class HorarioTutoria {
         this.nombreEstudiante = nombreEstudiante;
     }
 
+    public String getNombrePeriodoEscolar() {
+        return nombrePeriodoEscolar;
+    }
+
+    public void setNombrePeriodoEscolar(String nombrePeriodoEscolar) {
+        this.nombrePeriodoEscolar = nombrePeriodoEscolar;
+    }
+
+    // ===== LÓGICA =====
     public boolean isOcupado() {
         return idEstudiante != null;
     }
