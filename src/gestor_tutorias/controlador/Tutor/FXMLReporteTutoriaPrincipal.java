@@ -136,10 +136,47 @@ public class FXMLReporteTutoriaPrincipal {
     }
 
     public void consultarReporte(ActionEvent actionEvent) {
-        cambiarVentana(
-                "/gestor_tutorias/vista/Tutor/FXMLReporteTutoriaConsulta.fxml",
-                "Reporte de Tutoria consultar"
-        );
+
+        ReporteTutoria seleccionado = tvReportes.getSelectionModel().getSelectedItem();
+
+        if (seleccionado == null) {
+
+            mostrarAlerta("Aviso", "Seleccione un reporte para consultar.");
+
+            return;
+
+        }
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLReporteTutoriaConsulta.fxml"));
+
+            Parent root = loader.load();
+
+// Recuperar el controlador de consulta y pasarle el ID
+
+            FXMLReporteTutoriaConsulta controlador = loader.getController();
+
+            controlador.setIdReporte(seleccionado.getIdReporte());
+
+            Stage stage = new Stage();
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.setTitle("Consultar Reporte de Tutoría");
+
+            stage.setScene(new Scene(root));
+
+            stage.showAndWait();
+
+        } catch (IOException e) {
+
+            mostrarAlerta("Error", "No se pudo abrir la ventana de consulta.");
+
+            e.printStackTrace();
+
+        }
+
     }
 
     public void eliminarReporte(ActionEvent actionEvent) {
