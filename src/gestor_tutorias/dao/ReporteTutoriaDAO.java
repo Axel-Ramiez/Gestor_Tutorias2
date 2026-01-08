@@ -43,7 +43,6 @@ public class ReporteTutoriaDAO {
                     "LEFT JOIN estudiante e ON r.id_estudiante = e.id_estudiante " +
                     "LEFT JOIN periodo_escolar pe ON r.id_periodo_escolar = pe.id_periodo_escolar ";
 
-    /* ========================= GUARDAR ========================= */
 
     public int guardarReporte(ReporteTutoria r) throws SQLException {
         try (Connection conn = ConexionBD.abrirConexion();
@@ -65,7 +64,7 @@ public class ReporteTutoriaDAO {
             }
         }
     }
-    /* ========================= ACTUALIZAR ========================= */
+
 
     public boolean actualizarReporte(ReporteTutoria r) throws SQLException {
         try (Connection conn = ConexionBD.abrirConexion();
@@ -85,7 +84,6 @@ public class ReporteTutoriaDAO {
         }
     }
 
-    /* ========================= ELIMINAR ========================= */
 
     public boolean eliminarReporte(int idReporte) throws SQLException {
         try (Connection conn = ConexionBD.abrirConexion();
@@ -96,15 +94,17 @@ public class ReporteTutoriaDAO {
         }
     }
 
-    /* ========================= CONSULTAS ========================= */
 
     public List<ReporteTutoria> obtenerTodos() throws SQLException {
-        return ejecutarConsulta(SQL_SELECT_BASE);
+
+        return ejecutarConsultaListado(SQL_SELECT_DETALLADO_BASE);
     }
 
     public ReporteTutoria obtenerPorId(int idReporte) throws SQLException {
-        List<ReporteTutoria> lista =
-                ejecutarConsulta(SQL_SELECT_BASE + " WHERE id_reporte_tutoria = ?", idReporte);
+
+        String sql = SQL_SELECT_DETALLADO_BASE + " WHERE r.id_reporte_tutoria = ?";
+
+        List<ReporteTutoria> lista = ejecutarConsultaListado(sql, idReporte);
         return lista.isEmpty() ? null : lista.get(0);
     }
 
@@ -117,7 +117,6 @@ public class ReporteTutoriaDAO {
         return ejecutarConsultaListado(sql, idUsuario);
     }
 
-    /* ========================= MAPEOS ========================= */
 
     private List<ReporteTutoria> ejecutarConsulta(String sql, Object... params) throws SQLException {
         List<ReporteTutoria> lista = new ArrayList<>();
@@ -192,7 +191,6 @@ public class ReporteTutoriaDAO {
         return r;
     }
 
-    /* ========================= UTILIDAD ========================= */
 
     private void cerrarRecursos(Connection conn, PreparedStatement ps, ResultSet rs) {
         try {

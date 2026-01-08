@@ -17,7 +17,7 @@ public class ReporteTutoria {
     private int idEstudiante;             // id_estudiante
     private int idPeriodoEscolar;         // id_periodo_escolar
 
-    // Campos auxiliares (JOINs)
+
     private String nombreTutor;
     private String nombreEstudiante;
     private String periodoEscolar;

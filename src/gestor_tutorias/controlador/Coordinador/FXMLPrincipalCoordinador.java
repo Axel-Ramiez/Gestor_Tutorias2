@@ -134,22 +134,5 @@ public class FXMLPrincipalCoordinador implements Initializable {
         alert.showAndWait();
     }
 
-    public void clicProblematica(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLProblematicaPrincipal.fxml")
-            );
 
-            Parent root = loader.load();
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Problematica");
-            stage.show();
-
-        } catch (IOException e) {
-            mostrarAlerta("Error", "No se pudo abrir Problematica.");
-            e.printStackTrace();
-        }
-    }
 }
