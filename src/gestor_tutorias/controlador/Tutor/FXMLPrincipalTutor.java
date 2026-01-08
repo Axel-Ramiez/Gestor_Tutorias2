@@ -52,6 +52,13 @@ public class FXMLPrincipalTutor {
         );
     }
 
+    public void clicPlaneacionTu(ActionEvent actionEvent) {
+        cambiarVentana(
+                "/gestor_tutorias/vista/Tutor/FXMLPlaneacionTutoriaPrincipal.fxml",
+                "Planeacion de Tutoría"
+        );
+    }
+
     public void clicCerrarSesion(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/FXMLInicioSesion.fxml"));
