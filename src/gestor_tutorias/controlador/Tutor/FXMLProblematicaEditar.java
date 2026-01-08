@@ -11,7 +11,11 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import gestor_tutorias.dao.CarreraDAO;
 
+import java.sql.SQLException;
+
+import java.util.List;
 public class FXMLProblematicaEditar {
 
     /* ===================== FXML ===================== */
@@ -40,7 +44,7 @@ public class FXMLProblematicaEditar {
         cbEstado.setItems(
                 FXCollections.observableArrayList(EstatusProblematica.values())
         );
-
+        cargarCarreras();
         configurarCampos();
     }
 
@@ -52,7 +56,23 @@ public class FXMLProblematicaEditar {
     }
 
     /* ===================== CARGA BD ===================== */
+    private void cargarCarreras() {
 
+        try {
+
+            List<Carrera> listaCarreras = CarreraDAO.obtenerTodas();
+
+            cbCarrera.setItems(FXCollections.observableArrayList(listaCarreras));
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+            mostrarAlerta("Error", "No se pudieron cargar las carreras de la base de datos.");
+
+        }
+
+    }
     private void cargarProblematica() {
         try {
             problematicaActual = problematicaDAO.obtenerPorId(idProblematica);
@@ -82,11 +102,14 @@ public class FXMLProblematicaEditar {
 
         cbEstado.setValue(problematicaActual.getEstado());
 
-        // Carrera (si existe)
         if (problematicaActual.getIdCarrera() != null) {
+
             for (Carrera c : cbCarrera.getItems()) {
+
                 if (c.getIdCarrera() == problematicaActual.getIdCarrera()) {
+
                     cbCarrera.getSelectionModel().select(c);
+
                     break;
                 }
             }
@@ -179,4 +202,5 @@ public class FXMLProblematicaEditar {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
 }
