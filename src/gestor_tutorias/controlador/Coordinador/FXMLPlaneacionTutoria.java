@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.dao.PlaneacionTutoriaDAO;
 import gestor_tutorias.pojo.PlaneacionTutoria;
@@ -41,10 +41,6 @@ public class FXMLPlaneacionTutoria implements Initializable {
     @FXML
     private TableColumn<PlaneacionTutoria, String> temas;
 
-    @FXML
-    private Button crear;
-    @FXML
-    private Button consultar;
 
     private ObservableList<PlaneacionTutoria> listaPlaneaciones;
     private final PlaneacionTutoriaDAO dao = new PlaneacionTutoriaDAO();
@@ -57,10 +53,9 @@ public class FXMLPlaneacionTutoria implements Initializable {
 
     private void configurarTabla() {
 
-        fechainicio.setCellValueFactory(new PropertyValueFactory<>("idFechaTutoria"));
+        fechainicio.setCellValueFactory(new PropertyValueFactory<>("idPlaneacionTutoria"));
         periodoescolar.setCellValueFactory(new PropertyValueFactory<>("periodoNombre"));
         carrera.setCellValueFactory(new PropertyValueFactory<>("carreraNombre"));
-
         fecha.setCellValueFactory(new PropertyValueFactory<>("fechaTutoria"));
         sesion.setCellValueFactory(new PropertyValueFactory<>("numeroSesion"));
         temas.setCellValueFactory(new PropertyValueFactory<>("temas"));
@@ -93,10 +88,8 @@ public class FXMLPlaneacionTutoria implements Initializable {
         }
     }
 
-
     private void abrirFormulario(PlaneacionTutoria planeacion) {
         try {
-
             String ruta = "/gestor_tutorias/vista/Coordinador/FXMLPlaneacionTutoriaConsulta.fxml";
             URL url = getClass().getResource(ruta);
 
@@ -119,11 +112,9 @@ public class FXMLPlaneacionTutoria implements Initializable {
             stage.setTitle(planeacion == null ? "Nueva Planeación" : "Consultar Planeación");
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
             cargarDatosTabla();
 
         } catch (IOException ex) {
-
             System.err.println(" ERROR AL ABRIR VENTANA:");
             ex.printStackTrace();
             mostrarAlerta("Error de Carga", "Revisa la consola (letras rojas) para ver el detalle del error.");
@@ -141,5 +132,3 @@ public class FXMLPlaneacionTutoria implements Initializable {
         alert.showAndWait();
     }
 }
-
- */

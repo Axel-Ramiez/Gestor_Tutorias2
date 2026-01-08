@@ -1,4 +1,4 @@
-package gestor_tutorias.dao;/*package gestor_tutorias.dao;
+package gestor_tutorias.dao;
 
 import gestor_tutorias.pojo.PlaneacionTutoria;
 import gestor_tutorias.modelo.ConexionBD;
@@ -8,43 +8,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlaneacionTutoriaDAO {
+
     private static final String TABLA = "planeacion_tutoria";
+
+
     private static final String SQL_INSERT =
-            "INSERT INTO " + TABLA + " (id_periodo, id_carrera, fecha, numero_sesion, temas) VALUES (?, ?, ?, ?, ?)";
+            "INSERT INTO " + TABLA + " (id_periodo_escolar, id_carrera, fecha_tutoria, numero_sesion, temas) VALUES (?, ?, ?, ?, ?)";
 
-
-    private static final String SQL_SELECT_BY_ID =
-            "SELECT p.id_fecha_tutoria, p.id_periodo, p.id_carrera, p.fecha, p.numero_sesion, p.temas, " +
-                    "pe.nombre AS periodo_nombre, c.nombre AS carrera_nombre " +
-                    "FROM " + TABLA + " p " +
-                    "INNER JOIN periodo_escolar pe ON p.id_periodo = pe.id_periodo " +
-                    "INNER JOIN carrera c ON p.id_carrera = c.id_carrera " +
-                    "WHERE p.id_fecha_tutoria = ?";
 
     private static final String SQL_SELECT_ALL =
-            "SELECT p.id_fecha_tutoria, p.id_periodo, p.id_carrera, p.fecha, p.numero_sesion, p.temas, " +
-                    "pe.nombre AS periodo_nombre, c.nombre AS carrera_nombre " +
+            "SELECT p.id_planeacion_tutoria, p.id_periodo_escolar, p.id_carrera, p.fecha_tutoria, p.numero_sesion, p.temas, " +
+                    "pe.nombre_periodo_escolar AS periodo_nombre, " +
+                    "c.nombre_carrera AS carrera_nombre " +
                     "FROM " + TABLA + " p " +
-                    "INNER JOIN periodo_escolar pe ON p.id_periodo = pe.id_periodo " +
+                    "INNER JOIN periodo_escolar pe ON p.id_periodo_escolar = pe.id_periodo_escolar " +
                     "INNER JOIN carrera c ON p.id_carrera = c.id_carrera";
 
+
+    private static final String SQL_SELECT_BY_ID = SQL_SELECT_ALL + " WHERE p.id_planeacion_tutoria = ?";
+
+
     private static final String SQL_UPDATE =
-            "UPDATE " + TABLA + " SET id_periodo = ?, id_carrera = ?, fecha = ?, numero_sesion = ?, temas = ? WHERE id_fecha_tutoria = ?";
+            "UPDATE " + TABLA + " SET id_periodo_escolar = ?, id_carrera = ?, fecha_tutoria = ?, numero_sesion = ?, temas = ? WHERE id_planeacion_tutoria = ?";
+
 
     private static final String SQL_DELETE =
-            "DELETE FROM " + TABLA + " WHERE id_fecha_tutoria = ?";
+            "DELETE FROM " + TABLA + " WHERE id_planeacion_tutoria = ?";
 
 
     private PlaneacionTutoria mapearPlaneacion(ResultSet rs) throws SQLException {
-        int idFechaTutoria = rs.getInt("id_fecha_tutoria");
-        int idPeriodo = rs.getInt("id_periodo");
-        int idCarrera = rs.getInt("id_carrera");
-        LocalDate fechaTutoria = rs.getDate("fecha").toLocalDate();
-        LocalDate fechaCierre = fechaTutoria;
+        PlaneacionTutoria plan = new PlaneacionTutoria();
+        plan.setIdPlaneacionTutoria(rs.getInt("id_planeacion_tutoria"));
+        plan.setIdPeriodoEscolar(rs.getInt("id_periodo_escolar"));
+        plan.setIdCarrera(rs.getInt("id_carrera"));
 
-        int numeroSesion = rs.getInt("numero_sesion");
-        String temas = rs.getString("temas");
-        PlaneacionTutoria plan = new PlaneacionTutoria(idFechaTutoria, idPeriodo, idCarrera, fechaTutoria, fechaCierre, numeroSesion, temas);
+
+        Date fechaSQL = rs.getDate("fecha_tutoria");
+        if (fechaSQL != null) {
+            plan.setFechaTutoria(fechaSQL.toLocalDate());
+        }
+
+        plan.setNumeroSesion(rs.getInt("numero_sesion"));
+        plan.setTemas(rs.getString("temas"));
         plan.setPeriodoNombre(rs.getString("periodo_nombre"));
         plan.setCarreraNombre(rs.getString("carrera_nombre"));
 
@@ -61,7 +66,7 @@ public class PlaneacionTutoriaDAO {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
 
-            ps.setInt(1, planeacion.getIdPeriodo());
+            ps.setInt(1, planeacion.getIdPeriodoEscolar());
             ps.setInt(2, planeacion.getIdCarrera());
             ps.setDate(3, Date.valueOf(planeacion.getFechaTutoria()));
             ps.setInt(4, planeacion.getNumeroSesion());
@@ -76,14 +81,12 @@ public class PlaneacionTutoriaDAO {
                 }
             }
         } finally {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            ConexionBD.cerrarConexion(conn);
+            cerrarRecursos(conn, ps, rs);
         }
         return idGenerado;
     }
 
-    public PlaneacionTutoria obtenerPorId(int idFechaTutoria) throws SQLException {
+    public PlaneacionTutoria obtenerPorId(int idPlaneacion) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -92,16 +95,14 @@ public class PlaneacionTutoriaDAO {
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_SELECT_BY_ID);
-            ps.setInt(1, idFechaTutoria);
+            ps.setInt(1, idPlaneacion);
             rs = ps.executeQuery();
 
             if (rs.next()) {
                 planeacion = mapearPlaneacion(rs);
             }
         } finally {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            ConexionBD.cerrarConexion(conn);
+            cerrarRecursos(conn, ps, rs);
         }
         return planeacion;
     }
@@ -121,9 +122,7 @@ public class PlaneacionTutoriaDAO {
                 planeaciones.add(mapearPlaneacion(rs));
             }
         } finally {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            ConexionBD.cerrarConexion(conn);
+            cerrarRecursos(conn, ps, rs);
         }
         return planeaciones;
     }
@@ -131,50 +130,47 @@ public class PlaneacionTutoriaDAO {
     public boolean actualizarPlaneacion(PlaneacionTutoria planeacion) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
-        boolean exito = false;
 
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_UPDATE);
 
-            ps.setInt(1, planeacion.getIdPeriodo());
+            ps.setInt(1, planeacion.getIdPeriodoEscolar());
             ps.setInt(2, planeacion.getIdCarrera());
-            // Actualizamos la fecha principal
             ps.setDate(3, Date.valueOf(planeacion.getFechaTutoria()));
             ps.setInt(4, planeacion.getNumeroSesion());
             ps.setString(5, planeacion.getTemas());
-            ps.setInt(6, planeacion.getIdFechaTutoria());
+            ps.setInt(6, planeacion.getIdPlaneacionTutoria());
 
-            int filasAfectadas = ps.executeUpdate();
-            if (filasAfectadas > 0) {
-                exito = true;
-            }
+            return ps.executeUpdate() > 0;
         } finally {
-            if (ps != null) ps.close();
-            ConexionBD.cerrarConexion(conn);
+            cerrarRecursos(conn, ps, null);
         }
-        return exito;
     }
 
-    public boolean eliminarPlaneacion(int idFechaTutoria) throws SQLException {
+    public boolean eliminarPlaneacion(int idPlaneacion) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
-        boolean exito = false;
 
         try {
             conn = ConexionBD.abrirConexion();
             ps = conn.prepareStatement(SQL_DELETE);
-            ps.setInt(1, idFechaTutoria);
+            ps.setInt(1, idPlaneacion);
 
-            int filasAfectadas = ps.executeUpdate();
-            if (filasAfectadas > 0) {
-                exito = true;
-            }
+            return ps.executeUpdate() > 0;
         } finally {
-            if (ps != null) ps.close();
-            ConexionBD.cerrarConexion(conn);
+            cerrarRecursos(conn, ps, null);
         }
-        return exito;
+    }
+
+
+    private void cerrarRecursos(Connection conn, PreparedStatement ps, ResultSet rs) {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (conn != null && !conn.isClosed()) ConexionBD.cerrarConexion(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
-*/

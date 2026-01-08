@@ -1,11 +1,11 @@
-package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.dao.CarreraDAO;
 import gestor_tutorias.dao.PeriodoEscolarDAO;
-//import gestor_tutorias.dao.PlaneacionTutoriaDAO;
+import gestor_tutorias.dao.PlaneacionTutoriaDAO;
 import gestor_tutorias.pojo.Carrera;
 import gestor_tutorias.pojo.PeriodoEscolar;
-//import gestor_tutorias.pojo.PlaneacionTutoria;
+import gestor_tutorias.pojo.PlaneacionTutoria;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -18,16 +18,15 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class FXMLPlaneacionTutoriaConsulta implements Initializable {
+
     @FXML private ComboBox<PeriodoEscolar> cbPeriodo;
     @FXML private ComboBox<Carrera> cbCarrera;
     @FXML private ComboBox<Integer> cbSesion;
     @FXML private DatePicker fechaTutoria;
-    @FXML private DatePicker fechaCierre;
     @FXML private TextArea temastratar;
     @FXML private TextField tfIdPlaneacion;
 
-
-    //private PlaneacionTutoria planeacionActual;
+    private PlaneacionTutoria planeacionActual;
     private final PlaneacionTutoriaDAO dao = new PlaneacionTutoriaDAO();
 
     @Override
@@ -40,6 +39,7 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
         try {
             List<PeriodoEscolar> periodos = PeriodoEscolarDAO.obtenerTodos();
             cbPeriodo.setItems(FXCollections.observableArrayList(periodos));
+
             List<Carrera> carreras = CarreraDAO.obtenerTodas();
             cbCarrera.setItems(FXCollections.observableArrayList(carreras));
 
@@ -51,6 +51,7 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
 
     @FXML
     private void guardarPlaneacionTutoria() {
+
         if (cbPeriodo.getValue() == null || cbCarrera.getValue() == null || cbSesion.getValue() == null) {
             mostrarAlerta("Advertencia", "Seleccione Periodo, Carrera y Número de Sesión.");
             return;
@@ -59,40 +60,38 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
             mostrarAlerta("Advertencia", "Seleccione la fecha de la tutoría.");
             return;
         }
-
         try {
-            int idPeriodo = cbPeriodo.getValue().getIdPeriodo();
+            int idPeriodo = cbPeriodo.getValue().getIdPeriodoEscolar();
             int idCarrera = cbCarrera.getValue().getIdCarrera();
             int numSesion = cbSesion.getValue();
             LocalDate fechaT = fechaTutoria.getValue();
-            LocalDate fechaC = (fechaCierre.getValue() != null) ? fechaCierre.getValue() : fechaT;
             String temas = temastratar.getText();
-
 
             if (planeacionActual == null) {
                 PlaneacionTutoria nueva = new PlaneacionTutoria();
-                nueva.setIdPeriodo(idPeriodo);
+                nueva.setIdPeriodoEscolar(idPeriodo);
                 nueva.setIdCarrera(idCarrera);
                 nueva.setNumeroSesion(numSesion);
                 nueva.setFechaTutoria(fechaT);
                 nueva.setTemas(temas);
 
                 dao.guardarPlaneacion(nueva);
-                mostrarAlerta("Éxito", "Planeación registrada.");
+                mostrarAlerta("Éxito", "Planeación registrada correctamente.");
             } else {
-                planeacionActual.setIdPeriodo(idPeriodo);
+                planeacionActual.setIdPeriodoEscolar(idPeriodo);
                 planeacionActual.setIdCarrera(idCarrera);
                 planeacionActual.setNumeroSesion(numSesion);
                 planeacionActual.setFechaTutoria(fechaT);
                 planeacionActual.setTemas(temas);
 
                 dao.actualizarPlaneacion(planeacionActual);
-                mostrarAlerta("Éxito", "Planeación actualizada.");
+                mostrarAlerta("Éxito", "Planeación actualizada correctamente.");
             }
             cerrarVentana();
 
         } catch (SQLException e) {
             mostrarAlerta("Error BD", "Error al guardar: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -101,26 +100,29 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
         if (planeacionActual == null) return;
 
         try {
-            dao.eliminarPlaneacion(planeacionActual.getIdFechaTutoria());
+            dao.eliminarPlaneacion(planeacionActual.getIdPlaneacionTutoria());
             mostrarAlerta("Información", "Planeación eliminada.");
             cerrarVentana();
         } catch (SQLException e) {
-            mostrarAlerta("Error", "No se pudo eliminar (quizás ya tiene reportes asociados).");
+            mostrarAlerta("Error", "No se pudo eliminar el registro (quizás tiene horarios asociados).");
+            e.printStackTrace();
         }
     }
 
     public void cargarPlaneacion(PlaneacionTutoria plan) {
         this.planeacionActual = plan;
-        tfIdPlaneacion.setText(String.valueOf(plan.getIdFechaTutoria()));
+        tfIdPlaneacion.setText(String.valueOf(plan.getIdPlaneacionTutoria()));
         temastratar.setText(plan.getTemas());
-        seleccionarEnComboPeriodo(plan.getIdPeriodo());
-        seleccionarEnComboCarrera(plan.getIdCarrera());
+        fechaTutoria.setValue(plan.getFechaTutoria());
         cbSesion.setValue(plan.getNumeroSesion());
+        seleccionarEnComboPeriodo(plan.getIdPeriodoEscolar());
+        seleccionarEnComboCarrera(plan.getIdCarrera());
+        tfIdPlaneacion.setEditable(false);
     }
 
     private void seleccionarEnComboPeriodo(int idBuscado) {
         for (PeriodoEscolar p : cbPeriodo.getItems()) {
-            if (p.getIdPeriodo() == idBuscado) {
+            if (p.getIdPeriodoEscolar() == idBuscado) {
                 cbPeriodo.setValue(p);
                 break;
             }
@@ -144,9 +146,8 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
+        alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
 }
-
- */
