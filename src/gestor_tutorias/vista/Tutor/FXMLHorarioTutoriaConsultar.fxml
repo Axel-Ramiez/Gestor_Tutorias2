@@ -85,14 +85,9 @@
                   prefWidth="400.0"
                   promptText="Seleccione estudiante"/>
 
-        <!-- BOTONES -->
-        <Button fx:id="btnCancelar"
-                layoutX="360.0"
-                layoutY="340.0"
-                prefWidth="90.0"
-                text="Cancelar"
-                onAction="#clicCancelar"
-                style="-fx-cursor: hand;"/>
+        <Label layoutX="450.0" layoutY="230.0" text="Periodo Escolar"/>
+
+        <ComboBox fx:id="cbPeriodo" layoutX="450.0" layoutY="250.0" prefWidth="200.0"/>
 
         <Button fx:id="btnCerrar"
                 layoutX="460.0"
@@ -102,13 +97,7 @@
                 onAction="#clicCerrar"
                 style="-fx-cursor: hand;"/>
 
-        <Button fx:id="btnGuardar"
-                layoutX="560.0"
-                layoutY="340.0"
-                prefWidth="90.0"
-                text="Guardar"
-                onAction="#clicGuardar"
-                style="-fx-cursor: hand;"/>
+
 
     </children>
 

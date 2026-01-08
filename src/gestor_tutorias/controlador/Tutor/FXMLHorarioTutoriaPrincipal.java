@@ -149,10 +149,33 @@ public class FXMLHorarioTutoriaPrincipal {
     }
 
     public void clicConsultar(ActionEvent actionEvent) {
-        cambiarVentana(
-                "/gestor_tutorias/vista/Tutor/FXMLHorarioTutoriaConsulta.fxml",
-                "Consultar Horario de Tutoría"
-        );
+        HorarioTutoria seleccionado = tvHorarios.getSelectionModel().getSelectedItem();
+
+        if (seleccionado == null) {
+            mostrarAlerta("Aviso", "Seleccione un horario para consultar.");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLHorarioTutoriaConsultar.fxml"));
+
+            Parent root = loader.load();
+
+            FXMLHorarioTutoriaConsultar controlador = loader.getController();
+
+            controlador.setIdHorarioTutoria(seleccionado.getIdHorarioTutoria());
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Consulta Horario de Tutoría");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+            cargarHorarios();
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo abrir la ventana de edición.");
+            e.printStackTrace();
+        }
     }
 
     public void clicEliminar(ActionEvent actionEvent) {
