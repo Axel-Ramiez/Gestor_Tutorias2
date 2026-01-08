@@ -51,7 +51,7 @@ public class FXMLReporteTutoriaEditar {
         configurarCampos();
     }
 
-    // ===================== RECIBE ID DESDE PRINCIPAL =====================
+
     public void setIdReporte(int idReporte) {
         this.idReporte = idReporte;
         cargarReporte();
@@ -97,7 +97,7 @@ public class FXMLReporteTutoriaEditar {
     }
 
 
-    // ===================== CARGA DESDE BD =====================
+
     private void cargarReporte() {
         try {
             reporteActual = reporteDAO.obtenerPorId(idReporte);
@@ -110,7 +110,6 @@ public class FXMLReporteTutoriaEditar {
         }
     }
 
-    // ===================== PINTA DATOS =====================
     private void cargarDatosEnVista() {
         lbIdReporte.setText(String.valueOf(reporteActual.getIdReporte()));
         dpFechaReporte.setValue(reporteActual.getFechaReporte());
@@ -125,13 +124,13 @@ public class FXMLReporteTutoriaEditar {
     }
 
 
-    // ===================== CONFIG CAMPOS =====================
+
     private void configurarCampos() {
 
-        // ID siempre solo lectura
+
         lbIdReporte.setDisable(false);
 
-        // Campos editables
+
         dpFechaReporte.setDisable(false);
         cbEstado.setDisable(false);
         chkAsistencia.setDisable(false);
@@ -139,13 +138,12 @@ public class FXMLReporteTutoriaEditar {
         taTextoReporte.setEditable(true);
         taRespuestaCoordinador.setEditable(true);
 
-        // Combos solo informativos (no editables sin DAOs extra)
         cbTutor.setDisable(false);
         cbEstudiante.setDisable(false);
         cbPeriodo.setDisable(false);
     }
 
-    // ===================== GUARDAR =====================
+
     public void clicGuardar(ActionEvent event) {
         try {
             juntarDatos();
@@ -157,7 +155,7 @@ public class FXMLReporteTutoriaEditar {
         }
     }
 
-    // ===================== JUNTAR DATOS =====================
+
     private void juntarDatos() {
         reporteActual.setFechaReporte(dpFechaReporte.getValue());
         reporteActual.setTextoReporte(taTextoReporte.getText());
@@ -183,7 +181,6 @@ public class FXMLReporteTutoriaEditar {
         stage.close();
     }
 
-    // ===================== CERRAR =====================
     public void clicCancelar(ActionEvent event) {
         cerrar(event);
     }
@@ -194,7 +191,7 @@ public class FXMLReporteTutoriaEditar {
         stage.close();
     }
 
-    // ===================== ALERTA =====================
+
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titulo);

@@ -17,11 +17,11 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class FXMLReporteTutoriaCrear {
 
-    @FXML
-    private Label lbIdReporte;
+    @FXML private Label lbIdReporte;
     @FXML private DatePicker dpFechaReporte;
     @FXML private ComboBox<EstadoReporte> cbEstado;
     @FXML private ComboBox<Usuario> cbTutor;
@@ -31,134 +31,69 @@ public class FXMLReporteTutoriaCrear {
     @FXML private TextArea taTextoReporte;
     @FXML private TextArea taRespuestaCoordinador;
 
-    private int idReporte;
     private ReporteTutoria reporteActual;
-
-
     private final ReporteTutoriaDAO reporteDAO = new ReporteTutoriaDAO();
 
     @FXML
     private void initialize() {
+        reporteActual = new ReporteTutoria();
+
+        dpFechaReporte.setValue(LocalDate.now());
         cbEstado.setItems(FXCollections.observableArrayList(EstadoReporte.values()));
+        cbEstado.setValue(EstadoReporte.PENDIENTE);
 
         try {
             cargarComboTutores(cbTutor);
             cargarComboEstudiantes(cbEstudiante);
             cargarComboPeriodos(cbPeriodo);
         } catch (SQLException e) {
-            mostrarAlerta("Error", "No se pudieron cargar los datos.");
+            mostrarAlerta("Error", "No se pudieron cargar los catálogos.");
         }
-
-        configurarCampos();
-    }
-
-    // ===================== RECIBE ID DESDE PRINCIPAL =====================
-    public void setIdReporte(int idReporte) {
-        this.idReporte = idReporte;
-        cargarReporte();
     }
 
     private void cargarComboTutores(ComboBox<Usuario> combo) throws SQLException {
-        combo.setItems(FXCollections.observableArrayList(
-                UsuarioDAO.obtenerTutores()
-        ));
+        combo.setItems(FXCollections.observableArrayList(UsuarioDAO.obtenerTutores()));
     }
 
     private void cargarComboEstudiantes(ComboBox<Estudiante> combo) throws SQLException {
-        combo.setItems(FXCollections.observableArrayList(
-                EstudianteDAO.obtenerTodos()
-        ));
+        combo.setItems(FXCollections.observableArrayList(EstudianteDAO.obtenerTodos()));
     }
 
     private void cargarComboPeriodos(ComboBox<PeriodoEscolar> combo) throws SQLException {
-        combo.setItems(FXCollections.observableArrayList(
-                PeriodoEscolarDAO.obtenerTodos()
-        ));
+        combo.setItems(FXCollections.observableArrayList(PeriodoEscolarDAO.obtenerTodos()));
     }
 
-    private <T> int obtenerIdSeleccionado(
-            ComboBox<T> combo,
-            java.util.function.Function<T, Integer> extractorId
-    ) {
+    private <T> int obtenerIdSeleccionado(ComboBox<T> combo, java.util.function.Function<T, Integer> extractorId) {
         T seleccionado = combo.getValue();
         return seleccionado != null ? extractorId.apply(seleccionado) : 0;
     }
 
-    private <T> void seleccionarPorId(
-            ComboBox<T> combo,
-            int idBuscado,
-            java.util.function.Function<T, Integer> extractorId
-    ) {
-        for (T item : combo.getItems()) {
-            if (extractorId.apply(item) == idBuscado) {
-                combo.getSelectionModel().select(item);
-                break;
-            }
-        }
-    }
 
-
-    // ===================== CARGA DESDE BD =====================
-    private void cargarReporte() {
-        try {
-            reporteActual = reporteDAO.obtenerPorId(idReporte);
-            if (reporteActual != null) {
-                cargarDatosEnVista();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo cargar el reporte.");
-        }
-    }
-
-    // ===================== PINTA DATOS =====================
-    private void cargarDatosEnVista() {
-        lbIdReporte.setText(String.valueOf(reporteActual.getIdReporte()));
-        dpFechaReporte.setValue(reporteActual.getFechaReporte());
-        taTextoReporte.setText(reporteActual.getTextoReporte());
-        taRespuestaCoordinador.setText(reporteActual.getRespuestaCoordinador());
-        chkAsistencia.setSelected(reporteActual.isAsistencia());
-        cbEstado.setValue(reporteActual.getEstado());
-
-        seleccionarPorId(cbTutor, reporteActual.getIdUsuario(), Usuario::getIdUsuario);
-        seleccionarPorId(cbEstudiante, reporteActual.getIdEstudiante(), Estudiante::getIdEstudiante);
-        seleccionarPorId(cbPeriodo, reporteActual.getIdPeriodoEscolar(), PeriodoEscolar::getIdPeriodoEscolar);
-    }
-
-
-    // ===================== CONFIG CAMPOS =====================
-    private void configurarCampos() {
-
-        // ID siempre solo lectura
-        lbIdReporte.setDisable(false);
-
-        // Campos editables
-        dpFechaReporte.setDisable(false);
-        cbEstado.setDisable(false);
-        chkAsistencia.setDisable(false);
-
-        taTextoReporte.setEditable(true);
-        taRespuestaCoordinador.setEditable(true);
-
-        // Combos solo informativos (no editables sin DAOs extra)
-        cbTutor.setDisable(false);
-        cbEstudiante.setDisable(false);
-        cbPeriodo.setDisable(false);
-    }
-
-    // ===================== GUARDAR =====================
+    @FXML
     public void clicGuardar(ActionEvent event) {
+        if (dpFechaReporte.getValue() == null || cbTutor.getValue() == null ||
+                cbEstudiante.getValue() == null || cbPeriodo.getValue() == null) {
+            mostrarAlerta("Campos vacíos", "Por favor seleccione Tutor, Estudiante, Periodo y Fecha.");
+            return;
+        }
+
         try {
             juntarDatos();
-            reporteDAO.actualizarReporte(reporteActual);
-            cerrar(event);
+            int idGenerado = reporteDAO.guardarReporte(reporteActual);
+
+            if (idGenerado > 0) {
+                mostrarAlerta("Éxito", "Reporte creado correctamente.");
+                cerrar(event);
+            } else {
+                mostrarAlerta("Error", "No se pudo guardar en la base de datos.");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo guardar el reporte.");
+            mostrarAlerta("Error", "Ocurrió un error al guardar: " + e.getMessage());
         }
     }
 
-    // ===================== JUNTAR DATOS =====================
     private void juntarDatos() {
         reporteActual.setFechaReporte(dpFechaReporte.getValue());
         reporteActual.setTextoReporte(taTextoReporte.getText());
@@ -166,42 +101,34 @@ public class FXMLReporteTutoriaCrear {
         reporteActual.setAsistencia(chkAsistencia.isSelected());
         reporteActual.setEstado(cbEstado.getValue());
 
-        reporteActual.setIdUsuario(
-                obtenerIdSeleccionado(cbTutor, Usuario::getIdUsuario)
-        );
-        reporteActual.setIdEstudiante(
-                obtenerIdSeleccionado(cbEstudiante, Estudiante::getIdEstudiante)
-        );
-        reporteActual.setIdPeriodoEscolar(
-                obtenerIdSeleccionado(cbPeriodo, PeriodoEscolar::getIdPeriodoEscolar)
-        );
+        reporteActual.setIdUsuario(obtenerIdSeleccionado(cbTutor, Usuario::getIdUsuario));
+        reporteActual.setIdEstudiante(obtenerIdSeleccionado(cbEstudiante, Estudiante::getIdEstudiante));
+        reporteActual.setIdPeriodoEscolar(obtenerIdSeleccionado(cbPeriodo, PeriodoEscolar::getIdPeriodoEscolar));
+    }
+
+    @FXML
+    public void clicCerrar(ActionEvent event) {
+        cerrar(event);
     }
 
 
-    public void clicCerrar(ActionEvent actionEvent) {
-        Stage stage = (Stage) ((Node) actionEvent.getSource())
-                .getScene().getWindow();
-        stage.close();
-    }
-
-    // ===================== CERRAR =====================
+    @FXML
     public void clicCancelar(ActionEvent event) {
         cerrar(event);
     }
 
     private void cerrar(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource())
-                .getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
-    // ===================== ALERTA =====================
     private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        if (titulo.equals("Error") || titulo.equals("Campos vacíos")) alert.setAlertType(Alert.AlertType.ERROR);
+
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
 }
