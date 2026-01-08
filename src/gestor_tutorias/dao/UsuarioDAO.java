@@ -181,6 +181,30 @@ public class UsuarioDAO {
         return resultado;
     }
 
+    public static boolean esNoPersonalRegistrado(String noPersonal, int idUsuarioExcluir) throws SQLException {
+        boolean existe = false;
+        Connection conn = ConexionBD.abrirConexion();
+
+        if (conn != null) {
+            try {
+                String consulta = "SELECT COUNT(*) FROM usuario WHERE no_Personal_usuario = ? AND id_usuario <> ?";
+                PreparedStatement ps = conn.prepareStatement(consulta);
+                ps.setString(1, noPersonal);
+                ps.setInt(2, idUsuarioExcluir);
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    existe = rs.getInt(1) > 0;
+                }
+                rs.close();
+                ps.close();
+            } finally {
+                ConexionBD.cerrarConexion(conn);
+            }
+        }
+        return existe;
+    }
+
 
 
     private static Usuario mapearUsuario(ResultSet rs) throws SQLException {

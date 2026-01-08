@@ -12,16 +12,13 @@ import java.util.List;
 
 public class EstudianteDAO {
 
-    /* =========================
-       OBTENER TODOS
-       ========================= */
+
     public static List<Estudiante> obtenerTodos() throws SQLException {
         List<Estudiante> lista = new ArrayList<>();
         Connection conn = ConexionBD.abrirConexion();
 
         if (conn != null) {
             try {
-                // CORRECCIÓN AQUÍ: Usamos CONCAT para crear el nombre completo
                 String consulta =
                         "SELECT e.*, c.nombre_carrera AS nombre_carrera, " +
                                 "CONCAT(u.nombre_usuario, ' ', u.apellido_paterno_usuario) AS nombre_tutor " +
@@ -46,9 +43,7 @@ public class EstudianteDAO {
         return lista;
     }
 
-    /* =========================
-       ESTUDIANTES EN RIESGO
-       ========================= */
+
     public static List<Estudiante> obtenerEstudiantesEnRiesgo() throws SQLException {
         List<Estudiante> lista = new ArrayList<>();
         Connection conn = ConexionBD.abrirConexion();
@@ -86,9 +81,7 @@ public class EstudianteDAO {
         return lista;
     }
 
-    /* =========================
-       REGISTRAR
-       ========================= */
+
     public static boolean registrarEstudiante(Estudiante est) throws SQLException {
         boolean resultado = false;
         Connection conn = ConexionBD.abrirConexion();
@@ -121,15 +114,13 @@ public class EstudianteDAO {
         return resultado;
     }
 
-    /* =========================
-       EDITAR
-       ========================= */
     public static boolean editarEstudiante(Estudiante est) throws SQLException {
         boolean resultado = false;
         Connection conn = ConexionBD.abrirConexion();
 
         if (conn != null) {
             try {
+
                 String consulta =
                         "UPDATE estudiante SET " +
                                 "nombre_estudiante = ?, " +
@@ -160,9 +151,7 @@ public class EstudianteDAO {
         return resultado;
     }
 
-    /* =========================
-       ELIMINAR (LÓGICO)
-       ========================= */
+
     public static boolean eliminarEstudiante(int idEstudiante) throws SQLException {
         boolean resultado = false;
         Connection conn = ConexionBD.abrirConexion();
@@ -183,9 +172,6 @@ public class EstudianteDAO {
         return resultado;
     }
 
-    /* =========================
-       ASIGNAR TUTOR (USUARIO)
-       ========================= */
     public static boolean asignarTutor(int idEstudiante, int idUsuario) throws SQLException {
         boolean resultado = false;
         Connection conn = ConexionBD.abrirConexion();
@@ -207,32 +193,32 @@ public class EstudianteDAO {
         return resultado;
     }
 
-    /* =========================
-       ACTUALIZAR RIESGO
-       ========================= */
-    public boolean actualizarEstatusRiesgo(int idEstudiante, boolean enRiesgo) throws SQLException {
-        String sql =
-                "UPDATE estudiante SET riesgo_estudiante = ? WHERE id_estudiante = ?";
 
-        Connection conn = null;
-        PreparedStatement ps = null;
+    public static boolean esMatriculaRegistrada(String matricula, int idEstudianteExcluir) throws SQLException {
+        boolean existe = false;
+        Connection conn = ConexionBD.abrirConexion();
 
-        try {
-            conn = ConexionBD.abrirConexion();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, enRiesgo ? 1 : 0);
-            ps.setInt(2, idEstudiante);
+        if (conn != null) {
+            try {
+                String consulta = "SELECT COUNT(*) FROM estudiante WHERE matricula_estudiante = ? AND id_estudiante <> ?";
+                PreparedStatement ps = conn.prepareStatement(consulta);
+                ps.setString(1, matricula);
+                ps.setInt(2, idEstudianteExcluir);
 
-            return ps.executeUpdate() > 0;
-        } finally {
-            if (ps != null) ps.close();
-            if (conn != null) ConexionBD.cerrarConexion(conn);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    existe = rs.getInt(1) > 0;
+                }
+                rs.close();
+                ps.close();
+            } finally {
+                ConexionBD.cerrarConexion(conn);
+            }
         }
+        return existe;
     }
 
-    /* =========================
-       MAPEO CENTRAL
-       ========================= */
+
     private static Estudiante mapearEstudiante(ResultSet rs) throws SQLException {
         Estudiante est = new Estudiante();
         est.setIdEstudiante(rs.getInt("id_estudiante"));

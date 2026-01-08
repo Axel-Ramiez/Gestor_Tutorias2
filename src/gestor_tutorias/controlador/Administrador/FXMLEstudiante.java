@@ -61,42 +61,49 @@ public class FXMLEstudiante implements Initializable {
             return;
         }
 
-        Estudiante est = obtenerEstudianteDeVista();
+        int idAExcluir = 0;
+
+        if (this.estudianteEdicion != null) {
+            idAExcluir = this.estudianteEdicion.getIdEstudiante();
+        }
 
         try {
-            boolean exito = EstudianteDAO.registrarEstudiante(est);
-            if (exito) {
-                mostrarAlerta("Éxito", "Estudiante registrado correctamente.");
-                cerrarVentana();
-            } else {
-                mostrarAlerta("Error", "No se pudo registrar. Verifica que la Matrícula no esté repetida.");
+
+            if (EstudianteDAO.esMatriculaRegistrada(tfMatricula.getText(), idAExcluir)) {
+                lblErrorMatricula.setText("Matrícula ya registrada en el sistema.");
+                tfMatricula.setStyle("-fx-border-color: red;");
+                return;
             }
         } catch (SQLException ex) {
-            mostrarAlerta("Error BD", "Error al registrar: " + ex.getMessage());
-            ex.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void clicEditar(ActionEvent event) {
-        if (!validarCampos()) {
+            mostrarAlerta("Error", "Error al validar matrícula: " + ex.getMessage());
             return;
         }
 
         Estudiante est = obtenerEstudianteDeVista();
-        est.setIdEstudiante(this.estudianteEdicion.getIdEstudiante());
-        est.setRiesgoEstudiante(this.estudianteEdicion.getRiesgoEstudiante());
 
         try {
-            boolean exito = EstudianteDAO.editarEstudiante(est);
+            boolean exito = false;
+
+            if (this.estudianteEdicion == null) {
+
+                exito = EstudianteDAO.registrarEstudiante(est);
+            } else {
+                est.setIdEstudiante(this.estudianteEdicion.getIdEstudiante());
+                est.setRiesgoEstudiante(this.estudianteEdicion.getRiesgoEstudiante());
+                est.setActivoEstudiante(this.estudianteEdicion.getActivoEstudiante());
+
+                exito = EstudianteDAO.editarEstudiante(est);
+            }
+
             if (exito) {
-                mostrarAlerta("Éxito", "Estudiante actualizado correctamente.");
+                mostrarAlerta("Éxito", "La información se guardó correctamente.");
                 cerrarVentana();
             } else {
-                mostrarAlerta("Error", "No se pudo actualizar la información.");
+                mostrarAlerta("Error", "No se pudo guardar la información.");
             }
+
         } catch (SQLException ex) {
-            mostrarAlerta("Error BD", "Error al actualizar: " + ex.getMessage());
+            mostrarAlerta("Error BD", "Error SQL: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

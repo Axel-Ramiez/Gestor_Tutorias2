@@ -177,7 +177,7 @@ public class FXMLEstudianteConsulta implements Initializable {
                         return true;
                     }
                     if (estudiante.getApellidoPaternoEstudiante() != null &&
-                            estudiante.getApellidoMaternoEstudiante().toLowerCase().contains(lowerNewValue)) {
+                            estudiante.getApellidoPaternoEstudiante().toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
                     if (estudiante.getApellidoMaternoEstudiante() != null &&
@@ -196,7 +196,7 @@ public class FXMLEstudianteConsulta implements Initializable {
                         estudiante.getCorreoEstudiante().toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
-                    if (String .valueOf(estudiante.getIdEstudiante()).toLowerCase().contains(lowerNewValue)) {
+                    if (String .valueOf(estudiante.getSemestreEstudiante()).toLowerCase().contains(lowerNewValue)) {
                         return true;
                     }
                     return false;

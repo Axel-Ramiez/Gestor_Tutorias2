@@ -67,7 +67,7 @@ public class FXMLPrincipalCoordinador implements Initializable {
     private void clicReporte(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLReporteTutoriaPrincipal.fxml")
+                    getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLReporteTutoria.fxml")
             );
 
             Parent root = loader.load();

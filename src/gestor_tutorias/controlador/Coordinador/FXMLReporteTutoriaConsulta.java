@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.Enum.EstadoReporte;
 import gestor_tutorias.dao.ReporteTutoriaDAO;
@@ -10,78 +10,89 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class FXMLReporteTutoriaConsulta implements Initializable {
 
-    @FXML
-    private TextField tfIdReporte;
-    @FXML
-    private TextField tfIdEstudiante;
-    @FXML
-    private TextField tfIdTutor;
-    @FXML
-    private TextField tfIdFechaTutoria;
-    @FXML
-    private CheckBox chbAsistencia;
-    @FXML
-    private ComboBox<EstadoReporte> cbEstado;
-    @FXML
-    private TextArea taReporte;
-    @FXML
-    private TextArea taRespuesta;
+    @FXML private Label lbIdReporte;
+    @FXML private DatePicker dpFechaReporte;
+    @FXML private ComboBox<EstadoReporte> cbEstado;
+    @FXML private ComboBox<String> cbTutor;
+    @FXML private ComboBox<String> cbEstudiante;
+    @FXML private ComboBox<String> cbPeriodo;
+    @FXML private CheckBox chkAsistencia;
+    @FXML private TextArea taTextoReporte;
+    @FXML private TextArea taRespuestaCoordinador;
 
     private ReporteTutoria reporteActual;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cbEstado.setItems(FXCollections.observableArrayList(EstadoReporte.values()));
-        aplicarEstiloLectura();
+        configurarModoLectura();
+    }
+
+    private void configurarModoLectura() {
+        dpFechaReporte.setDisable(true);
+        dpFechaReporte.setStyle("-fx-opacity: 1;");
+
+        cbTutor.setDisable(true);
+        cbTutor.setStyle("-fx-opacity: 1;");
+
+        cbEstudiante.setDisable(true);
+        cbEstudiante.setStyle("-fx-opacity: 1;");
+
+        cbPeriodo.setDisable(true);
+        cbPeriodo.setStyle("-fx-opacity: 1;");
+
+        chkAsistencia.setDisable(true);
+        chkAsistencia.setStyle("-fx-opacity: 1;");
+
+        taTextoReporte.setEditable(false);
     }
 
     public void inicializarDatos(ReporteTutoria reporte) {
         this.reporteActual = reporte;
 
-        tfIdReporte.setText(String.valueOf(reporte.getIdReporte()));
+        lbIdReporte.setText(String.valueOf(reporte.getIdReporte()));
+        if (reporte.getFechaReporte() != null) {
+            dpFechaReporte.setValue(reporte.getFechaReporte());
+        }
 
-        if(reporte.getNombreEstudiante() != null)
-            tfIdEstudiante.setText(reporte.getNombreEstudiante());
-        else
-            tfIdEstudiante.setText(String.valueOf(reporte.getIdEstudiante()));
-
-        if(reporte.getNombreTutor() != null)
-            tfIdTutor.setText(reporte.getNombreTutor());
-        else
-            tfIdTutor.setText(String.valueOf(reporte.getIdTutor()));
-
-        tfIdFechaTutoria.setText(reporte.getFecha() != null ? reporte.getFecha() : String.valueOf(reporte.getIdFechaTutoria()));
-
-        chbAsistencia.setSelected(reporte.isAsistencia());
         cbEstado.setValue(reporte.getEstado());
-        taReporte.setText(reporte.getReporte());
+
+        cbTutor.getItems().clear();
+        cbTutor.getItems().add(reporte.getNombreTutor() != null ? reporte.getNombreTutor() : "N/A");
+        cbTutor.getSelectionModel().selectFirst();
+
+        cbEstudiante.getItems().clear();
+        cbEstudiante.getItems().add(reporte.getNombreEstudiante() != null ? reporte.getNombreEstudiante() : "N/A");
+        cbEstudiante.getSelectionModel().selectFirst();
+
+        cbPeriodo.getItems().clear();
+        cbPeriodo.getItems().add(reporte.getPeriodoEscolar() != null ? reporte.getPeriodoEscolar() : "N/A");
+        cbPeriodo.getSelectionModel().selectFirst();
+        chkAsistencia.setSelected(reporte.isAsistencia());
+        taTextoReporte.setText(reporte.getTextoReporte());
 
         if (reporte.getRespuestaCoordinador() != null) {
-            taRespuesta.setText(reporte.getRespuestaCoordinador());
+            taRespuestaCoordinador.setText(reporte.getRespuestaCoordinador());
         }
     }
 
     @FXML
-    private void guardarReporte(ActionEvent event) {
-        String respuesta = taRespuesta.getText();
+    private void clicGuardar(ActionEvent event) {
         EstadoReporte nuevoEstado = cbEstado.getValue();
+        String respuesta = taRespuestaCoordinador.getText();
 
         if (nuevoEstado == null) {
-            mostrarAlerta("Error", "Debe seleccionar un estado.");
+            mostrarAlerta("Campo requerido", "Debe seleccionar un estado para el reporte.");
             return;
         }
 
-        reporteActual.setRespuestaCoordinador(respuesta);
         reporteActual.setEstado(nuevoEstado);
+        reporteActual.setRespuestaCoordinador(respuesta);
 
         try {
             ReporteTutoriaDAO dao = new ReporteTutoriaDAO();
@@ -89,26 +100,30 @@ public class FXMLReporteTutoriaConsulta implements Initializable {
             boolean exito = dao.actualizarReporte(reporteActual);
 
             if (exito) {
-                mostrarAlerta("Éxito", "El reporte ha sido respondido y actualizado.");
+                mostrarAlerta("Éxito", "La respuesta ha sido guardada correctamente.");
                 cerrarVentana();
             } else {
-                mostrarAlerta("Error", "No se pudo guardar la respuesta en la base de datos.");
+                mostrarAlerta("Error", "No se pudo guardar la información en la base de datos.");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            mostrarAlerta("Error de conexión", "Error al conectar con la base de datos.");
+            mostrarAlerta("Error de conexión", "Error al comunicarse con la base de datos: " + ex.getMessage());
         }
     }
 
-    private void aplicarEstiloLectura() {
-        String estiloVisible = "-fx-opacity: 1; -fx-text-fill: black; -fx-background-color: #f4f4f4;";
+    @FXML
+    private void clicCancelar(ActionEvent event) {
+        cerrarVentana();
+    }
 
-        tfIdReporte.setStyle(estiloVisible);
-        tfIdEstudiante.setStyle(estiloVisible);
-        tfIdTutor.setStyle(estiloVisible);
-        tfIdFechaTutoria.setStyle(estiloVisible);
-        taReporte.setStyle(estiloVisible);
-        chbAsistencia.setStyle("-fx-opacity: 1;");
+    @FXML
+    private void clicCerrar(ActionEvent event) {
+        cerrarVentana();
+    }
+
+    private void cerrarVentana() {
+        Stage stage = (Stage) lbIdReporte.getScene().getWindow();
+        stage.close();
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
@@ -118,12 +133,4 @@ public class FXMLReporteTutoriaConsulta implements Initializable {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
-    private void cerrarVentana() {
-        Stage stage = (Stage) tfIdReporte.getScene().getWindow();
-        stage.close();
-    }
 }
-
-
- */

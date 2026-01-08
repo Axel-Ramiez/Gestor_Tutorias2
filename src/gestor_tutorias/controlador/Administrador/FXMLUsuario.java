@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,6 +25,7 @@ public class FXMLUsuario implements Initializable {
     @FXML private TextField tfCorreo;
     @FXML private PasswordField pfContrasena;
     @FXML private ComboBox<Rol> cbRol;
+
     @FXML private Label lblErrorNoPersonal;
     @FXML private Label lblErrorNombre;
     @FXML private Label lblErrorApellidoPaterno;
@@ -34,58 +34,52 @@ public class FXMLUsuario implements Initializable {
     @FXML private Label lblErrorContrasena;
     @FXML private Label lblErrorRol;
 
-
     private Usuario usuarioEdicion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarRoles();
-
     }
 
     @FXML
     private void clicGuardar(ActionEvent event) {
+
         if (!validarCampos()) {
+            return;
+        }
+
+        int idExcluir = (this.usuarioEdicion != null) ? this.usuarioEdicion.getIdUsuario() : 0;
+
+        try {
+            if (UsuarioDAO.esNoPersonalRegistrado(tfNoPersonal.getText(), idExcluir)) {
+                lblErrorNoPersonal.setText("Este No. Personal ya está registrado.");
+                tfNoPersonal.setStyle("-fx-border-color: red;");
+                return;
+            }
+        } catch (SQLException ex) {
+            mostrarAlerta("Error", "Error al validar duplicados: " + ex.getMessage());
             return;
         }
 
         Usuario u = obtenerUsuarioDeVista();
 
         try {
-            boolean exito = UsuarioDAO.registrarUsuario(u);
+            boolean exito = false;
+
+            if (this.usuarioEdicion == null) {
+            } else {
+                u.setIdUsuario(this.usuarioEdicion.getIdUsuario()); // Recuperamos el ID
+                exito = UsuarioDAO.editarUsuario(u);
+            }
+
             if (exito) {
-                mostrarAlerta("Éxito", "Usuario registrado correctamente.");
+                mostrarAlerta("Éxito", "La información se guardó correctamente.");
                 cerrarVentana();
             } else {
-                mostrarAlerta("Error", "No se pudo registrar. Verifica duplicados.");
+                mostrarAlerta("Error", "No se pudo guardar la información.");
             }
         } catch (SQLException ex) {
-            mostrarAlerta("Error BD", "Error al registrar: " + ex.getMessage());
-            ex.printStackTrace();
-        }
-    }
-
-
-    @FXML
-    private void clicEditar(ActionEvent event) {
-        if (!validarCampos()) {
-            return;
-        }
-
-        Usuario u = obtenerUsuarioDeVista();
-
-        u.setIdUsuario(this.usuarioEdicion.getIdUsuario());
-
-        try {
-            boolean exito = UsuarioDAO.editarUsuario(u);
-            if (exito) {
-                mostrarAlerta("Éxito", "Usuario actualizado correctamente.");
-                cerrarVentana();
-            } else {
-                mostrarAlerta("Error", "No se pudo actualizar la información.");
-            }
-        } catch (SQLException ex) {
-            mostrarAlerta("Error BD", "Error al actualizar: " + ex.getMessage());
+            mostrarAlerta("Error BD", "Error de conexión: " + ex.getMessage());
             ex.printStackTrace();
         }
     }
@@ -100,16 +94,16 @@ public class FXMLUsuario implements Initializable {
         tfCorreo.setText(usuario.getCorreoUsuario());
         pfContrasena.setText(usuario.getContrasenaUsuario());
         tfNoPersonal.setEditable(false);
+
         cargarRoles();
+
         for (Rol r : cbRol.getItems()) {
             if (r.getIdRol() == usuario.getIdRol()) {
                 cbRol.setValue(r);
                 break;
             }
         }
-
     }
-
 
     private Usuario obtenerUsuarioDeVista() {
         Usuario u = new Usuario();
@@ -139,18 +133,28 @@ public class FXMLUsuario implements Initializable {
 
     private boolean validarCampos() {
         boolean valido = true;
+
+        tfNoPersonal.setStyle("");
+
         if (!Validacion.validarLongitud(tfNoPersonal, lblErrorNoPersonal, 1, 20)) valido = false;
         else if (!Validacion.validarNoPersonal(tfNoPersonal, lblErrorNoPersonal)) valido = false;
+
         if (!Validacion.validarLongitud(tfNombre, lblErrorNombre, 1, 150)) valido = false;
         else if (!Validacion.validarNombre(tfNombre, lblErrorNombre)) valido = false;
+
         if (!Validacion.validarLongitud(tfApellidoPaterno, lblErrorApellidoPaterno, 1, 150)) valido = false;
         else if (!Validacion.validarNombre(tfApellidoPaterno, lblErrorApellidoPaterno)) valido = false;
+
         if (!Validacion.validarLongitud(tfApellidoMaterno, lblErrorApellidoMaterno, 1, 150)) valido = false;
         else if (!Validacion.validarNombre(tfApellidoMaterno, lblErrorApellidoMaterno)) valido = false;
+
         if (!Validacion.validarLongitud(tfCorreo, lblErrorCorreo, 1, 100)) valido = false;
         else if (!Validacion.validarCorreoPersonal(tfCorreo, lblErrorCorreo)) valido = false;
+
         if (!Validacion.validarLongitud(pfContrasena, lblErrorContrasena, 5, 50)) valido = false;
+
         if (!Validacion.validarSeleccion(cbRol, lblErrorRol, "Selecciona un rol")) valido = false;
+
         return valido;
     }
 

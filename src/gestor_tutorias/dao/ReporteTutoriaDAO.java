@@ -35,13 +35,13 @@ public class ReporteTutoriaDAO {
             "SELECT r.id_reporte_tutoria, r.id_usuario, r.id_estudiante, r.id_periodo_escolar, " +
                     "r.fecha_reporte_tutoria, r.texto_reporte_tutoria, r.respuesta_coordinador, " +
                     "r.asistencia_reporte_tutoria, r.estado_reporte_tutoria, " +
-                    "u.nombre_completo AS nombre_tutor, " +
-                    "e.nombre_completo AS nombre_estudiante, " +
-                    "pe.nombre AS periodo_nombre " +
+                    "CONCAT(u.nombre_usuario, ' ', u.apellido_paterno_usuario, ' ', u.apellido_materno_usuario) AS nombre_tutor, " +
+                    "CONCAT(e.nombre_estudiante, ' ', e.apellido_paterno_estudiante, ' ', e.apellido_materno_estudiante) AS nombre_estudiante, " +
+                    "pe.nombre_periodo_escolar AS periodo_nombre " +
                     "FROM " + TABLA + " r " +
-                    "INNER JOIN usuario u ON r.id_usuario = u.id_usuario " +
-                    "INNER JOIN estudiante e ON r.id_estudiante = e.id_estudiante " +
-                    "INNER JOIN periodo_escolar pe ON r.id_periodo_escolar = pe.id_periodo_escolar ";
+                    "LEFT JOIN usuario u ON r.id_usuario = u.id_usuario " +
+                    "LEFT JOIN estudiante e ON r.id_estudiante = e.id_estudiante " +
+                    "LEFT JOIN periodo_escolar pe ON r.id_periodo_escolar = pe.id_periodo_escolar ";
 
     /* ========================= GUARDAR ========================= */
 

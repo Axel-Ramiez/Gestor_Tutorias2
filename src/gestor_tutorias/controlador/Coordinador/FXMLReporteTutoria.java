@@ -1,4 +1,4 @@
-package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.dao.ReporteTutoriaDAO;
 import gestor_tutorias.pojo.ReporteTutoria;
@@ -6,6 +6,7 @@ import gestor_tutorias.Enum.EstadoReporte;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate; // Importante para la columna de fecha
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -24,22 +25,22 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class FXMLReporteTutoriaPrincipal implements Initializable {
+public class FXMLReporteTutoria implements Initializable {
 
     @FXML
     private TableView<ReporteTutoria> tvReportes;
     @FXML
-    private TableColumn colIdReporte;
+    private TableColumn<ReporteTutoria, Integer> colIdReporte;
     @FXML
-    private TableColumn colFecha;
+    private TableColumn<ReporteTutoria, LocalDate> colFecha; // Cambiado a LocalDate
     @FXML
-    private TableColumn colPeriodo;
+    private TableColumn<ReporteTutoria, String> colPeriodo;
     @FXML
-    private TableColumn colEstudiante;
+    private TableColumn<ReporteTutoria, String> colEstudiante;
     @FXML
-    private TableColumn colEstado;
+    private TableColumn<ReporteTutoria, EstadoReporte> colEstado;
     @FXML
-    private TableColumn colAsistencia;
+    private TableColumn<ReporteTutoria, Boolean> colAsistencia;
 
     private ObservableList<ReporteTutoria> listaReportes;
 
@@ -50,12 +51,23 @@ public class FXMLReporteTutoriaPrincipal implements Initializable {
     }
 
     private void configurarColumnas() {
-        colIdReporte.setCellValueFactory(new PropertyValueFactory("idReporte"));
-        colFecha.setCellValueFactory(new PropertyValueFactory("fecha"));
-        colPeriodo.setCellValueFactory(new PropertyValueFactory("periodoEscolar"));
-        colEstudiante.setCellValueFactory(new PropertyValueFactory("nombreEstudiante"));
-        colEstado.setCellValueFactory(new PropertyValueFactory("estado"));
-        colAsistencia.setCellValueFactory(new PropertyValueFactory("asistencia"));
+        // Deben coincidir con los nombres de las variables en el POJO ReporteTutoria
+        colIdReporte.setCellValueFactory(new PropertyValueFactory<>("idReporte"));
+
+        // Coincide con getFechaReporte()
+        colFecha.setCellValueFactory(new PropertyValueFactory<>("fechaReporte"));
+
+        // Coincide con getPeriodoEscolar() (el campo String auxiliar)
+        colPeriodo.setCellValueFactory(new PropertyValueFactory<>("periodoEscolar"));
+
+        // Coincide con getNombreEstudiante()
+        colEstudiante.setCellValueFactory(new PropertyValueFactory<>("nombreEstudiante"));
+
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+
+        colAsistencia.setCellValueFactory(new PropertyValueFactory<>("asistencia"));
+
+        // Renderizado personalizado para la columna asistencia
         colAsistencia.setCellFactory(col -> new TableCell<ReporteTutoria, Boolean>() {
             @Override
             protected void updateItem(Boolean item, boolean empty) {
@@ -64,6 +76,7 @@ public class FXMLReporteTutoriaPrincipal implements Initializable {
                     setText(null);
                 } else {
                     setText(item ? "Asistió" : "Falta");
+                    setStyle(item ? "-fx-text-fill: green; -fx-font-weight: bold;" : "-fx-text-fill: red; -fx-font-weight: bold;");
                 }
             }
         });
@@ -77,7 +90,7 @@ public class FXMLReporteTutoriaPrincipal implements Initializable {
             tvReportes.setItems(listaReportes);
         } catch (SQLException ex) {
             ex.printStackTrace();
-            mostrarAlerta("Error de conexión", "No se pudieron cargar los reportes.");
+            mostrarAlerta("Error de conexión", "No se pudieron cargar los reportes de la base de datos.");
         }
     }
 
@@ -86,7 +99,7 @@ public class FXMLReporteTutoriaPrincipal implements Initializable {
         ReporteTutoria seleccionado = tvReportes.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
-            mostrarAlerta("Selección requerida", "Selecciona un reporte de la tabla para consultarlo.");
+            mostrarAlerta("Aviso", "Por favor selecciona un reporte de la tabla para consultarlo.");
             return;
         }
 
@@ -99,16 +112,23 @@ public class FXMLReporteTutoriaPrincipal implements Initializable {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Responder Reporte");
+            stage.setTitle("Detalle del Reporte de Tutoría");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
+            // Recargar tabla al cerrar por si hubo cambios
             cargarReportes();
 
         } catch (IOException ex) {
             ex.printStackTrace();
-            mostrarAlerta("Error", "No se pudo abrir la ventana de consulta.");
+            mostrarAlerta("Error de Interfaz", "No se pudo abrir la ventana de consulta: " + ex.getMessage());
         }
+    }
+
+    @FXML
+    private void clicCerrar(ActionEvent event) {
+        Stage stage = (Stage) tvReportes.getScene().getWindow();
+        stage.close();
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
@@ -120,7 +140,3 @@ public class FXMLReporteTutoriaPrincipal implements Initializable {
     }
 }
 
-
-
-
- */
