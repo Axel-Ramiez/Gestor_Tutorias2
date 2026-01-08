@@ -136,7 +136,7 @@ public class FXMLReporteTutoriaEditar {
         chkAsistencia.setDisable(false);
 
         taTextoReporte.setEditable(true);
-        taRespuestaCoordinador.setEditable(true);
+        taRespuestaCoordinador.setEditable(false);
 
         cbTutor.setDisable(false);
         cbEstudiante.setDisable(false);

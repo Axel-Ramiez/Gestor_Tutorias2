@@ -1,104 +1,155 @@
-package gestor_tutorias.controlador.Coordinador;/*package gestor_tutorias.controlador.Coordinador;
+package gestor_tutorias.controlador.Coordinador;
 
 import gestor_tutorias.dao.EstudianteDAO;
+
 import gestor_tutorias.pojo.Estudiante;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
+
 import javafx.collections.ObservableList;
+
+import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
+
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+
 import javafx.scene.Parent;
+
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+
+import javafx.scene.control.*;
+
 import javafx.stage.Modality;
+
 import javafx.stage.Stage;
 
-public class FXMLEstudiante implements Initializable {
+import java.io.IOException;
+
+import java.sql.SQLException;
+
+import java.util.List;
+
+public class FXMLEstudiante {
+
+    @FXML private TableView<Estudiante> tablaEstudiante;
+
+    @FXML private TableColumn<Estudiante, String> colMatricula;
+
+    @FXML private TableColumn<Estudiante, String> colNombreCompleto;
+
+    @FXML private TableColumn<Estudiante, String> colCarrera;
+
+    @FXML private TableColumn<Estudiante, Integer> colSemestre;
+
+    @FXML private TableColumn<Estudiante, String> colTutor;
+
+    private ObservableList<Estudiante> listaEstudiantes;
 
     @FXML
-    private TableView<Estudiante> tablaEstudiante;
-    @FXML
-    private TableColumn colMatricula;
-    @FXML
-    private TableColumn colNombreCompleto;
-    @FXML
-    private TableColumn colCarrera;
-    @FXML
-    private TableColumn colSemestre;
-    @FXML
-    private TableColumn colTutor;
 
-    private ObservableList<Estudiante> lista;
+    private void initialize() {
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        configurarColumnas();
-        cargarAlumnos();
+        configurarTabla();
+
+        cargarEstudiantes();
+
     }
 
-    private void configurarColumnas() {
-        colMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
-        colNombreCompleto.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
-        colSemestre.setCellValueFactory(new PropertyValueFactory("semestre"));
-        colCarrera.setCellValueFactory(new PropertyValueFactory("carreraNombre"));
-        colTutor.setCellValueFactory(new PropertyValueFactory("tutorNombre"));
+    private void configurarTabla() {
+
+        colMatricula.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("matriculaEstudiante"));
+
+        colNombreCompleto.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
+
+                c.getValue().getNombreEstudiante() + " " + c.getValue().getApellidoPaternoEstudiante()
+
+        ));
+
+        colCarrera.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("carreraNombre"));
+
+        colSemestre.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("semestreEstudiante"));
+
+        colTutor.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("tutorNombre"));
+
+    }
+
+    private void cargarEstudiantes() {
+
+        try {
+
+            List<Estudiante> resultado = EstudianteDAO.obtenerTodos();
+
+            listaEstudiantes = FXCollections.observableArrayList(resultado);
+
+            tablaEstudiante.setItems(listaEstudiantes);
+
+        } catch (SQLException e) {
+
+            mostrarAlerta("Error", "No se pudo conectar con la base de datos.");
+
+        }
+
     }
 
     @FXML
-    private void clicConsultar() {
+
+    private void clicConsultar(ActionEvent event) {
+
         Estudiante seleccionado = tablaEstudiante.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText(null);
-            alert.setContentText("Seleccione un estudiante de la lista para asignar tutor.");
-            alert.showAndWait();
+
+            mostrarAlerta("Aviso", "Seleccione un estudiante de la tabla.");
+
             return;
+
         }
 
         try {
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Coordinador/FXMLEstudianteConsulta.fxml"));
+
             Parent root = loader.load();
 
             FXMLEstudianteConsulta controlador = loader.getController();
-            controlador.cargarEstudiante(seleccionado);
+
+            controlador.inicializarInformacion(seleccionado);
 
             Stage stage = new Stage();
-            stage.setTitle("Asignar Tutor");
-            stage.setScene(new Scene(root));
+
             stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.setTitle("Detalles del Estudiante");
+
+            stage.setScene(new Scene(root));
+
             stage.showAndWait();
 
-            cargarAlumnos();
+            cargarEstudiantes(); // Recargar por si se editó
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("No se pudo abrir la ventana de consulta: " + ex.getMessage());
-            alert.showAndWait();
-        }
-    }
+        } catch (IOException e) {
 
-    private void cargarAlumnos() {
-        try {
-            List<Estudiante> alumnos = EstudianteDAO.obtenerTodos();
-            lista = FXCollections.observableArrayList(alumnos);
-            tablaEstudiante.setItems(lista);
-        } catch (SQLException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error de conexión");
-            alert.setContentText("No se pudo conectar con la base de datos.");
-            alert.showAndWait();
+
+            mostrarAlerta("Error", "No se pudo abrir la ventana de detalles.");
+
         }
+
     }
-}*/
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+
+        alert.setTitle(titulo);
+
+        alert.setHeaderText(null);
+
+        alert.setContentText(mensaje);
+
+        alert.showAndWait();
+
+    }
+
+}
