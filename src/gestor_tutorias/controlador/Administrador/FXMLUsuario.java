@@ -67,8 +67,10 @@ public class FXMLUsuario implements Initializable {
             boolean exito = false;
 
             if (this.usuarioEdicion == null) {
+
+                exito = UsuarioDAO.registrarUsuario(u);
             } else {
-                u.setIdUsuario(this.usuarioEdicion.getIdUsuario()); // Recuperamos el ID
+                u.setIdUsuario(this.usuarioEdicion.getIdUsuario());
                 exito = UsuarioDAO.editarUsuario(u);
             }
 
