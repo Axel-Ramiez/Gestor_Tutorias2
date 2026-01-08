@@ -170,13 +170,14 @@ public class FXMLProblematicaPrincipal {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource(
-                            "/gestor_tutorias/vista/Tutor/FXMLProblematicaConsultar.fxml"
+                            "/gestor_tutorias/vista/Tutor/FXMLProblematicaConsulta.fxml"
                     )
             );
 
             Parent root = loader.load();
 
-            FXMLProblematicaEditar controlador = loader.getController();
+            FXMLProblematicaConsulta controlador = loader.getController();
+
             controlador.setIdProblematica(seleccionada.getIdProblematica());
 
             Stage stage = new Stage();

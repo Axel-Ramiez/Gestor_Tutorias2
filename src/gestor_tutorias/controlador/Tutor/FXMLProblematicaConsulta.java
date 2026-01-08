@@ -119,69 +119,32 @@ public class FXMLProblematicaConsulta {
     /* ===================== CONFIG CAMPOS ===================== */
 
     private void configurarCampos() {
+        tfIdReporteTutoria.setEditable(false);
 
-        lbIdProblematica.setDisable(false);
+        tfTitulo.setEditable(false);
 
-        tfIdReporteTutoria.setEditable(true);
-        tfTitulo.setEditable(true);
-        taDescripcion.setEditable(true);
+        taDescripcion.setEditable(false);
 
-        cbEstado.setDisable(false);
-        cbCarrera.setDisable(false);
+        cbEstado.setDisable(true);
+
+        cbCarrera.setDisable(true);
+
+        cbEstado.setStyle("-fx-opacity: 1;");
+
+        cbCarrera.setStyle("-fx-opacity: 1;");
     }
 
     /* ===================== GUARDAR ===================== */
 
-    public void clicGuardar(ActionEvent event) {
 
-        try {
-            juntarDatos();
-
-            if (problematicaActual.getIdProblematica() > 0) {
-                problematicaDAO.actualizarProblematica(problematicaActual);
-            } else {
-                int idGenerado =
-                        problematicaDAO.guardarProblematica(problematicaActual);
-                problematicaActual.setIdProblematica(idGenerado);
-            }
-
-            cerrar(event);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo guardar la problemática.");
-        }
-    }
 
     /* ===================== JUNTAR DATOS ===================== */
 
-    private void juntarDatos() {
 
-        if (problematicaActual == null) {
-            problematicaActual = new Problematica();
-        }
-
-        problematicaActual.setIdReporteTutoria(
-                Integer.parseInt(tfIdReporteTutoria.getText())
-        );
-
-        problematicaActual.setTitulo(tfTitulo.getText());
-        problematicaActual.setDescripcion(taDescripcion.getText());
-        problematicaActual.setEstado(cbEstado.getValue());
-
-        Carrera carrera = cbCarrera.getValue();
-        if (carrera != null) {
-            problematicaActual.setIdCarrera(carrera.getIdCarrera());
-        } else {
-            problematicaActual.setIdCarrera(null);
-        }
-    }
 
     /* ===================== BOTONES ===================== */
 
-    public void clicCancelar(ActionEvent actionEvent) {
-        cerrar(actionEvent);
-    }
+
 
     public void clicCerrar(ActionEvent actionEvent) {
         cerrar(actionEvent);
