@@ -51,23 +51,12 @@ public class FXMLReporteTutoria implements Initializable {
     }
 
     private void configurarColumnas() {
-        // Deben coincidir con los nombres de las variables en el POJO ReporteTutoria
         colIdReporte.setCellValueFactory(new PropertyValueFactory<>("idReporte"));
-
-        // Coincide con getFechaReporte()
         colFecha.setCellValueFactory(new PropertyValueFactory<>("fechaReporte"));
-
-        // Coincide con getPeriodoEscolar() (el campo String auxiliar)
         colPeriodo.setCellValueFactory(new PropertyValueFactory<>("periodoEscolar"));
-
-        // Coincide con getNombreEstudiante()
         colEstudiante.setCellValueFactory(new PropertyValueFactory<>("nombreEstudiante"));
-
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
-
         colAsistencia.setCellValueFactory(new PropertyValueFactory<>("asistencia"));
-
-        // Renderizado personalizado para la columna asistencia
         colAsistencia.setCellFactory(col -> new TableCell<ReporteTutoria, Boolean>() {
             @Override
             protected void updateItem(Boolean item, boolean empty) {
@@ -76,7 +65,7 @@ public class FXMLReporteTutoria implements Initializable {
                     setText(null);
                 } else {
                     setText(item ? "Asistió" : "Falta");
-                    setStyle(item ? "-fx-text-fill: green; -fx-font-weight: bold;" : "-fx-text-fill: red; -fx-font-weight: bold;");
+                    setStyle(item ? "-fx-font-weight: bold;" : "-fx-font-weight: bold;");
                 }
             }
         });
@@ -115,8 +104,6 @@ public class FXMLReporteTutoria implements Initializable {
             stage.setTitle("Detalle del Reporte de Tutoría");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-
-            // Recargar tabla al cerrar por si hubo cambios
             cargarReportes();
 
         } catch (IOException ex) {
