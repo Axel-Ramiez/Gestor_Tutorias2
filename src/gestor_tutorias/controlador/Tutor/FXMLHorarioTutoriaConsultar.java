@@ -95,7 +95,7 @@ public class FXMLHorarioTutoriaConsultar {
 
         cbMinutoFin.setDisable(true);
 
-        dpFecha.setStyle("-fx-opacity: 1; -fx-text-fill: black;"); // Para que se vea claro aunque esté deshabilitado
+        dpFecha.setStyle("-fx-opacity: 1; -fx-text-fill: black;");
 
     }
 

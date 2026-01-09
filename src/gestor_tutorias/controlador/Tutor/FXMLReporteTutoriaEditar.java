@@ -144,36 +144,52 @@ public class FXMLReporteTutoriaEditar {
     }
 
 
+    @FXML
     public void clicGuardar(ActionEvent event) {
+        if (cbTutor.getValue() == null) {
+            mostrarAlerta("Campo Requerido", "El campo Tutor es obligatorio. Por favor seleccione uno.");
+            return;
+        }
+        if (cbEstudiante.getValue() == null) {
+            mostrarAlerta("Campo Requerido", "El campo Estudiante es obligatorio.");
+            return;
+        }
+        if (cbPeriodo.getValue() == null) {
+            mostrarAlerta("Campo Requerido", "El campo Periodo Escolar es obligatorio.");
+            return;
+        }
+
         try {
             juntarDatos();
-            reporteDAO.actualizarReporte(reporteActual);
-            cerrar(event);
+
+            boolean exito = reporteDAO.actualizarReporte(reporteActual);
+
+            if (exito) {
+                boolean asistio = chkAsistencia.isSelected();
+                boolean enRiesgo = !asistio;
+                EstudianteDAO.cambiarEstadoRiesgo(reporteActual.getIdEstudiante(), enRiesgo);
+
+                mostrarAlerta("Éxito", "Reporte actualizado correctamente.");
+                cerrar(event);
+            } else {
+                mostrarAlerta("Error", "No se pudieron guardar los cambios.");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo guardar el reporte.");
+            mostrarAlerta("Error", "Excepción al guardar: " + e.getMessage());
         }
     }
-
 
     private void juntarDatos() {
         reporteActual.setFechaReporte(dpFechaReporte.getValue());
         reporteActual.setTextoReporte(taTextoReporte.getText());
-        reporteActual.setRespuestaCoordinador(taRespuestaCoordinador.getText());
         reporteActual.setAsistencia(chkAsistencia.isSelected());
         reporteActual.setEstado(cbEstado.getValue());
-
-        reporteActual.setIdUsuario(
-                obtenerIdSeleccionado(cbTutor, Usuario::getIdUsuario)
-        );
-        reporteActual.setIdEstudiante(
-                obtenerIdSeleccionado(cbEstudiante, Estudiante::getIdEstudiante)
-        );
-        reporteActual.setIdPeriodoEscolar(
-                obtenerIdSeleccionado(cbPeriodo, PeriodoEscolar::getIdPeriodoEscolar)
-        );
+        reporteActual.setIdUsuario(obtenerIdSeleccionado(cbTutor, Usuario::getIdUsuario));
+        reporteActual.setIdEstudiante(obtenerIdSeleccionado(cbEstudiante, Estudiante::getIdEstudiante));
+        reporteActual.setIdPeriodoEscolar(obtenerIdSeleccionado(cbPeriodo, PeriodoEscolar::getIdPeriodoEscolar));
     }
-
 
     public void clicCerrar(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource())
@@ -193,7 +209,14 @@ public class FXMLReporteTutoriaEditar {
 
 
     private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert.AlertType tipo = Alert.AlertType.INFORMATION;
+
+
+        if (titulo.toLowerCase().contains("error")) {
+            tipo = Alert.AlertType.ERROR;
+        }
+
+        Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);

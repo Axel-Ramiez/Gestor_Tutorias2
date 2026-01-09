@@ -82,6 +82,14 @@ public class FXMLReporteTutoriaCrear {
             int idGenerado = reporteDAO.guardarReporte(reporteActual);
 
             if (idGenerado > 0) {
+
+                if (!chkAsistencia.isSelected()) {
+                    boolean riesgoActualizado = EstudianteDAO.cambiarEstadoRiesgo(reporteActual.getIdEstudiante(), true);
+                    if(riesgoActualizado) {
+                        System.out.println("El estudiante ha sido marcado en riesgo por inasistencia.");
+                    }
+                }
+
                 mostrarAlerta("Éxito", "Reporte creado correctamente.");
                 cerrar(event);
             } else {

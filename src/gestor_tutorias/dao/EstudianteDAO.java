@@ -218,6 +218,18 @@ public class EstudianteDAO {
         return existe;
     }
 
+    public static boolean cambiarEstadoRiesgo(int idEstudiante, boolean enRiesgo) throws SQLException {
+        String sql = "UPDATE estudiante SET riesgo_estudiante = ? WHERE id_estudiante = ?";
+
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, enRiesgo ? 1 : 0);
+            ps.setInt(2, idEstudiante);
+
+            return ps.executeUpdate() > 0;
+        }
+    }
 
     private static Estudiante mapearEstudiante(ResultSet rs) throws SQLException {
         Estudiante est = new Estudiante();

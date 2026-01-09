@@ -14,7 +14,6 @@ import java.time.LocalTime;
 
 public class FXMLHorarioTutoriaCrear {
 
-    // Etiqueta decorativa (en crear no hay ID aún)
     @FXML private Label lbIdHorario;
 
     @FXML private DatePicker dpFecha;
@@ -67,7 +66,6 @@ public class FXMLHorarioTutoriaCrear {
 
     @FXML
     public void clicGuardar(ActionEvent event) {
-        // 1. Validar antes de procesar
         if (!validarCampos()) {
             return;
         }
