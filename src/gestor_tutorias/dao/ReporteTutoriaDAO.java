@@ -191,6 +191,19 @@ public class ReporteTutoriaDAO {
         return r;
     }
 
+    public boolean actualizarRespuesta(ReporteTutoria r) throws SQLException {
+        String sql = "UPDATE reporte_tutoria SET respuesta_coordinador = ?, estado_reporte_tutoria = ? WHERE id_reporte_tutoria = ?";
+
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, r.getRespuestaCoordinador());
+            ps.setString(2, r.getEstado().getValorBD());
+            ps.setInt(3, r.getIdReporte());
+
+            return ps.executeUpdate() > 0;
+        }
+    }
 
     private void cerrarRecursos(Connection conn, PreparedStatement ps, ResultSet rs) {
         try {

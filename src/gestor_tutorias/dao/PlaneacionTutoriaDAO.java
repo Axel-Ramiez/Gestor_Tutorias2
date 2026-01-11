@@ -164,6 +164,26 @@ public class PlaneacionTutoriaDAO {
     }
 
 
+    public List<LocalDate> obtenerFechasPorPeriodo(int idPeriodo) throws SQLException {
+        List<LocalDate> fechas = new ArrayList<>();
+        String sql = "SELECT fecha_tutoria FROM planeacion_tutoria WHERE id_periodo_escolar = ?";
+
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idPeriodo);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                java.sql.Date fechaSQL = rs.getDate("fecha_tutoria");
+                if (fechaSQL != null) {
+                    fechas.add(fechaSQL.toLocalDate());
+                }
+            }
+        }
+        return fechas;
+    }
+
     private void cerrarRecursos(Connection conn, PreparedStatement ps, ResultSet rs) {
         try {
             if (rs != null) rs.close();

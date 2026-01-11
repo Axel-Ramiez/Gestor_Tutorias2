@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="532.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLReporteTutoriaConsulta">
+<AnchorPane prefHeight="532.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestor_tutorias.controlador.Coordinador.FXMLReporteTutoriaConsulta">
     <children>
 
         <Pane prefHeight="60.0" prefWidth="720.0" style="-fx-background-color: #283593;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -48,12 +49,8 @@
         <Label layoutX="30.0" layoutY="400.0" text="Respuesta del Coordinador" />
         <TextArea fx:id="taRespuestaCoordinador" layoutX="30.0" layoutY="420.0" prefHeight="60.0" prefWidth="600.0" promptText="Respuesta o comentarios..." wrapText="true" />
 
-
-        <Button layoutX="511.0" layoutY="490.0" onAction="#clicCancelar" prefWidth="90.0" style="-fx-cursor: hand;" text="Cancelar" />
-
-        <Button layoutX="416.0" layoutY="490.0" onAction="#clicCerrar" prefWidth="90.0" style="-fx-cursor: hand;" text="Cerrar" />
-
-        <Button layoutX="610.0" layoutY="490.0" onAction="#clicGuardar" prefWidth="90.0" style="-fx-cursor: hand;" text="Guardar" />
+        <Button layoutX="421.0" layoutY="493.0" onAction="#clicCerrar" prefWidth="90.0" style="-fx-cursor: hand;" text="Cerrar" />
+      <Button layoutX="540.0" layoutY="493.0" onAction="#clicGuardar" prefWidth="90.0" style="-fx-cursor: hand;" text="Guardar" />
 
     </children>
 </AnchorPane>

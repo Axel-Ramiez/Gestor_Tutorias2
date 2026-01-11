@@ -3,6 +3,7 @@ package gestor_tutorias.controlador.Tutor;
 import gestor_tutorias.Enum.EstadoReporte;
 import gestor_tutorias.dao.EstudianteDAO;
 import gestor_tutorias.dao.PeriodoEscolarDAO;
+import gestor_tutorias.dao.PlaneacionTutoriaDAO;
 import gestor_tutorias.dao.ReporteTutoriaDAO;
 import gestor_tutorias.dao.UsuarioDAO;
 import gestor_tutorias.pojo.Estudiante;
@@ -18,11 +19,12 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class FXMLReporteTutoriaCrear {
 
     @FXML private Label lbIdReporte;
-    @FXML private DatePicker dpFechaReporte;
+    @FXML private ComboBox<LocalDate> cbFechaReporte;
     @FXML private ComboBox<EstadoReporte> cbEstado;
     @FXML private ComboBox<Usuario> cbTutor;
     @FXML private ComboBox<Estudiante> cbEstudiante;
@@ -33,12 +35,12 @@ public class FXMLReporteTutoriaCrear {
 
     private ReporteTutoria reporteActual;
     private final ReporteTutoriaDAO reporteDAO = new ReporteTutoriaDAO();
+    private final PlaneacionTutoriaDAO planeacionDAO = new PlaneacionTutoriaDAO();
 
     @FXML
     private void initialize() {
         reporteActual = new ReporteTutoria();
 
-        dpFechaReporte.setValue(LocalDate.now());
         cbEstado.setItems(FXCollections.observableArrayList(EstadoReporte.values()));
         cbEstado.setValue(EstadoReporte.PENDIENTE);
 
@@ -48,6 +50,30 @@ public class FXMLReporteTutoriaCrear {
             cargarComboPeriodos(cbPeriodo);
         } catch (SQLException e) {
             mostrarAlerta("Error", "No se pudieron cargar los catálogos.");
+        }
+
+        cbPeriodo.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                cargarFechasDeTutoria(newValue.getIdPeriodoEscolar());
+            } else {
+                cbFechaReporte.getItems().clear();
+            }
+        });
+    }
+
+    private void cargarFechasDeTutoria(int idPeriodo) {
+        try {
+            cbFechaReporte.getItems().clear();
+            List<LocalDate> fechas = planeacionDAO.obtenerFechasPorPeriodo(idPeriodo);
+
+            if (fechas.isEmpty()) {
+                mostrarAlerta("Aviso", "No hay fechas de tutoría planeadas para este periodo.");
+            } else {
+                cbFechaReporte.setItems(FXCollections.observableArrayList(fechas));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "Error al cargar las fechas de la planeación.");
         }
     }
 
@@ -68,10 +94,9 @@ public class FXMLReporteTutoriaCrear {
         return seleccionado != null ? extractorId.apply(seleccionado) : 0;
     }
 
-
     @FXML
     public void clicGuardar(ActionEvent event) {
-        if (dpFechaReporte.getValue() == null || cbTutor.getValue() == null ||
+        if (cbFechaReporte.getValue() == null || cbTutor.getValue() == null ||
                 cbEstudiante.getValue() == null || cbPeriodo.getValue() == null) {
             mostrarAlerta("Campos vacíos", "Por favor seleccione Tutor, Estudiante, Periodo y Fecha.");
             return;
@@ -82,12 +107,11 @@ public class FXMLReporteTutoriaCrear {
             int idGenerado = reporteDAO.guardarReporte(reporteActual);
 
             if (idGenerado > 0) {
-
                 if (!chkAsistencia.isSelected()) {
-                    boolean riesgoActualizado = EstudianteDAO.cambiarEstadoRiesgo(reporteActual.getIdEstudiante(), true);
-                    if(riesgoActualizado) {
-                        System.out.println("El estudiante ha sido marcado en riesgo por inasistencia.");
-                    }
+                    EstudianteDAO.cambiarEstadoRiesgo(reporteActual.getIdEstudiante(), true);
+                }
+                if (chkAsistencia.isSelected()) {
+                    EstudianteDAO.cambiarEstadoRiesgo(reporteActual.getIdEstudiante(), false);
                 }
 
                 mostrarAlerta("Éxito", "Reporte creado correctamente.");
@@ -103,7 +127,7 @@ public class FXMLReporteTutoriaCrear {
     }
 
     private void juntarDatos() {
-        reporteActual.setFechaReporte(dpFechaReporte.getValue());
+        reporteActual.setFechaReporte(cbFechaReporte.getValue());
         reporteActual.setTextoReporte(taTextoReporte.getText());
         reporteActual.setRespuestaCoordinador(taRespuestaCoordinador.getText());
         reporteActual.setAsistencia(chkAsistencia.isSelected());
@@ -119,7 +143,6 @@ public class FXMLReporteTutoriaCrear {
         cerrar(event);
     }
 
-
     @FXML
     public void clicCancelar(ActionEvent event) {
         cerrar(event);
@@ -132,8 +155,7 @@ public class FXMLReporteTutoriaCrear {
 
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        if (titulo.equals("Error") || titulo.equals("Campos vacíos")) alert.setAlertType(Alert.AlertType.ERROR);
-
+        if (titulo.contains("Error") || titulo.contains("vacíos")) alert.setAlertType(Alert.AlertType.ERROR);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);

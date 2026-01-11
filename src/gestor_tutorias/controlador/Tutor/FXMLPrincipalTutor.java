@@ -52,9 +52,9 @@ public class FXMLPrincipalTutor {
         );
     }
 
-    public void clicPlaneacionTu(ActionEvent actionEvent) {
+    public void clicPlaneacion(ActionEvent actionEvent) {
         cambiarVentana(
-                "/gestor_tutorias/vista/Tutor/FXMLPlaneacionTutoriaPrincipal.fxml",
+                "/gestor_tutorias/vista/Tutor/FXMLPlaneacionTutoria.fxml",
                 "Planeacion de Tutoría"
         );
     }

@@ -1,7 +1,7 @@
 package gestor_tutorias.controlador.Tutor;
 
 import gestor_tutorias.Enum.EstadoReporte;
-import gestor_tutorias.dao.ReporteTutoriaDAO;
+import gestor_tutorias.dao.*;
 import gestor_tutorias.pojo.ReporteTutoria;
 import gestor_tutorias.pojo.PeriodoEscolar;
 import gestor_tutorias.pojo.Usuario;
@@ -12,16 +12,14 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import gestor_tutorias.dao.EstudianteDAO;
-import gestor_tutorias.dao.PeriodoEscolarDAO;
-import gestor_tutorias.dao.UsuarioDAO;
-import javafx.scene.control.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 
 public class FXMLReporteTutoriaEditar {
 
     @FXML private Label lbIdReporte;
-    @FXML private DatePicker dpFechaReporte;
+    @FXML private ComboBox<LocalDate> cbFechaReporte;
     @FXML private ComboBox<EstadoReporte> cbEstado;
     @FXML private ComboBox<Usuario> cbTutor;
     @FXML private ComboBox<Estudiante> cbEstudiante;
@@ -32,9 +30,8 @@ public class FXMLReporteTutoriaEditar {
 
     private int idReporte;
     private ReporteTutoria reporteActual;
-
-
     private final ReporteTutoriaDAO reporteDAO = new ReporteTutoriaDAO();
+    private final PlaneacionTutoriaDAO planeacionDAO = new PlaneacionTutoriaDAO();
 
     @FXML
     private void initialize() {
@@ -47,10 +44,32 @@ public class FXMLReporteTutoriaEditar {
         } catch (SQLException e) {
             mostrarAlerta("Error", "No se pudieron cargar los datos.");
         }
+        cbPeriodo.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                cargarFechasDeTutoria(newValue.getIdPeriodoEscolar());
+            } else {
+                cbFechaReporte.getItems().clear();
+            }
+        });
 
         configurarCampos();
     }
 
+
+    private void cargarFechasDeTutoria(int idPeriodo) {
+        try {
+            cbFechaReporte.getItems().clear();
+            List<LocalDate> fechas = planeacionDAO.obtenerFechasPorPeriodo(idPeriodo);
+
+            if (fechas.isEmpty()) {
+            } else {
+                cbFechaReporte.setItems(FXCollections.observableArrayList(fechas));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "Error al cargar las fechas de la planeación.");
+        }
+    }
 
     public void setIdReporte(int idReporte) {
         this.idReporte = idReporte;
@@ -58,36 +77,19 @@ public class FXMLReporteTutoriaEditar {
     }
 
     private void cargarComboTutores(ComboBox<Usuario> combo) throws SQLException {
-        combo.setItems(FXCollections.observableArrayList(
-                UsuarioDAO.obtenerTutores()
-        ));
+        combo.setItems(FXCollections.observableArrayList(UsuarioDAO.obtenerTutores()));
     }
-
     private void cargarComboEstudiantes(ComboBox<Estudiante> combo) throws SQLException {
-        combo.setItems(FXCollections.observableArrayList(
-                EstudianteDAO.obtenerTodos()
-        ));
+        combo.setItems(FXCollections.observableArrayList(EstudianteDAO.obtenerTodos()));
     }
-
     private void cargarComboPeriodos(ComboBox<PeriodoEscolar> combo) throws SQLException {
-        combo.setItems(FXCollections.observableArrayList(
-                PeriodoEscolarDAO.obtenerTodos()
-        ));
+        combo.setItems(FXCollections.observableArrayList(PeriodoEscolarDAO.obtenerTodos()));
     }
-
-    private <T> int obtenerIdSeleccionado(
-            ComboBox<T> combo,
-            java.util.function.Function<T, Integer> extractorId
-    ) {
+    private <T> int obtenerIdSeleccionado(ComboBox<T> combo, java.util.function.Function<T, Integer> extractorId) {
         T seleccionado = combo.getValue();
         return seleccionado != null ? extractorId.apply(seleccionado) : 0;
     }
-
-    private <T> void seleccionarPorId(
-            ComboBox<T> combo,
-            int idBuscado,
-            java.util.function.Function<T, Integer> extractorId
-    ) {
+    private <T> void seleccionarPorId(ComboBox<T> combo, int idBuscado, java.util.function.Function<T, Integer> extractorId) {
         for (T item : combo.getItems()) {
             if (extractorId.apply(item) == idBuscado) {
                 combo.getSelectionModel().select(item);
@@ -95,8 +97,6 @@ public class FXMLReporteTutoriaEditar {
             }
         }
     }
-
-
 
     private void cargarReporte() {
         try {
@@ -112,42 +112,32 @@ public class FXMLReporteTutoriaEditar {
 
     private void cargarDatosEnVista() {
         lbIdReporte.setText(String.valueOf(reporteActual.getIdReporte()));
-        dpFechaReporte.setValue(reporteActual.getFechaReporte());
         taTextoReporte.setText(reporteActual.getTextoReporte());
         taRespuestaCoordinador.setText(reporteActual.getRespuestaCoordinador());
         chkAsistencia.setSelected(reporteActual.isAsistencia());
         cbEstado.setValue(reporteActual.getEstado());
-
         seleccionarPorId(cbTutor, reporteActual.getIdUsuario(), Usuario::getIdUsuario);
         seleccionarPorId(cbEstudiante, reporteActual.getIdEstudiante(), Estudiante::getIdEstudiante);
         seleccionarPorId(cbPeriodo, reporteActual.getIdPeriodoEscolar(), PeriodoEscolar::getIdPeriodoEscolar);
+        cbFechaReporte.setValue(reporteActual.getFechaReporte());
     }
 
-
-
     private void configurarCampos() {
-
-
         lbIdReporte.setDisable(false);
-
-
-        dpFechaReporte.setDisable(false);
+        cbFechaReporte.setDisable(false);
         cbEstado.setDisable(false);
         chkAsistencia.setDisable(false);
-
         taTextoReporte.setEditable(true);
         taRespuestaCoordinador.setEditable(false);
-
         cbTutor.setDisable(false);
         cbEstudiante.setDisable(false);
         cbPeriodo.setDisable(false);
     }
 
-
     @FXML
     public void clicGuardar(ActionEvent event) {
         if (cbTutor.getValue() == null) {
-            mostrarAlerta("Campo Requerido", "El campo Tutor es obligatorio. Por favor seleccione uno.");
+            mostrarAlerta("Campo Requerido", "El campo Tutor es obligatorio.");
             return;
         }
         if (cbEstudiante.getValue() == null) {
@@ -156,6 +146,10 @@ public class FXMLReporteTutoriaEditar {
         }
         if (cbPeriodo.getValue() == null) {
             mostrarAlerta("Campo Requerido", "El campo Periodo Escolar es obligatorio.");
+            return;
+        }
+        if (cbFechaReporte.getValue() == null) {
+            mostrarAlerta("Campo Requerido", "La fecha de tutoría es obligatoria.");
             return;
         }
 
@@ -182,7 +176,7 @@ public class FXMLReporteTutoriaEditar {
     }
 
     private void juntarDatos() {
-        reporteActual.setFechaReporte(dpFechaReporte.getValue());
+        reporteActual.setFechaReporte(cbFechaReporte.getValue());
         reporteActual.setTextoReporte(taTextoReporte.getText());
         reporteActual.setAsistencia(chkAsistencia.isSelected());
         reporteActual.setEstado(cbEstado.getValue());
@@ -192,9 +186,7 @@ public class FXMLReporteTutoriaEditar {
     }
 
     public void clicCerrar(ActionEvent actionEvent) {
-        Stage stage = (Stage) ((Node) actionEvent.getSource())
-                .getScene().getWindow();
-        stage.close();
+        cerrar(actionEvent);
     }
 
     public void clicCancelar(ActionEvent event) {
@@ -202,17 +194,13 @@ public class FXMLReporteTutoriaEditar {
     }
 
     private void cerrar(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource())
-                .getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
-
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert.AlertType tipo = Alert.AlertType.INFORMATION;
-
-
-        if (titulo.toLowerCase().contains("error")) {
+        if (titulo.toLowerCase().contains("error") || titulo.contains("Requerido")) {
             tipo = Alert.AlertType.ERROR;
         }
 
@@ -222,5 +210,4 @@ public class FXMLReporteTutoriaEditar {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
 }

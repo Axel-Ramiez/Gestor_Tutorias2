@@ -87,7 +87,7 @@ public class FXMLReporteTutoriaConsulta implements Initializable {
         String respuesta = taRespuestaCoordinador.getText();
 
         if (nuevoEstado == null) {
-            mostrarAlerta("Campo requerido", "Debe seleccionar un estado para el reporte.");
+            mostrarAlerta("Campo requerido", "Debe seleccionar un estado.");
             return;
         }
 
@@ -97,24 +97,20 @@ public class FXMLReporteTutoriaConsulta implements Initializable {
         try {
             ReporteTutoriaDAO dao = new ReporteTutoriaDAO();
 
-            boolean exito = dao.actualizarReporte(reporteActual);
+            boolean exito = dao.actualizarRespuesta(reporteActual);
 
             if (exito) {
                 mostrarAlerta("Éxito", "La respuesta ha sido guardada correctamente.");
                 cerrarVentana();
             } else {
-                mostrarAlerta("Error", "No se pudo guardar la información en la base de datos.");
+                mostrarAlerta("Error", "No se pudo guardar la información.");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            mostrarAlerta("Error de conexión", "Error al comunicarse con la base de datos: " + ex.getMessage());
+            mostrarAlerta("Error de conexión", "Error BD: " + ex.getMessage());
         }
     }
 
-    @FXML
-    private void clicCancelar(ActionEvent event) {
-        cerrarVentana();
-    }
 
     @FXML
     private void clicCerrar(ActionEvent event) {
