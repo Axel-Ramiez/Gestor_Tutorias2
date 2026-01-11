@@ -20,16 +20,16 @@
         </Pane>
 
         <Label layoutX="30.0" layoutY="90.0" text="Periodo Escolar:" />
-        <ComboBox fx:id="cbPeriodo" layoutX="30.0" layoutY="110.0" prefHeight="25.0" prefWidth="250.0" promptText="Seleccione el periodo..." />
+        <ComboBox fx:id="cbPeriodo" disable="true" layoutX="30.0" layoutY="110.0" prefHeight="25.0" prefWidth="250.0" promptText="Seleccione el periodo..." style="-fx-opacity: 1;" />
 
         <Label layoutX="320.0" layoutY="90.0" text="Programa Educativo (Carrera):" />
-        <ComboBox fx:id="cbCarrera" layoutX="320.0" layoutY="110.0" prefHeight="25.0" prefWidth="250.0" promptText="Seleccione la carrera..." />
+        <ComboBox fx:id="cbCarrera" disable="true" layoutX="320.0" layoutY="110.0" prefHeight="25.0" prefWidth="250.0" promptText="Seleccione la carrera..." style="-fx-opacity: 1;" />
 
         <Label layoutX="30.0" layoutY="160.0" text="Fecha de la Tutoría:" />
-        <DatePicker fx:id="fechaTutoria" editable="false" layoutX="30.0" layoutY="180.0" prefHeight="25.0" prefWidth="150.0" />
+        <DatePicker fx:id="fechaTutoria" disable="true" editable="false" layoutX="30.0" layoutY="180.0" prefHeight="25.0" prefWidth="150.0" style="-fx-opacity: 1;" />
 
         <Label layoutX="380.0" layoutY="160.0" text="Número de Sesión:" />
-        <ComboBox fx:id="cbSesion" layoutX="380.0" layoutY="180.0" prefHeight="25.0" prefWidth="100.0" promptText="#" />
+        <ComboBox fx:id="cbSesion" disable="true" layoutX="380.0" layoutY="180.0" prefHeight="25.0" prefWidth="100.0" promptText="#" style="-fx-opacity: 1;" />
 
         <Label layoutX="30.0" layoutY="230.0" text="Temas a tratar:" />
         <TextArea fx:id="temastratar" editable="false" layoutX="30.0" layoutY="250.0" prefHeight="100.0" prefWidth="540.0" wrapText="true" />

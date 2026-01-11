@@ -30,7 +30,7 @@
 
         <HBox layoutX="576.0" layoutY="80.0" spacing="15.0" AnchorPane.rightAnchor="25.0">
             <children>
-                <Button fx:id="consultar" mnemonicParsing="false" onAction="#consultarPlaneacionTutoria" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #e0e0e0; -fx-border-color: #bdbdbd; -fx-cursor: hand;" text="Consultar" />
+                <Button mnemonicParsing="false" onAction="#consultarPlaneacionTutoria" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #e0e0e0; -fx-border-color: #bdbdbd; -fx-cursor: hand;" text="Consultar" />
             </children>
         </HBox>
 

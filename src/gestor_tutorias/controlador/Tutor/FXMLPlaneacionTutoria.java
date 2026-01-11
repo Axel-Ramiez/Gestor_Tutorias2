@@ -16,7 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,22 +26,12 @@ public class FXMLPlaneacionTutoria implements Initializable {
 
     @FXML
     private TableView<PlaneacionTutoria> reportetutoria;
-
-    @FXML
-    private TableColumn<PlaneacionTutoria, Integer> fechainicio;
-    @FXML
-    private TableColumn<PlaneacionTutoria, String> periodoescolar;
-    @FXML
-    private TableColumn<PlaneacionTutoria, String> carrera;
-    @FXML
-    private TableColumn<PlaneacionTutoria, String> fecha;
-    @FXML
-    private TableColumn<PlaneacionTutoria, Integer> sesion;
-    @FXML
-    private TableColumn<PlaneacionTutoria, String> temas;
-
-    @FXML
-    private Button consultar;
+    @FXML private TableColumn<PlaneacionTutoria, Integer> fechainicio; // Columna para ID
+    @FXML private TableColumn<PlaneacionTutoria, String> periodoescolar;
+    @FXML private TableColumn<PlaneacionTutoria, String> carrera;
+    @FXML private TableColumn<PlaneacionTutoria, String> fecha;
+    @FXML private TableColumn<PlaneacionTutoria, Integer> sesion;
+    @FXML private TableColumn<PlaneacionTutoria, String> temas;
 
     private ObservableList<PlaneacionTutoria> listaPlaneaciones;
     private final PlaneacionTutoriaDAO dao = new PlaneacionTutoriaDAO();
@@ -50,7 +39,7 @@ public class FXMLPlaneacionTutoria implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
-        cargarDatosTabla();
+        cargarInformacionTabla();
     }
 
     private void configurarTabla() {
@@ -63,14 +52,14 @@ public class FXMLPlaneacionTutoria implements Initializable {
         temas.setCellValueFactory(new PropertyValueFactory<>("temas"));
     }
 
-    private void cargarDatosTabla() {
+    private void cargarInformacionTabla() {
         try {
             List<PlaneacionTutoria> resultados = dao.obtenerTodas();
             listaPlaneaciones = FXCollections.observableArrayList(resultados);
             reportetutoria.setItems(listaPlaneaciones);
         } catch (SQLException ex) {
-            mostrarAlerta("Error", "No se pudo cargar la lista de planeaciones.");
             ex.printStackTrace();
+            mostrarAlerta("Error de conexión", "No se pudo cargar la lista de planeaciones.");
         }
     }
 
@@ -79,43 +68,37 @@ public class FXMLPlaneacionTutoria implements Initializable {
         PlaneacionTutoria seleccion = reportetutoria.getSelectionModel().getSelectedItem();
 
         if (seleccion != null) {
-            abrirFormularioConsulta(seleccion);
+            irPantallaConsulta(seleccion);
         } else {
-            mostrarAlerta("Aviso", "Selecciona una fila de la tabla para consultar.");
+            mostrarAlerta("Selección requerida", "Por favor selecciona una fila de la tabla para consultar.");
         }
     }
 
-    private void abrirFormularioConsulta(PlaneacionTutoria planeacion) {
+    private void irPantallaConsulta(PlaneacionTutoria planeacion) {
         try {
-            String ruta = "/gestor_tutorias/vista/Tutor/FXMLPlaneacionTutoriaConsulta.fxml";
-            URL url = getClass().getResource(ruta);
-
-            if (url == null) {
-                mostrarAlerta("Error Crítico", "No se encuentra el archivo FXML de consulta.");
-                return;
-            }
-
-            FXMLLoader loader = new FXMLLoader(url);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLPlaneacionTutoriaConsulta.fxml"));
             Parent root = loader.load();
 
             FXMLPlaneacionTutoriaConsulta controlador = loader.getController();
             controlador.inicializarValores(planeacion);
 
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Detalle de Planeación");
             stage.setScene(new Scene(root));
+            stage.setTitle("Detalle de Planeación");
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
         } catch (IOException ex) {
             ex.printStackTrace();
-            mostrarAlerta("Error", "Error al abrir la ventana de consulta.");
+            mostrarAlerta("Error", "No se pudo abrir la ventana de consulta.");
         }
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        if(titulo.contains("Error")) alert.setAlertType(Alert.AlertType.ERROR);
+        if (titulo.toLowerCase().contains("error")) {
+            alert.setAlertType(Alert.AlertType.ERROR);
+        }
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);

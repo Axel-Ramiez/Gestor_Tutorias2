@@ -25,31 +25,11 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
     @FXML private ComboBox<Integer> cbSesion;
     @FXML private TextArea temastratar;
     @FXML private TextField tfIdPlaneacion;
-    @FXML private Button guardar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarCatalogos();
         cbSesion.setItems(FXCollections.observableArrayList(1, 2, 3, 4));
-        configurarCamposLectura();
-    }
-
-    private void configurarCamposLectura() {
-        tfIdPlaneacion.setDisable(true);
-        fechaTutoria.setDisable(true);
-        cbSesion.setDisable(true);
-        cbPeriodo.setDisable(true);
-        cbCarrera.setDisable(true);
-
-        String estiloCSS = "-fx-opacity: 1; -fx-text-fill: black; -fx-background-color: #f4f4f4;";
-
-        cbPeriodo.setStyle(estiloCSS);
-        cbCarrera.setStyle(estiloCSS);
-        cbSesion.setStyle(estiloCSS);
-        temastratar.setStyle(estiloCSS);
-        tfIdPlaneacion.setStyle(estiloCSS);
-        fechaTutoria.setStyle("-fx-opacity: 1;");
-        fechaTutoria.getEditor().setStyle("-fx-text-fill: black; -fx-opacity: 1; -fx-background-color: #f4f4f4;");
     }
 
     private void cargarCatalogos() {
@@ -59,20 +39,24 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
 
             List<Carrera> carreras = CarreraDAO.obtenerTodas();
             cbCarrera.setItems(FXCollections.observableArrayList(carreras));
-
         } catch (SQLException e) {
             e.printStackTrace();
+
+            System.err.println("Error al cargar catálogos para visualización.");
         }
     }
 
-    public void inicializarValores(PlaneacionTutoria plan) {
-        tfIdPlaneacion.setText(String.valueOf(plan.getIdPlaneacionTutoria()));
-        fechaTutoria.setValue(plan.getFechaTutoria());
-        cbSesion.setValue(plan.getNumeroSesion());
-        temastratar.setText(plan.getTemas());
 
-        seleccionarPeriodo(plan.getIdPeriodoEscolar());
-        seleccionarCarrera(plan.getIdCarrera());
+    public void inicializarValores(PlaneacionTutoria planeacion) {
+        if (planeacion != null) {
+            tfIdPlaneacion.setText(String.valueOf(planeacion.getIdPlaneacionTutoria()));
+            fechaTutoria.setValue(planeacion.getFechaTutoria());
+            cbSesion.setValue(planeacion.getNumeroSesion());
+            temastratar.setText(planeacion.getTemas());
+
+            seleccionarPeriodo(planeacion.getIdPeriodoEscolar());
+            seleccionarCarrera(planeacion.getIdCarrera());
+        }
     }
 
     private void seleccionarPeriodo(int idPeriodo) {
@@ -96,6 +80,8 @@ public class FXMLPlaneacionTutoriaConsulta implements Initializable {
             }
         }
     }
+
+
 
     @FXML
     private void clicCerrar(ActionEvent event) {
