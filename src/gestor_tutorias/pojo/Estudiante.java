@@ -1,5 +1,11 @@
 package gestor_tutorias.pojo;
 
+/**
+ * Nombre: Axel Ramírez
+ * Fecha de creación: 13/12/2025
+ * Fecha de modificación: 11/01/2026
+ * Descripción: Modelo de datos para el catálogo Estudiante.
+ */
 public class Estudiante {
 
     private int idEstudiante;

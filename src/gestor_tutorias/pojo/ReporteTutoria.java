@@ -4,18 +4,24 @@ import gestor_tutorias.Enum.EstadoReporte;
 
 import java.time.LocalDate;
 
+/**
+ * Nombre: Axel Ramírez
+ * Fecha de creación: 13/12/2025
+ * Fecha de modificación: 11/01/2026
+ * Descripción: Modelo de datos para el catálogo ReporteTutoria.
+ */
+
 public class ReporteTutoria {
 
-    private int idReporte;               // id_reporte_tutoria
-    private LocalDate fechaReporte;      // fecha_reporte_tutoria
-    private String textoReporte;         // texto_reporte_tutoria
-    private String respuestaCoordinador; // respuesta_coordinador
-    private boolean asistencia;          // asistencia_reporte_tutoria
-    private EstadoReporte estado;         // estado_reporte_tutoria
-
-    private int idUsuario;               // id_usuario
-    private int idEstudiante;             // id_estudiante
-    private int idPeriodoEscolar;         // id_periodo_escolar
+    private int idReporte;
+    private LocalDate fechaReporte;
+    private String textoReporte;
+    private String respuestaCoordinador;
+    private boolean asistencia;
+    private EstadoReporte estado;
+    private int idUsuario;
+    private int idEstudiante;
+    private int idPeriodoEscolar;
 
 
     private String nombreTutor;
@@ -41,8 +47,6 @@ public class ReporteTutoria {
         this.asistencia = asistencia;
         this.estado = (estado != null) ? estado : EstadoReporte.PENDIENTE;
     }
-
-    // Getters y setters ↓↓↓
 
     public int getIdReporte() {
         return idReporte;

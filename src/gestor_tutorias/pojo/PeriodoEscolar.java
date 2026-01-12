@@ -2,6 +2,12 @@ package gestor_tutorias.pojo;
 
 import java.time.LocalDate;
 
+/**
+ * Nombre: Axel Ramírez
+ * Fecha de creación: 13/12/2025
+ * Fecha de modificación: 11/01/2026
+ * Descripción: Modelo de datos para el catálogo PlaneacionEscolar.
+ */
 public class PeriodoEscolar {
 
     private int idPeriodoEscolar;

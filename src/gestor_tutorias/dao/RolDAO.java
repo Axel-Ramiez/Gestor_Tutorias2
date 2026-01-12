@@ -9,28 +9,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Nombre: Axel Ramírez
+ * Fecha de creación: 08/12/2025
+ * Fecha de modificación: 13/12/2025
+ * Descripción: Clase DAO para consultar el catálogo de Roles del sistema.
+ */
 public class RolDAO {
+
+    private static final String SQL_OBTENER_ROLES = "SELECT id_rol, nombre_rol FROM rol";
 
     public static List<Rol> obtenerRoles() throws SQLException {
         List<Rol> lista = new ArrayList<>();
-        Connection conn = ConexionBD.abrirConexion();
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement ps = conn.prepareStatement(SQL_OBTENER_ROLES);
+             ResultSet rs = ps.executeQuery()) {
 
-        if (conn != null) {
-            try {
-                String sql = "SELECT id_rol, nombre_rol FROM rol";
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery();
-
-                while (rs.next()) {
-                    Rol r = new Rol();
-                    r.setIdRol(rs.getInt("id_rol"));
-                    r.setNombreRol(rs.getString("nombre_rol"));
-                    lista.add(r);
-                }
-                rs.close();
-                ps.close();
-            } finally {
-                ConexionBD.cerrarConexion(conn);
+            while (rs.next()) {
+                Rol r = new Rol();
+                r.setIdRol(rs.getInt("id_rol"));
+                r.setNombreRol(rs.getString("nombre_rol"));
+                lista.add(r);
             }
         }
         return lista;

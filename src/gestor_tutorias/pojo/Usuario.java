@@ -1,5 +1,12 @@
 package gestor_tutorias.pojo;
 
+
+/**
+ * Nombre: Axel Ramírez
+ * Fecha de creación: 13/12/2025
+ * Fecha de modificación: 11/01/2026
+ * Descripción: Modelo de datos para el catálogo Usuario.
+ */
 public class Usuario {
 
     private int idUsuario;
@@ -30,7 +37,6 @@ public class Usuario {
         this.activoUsuario = 1;
     }
 
-    // --- GETTERS Y SETTERS ---
 
     public int getIdUsuario() {
         return idUsuario;

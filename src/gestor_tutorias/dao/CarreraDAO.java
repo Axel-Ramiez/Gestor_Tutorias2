@@ -2,7 +2,6 @@ package gestor_tutorias.dao;
 
 import gestor_tutorias.modelo.ConexionBD;
 import gestor_tutorias.pojo.Carrera;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,34 +9,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Nombre: Axel Ramírez
+ * Fecha de creación: 13/12/2025
+ * Fecha de modificación: 15/12/2025
+ * Descripción: DAO para consultar el catálogo de Carreras.
+ */
 public class CarreraDAO {
 
     public static List<Carrera> obtenerPorFacultad(int idFacultad) throws SQLException {
         List<Carrera> lista = new ArrayList<>();
-        Connection conn = ConexionBD.abrirConexion();
+        String sql = "SELECT id_carrera, nombre_carrera, id_facultad FROM carrera WHERE id_facultad = ?";
 
-        if (conn != null) {
-            try {
-                String consulta =
-                        "SELECT id_carrera, nombre_carrera, id_facultad " +
-                                "FROM carrera WHERE id_facultad = ?";
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-                PreparedStatement ps = conn.prepareStatement(consulta);
-                ps.setInt(1, idFacultad);
-
-                ResultSet rs = ps.executeQuery();
+            ps.setInt(1, idFacultad);
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Carrera c = new Carrera();
-                    c.setIdCarrera(rs.getInt("id_carrera"));
-                    c.setNombreCarrera(rs.getString("nombre_carrera"));
-                    c.setIdFacultad(rs.getInt("id_facultad"));
-                    lista.add(c);
+                    lista.add(mapearCarrera(rs));
                 }
-
-                rs.close();
-                ps.close();
-            } finally {
-                ConexionBD.cerrarConexion(conn);
             }
         }
         return lista;
@@ -45,28 +36,14 @@ public class CarreraDAO {
 
     public static List<Carrera> obtenerTodas() throws SQLException {
         List<Carrera> lista = new ArrayList<>();
-        Connection conn = ConexionBD.abrirConexion();
+        String sql = "SELECT id_carrera, nombre_carrera, id_facultad FROM carrera";
 
-        if (conn != null) {
-            try {
-                String consulta =
-                        "SELECT id_carrera, nombre_carrera, id_facultad FROM carrera";
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-                PreparedStatement ps = conn.prepareStatement(consulta);
-                ResultSet rs = ps.executeQuery();
-
-                while (rs.next()) {
-                    Carrera c = new Carrera();
-                    c.setIdCarrera(rs.getInt("id_carrera"));
-                    c.setNombreCarrera(rs.getString("nombre_carrera"));
-                    c.setIdFacultad(rs.getInt("id_facultad"));
-                    lista.add(c);
-                }
-
-                rs.close();
-                ps.close();
-            } finally {
-                ConexionBD.cerrarConexion(conn);
+            while (rs.next()) {
+                lista.add(mapearCarrera(rs));
             }
         }
         return lista;
@@ -74,27 +51,26 @@ public class CarreraDAO {
 
     public static Carrera obtenerPorId(int idCarrera) throws SQLException {
         Carrera carrera = null;
-        Connection conn = ConexionBD.abrirConexion();
+        String sql = "SELECT * FROM carrera WHERE id_carrera = ?";
 
-        if (conn != null) {
-            try {
-                String consulta = "SELECT * FROM carrera WHERE id_carrera = ?";
-                PreparedStatement ps = conn.prepareStatement(consulta);
-                ps.setInt(1, idCarrera);
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-                ResultSet rs = ps.executeQuery();
+            ps.setInt(1, idCarrera);
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    carrera = new Carrera();
-                    carrera.setIdCarrera(rs.getInt("id_carrera"));
-                    carrera.setNombreCarrera(rs.getString("nombre_carrera"));
-                    carrera.setIdFacultad(rs.getInt("id_facultad"));
+                    carrera = mapearCarrera(rs);
                 }
-                rs.close();
-                ps.close();
-            } finally {
-                ConexionBD.cerrarConexion(conn);
             }
         }
         return carrera;
+    }
+
+    private static Carrera mapearCarrera(ResultSet rs) throws SQLException {
+        Carrera c = new Carrera();
+        c.setIdCarrera(rs.getInt("id_carrera"));
+        c.setNombreCarrera(rs.getString("nombre_carrera"));
+        c.setIdFacultad(rs.getInt("id_facultad"));
+        return c;
     }
 }

@@ -1,10 +1,11 @@
 package gestor_tutorias.controlador;
 
-import gestor_tutorias.controlador.Administrador.FXMLPrincipalAdministradorController;
-import gestor_tutorias.controlador.Coordinador.FXMLPrincipalCoordinador;
-import gestor_tutorias.controlador.Tutor.FXMLPrincipalTutor;
+import gestor_tutorias.controlador.administrador.FXMLPrincipalAdministradorController;
+import gestor_tutorias.controlador.coordinador.FXMLPrincipalCoordinador;
+import gestor_tutorias.controlador.tutor.FXMLPrincipalTutor;
 import gestor_tutorias.dao.UsuarioDAO;
 import gestor_tutorias.pojo.Usuario;
+import gestor_tutorias.validacion.Validacion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,13 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-
+/**
+ * Nombre: Axel Ramírez / Equipo de Desarrollo
+ * Fecha de creación: 08/12/2025
+ * Fecha de modificación: 17/12/2025
+ * Descripción: Controlador encargado de la autenticación de usuarios y
+ * redirección a la pantalla principal correspondiente según el rol.
+ */
 public class FXMLInicioSesionController implements Initializable {
 
     @FXML private TextField tfUsuario;
@@ -41,22 +48,11 @@ public class FXMLInicioSesionController implements Initializable {
         lbErrorUsuario.setText("");
         lbErrorPassword.setText("");
 
-        String noPersonal = tfUsuario.getText();
-        String password = pfPassword.getText();
+        boolean usuarioValido = Validacion.validarRequerido(tfUsuario, lbErrorUsuario, "Usuario requerido");
+        boolean passValido = Validacion.validarRequerido(pfPassword, lbErrorPassword, "Contraseña requerida");
 
-        boolean isValido = true;
-
-        if(noPersonal.isEmpty()){
-            lbErrorUsuario.setText("Campo obligatorio");
-            isValido = false;
-        }
-        if(password.isEmpty()){
-            lbErrorPassword.setText("Campo obligatorio");
-            isValido = false;
-        }
-
-        if(isValido){
-            validarCredenciales(noPersonal, password);
+        if (usuarioValido && passValido) {
+            validarCredenciales(tfUsuario.getText(), pfPassword.getText());
         }
     }
 
@@ -113,6 +109,7 @@ public class FXMLInicioSesionController implements Initializable {
             escenario.setTitle("Sistema de Gestión de Tutorías - Sesión de: " + usuario.getNombreUsuario());
             escenario.show();
 
+
             Stage escenarioActual = (Stage) tfUsuario.getScene().getWindow();
             escenarioActual.close();
 
@@ -125,7 +122,7 @@ public class FXMLInicioSesionController implements Initializable {
         }
     }
 
-    private void mostrarAlerta(String titulo, String mensaje){
+    private void mostrarAlerta(String titulo, String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);

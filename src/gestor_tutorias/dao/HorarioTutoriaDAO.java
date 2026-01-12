@@ -2,16 +2,20 @@ package gestor_tutorias.dao;
 
 import gestor_tutorias.modelo.ConexionBD;
 import gestor_tutorias.pojo.HorarioTutoria;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Nombre: Axel Ramírez
+ * Fecha de creación: 10/12/2025
+ * Fecha de modificación: 17/12/2025
+ * Descripción: Clase DAO para gestionar la disponibilidad de horarios de tutoría.
+ */
 public class HorarioTutoriaDAO {
 
     private static final String TABLA = "horario_tutoria";
-
 
     private static final String SQL_INSERT =
             "INSERT INTO " + TABLA +
@@ -22,9 +26,6 @@ public class HorarioTutoriaDAO {
     private static final String SQL_SELECT_BY_ID =
             "SELECT * FROM " + TABLA + " WHERE id_horario_tutoria = ?";
 
-    private static final String SQL_SELECT_ALL =
-            "SELECT * FROM " + TABLA;
-
     private static final String SQL_UPDATE =
             "UPDATE " + TABLA +
                     " SET fecha_horario_tutoria = ?, hora_inicio_horario_tutoria = ?, hora_fin_horario_tutoria = ?, " +
@@ -34,37 +35,19 @@ public class HorarioTutoriaDAO {
     private static final String SQL_DELETE =
             "DELETE FROM " + TABLA + " WHERE id_horario_tutoria = ?";
 
-
-    private HorarioTutoria mapearHorario(ResultSet rs) throws SQLException {
-
-        HorarioTutoria h = new HorarioTutoria();
-
-        h.setIdHorarioTutoria(rs.getInt("id_horario_tutoria"));
-        h.setFechaHorarioTutoria(rs.getDate("fecha_horario_tutoria").toLocalDate());
-        h.setHoraInicioHorarioTutoria(
-                rs.getTime("hora_inicio_horario_tutoria").toLocalTime()
-        );
-        h.setHoraFinHorarioTutoria(
-                rs.getTime("hora_fin_horario_tutoria").toLocalTime()
-        );
-
-        h.setIdUsuario(rs.getInt("id_usuario"));
-
-        int idEst = rs.getInt("id_estudiante");
-        h.setIdEstudiante(rs.wasNull() ? null : idEst);
-
-        int idPeriodo = rs.getInt("id_periodo_escolar");
-        h.setIdPeriodoEscolar(rs.wasNull() ? null : idPeriodo);
-
-        return h;
-    }
-
+    private static final String SQL_SELECT_JOINED =
+            "SELECT h.*, " +
+                    "CONCAT(u.nombre_usuario, ' ', u.apellido_paterno_usuario) AS nombre_tutor, " +
+                    "IFNULL(CONCAT(e.nombre_estudiante, ' ', e.apellido_paterno_estudiante), 'Sin Asignar') AS nombre_estudiante, " +
+                    "p.nombre_periodo_escolar AS nombre_periodo " +
+                    "FROM horario_tutoria h " +
+                    "INNER JOIN usuario u ON h.id_usuario = u.id_usuario " +
+                    "LEFT JOIN estudiante e ON h.id_estudiante = e.id_estudiante " +
+                    "INNER JOIN periodo_escolar p ON h.id_periodo_escolar = p.id_periodo_escolar";
 
     public int guardarHorario(HorarioTutoria horario) throws SQLException {
-
         try (Connection conn = ConexionBD.abrirConexion();
-             PreparedStatement ps =
-                     conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setDate(1, Date.valueOf(horario.getFechaHorarioTutoria()));
             ps.setTime(2, Time.valueOf(horario.getHoraInicioHorarioTutoria()));
@@ -85,38 +68,28 @@ public class HorarioTutoriaDAO {
 
             ps.executeUpdate();
 
-            ResultSet rs = ps.getGeneratedKeys();
-            return rs.next() ? rs.getInt(1) : -1;
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                return rs.next() ? rs.getInt(1) : -1;
+            }
         }
     }
 
     public HorarioTutoria obtenerPorId(int idHorario) throws SQLException {
-
         try (Connection conn = ConexionBD.abrirConexion();
              PreparedStatement ps = conn.prepareStatement(SQL_SELECT_BY_ID)) {
 
             ps.setInt(1, idHorario);
-            ResultSet rs = ps.executeQuery();
-
-            return rs.next() ? mapearHorario(rs) : null;
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? mapearHorario(rs) : null;
+            }
         }
     }
 
     public List<HorarioTutoria> obtenerTodos() throws SQLException {
         List<HorarioTutoria> horarios = new ArrayList<>();
 
-        String sql = "SELECT h.*, " +
-
-                "CONCAT(u.nombre_usuario, ' ', u.apellido_paterno_usuario) AS nombre_tutor, " +
-                "IFNULL(CONCAT(e.nombre_estudiante, ' ', e.apellido_paterno_estudiante), 'Sin Asignar') AS nombre_estudiante, " +
-                "p.nombre_periodo_escolar AS nombre_periodo " +
-                "FROM horario_tutoria h " +
-                "INNER JOIN usuario u ON h.id_usuario = u.id_usuario " +
-                "LEFT JOIN estudiante e ON h.id_estudiante = e.id_estudiante " +
-                "INNER JOIN periodo_escolar p ON h.id_periodo_escolar = p.id_periodo_escolar";
-
         try (Connection conn = ConexionBD.abrirConexion();
-             PreparedStatement ps = conn.prepareStatement(sql);
+             PreparedStatement ps = conn.prepareStatement(SQL_SELECT_JOINED);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -128,8 +101,10 @@ public class HorarioTutoriaDAO {
                 h.setHoraFinHorarioTutoria(rs.getTime("hora_fin_horario_tutoria").toLocalTime());
                 h.setIdUsuario(rs.getInt("id_usuario"));
                 h.setIdPeriodoEscolar(rs.getInt("id_periodo_escolar"));
+
                 int idEst = rs.getInt("id_estudiante");
                 h.setIdEstudiante(rs.wasNull() ? null : idEst);
+
                 h.setNombreTutor(rs.getString("nombre_tutor"));
                 h.setNombreEstudiante(rs.getString("nombre_estudiante"));
                 h.setNombrePeriodoEscolar(rs.getString("nombre_periodo"));
@@ -141,7 +116,6 @@ public class HorarioTutoriaDAO {
     }
 
     public boolean actualizarHorario(HorarioTutoria horario) throws SQLException {
-
         try (Connection conn = ConexionBD.abrirConexion();
              PreparedStatement ps = conn.prepareStatement(SQL_UPDATE)) {
 
@@ -169,7 +143,6 @@ public class HorarioTutoriaDAO {
     }
 
     public boolean eliminarHorario(int idHorario) throws SQLException {
-
         try (Connection conn = ConexionBD.abrirConexion();
              PreparedStatement ps = conn.prepareStatement(SQL_DELETE)) {
 
@@ -178,18 +151,11 @@ public class HorarioTutoriaDAO {
         }
     }
 
-    /* ===================== MÉTODOS EXTRA ===================== */
-
-    public List<HorarioTutoria> obtenerHorariosDisponiblesPorFecha(
-            LocalDate fecha,
-            int idPeriodoEscolar
-    ) throws SQLException {
-
-        String sql =
-                "SELECT * FROM " + TABLA +
-                        " WHERE fecha_horario_tutoria = ? " +
-                        "AND id_estudiante IS NULL " +
-                        "AND id_periodo_escolar = ?";
+    public List<HorarioTutoria> obtenerHorariosDisponiblesPorFecha(LocalDate fecha, int idPeriodoEscolar) throws SQLException {
+        String sql = "SELECT * FROM " + TABLA +
+                " WHERE fecha_horario_tutoria = ? " +
+                "AND id_estudiante IS NULL " +
+                "AND id_periodo_escolar = ?";
 
         List<HorarioTutoria> lista = new ArrayList<>();
 
@@ -199,12 +165,30 @@ public class HorarioTutoriaDAO {
             ps.setDate(1, Date.valueOf(fecha));
             ps.setInt(2, idPeriodoEscolar);
 
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                lista.add(mapearHorario(rs));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(mapearHorario(rs));
+                }
             }
         }
         return lista;
+    }
+
+
+    private HorarioTutoria mapearHorario(ResultSet rs) throws SQLException {
+        HorarioTutoria h = new HorarioTutoria();
+        h.setIdHorarioTutoria(rs.getInt("id_horario_tutoria"));
+        h.setFechaHorarioTutoria(rs.getDate("fecha_horario_tutoria").toLocalDate());
+        h.setHoraInicioHorarioTutoria(rs.getTime("hora_inicio_horario_tutoria").toLocalTime());
+        h.setHoraFinHorarioTutoria(rs.getTime("hora_fin_horario_tutoria").toLocalTime());
+        h.setIdUsuario(rs.getInt("id_usuario"));
+
+        int idEst = rs.getInt("id_estudiante");
+        h.setIdEstudiante(rs.wasNull() ? null : idEst);
+
+        int idPeriodo = rs.getInt("id_periodo_escolar");
+        h.setIdPeriodoEscolar(rs.wasNull() ? null : idPeriodo);
+
+        return h;
     }
 }

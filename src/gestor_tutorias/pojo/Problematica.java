@@ -2,6 +2,13 @@ package gestor_tutorias.pojo;
 
 import gestor_tutorias.Enum.EstatusProblematica;
 
+
+/**
+ * Nombre: Axel Ramírez
+ * Fecha de creación: 13/12/2025
+ * Fecha de modificación: 11/01/2026
+ * Descripción: Modelo de datos para el catálogo Problematica.
+ */
 public class Problematica {
 
     private int idProblematica;

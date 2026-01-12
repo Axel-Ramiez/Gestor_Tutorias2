@@ -3,14 +3,18 @@ package gestor_tutorias.dao;
 import gestor_tutorias.Enum.EstadoReporte;
 import gestor_tutorias.modelo.ConexionBD;
 import gestor_tutorias.pojo.ReporteTutoria;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Nombre: Axel Ramírez
+ * Fecha de creación: 15/12/2025
+ * Fecha de modificación: 11/01/2026
+ * Descripción: DAO para la gestión completa de Reportes de Tutoría.
+ * Incluye consultas complejas con JOINS para obtener nombres de tutores, estudiantes y periodos.
+ */
 public class ReporteTutoriaDAO {
-
-    private static final String TABLA = "reporte_tutoria";
 
     private static final String SQL_INSERT =
             "INSERT INTO reporte_tutoria " +
@@ -25,11 +29,14 @@ public class ReporteTutoriaDAO {
                     "id_usuario = ?, id_estudiante = ?, id_periodo_escolar = ? " +
                     "WHERE id_reporte_tutoria = ?";
 
+    private static final String SQL_UPDATE_RESPUESTA =
+            "UPDATE reporte_tutoria SET respuesta_coordinador = ?, estado_reporte_tutoria = ? " +
+                    "WHERE id_reporte_tutoria = ?";
+
     private static final String SQL_DELETE =
             "DELETE FROM reporte_tutoria WHERE id_reporte_tutoria = ?";
 
-    private static final String SQL_SELECT_BASE =
-            "SELECT * FROM reporte_tutoria";
+    private static final String SQL_SELECT_BASE = "SELECT * FROM reporte_tutoria";
 
     private static final String SQL_SELECT_DETALLADO_BASE =
             "SELECT r.id_reporte_tutoria, r.id_usuario, r.id_estudiante, r.id_periodo_escolar, " +
@@ -38,12 +45,14 @@ public class ReporteTutoriaDAO {
                     "CONCAT(u.nombre_usuario, ' ', u.apellido_paterno_usuario, ' ', u.apellido_materno_usuario) AS nombre_tutor, " +
                     "CONCAT(e.nombre_estudiante, ' ', e.apellido_paterno_estudiante, ' ', e.apellido_materno_estudiante) AS nombre_estudiante, " +
                     "pe.nombre_periodo_escolar AS periodo_nombre " +
-                    "FROM " + TABLA + " r " +
+                    "FROM reporte_tutoria r " +
                     "LEFT JOIN usuario u ON r.id_usuario = u.id_usuario " +
                     "LEFT JOIN estudiante e ON r.id_estudiante = e.id_estudiante " +
                     "LEFT JOIN periodo_escolar pe ON r.id_periodo_escolar = pe.id_periodo_escolar ";
 
-
+    /**
+     * Registra un nuevo reporte y retorna el ID generado.
+     */
     public int guardarReporte(ReporteTutoria r) throws SQLException {
         try (Connection conn = ConexionBD.abrirConexion();
              PreparedStatement ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
@@ -65,7 +74,6 @@ public class ReporteTutoriaDAO {
         }
     }
 
-
     public boolean actualizarReporte(ReporteTutoria r) throws SQLException {
         try (Connection conn = ConexionBD.abrirConexion();
              PreparedStatement ps = conn.prepareStatement(SQL_UPDATE)) {
@@ -84,6 +92,20 @@ public class ReporteTutoriaDAO {
         }
     }
 
+    /**
+     * Método para que el coordinador responda un reporte sin modificar el resto de datos.
+     */
+    public boolean actualizarRespuesta(ReporteTutoria r) throws SQLException {
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement ps = conn.prepareStatement(SQL_UPDATE_RESPUESTA)) {
+
+            ps.setString(1, r.getRespuestaCoordinador());
+            ps.setString(2, r.getEstado().getValorBD());
+            ps.setInt(3, r.getIdReporte());
+
+            return ps.executeUpdate() > 0;
+        }
+    }
 
     public boolean eliminarReporte(int idReporte) throws SQLException {
         try (Connection conn = ConexionBD.abrirConexion();
@@ -94,22 +116,18 @@ public class ReporteTutoriaDAO {
         }
     }
 
-
     public List<ReporteTutoria> obtenerTodos() throws SQLException {
-
         return ejecutarConsultaListado(SQL_SELECT_DETALLADO_BASE);
     }
 
     public ReporteTutoria obtenerPorId(int idReporte) throws SQLException {
-
         String sql = SQL_SELECT_DETALLADO_BASE + " WHERE r.id_reporte_tutoria = ?";
-
         List<ReporteTutoria> lista = ejecutarConsultaListado(sql, idReporte);
         return lista.isEmpty() ? null : lista.get(0);
     }
 
     public List<ReporteTutoria> obtenerPorIdUsuario(int idUsuario) throws SQLException {
-        return ejecutarConsulta(SQL_SELECT_BASE + " WHERE id_usuario = ?", idUsuario);
+        return ejecutarConsultaSimple(SQL_SELECT_BASE + " WHERE id_usuario = ?", idUsuario);
     }
 
     public List<ReporteTutoria> obtenerPorTutor(int idUsuario) throws SQLException {
@@ -118,9 +136,9 @@ public class ReporteTutoriaDAO {
     }
 
 
-    private List<ReporteTutoria> ejecutarConsulta(String sql, Object... params) throws SQLException {
-        List<ReporteTutoria> lista = new ArrayList<>();
 
+    private List<ReporteTutoria> ejecutarConsultaSimple(String sql, Object... params) throws SQLException {
+        List<ReporteTutoria> lista = new ArrayList<>();
         try (Connection conn = ConexionBD.abrirConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -149,31 +167,24 @@ public class ReporteTutoriaDAO {
 
     private List<ReporteTutoria> ejecutarConsultaListado(String sql, Object... params) throws SQLException {
         List<ReporteTutoria> lista = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            conn = ConexionBD.abrirConexion();
-            ps = conn.prepareStatement(sql);
+        try (Connection conn = ConexionBD.abrirConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             for (int i = 0; i < params.length; i++) {
                 ps.setObject(i + 1, params[i]);
             }
 
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                lista.add(mapearReporte(rs));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(mapearReporteCompleto(rs));
+                }
             }
-        } finally {
-            cerrarRecursos(conn, ps, rs);
         }
         return lista;
     }
 
-    private ReporteTutoria mapearReporte(ResultSet rs) throws SQLException {
+    private ReporteTutoria mapearReporteCompleto(ResultSet rs) throws SQLException {
         ReporteTutoria r = new ReporteTutoria();
-
         r.setIdReporte(rs.getInt("id_reporte_tutoria"));
         r.setIdUsuario(rs.getInt("id_usuario"));
         r.setIdEstudiante(rs.getInt("id_estudiante"));
@@ -183,35 +194,10 @@ public class ReporteTutoriaDAO {
         r.setRespuestaCoordinador(rs.getString("respuesta_coordinador"));
         r.setAsistencia(rs.getBoolean("asistencia_reporte_tutoria"));
         r.setEstado(EstadoReporte.fromString(rs.getString("estado_reporte_tutoria")));
-
         r.setNombreTutor(rs.getString("nombre_tutor"));
         r.setNombreEstudiante(rs.getString("nombre_estudiante"));
         r.setPeriodoEscolar(rs.getString("periodo_nombre"));
 
         return r;
-    }
-
-    public boolean actualizarRespuesta(ReporteTutoria r) throws SQLException {
-        String sql = "UPDATE reporte_tutoria SET respuesta_coordinador = ?, estado_reporte_tutoria = ? WHERE id_reporte_tutoria = ?";
-
-        try (Connection conn = ConexionBD.abrirConexion();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, r.getRespuestaCoordinador());
-            ps.setString(2, r.getEstado().getValorBD());
-            ps.setInt(3, r.getIdReporte());
-
-            return ps.executeUpdate() > 0;
-        }
-    }
-
-    private void cerrarRecursos(Connection conn, PreparedStatement ps, ResultSet rs) {
-        try {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (conn != null) ConexionBD.cerrarConexion(conn);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

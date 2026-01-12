@@ -4,53 +4,74 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputControl;
-
 import java.util.regex.Pattern;
 
+/**
+ * Nombre: Axel Ramírez
+ * Fecha de creación: 14/12/2025
+ * Fecha de modificación: 15/12/2025
+ * Descripción: Clase utilitaria que centraliza las reglas de validación de datos y
+ * la retroalimentación visual (estilos de error) para la interfaz gráfica JavaFX.
+ */
 public class Validacion {
 
-
     private static final String PATRON_MATRICULA = "^zS\\d{8}$";
-
-
     private static final String PATRON_CORREO_ESTUDIANTE = "^zS\\d{8}@estudiantes\\.uv\\.mx$";
-
-
     private static final String PATRON_CORREO_PERSONAL = "^[a-zA-Z0-9._-]+@uv\\.mx$";
-
-
     private static final String PATRON_NOMBRE = "^[a-zA-ZÀ-ÿ\\u00f1\\u00d1\\s]+$";
-
     private static final String PATRON_NO_PERSONAL = "^[a-zA-Z0-9]{1,20}$";
 
-
-
+    /**
+     * Verifica si una cadena es nula o está vacía (solo espacios).
+     * @param texto Cadena a evaluar.
+     * @return true si es nula o vacía, false en caso contrario.
+     */
     public static boolean esNuloOVacio(String texto) {
         return texto == null || texto.trim().isEmpty();
     }
 
+    /**
+     * Valida si la matrícula cumple el formato zS seguido de 8 dígitos.
+     */
     public static boolean esMatriculaValida(String matricula) {
         return matricula != null && Pattern.matches(PATRON_MATRICULA, matricula);
     }
 
+    /**
+     * Valida el correo institucional de estudiante (dominio @estudiantes.uv.mx).
+     */
     public static boolean esCorreoEstudianteValido(String correo) {
         return correo != null && Pattern.matches(PATRON_CORREO_ESTUDIANTE, correo);
     }
 
+    /**
+     * Valida el número de personal para académicos/administrativos.
+     */
     public static boolean esNoPersonalValido(String noPersonal) {
         return noPersonal != null && Pattern.matches(PATRON_NO_PERSONAL, noPersonal);
     }
 
+    /**
+     * Valida el correo institucional de personal (dominio @uv.mx).
+     */
     public static boolean esCorreoPersonalValido(String correo) {
         return correo != null && Pattern.matches(PATRON_CORREO_PERSONAL, correo);
     }
 
+    /**
+     * Valida que el nombre contenga solo letras (incluyendo acentos y ñ) y espacios.
+     */
     public static boolean esNombreValido(String nombre) {
         return nombre != null && Pattern.matches(PATRON_NOMBRE, nombre);
     }
 
+    /**
+     * Verifica si una cadena puede convertirse a un número entero válido.
+     */
     public static boolean esNumeroEntero(String texto) {
-        if (esNuloOVacio(texto)) return false;
+        if (esNuloOVacio(texto)) {
+            return false;
+        }
         try {
             Integer.parseInt(texto);
             return true;
@@ -59,7 +80,9 @@ public class Validacion {
         }
     }
 
-
+    // -------------------------------------------------------------------------
+    // MÉTODOS DE VALIDACIÓN PARA MENSAJE
+    // -------------------------------------------------------------------------
 
     public static boolean validarRequerido(TextInputControl campo, Label etiquetaError, String mensaje) {
         if (esNuloOVacio(campo.getText())) {
@@ -91,7 +114,6 @@ public class Validacion {
         }
     }
 
-
     public static boolean validarCorreoEstudiante(TextInputControl campo, Label etiquetaError) {
         if (!esCorreoEstudianteValido(campo.getText())) {
             marcarError(campo, etiquetaError, "Debe ser: zS########@estudiantes.uv.mx");
@@ -101,7 +123,6 @@ public class Validacion {
             return true;
         }
     }
-
 
     public static boolean validarCorreoPersonal(TextInputControl campo, Label etiquetaError) {
         if (!esCorreoPersonalValido(campo.getText())) {
@@ -113,7 +134,6 @@ public class Validacion {
         }
     }
 
-
     public static boolean validarNombre(TextInputControl campo, Label etiquetaError) {
         if (!esNombreValido(campo.getText())) {
             marcarError(campo, etiquetaError, "Solo letras y espacios");
@@ -123,7 +143,6 @@ public class Validacion {
             return true;
         }
     }
-
 
     public static boolean validarSeleccion(ComboBox<?> combo, Label etiquetaError, String mensaje) {
         if (combo.getSelectionModel().getSelectedItem() == null) {
@@ -137,7 +156,6 @@ public class Validacion {
         }
     }
 
-
     public static boolean validarFecha(DatePicker fecha, Label etiquetaError, String mensaje) {
         if (fecha.getValue() == null) {
             etiquetaError.setText(mensaje);
@@ -149,7 +167,6 @@ public class Validacion {
             return true;
         }
     }
-
 
     public static boolean validarLongitud(TextInputControl campo, Label etiquetaError, int min, int max) {
         String texto = campo.getText();
@@ -163,13 +180,17 @@ public class Validacion {
     }
 
 
-
+    /**
+     * Aplica estilo de error visual al control y muestra el mensaje.
+     */
     private static void marcarError(javafx.scene.control.Control control, Label etiqueta, String mensaje) {
         etiqueta.setText(mensaje);
-
         control.setStyle("-fx-border-color: red; -fx-border-radius: 5;");
     }
 
+    /**
+     * Limpia el estilo de error y el mensaje.
+     */
     private static void limpiarError(javafx.scene.control.Control control, Label etiqueta) {
         etiqueta.setText("");
         control.setStyle("");
