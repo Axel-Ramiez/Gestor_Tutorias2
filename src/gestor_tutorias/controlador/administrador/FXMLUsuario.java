@@ -101,7 +101,6 @@ public class FXMLUsuario implements Initializable {
         tfApellidoMaterno.setText(usuario.getApellidoMaternoUsuario());
         tfCorreo.setText(usuario.getCorreoUsuario());
         pfContrasena.setText(usuario.getContrasenaUsuario());
-        tfNoPersonal.setEditable(false);
 
         cargarRoles();
 
