@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 08/12/2025

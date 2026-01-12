@@ -17,6 +17,7 @@
                     </font>
                 </Label>
 
+
                 <Label fx:id="lblUsuario" layoutX="450.0" layoutY="28.0" text="Usuario: Tutor" textFill="WHITE" />
             </children>
         </Pane>

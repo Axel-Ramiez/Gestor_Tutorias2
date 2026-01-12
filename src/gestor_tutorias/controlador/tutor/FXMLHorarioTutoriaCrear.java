@@ -19,7 +19,6 @@ import java.time.LocalTime;
  * Descripción: Controlador para el registro de nuevos horarios de tutoría.
  */
 public class FXMLHorarioTutoriaCrear {
-
     @FXML private Label lbIdHorario;
 
     @FXML private DatePicker dpFecha;

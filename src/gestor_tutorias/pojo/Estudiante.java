@@ -7,7 +7,6 @@ package gestor_tutorias.pojo;
  * Descripción: Modelo de datos para el catálogo Estudiante.
  */
 public class Estudiante {
-
     private int idEstudiante;
     private String matriculaEstudiante;
     private String nombreEstudiante;

@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 08/12/2025
- * Fecha de modificación: 17/12/2025
+ * Fecha de modificación: 11/01/2026
  * Descripción: Controlador del menú principal para el rol de Tutor Académico.
  * Gestiona la navegación hacia los módulos de Reportes, Problemáticas, Horarios y Planeación.
  */

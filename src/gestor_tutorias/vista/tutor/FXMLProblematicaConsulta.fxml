@@ -13,6 +13,7 @@
          <children>
             <Label layoutX="20.0" layoutY="15.0" text="Problemática" textFill="WHITE">
                <font>
+
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>

@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Nombre: Axel Ramírez / Equipo de Desarrollo
  * Fecha de creación: 17/12/2025
- * Fecha de modificación: 17/12/2025
+ * Fecha de modificación: 11/01/2026
  * Descripción: Controlador principal para la gestión de Reportes de Tutoría.
  * Permite listar, filtrar y acceder a las operaciones CRUD.
  */

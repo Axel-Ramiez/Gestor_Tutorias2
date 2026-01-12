@@ -13,7 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.sql.SQLException;
-
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 17/12/2025

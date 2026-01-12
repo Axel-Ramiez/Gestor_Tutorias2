@@ -38,7 +38,6 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 
 import java.time.LocalTime;
-
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 17/12/2025

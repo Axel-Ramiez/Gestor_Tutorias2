@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 13/12/2025
- * Fecha de modificación: 15/12/2025
+ * Fecha de modificación: 11/01/2026
  * Descripción: DAO para consultar los Periodos Escolares.
  */
 public class PeriodoEscolarDAO {

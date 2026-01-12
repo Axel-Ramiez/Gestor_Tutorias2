@@ -26,7 +26,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-
 /**
  * Nombre: Axel Ramírez / Equipo de Desarrollo
  * Fecha de creación: 17/12/2025

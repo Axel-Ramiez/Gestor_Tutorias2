@@ -7,7 +7,6 @@ package gestor_tutorias.pojo;
  * Descripción: Modelo de datos para el catálogo Carrera.
  */
 public class Carrera {
-
     private int idCarrera;
     private String nombreCarrera;
     private int idFacultad;

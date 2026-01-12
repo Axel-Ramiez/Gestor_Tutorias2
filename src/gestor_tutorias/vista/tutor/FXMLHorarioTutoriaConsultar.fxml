@@ -18,6 +18,7 @@
               style="-fx-background-color: #283593;"
               AnchorPane.topAnchor="0.0"
               AnchorPane.leftAnchor="0.0"
+
               AnchorPane.rightAnchor="0.0">
 
             <children>

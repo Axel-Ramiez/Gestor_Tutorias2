@@ -25,7 +25,7 @@ import java.util.function.Function;
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 17/12/2025
- * Fecha de modificación: 17/12/2025
+ * Fecha de modificación: 11/01/2026
  * Descripción: Controlador para la creación de nuevos reportes de tutoría.
  * Gestiona el formulario de registro y actualiza el estado de riesgo del estudiante.
  */

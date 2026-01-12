@@ -16,6 +16,7 @@
         <!-- ENCABEZADO -->
         <Pane prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: #283593;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
+
             <children>
                 <Label layoutX="20.0" layoutY="15.0" text="Problemática" textFill="WHITE">
                     <font>

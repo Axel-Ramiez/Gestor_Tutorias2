@@ -20,7 +20,6 @@ import java.time.LocalTime;
  * Descripción: Controlador para la edición de horarios de tutoría existentes.
  */
 public class FXMLHorarioTutoriaEditar {
-
     @FXML private Label lbIdHorario;
     @FXML private DatePicker dpFecha;
 

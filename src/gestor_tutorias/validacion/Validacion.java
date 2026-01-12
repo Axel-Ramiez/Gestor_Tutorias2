@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 14/12/2025
- * Fecha de modificación: 15/12/2025
+ * Fecha de modificación: 11/01/2026
  * Descripción: Clase utilitaria que centraliza las reglas de validación de datos y
  * la retroalimentación visual (estilos de error) para la interfaz gráfica JavaFX.
  */

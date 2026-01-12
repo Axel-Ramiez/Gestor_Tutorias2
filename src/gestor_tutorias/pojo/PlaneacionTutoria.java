@@ -9,7 +9,6 @@ import java.time.LocalDate;
  * Descripción: Modelo de datos para el catálogo PlaneacionTutoria.
  */
 public class PlaneacionTutoria {
-
     private int idPlaneacionTutoria;
     private int idPeriodoEscolar;
     private int idCarrera;

@@ -12,7 +12,6 @@ import java.time.LocalDate;
  */
 
 public class ReporteTutoria {
-
     private int idReporte;
     private LocalDate fechaReporte;
     private String textoReporte;

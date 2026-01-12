@@ -15,7 +15,6 @@ import java.util.List;
  * Incluye consultas complejas con JOINS para obtener nombres de tutores, estudiantes y periodos.
  */
 public class ReporteTutoriaDAO {
-
     private static final String SQL_INSERT =
             "INSERT INTO reporte_tutoria " +
                     "(fecha_reporte_tutoria, texto_reporte_tutoria, respuesta_coordinador, " +

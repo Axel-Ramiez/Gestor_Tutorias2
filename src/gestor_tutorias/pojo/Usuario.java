@@ -8,7 +8,6 @@ package gestor_tutorias.pojo;
  * Descripción: Modelo de datos para el catálogo Usuario.
  */
 public class Usuario {
-
     private int idUsuario;
     private String noPersonalUsuario;
     private String contrasenaUsuario;

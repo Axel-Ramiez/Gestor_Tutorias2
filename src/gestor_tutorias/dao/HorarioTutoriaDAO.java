@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 10/12/2025
- * Fecha de modificación: 17/12/2025
+ * Fecha de modificación: 11/01/2026
  * Descripción: Clase DAO para gestionar la disponibilidad de horarios de tutoría.
  */
 public class HorarioTutoriaDAO {

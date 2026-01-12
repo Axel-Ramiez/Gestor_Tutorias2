@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 15/12/2025
- * Fecha de modificación: 16/12/2025
+ * Fecha de modificación: 11/01/2026
  * Descripción: DAO para gestionar la información de las problemáticas de tutoría.
  */
 public class ProblematicaDAO {

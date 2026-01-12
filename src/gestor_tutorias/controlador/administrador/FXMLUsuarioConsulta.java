@@ -35,7 +35,6 @@ import javafx.stage.Stage;
  */
 public class FXMLUsuarioConsulta implements Initializable {
 
-
     @FXML
     private TextField tfBusqueda;
     @FXML

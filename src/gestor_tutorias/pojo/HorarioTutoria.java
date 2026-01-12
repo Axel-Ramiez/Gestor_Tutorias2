@@ -10,7 +10,6 @@ import java.time.LocalTime;
  * Descripción: Modelo de datos para el catálogo HorarioTutoria.
  */
 public class HorarioTutoria {
-
     private int idHorarioTutoria;
     private LocalDate fechaHorarioTutoria;
     private LocalTime horaInicioHorarioTutoria;

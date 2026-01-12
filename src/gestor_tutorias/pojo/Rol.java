@@ -8,7 +8,6 @@ package gestor_tutorias.pojo;
  * Descripción: Modelo de datos para el catálogo Rol.
  */
 public class Rol {
-
     private int idRol;
     private String nombreRol;
 

@@ -13,6 +13,7 @@
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
+
                 </Label>
             </children>
         </Pane>

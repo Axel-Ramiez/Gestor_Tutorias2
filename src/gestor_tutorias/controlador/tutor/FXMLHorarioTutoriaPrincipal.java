@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 17/12/2025
- * Fecha de modificación: 17/12/2025
+ * Fecha de modificación: 11/01/2026
  * Descripción: Controlador principal para la gestión de Horarios de Tutoría.
  * Permite listar, crear, editar, eliminar y consultar horarios.
  */

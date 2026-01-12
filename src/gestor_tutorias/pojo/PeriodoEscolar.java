@@ -9,7 +9,6 @@ import java.time.LocalDate;
  * Descripción: Modelo de datos para el catálogo PlaneacionEscolar.
  */
 public class PeriodoEscolar {
-
     private int idPeriodoEscolar;
     private String nombrePeriodoEscolar;
     private LocalDate fechaInicioPeriodoEscolar;

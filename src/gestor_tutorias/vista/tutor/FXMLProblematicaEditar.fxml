@@ -20,6 +20,7 @@
             </children>
         </Pane>
 
+
         <!-- ID PROBLEMATICA -->
         <Label layoutX="30.0" layoutY="80.0" text="ID Problemática" />
         <Label fx:id="lbIdProblematica" layoutX="30.0" layoutY="105.0" style="-fx-font-weight: bold;" />

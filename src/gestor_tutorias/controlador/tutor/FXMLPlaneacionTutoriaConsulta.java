@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 17/12/2025
- * Fecha de modificación: 17/12/2025
+ * Fecha de modificación: 11/01/2026
  * Descripción: Controlador para la consulta (solo lectura) de los detalles de una Planeación de Tutoría.
  */
 public class FXMLPlaneacionTutoriaConsulta implements Initializable {

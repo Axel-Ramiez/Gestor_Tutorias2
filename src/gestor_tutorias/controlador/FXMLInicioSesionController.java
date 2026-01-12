@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 /**
  * Nombre: Axel Ramírez / Equipo de Desarrollo
  * Fecha de creación: 08/12/2025
- * Fecha de modificación: 17/12/2025
+ * Fecha de modificación: 11/01/2026
  * Descripción: Controlador encargado de la autenticación de usuarios y
  * redirección a la pantalla principal correspondiente según el rol.
  */

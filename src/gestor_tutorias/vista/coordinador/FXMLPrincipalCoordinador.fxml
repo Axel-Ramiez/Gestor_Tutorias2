@@ -19,6 +19,7 @@
                     </image>
                 </ImageView>
 
+
                 <Label layoutX="140.0" layoutY="35.0" text="Sistema de Tutorías - UV" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="20.0" />

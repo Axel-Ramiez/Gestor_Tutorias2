@@ -10,7 +10,6 @@ import gestor_tutorias.Enum.EstatusProblematica;
  * Descripción: Modelo de datos para el catálogo Problematica.
  */
 public class Problematica {
-
     private int idProblematica;
     private int idReporteTutoria;
     private String titulo;

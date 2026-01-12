@@ -16,7 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 08/12/2025

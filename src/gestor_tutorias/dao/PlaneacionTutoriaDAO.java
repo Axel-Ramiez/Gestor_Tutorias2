@@ -14,7 +14,6 @@ import java.util.List;
  * Descripción: Clase DAO para gestionar las planeaciones de tutoría.
  */
 public class PlaneacionTutoriaDAO {
-
     private static final String TABLA = "planeacion_tutoria";
 
     private static final String SQL_INSERT =

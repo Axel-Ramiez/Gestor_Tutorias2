@@ -20,6 +20,7 @@
             <font><Font size="16.0" /></font>
         </Label>
 
+
         <HBox layoutX="560.0" layoutY="115.0" spacing="10.0" />
 
         <TableView fx:id="tvReportes" layoutX="20.0" layoutY="150.0" prefHeight="240.0" prefWidth="760.0">

@@ -7,7 +7,6 @@ package gestor_tutorias.pojo;
  * Descripción: Modelo de datos para el catálogo Facultad.
  */
 public class Facultad {
-
     private int idFacultad;
     private String nombreFacultad;
 

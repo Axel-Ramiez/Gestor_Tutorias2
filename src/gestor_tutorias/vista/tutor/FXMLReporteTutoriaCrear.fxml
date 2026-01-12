@@ -18,6 +18,7 @@
             </children>
         </Pane>
 
+
         <Label layoutX="30.0" layoutY="80.0" text="ID Reporte" />
         <Label fx:id="lbIdReporte" layoutX="93.0" layoutY="80.0" prefHeight="17.0" prefWidth="0.0" style="-fx-font-weight: bold;" />
 

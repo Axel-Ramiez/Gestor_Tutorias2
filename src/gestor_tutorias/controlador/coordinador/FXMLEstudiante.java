@@ -55,7 +55,6 @@ public class FXMLEstudiante implements Initializable {
             mostrarAlerta("Aviso", "Seleccione un estudiante de la tabla.");
             return;
         }
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/coordinador/FXMLEstudianteConsulta.fxml"));
             Parent root = loader.load();

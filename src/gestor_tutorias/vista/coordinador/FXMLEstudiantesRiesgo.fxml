@@ -17,6 +17,7 @@
             </children>
         </Pane>
 
+
         <TableView fx:id="tvEstudiantes" layoutX="20.0" layoutY="122.0" prefHeight="308.0" prefWidth="760.0">
             <columns>
                 <TableColumn fx:id="colMatricula" prefWidth="120.0" text="Matrícula" />

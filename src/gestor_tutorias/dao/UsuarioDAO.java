@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Nombre: Axel Ramírez
  * Fecha de creación: 08/12/2025
- * Fecha de modificación: 15/12/2025
+ * Fecha de modificación: 11/01/2026
  * Descripción: Clase de acceso a datos para la gestión de Usuarios.
  * Maneja el inicio de sesión y operaciones CRUD sobre la tabla 'usuario'.
  */
