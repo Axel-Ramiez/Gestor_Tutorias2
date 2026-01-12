@@ -2,6 +2,7 @@ package gestor_tutorias.controlador.Tutor;
 
 import gestor_tutorias.dao.HorarioTutoriaDAO;
 import gestor_tutorias.pojo.HorarioTutoria;
+import javafx.beans.property.SimpleStringProperty; // Importante
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,13 +27,12 @@ public class FXMLHorarioTutoriaPrincipal {
     @FXML private TableColumn<HorarioTutoria, String> colFecha;
     @FXML private TableColumn<HorarioTutoria, String> colHoraInicio;
     @FXML private TableColumn<HorarioTutoria, String> colHoraFin;
-    @FXML private TableColumn<HorarioTutoria, Integer> colTutor;
-    @FXML private TableColumn<HorarioTutoria, Integer> colEstudiante;
-    @FXML private TableColumn<HorarioTutoria, Integer> colPeriodoEscolar;
+    @FXML private TableColumn<HorarioTutoria, String> colTutor;
+    @FXML private TableColumn<HorarioTutoria, String> colEstudiante;
+    @FXML private TableColumn<HorarioTutoria, String> colPeriodoEscolar;
 
     private final HorarioTutoriaDAO horarioDAO = new HorarioTutoriaDAO();
     private ObservableList<HorarioTutoria> listaHorarios;
-
 
     @FXML
     private void initialize() {
@@ -73,29 +73,33 @@ public class FXMLHorarioTutoriaPrincipal {
                 )
         );
 
+
         colTutor.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleIntegerProperty(
-                        c.getValue().getIdUsuario()
-                ).asObject()
+                new SimpleStringProperty(
+                        c.getValue().getNombreTutor() != null
+                                ? c.getValue().getNombreTutor()
+                                : "Sin Asignar"
+                )
         );
+
 
         colEstudiante.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleIntegerProperty(
-                        c.getValue().getIdEstudiante() != null
-                                ? c.getValue().getIdEstudiante()
-                                : 0
-                ).asObject()
+                new SimpleStringProperty(
+                        c.getValue().getNombreEstudiante() != null
+                                ? c.getValue().getNombreEstudiante()
+                                : "Sin Asignar"
+                )
         );
+
 
         colPeriodoEscolar.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleIntegerProperty(
-                        c.getValue().getIdPeriodoEscolar() != null
-                                ? c.getValue().getIdPeriodoEscolar()
-                                : 0
-                ).asObject()
+                new SimpleStringProperty(
+                        c.getValue().getNombrePeriodoEscolar() != null
+                                ? c.getValue().getNombrePeriodoEscolar()
+                                : "Sin Asignar"
+                )
         );
     }
-
 
     private void cargarHorarios() {
         try {
@@ -109,83 +113,63 @@ public class FXMLHorarioTutoriaPrincipal {
     }
 
 
-
     public void clicCrear(ActionEvent actionEvent) {
-        cambiarVentana(
-                "/gestor_tutorias/vista/Tutor/FXMLHorarioTutoriaCrear.fxml",
-                "Crear Horario de Tutoría"
-        );
+        cambiarVentana("/gestor_tutorias/vista/Tutor/FXMLHorarioTutoriaCrear.fxml", "Crear Horario");
         cargarHorarios();
     }
 
     public void clicEditar(ActionEvent actionEvent) {
         HorarioTutoria seleccionado = tvHorarios.getSelectionModel().getSelectedItem();
-
         if (seleccionado == null) {
             mostrarAlerta("Aviso", "Seleccione un horario para editar.");
             return;
         }
-
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLHorarioTutoriaEditar.fxml")
-            );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLHorarioTutoriaEditar.fxml"));
             Parent root = loader.load();
-
             FXMLHorarioTutoriaEditar controlador = loader.getController();
             controlador.setIdHorarioTutoria(seleccionado.getIdHorarioTutoria());
-
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Editar Horario de Tutoría");
+            stage.setTitle("Editar Horario");
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
             cargarHorarios();
         } catch (IOException e) {
-            mostrarAlerta("Error", "No se pudo abrir la ventana de edición.");
+            mostrarAlerta("Error", "No se pudo abrir la ventana.");
             e.printStackTrace();
         }
     }
 
     public void clicConsultar(ActionEvent actionEvent) {
         HorarioTutoria seleccionado = tvHorarios.getSelectionModel().getSelectedItem();
-
         if (seleccionado == null) {
             mostrarAlerta("Aviso", "Seleccione un horario para consultar.");
             return;
         }
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestor_tutorias/vista/Tutor/FXMLHorarioTutoriaConsultar.fxml"));
-
             Parent root = loader.load();
-
             FXMLHorarioTutoriaConsultar controlador = loader.getController();
-
             controlador.setIdHorarioTutoria(seleccionado.getIdHorarioTutoria());
-
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Consulta Horario de Tutoría");
+            stage.setTitle("Consulta Horario");
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
             cargarHorarios();
         } catch (IOException e) {
-            mostrarAlerta("Error", "No se pudo abrir la ventana de edición.");
+            mostrarAlerta("Error", "No se pudo abrir la ventana.");
             e.printStackTrace();
         }
     }
 
     public void clicEliminar(ActionEvent actionEvent) {
         HorarioTutoria seleccionado = tvHorarios.getSelectionModel().getSelectedItem();
-
         if (seleccionado == null) {
             mostrarAlerta("Aviso", "Seleccione un horario para eliminar.");
             return;
         }
-
         try {
             horarioDAO.eliminarHorario(seleccionado.getIdHorarioTutoria());
             cargarHorarios();
@@ -195,12 +179,10 @@ public class FXMLHorarioTutoriaPrincipal {
         }
     }
 
-
     private void cambiarVentana(String rutaFXML, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
             Parent root = loader.load();
-
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle(titulo);

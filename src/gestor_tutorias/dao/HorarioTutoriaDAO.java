@@ -12,7 +12,6 @@ public class HorarioTutoriaDAO {
 
     private static final String TABLA = "horario_tutoria";
 
-    /* ===================== SQL ===================== */
 
     private static final String SQL_INSERT =
             "INSERT INTO " + TABLA +
@@ -35,7 +34,6 @@ public class HorarioTutoriaDAO {
     private static final String SQL_DELETE =
             "DELETE FROM " + TABLA + " WHERE id_horario_tutoria = ?";
 
-    /* ===================== MAPEADOR ===================== */
 
     private HorarioTutoria mapearHorario(ResultSet rs) throws SQLException {
 
@@ -61,7 +59,6 @@ public class HorarioTutoriaDAO {
         return h;
     }
 
-    /* ===================== CRUD ===================== */
 
     public int guardarHorario(HorarioTutoria horario) throws SQLException {
 
@@ -106,18 +103,41 @@ public class HorarioTutoriaDAO {
     }
 
     public List<HorarioTutoria> obtenerTodos() throws SQLException {
+        List<HorarioTutoria> horarios = new ArrayList<>();
 
-        List<HorarioTutoria> lista = new ArrayList<>();
+        String sql = "SELECT h.*, " +
+
+                "CONCAT(u.nombre_usuario, ' ', u.apellido_paterno_usuario) AS nombre_tutor, " +
+                "IFNULL(CONCAT(e.nombre_estudiante, ' ', e.apellido_paterno_estudiante), 'Sin Asignar') AS nombre_estudiante, " +
+                "p.nombre_periodo_escolar AS nombre_periodo " +
+                "FROM horario_tutoria h " +
+                "INNER JOIN usuario u ON h.id_usuario = u.id_usuario " +
+                "LEFT JOIN estudiante e ON h.id_estudiante = e.id_estudiante " +
+                "INNER JOIN periodo_escolar p ON h.id_periodo_escolar = p.id_periodo_escolar";
 
         try (Connection conn = ConexionBD.abrirConexion();
-             PreparedStatement ps = conn.prepareStatement(SQL_SELECT_ALL);
+             PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                lista.add(mapearHorario(rs));
+                HorarioTutoria h = new HorarioTutoria();
+
+                h.setIdHorarioTutoria(rs.getInt("id_horario_tutoria"));
+                h.setFechaHorarioTutoria(rs.getDate("fecha_horario_tutoria").toLocalDate());
+                h.setHoraInicioHorarioTutoria(rs.getTime("hora_inicio_horario_tutoria").toLocalTime());
+                h.setHoraFinHorarioTutoria(rs.getTime("hora_fin_horario_tutoria").toLocalTime());
+                h.setIdUsuario(rs.getInt("id_usuario"));
+                h.setIdPeriodoEscolar(rs.getInt("id_periodo_escolar"));
+                int idEst = rs.getInt("id_estudiante");
+                h.setIdEstudiante(rs.wasNull() ? null : idEst);
+                h.setNombreTutor(rs.getString("nombre_tutor"));
+                h.setNombreEstudiante(rs.getString("nombre_estudiante"));
+                h.setNombrePeriodoEscolar(rs.getString("nombre_periodo"));
+
+                horarios.add(h);
             }
         }
-        return lista;
+        return horarios;
     }
 
     public boolean actualizarHorario(HorarioTutoria horario) throws SQLException {

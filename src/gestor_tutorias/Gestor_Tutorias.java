@@ -20,6 +20,7 @@ public class Gestor_Tutorias extends Application {
             Scene scene = new Scene(parent);
             primaryStage.setScene(scene);
             primaryStage.show();
+
         }catch(IOException ioe){
             System.out.println("No ha sido posible ejecutar el programa");
             ioe.printStackTrace();

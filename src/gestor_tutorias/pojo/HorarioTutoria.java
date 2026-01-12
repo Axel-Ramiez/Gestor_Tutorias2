@@ -5,22 +5,18 @@ import java.time.LocalTime;
 
 public class HorarioTutoria {
 
-    // ===== CAMPOS BD =====
     private int idHorarioTutoria;
     private LocalDate fechaHorarioTutoria;
     private LocalTime horaInicioHorarioTutoria;
     private LocalTime horaFinHorarioTutoria;
-
-    private int idUsuario;               // tutor (NOT NULL)
-    private Integer idEstudiante;        // puede ser NULL
-    private Integer idPeriodoEscolar;    // puede ser NULL
-
-    // ===== CAMPOS AUXILIARES (NO BD) =====
+    private int idUsuario;
+    private Integer idEstudiante;
+    private Integer idPeriodoEscolar;
     private String nombreTutor;
     private String nombreEstudiante;
     private String nombrePeriodoEscolar;
 
-    // ===== CONSTRUCTORES =====
+
     public HorarioTutoria() {
     }
 
@@ -39,7 +35,6 @@ public class HorarioTutoria {
         this.idPeriodoEscolar = idPeriodoEscolar;
     }
 
-    // ===== GETTERS & SETTERS =====
 
     public int getIdHorarioTutoria() {
         return idHorarioTutoria;
@@ -97,7 +92,6 @@ public class HorarioTutoria {
         this.idPeriodoEscolar = idPeriodoEscolar;
     }
 
-    // ===== AUXILIARES =====
 
     public String getNombreTutor() {
         return nombreTutor;
@@ -123,7 +117,6 @@ public class HorarioTutoria {
         this.nombrePeriodoEscolar = nombrePeriodoEscolar;
     }
 
-    // ===== LÓGICA =====
     public boolean isOcupado() {
         return idEstudiante != null;
     }
