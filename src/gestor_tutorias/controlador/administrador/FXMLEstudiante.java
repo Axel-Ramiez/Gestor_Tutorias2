@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Nombre: Axel Ramírez / Equipo de Desarrollo
+ * Nombre: Axel Ramírez / Alberto Villalba
  * Fecha de creación: 17/12/2025
  * Fecha de modificación: 11/01/2026
  * Descripción: Controlador para el formulario de registro y edición de Estudiantes (Administrador).

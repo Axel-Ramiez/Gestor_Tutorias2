@@ -80,9 +80,6 @@ public class Validacion {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // MÉTODOS DE VALIDACIÓN PARA MENSAJE
-    // -------------------------------------------------------------------------
 
     public static boolean validarRequerido(TextInputControl campo, Label etiquetaError, String mensaje) {
         if (esNuloOVacio(campo.getText())) {

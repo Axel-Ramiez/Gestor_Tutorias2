@@ -14,7 +14,7 @@ import java.time.LocalTime;
 
 
 /**
- * Nombre: Axel Ramírez
+ * Nombre: Axel Ramírez / Alberto Villalba
  * Fecha de creación: 17/12/2025
  * Fecha de modificación: 11/01/2026
  * Descripción: Controlador para la edición de horarios de tutoría existentes.

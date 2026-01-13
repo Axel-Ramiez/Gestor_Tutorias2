@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
- * Nombre: Axel Ramírez / Equipo de Desarrollo
+ * Nombre: Axel Ramírez / Alberto Villalba
  * Fecha de creación: 08/12/2025
  * Fecha de modificación: 11/01/2026
  * Descripción: Controlador encargado de la autenticación de usuarios y

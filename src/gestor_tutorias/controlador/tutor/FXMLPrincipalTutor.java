@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Nombre: Axel Ramírez
+ * Nombre: Axel Ramírez / Alberto Villalba
  * Fecha de creación: 08/12/2025
  * Fecha de modificación: 11/01/2026
  * Descripción: Controlador del menú principal para el rol de Tutor Académico.

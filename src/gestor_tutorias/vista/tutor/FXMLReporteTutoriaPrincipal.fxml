@@ -11,7 +11,6 @@
 
     <children>
 
-        <!-- ENCABEZADO -->
         <Pane prefHeight="70.0" prefWidth="800.0" style="-fx-background-color: #283593;">
             <children>
                 <Label layoutX="20.0" layoutY="22.0" text="Sistema de Tutorías - UV" textFill="WHITE">
@@ -23,14 +22,12 @@
             </children>
         </Pane>
 
-        <!-- TÍTULO -->
         <Label layoutX="310.0" layoutY="85.0" text="Reportes de Tutoría">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
 
-        <!-- BOTONES -->
         <HBox layoutX="330.0" layoutY="115.0" spacing="10.0">
             <children>
                 <Button fx:id="btnCrear" text="Crear" onAction="#crearReporte"/>
@@ -40,7 +37,6 @@
             </children>
         </HBox>
 
-        <!-- TABLA -->
         <TableView fx:id="tvReportes"
                    layoutX="20.0"
                    layoutY="155.0"
@@ -57,7 +53,6 @@
             </columns>
         </TableView>
 
-        <!-- PIE -->
         <Label layoutX="20.0" layoutY="410.0"
                text="UNIVERSIDAD VERACRUZANA"
                textFill="#808080"/>
