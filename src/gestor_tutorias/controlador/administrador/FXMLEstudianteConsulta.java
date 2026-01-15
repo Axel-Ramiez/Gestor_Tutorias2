@@ -27,7 +27,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Nombre: Axel Ramírez / Equipo de Desarrollo
+ * Nombre: Axel Ramírez / Alberto Villalba
  * Fecha de creación: 17/12/2025
  * Fecha de modificación: 11/01/2026
  * Descripción: Controlador para visualizar la lista de estudiantes registrados.

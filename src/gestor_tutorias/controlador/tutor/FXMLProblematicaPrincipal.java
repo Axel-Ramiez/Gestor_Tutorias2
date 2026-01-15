@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Nombre: Axel Ramírez
+ * Nombre: Axel Ramírez / Alberto Villalba
  * Fecha de creación: 16/12/2025
  * Fecha de modificación: 11/01/2026
  * Descripción: Controlador principal para la gestión de Problemáticas Académicas.

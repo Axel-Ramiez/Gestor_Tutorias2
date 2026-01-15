@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Nombre: Axel Ramírez
+ * Nombre: Axel Ramírez / Alberto Villalba
  * Fecha de creación: 13/12/2025
  * Fecha de modificación: 11/01/2026
  * Descripción: DAO para consultar los Periodos Escolares.

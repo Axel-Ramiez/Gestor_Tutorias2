@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalTime;
 
 /**
- * Nombre: Axel Ramírez
+ * Nombre: Axel Ramírez / Alberto Villalba
  * Fecha de creación: 17/12/2025
  * Fecha de modificación: 11/01/2026
  * Descripción: Controlador para el registro de nuevos horarios de tutoría.

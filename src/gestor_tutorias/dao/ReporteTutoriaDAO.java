@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Nombre: Axel Ramírez
+ * Nombre: Axel Ramírez / Alberto Villalba
  * Fecha de creación: 15/12/2025
  * Fecha de modificación: 11/01/2026
  * Descripción: DAO para la gestión completa de Reportes de Tutoría.

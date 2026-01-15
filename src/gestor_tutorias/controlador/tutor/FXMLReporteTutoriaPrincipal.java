@@ -22,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * Nombre: Axel Ramírez / Equipo de Desarrollo
+ * Nombre: Axel Ramírez / Alberto Villalba
  * Fecha de creación: 17/12/2025
  * Fecha de modificación: 11/01/2026
  * Descripción: Controlador principal para la gestión de Reportes de Tutoría.

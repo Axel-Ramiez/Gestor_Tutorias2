@@ -3,7 +3,7 @@ package gestor_tutorias.pojo;
 import java.time.LocalDate;
 
 /**
- * Nombre: Axel Ramírez
+ * Nombre: Axel Ramírez / Alberto Villalba
  * Fecha de creación: 13/12/2025
  * Fecha de modificación: 11/01/2026
  * Descripción: Modelo de datos para el catálogo PlaneacionTutoria.
