@@ -2,7 +2,6 @@ DROP DATABASE IF EXISTS gestion_tutoria;
 CREATE DATABASE gestion_tutoria;
 USE gestion_tutoria;
 
-
 CREATE TABLE `facultad` (
   `id_facultad` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `nombre_facultad` varchar(100) NOT NULL
@@ -100,18 +99,14 @@ CREATE TABLE `planeacion_tutoria` (
   `temas` text,
   `id_periodo_escolar` int NOT NULL,
   `id_carrera` int NOT NULL,
-
   KEY `id_periodo_escolar` (`id_periodo_escolar`),
   KEY `id_carrera` (`id_carrera`),
-
   CONSTRAINT `fk_planeacion_periodo` FOREIGN KEY (`id_periodo_escolar`) REFERENCES `periodo_escolar` (`id_periodo_escolar`),
   CONSTRAINT `fk_planeacion_carrera` FOREIGN KEY (`id_carrera`) REFERENCES `carrera` (`id_carrera`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
 INSERT INTO planeacion_tutoria (fecha_tutoria, numero_sesion, temas, id_periodo_escolar, id_carrera) VALUES
 ('2025-03-15', 1, 'Seguimiento de trayectoria académica y revisión de créditos.', 1, 1);
-
 
 CREATE TABLE `horario_tutoria` (
   `id_horario_tutoria` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -121,15 +116,11 @@ CREATE TABLE `horario_tutoria` (
   `id_usuario` int NOT NULL,
   `id_estudiante` int DEFAULT NULL,
   `id_periodo_escolar` int DEFAULT NULL,
-
-
   `id_planeacion_tutoria` int DEFAULT NULL,
-
   KEY `id_usuario` (`id_usuario`),
   KEY `id_estudiante` (`id_estudiante`),
   KEY `id_periodo_escolar` (`id_periodo_escolar`),
   KEY `id_planeacion_tutoria` (`id_planeacion_tutoria`),
-
   CONSTRAINT `fk_horario_tutoria_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
   CONSTRAINT `fk_horario_tutoria_estudiante` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`),
   CONSTRAINT `fk_horario_tutoria_periodo_escolar` FOREIGN KEY (`id_periodo_escolar`) REFERENCES `periodo_escolar` (`id_periodo_escolar`),
