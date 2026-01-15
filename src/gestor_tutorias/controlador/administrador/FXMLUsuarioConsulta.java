@@ -38,7 +38,7 @@ public class FXMLUsuarioConsulta implements Initializable {
     @FXML
     private TextField tfBusqueda;
     @FXML
-    private TableView<Usuario> tbUsuario;
+    private TableView<Usuario> tvUsuario;
     @FXML
     private TableColumn colNoPersonal;
     @FXML
@@ -108,7 +108,7 @@ public class FXMLUsuarioConsulta implements Initializable {
 
     @FXML
     private void clicEditar(ActionEvent event) {
-        Usuario usuarioSeleccionado = tbUsuario.getSelectionModel().getSelectedItem();
+        Usuario usuarioSeleccionado = tvUsuario.getSelectionModel().getSelectedItem();
 
         if (usuarioSeleccionado != null) {
             try {
@@ -139,7 +139,7 @@ public class FXMLUsuarioConsulta implements Initializable {
 
     @FXML
     private void clicEliminar(ActionEvent event) {
-        Usuario usuarioSeleccionado = tbUsuario.getSelectionModel().getSelectedItem();
+        Usuario usuarioSeleccionado = tvUsuario.getSelectionModel().getSelectedItem();
         if (usuarioSeleccionado != null) {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -211,8 +211,8 @@ public class FXMLUsuarioConsulta implements Initializable {
                 });
             });
             SortedList<Usuario> sortedData = new SortedList<>(filtro);
-            sortedData.comparatorProperty().bind(tbUsuario.comparatorProperty());
-            tbUsuario.setItems(sortedData);
+            sortedData.comparatorProperty().bind(tvUsuario.comparatorProperty());
+            tvUsuario.setItems(sortedData);
         }
     }
 }

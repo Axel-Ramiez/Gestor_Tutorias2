@@ -38,7 +38,7 @@ public class FXMLEstudianteConsulta implements Initializable {
     @FXML
     private TextField tfBusqueda;
     @FXML
-    private TableView<Estudiante> tbEstudiantes;
+    private TableView<Estudiante> tvEstudiantes;
     @FXML
     private TableColumn colMatricula;
     @FXML
@@ -107,7 +107,7 @@ public class FXMLEstudianteConsulta implements Initializable {
 
     @FXML
     private void clicEditar(ActionEvent event) {
-        Estudiante estudianteSeleccionado = tbEstudiantes.getSelectionModel().getSelectedItem();
+        Estudiante estudianteSeleccionado = tvEstudiantes.getSelectionModel().getSelectedItem();
 
         if (estudianteSeleccionado != null) {
             try {
@@ -136,7 +136,7 @@ public class FXMLEstudianteConsulta implements Initializable {
 
     @FXML
     private void clicEliminar(ActionEvent event) {
-        Estudiante estudianteSeleccionado = tbEstudiantes.getSelectionModel().getSelectedItem();
+        Estudiante estudianteSeleccionado = tvEstudiantes.getSelectionModel().getSelectedItem();
         if (estudianteSeleccionado != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmar eliminación");
@@ -210,8 +210,8 @@ public class FXMLEstudianteConsulta implements Initializable {
                 });
             });
             SortedList<Estudiante> sortedData = new SortedList<>(filtro);
-            sortedData.comparatorProperty().bind(tbEstudiantes.comparatorProperty());
-            tbEstudiantes.setItems(sortedData);
+            sortedData.comparatorProperty().bind(tvEstudiantes.comparatorProperty());
+            tvEstudiantes.setItems(sortedData);
         }
     }
 }

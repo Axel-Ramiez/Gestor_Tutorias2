@@ -22,7 +22,7 @@
         <Button layoutX="784.0" layoutY="90.0" mnemonicParsing="false" onAction="#clicEditar" prefHeight="30.0" prefWidth="100.0" style="-fx-cursor: hand;" text="Editar" />
         <Button layoutX="901.0" layoutY="90.0" mnemonicParsing="false" onAction="#clicEliminar" prefHeight="30.0" prefWidth="100.0" style="-fx-cursor: hand;" text="Eliminar" />
 
-        <TableView fx:id="tbUsuario" layoutX="30.0" layoutY="140.0" prefHeight="430.0" prefWidth="840.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="140.0">
+        <TableView fx:id="tvUsuario" layoutX="30.0" layoutY="140.0" prefHeight="430.0" prefWidth="840.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="140.0">
             <columns>
                 <TableColumn fx:id="colNoPersonal" prefWidth="112.0" text="No.Personal" />
                 <TableColumn fx:id="colNombre" prefWidth="121.0" text="Nombre" />
