@@ -58,12 +58,11 @@ public class FXMLHorarioTutoriaCrear {
         }
     }
 
-
     public void inicializarTutor(Usuario tutorLogueado) {
         for(Usuario u : cbTutor.getItems()){
             if(u.getIdUsuario() == tutorLogueado.getIdUsuario()){
                 cbTutor.setValue(u);
-                cbTutor.setDisable(true); // Bloqueamos para que no pueda cambiarlo
+                cbTutor.setDisable(true);
                 break;
             }
         }
