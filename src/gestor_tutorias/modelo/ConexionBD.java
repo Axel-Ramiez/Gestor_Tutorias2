@@ -27,7 +27,7 @@ public class ConexionBD {
             System.err.println("Error de conexión: " + ex.getMessage());
             ex.printStackTrace();
         }
-        System.out.println("hay cinexion");
+        System.out.println("hay conexión");
         return conexion;
     }
 
