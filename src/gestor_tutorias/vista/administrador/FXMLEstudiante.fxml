@@ -17,7 +17,6 @@
                 </Label>
             </children>
         </Pane>
-
         <Label layoutX="49.0" layoutY="185.0" text="Matrícula" />
         <TextField fx:id="tfMatricula" layoutX="52.0" layoutY="206.0" prefHeight="30.0" prefWidth="296.0" promptText="zS2001..." />
 

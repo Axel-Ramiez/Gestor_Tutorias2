@@ -93,7 +93,7 @@ public class Validacion {
 
     public static boolean validarNoPersonal(TextInputControl campo, Label etiquetaError) {
         if (!esNoPersonalValido(campo.getText())) {
-            marcarError(campo, etiquetaError, "Inválido. Solo letras y números (Máx 20). Ej: ADM001");
+            marcarError(campo, etiquetaError, "Inválido. Solo letras y números. Máximo 20");
             return false;
         } else {
             limpiarError(campo, etiquetaError);
@@ -103,7 +103,7 @@ public class Validacion {
 
     public static boolean validarMatricula(TextInputControl campo, Label etiquetaError) {
         if (!esMatriculaValida(campo.getText())) {
-            marcarError(campo, etiquetaError, "Formato inválido (Ej: zS12345678)");
+            marcarError(campo, etiquetaError, "Matricula Invalida. Ej: zS12345678");
             return false;
         } else {
             limpiarError(campo, etiquetaError);
@@ -113,7 +113,7 @@ public class Validacion {
 
     public static boolean validarCorreoEstudiante(TextInputControl campo, Label etiquetaError) {
         if (!esCorreoEstudianteValido(campo.getText())) {
-            marcarError(campo, etiquetaError, "Debe ser: zS########@estudiantes.uv.mx");
+            marcarError(campo, etiquetaError, "Debe ser: zS12345678@estudiantes.uv.mx");
             return false;
         } else {
             limpiarError(campo, etiquetaError);

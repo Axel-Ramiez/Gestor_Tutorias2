@@ -97,7 +97,7 @@ public class FXMLEstudiante implements Initializable {
             }
 
         } catch (SQLException ex) {
-            mostrarAlerta("Error", "Error al validar duplicados: " + ex.getMessage());
+            mostrarAlerta("Error", "Error duplicados: " + ex.getMessage());
             return;
         }
 

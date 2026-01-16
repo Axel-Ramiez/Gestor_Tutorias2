@@ -17,7 +17,6 @@
                 </Label>
             </children>
         </Pane>
-
         <Label layoutX="30.0" layoutY="90.0" text="No. Personal" textFill="#666666" />
         <TextField fx:id="tfNoPersonal" layoutX="30.0" layoutY="110.0" prefHeight="30.0" prefWidth="265.0" promptText="ADM001" />
 
